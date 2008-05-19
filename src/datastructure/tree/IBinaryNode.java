@@ -39,16 +39,16 @@ public interface IBinaryNode<N extends IBinaryNode<N>> {
     public int getKey();
 
     /**
-     * Returns the right son of the node.
+     * Returns the right child of the node.
      * 
-     * @return the right son of the node
+     * @return the right child of the node
      */
     public N getRight();
 
     /**
-     * Returns the left son of the node.
+     * Returns the left child of the node.
      * 
-     * @return the left son of the node
+     * @return the left child of the node
      */
     public N getLeft();
 
@@ -67,16 +67,16 @@ public interface IBinaryNode<N extends IBinaryNode<N>> {
     public void setKey(int newKey);
 
     /**
-     * Replaces the left son of the node by the new node.
+     * Replaces the left child of the node by the new node.
      * 
-     * @param newNode the new left son of the node
+     * @param newNode the new left child of the node
      */
     public void setLeft(N newNode);
 
     /**
-     * Replaces the right son of the node by the new node.
+     * Replaces the right child of the node by the new node.
      * 
-     * @param newNode the new right son of the node
+     * @param newNode the new right child of the node
      */
     public void setRight(N newNode);
 

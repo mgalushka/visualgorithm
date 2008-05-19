@@ -34,7 +34,7 @@ abstract class AbstractBinarySearchNode<N extends IBinarySearchNode<N>> extends
         AbstractBinaryNode<N> implements IBinarySearchNode<N> {
 
     /**
-     * Build a node with the key given in parameter, the sons and
+     * Build a node with the key given in parameter, the children and
      * father are initialized to null.
      * 
      * @param key the key of the new node
