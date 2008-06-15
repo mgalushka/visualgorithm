@@ -1,5 +1,5 @@
 /*
- * RedBlackTree.java v1.00 19/05/08
+ * BinarySearchTree.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
@@ -19,33 +19,34 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package datastructure.tree;
+package model.datastructure.tree;
 
 /**
- * Definition of red black trees, with as node <tt>RedBlackNode</tt>.
+ * Definition of binary search trees, with as node <tt>BinarySearchNode</tt>.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IRedBlackNode
+ * @see IBinaryNode
  * @see IBinarySearchTree
  */
-public class RedBlackTree extends AbstractBinarySearchTree<RedBlackNode> {
+public class BinarySearchTree extends
+        AbstractBinarySearchTree<BinarySearchNode> {
 
     /**
-     * Build an empty red black tree.
+     * Builds an empty binary search tree.
      */
-    public RedBlackTree() {
+    public BinarySearchTree() {
         root = null;
     }
 
     /**
-     * Build a red black tree whose root is initialized with the specified key.
+     * Builds a binary search tree whose root is initialized with the specified key.
      * 
      * @param key the key of the root
      */
-    public RedBlackTree(int key) {
-        root = new RedBlackNode(key, RedBlackNode.RedBlackNodeColor.BLACK);
+    public BinarySearchTree(int key) {
+        root = new BinarySearchNode(key);
     }
 }

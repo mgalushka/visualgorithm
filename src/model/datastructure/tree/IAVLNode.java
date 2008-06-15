@@ -1,5 +1,5 @@
 /*
- * BinarySearchNode.java v1.00 19/05/08
+ * IAVLNode.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
@@ -19,10 +19,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package datastructure.tree;
+package model.datastructure.tree;
 
 /**
- * Definition of the nodes of binary search trees.
+ * Additional methods of the nodes of AVL trees.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
@@ -30,15 +30,34 @@ package datastructure.tree;
  * @version 1.00 19/05/08
  * @see IBinarySearchNode
  */
-public final class BinarySearchNode extends
-        AbstractBinarySearchNode<BinarySearchNode> {
+public interface IAVLNode<N extends IAVLNode<N>> extends
+        IBinarySearchNode<N> {
 
     /**
-     * Builds a binary search node with the key given in parameter.
+     * Returns the height of the AVL node.
      * 
-     * @param key the key of the new binary search node.
+     * @return the height of the AVL node
      */
-    public BinarySearchNode(int key) {
-        super(key);
-    }
+    public int getHeight();
+
+    /**
+     * Replaces the height of the AVL node by the new height.
+     * 
+     * @param height the new height of the AVL node
+     */
+    public void setHeight(int height);
+
+    /**
+     * Calculates the height of the AVL node.
+     * 
+     * @return the height of the AVL node
+     */
+    public int findHeight();
+
+    /**
+     * Calculates the balancing factor of the AVL node.
+     * 
+     * @return the balancing factor of the AVL node
+     */
+    public int findBalance();
 }

@@ -1,5 +1,5 @@
 /*
- * IRedBlackNode.java v1.00 19/05/08
+ * IBinarySearchTree.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
@@ -19,47 +19,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package datastructure.tree;
-
-import datastructure.tree.RedBlackNode.RedBlackNodeColor;
+package model.datastructure.tree;
 
 /**
- * Additional methods of the nodes of red black trees.
+ * Methods of binary search trees.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
  * @see IBinarySearchNode
+ * @see IBinaryTree
  */
-public interface IRedBlackNode<N extends IRedBlackNode<N>> extends
-        IBinarySearchNode<N> {
-
-    /**
-     * Returns the color of the red black node.
-     * 
-     * @return the color of the red black node
-     */
-    public RedBlackNodeColor getColor();
-
-    /**
-     * Replaces the color of the red black node by the new color.
-     * 
-     * @param color the new color of the red black node
-     */
-    public void setColor(RedBlackNodeColor color);
-
-    /**
-     * Returns true if the node is red or else false.
-     * 
-     * @return true if the node is red or else false
-     */
-    public boolean isRed();
-
-    /**
-     * Retourne true if the node is black or else false.
-     * 
-     * @return true if the node is black or else false
-     */
-    public boolean isBlack();
+public interface IBinarySearchTree<N extends IBinarySearchNode<N>> extends
+        IBinaryTree<N> {
 }

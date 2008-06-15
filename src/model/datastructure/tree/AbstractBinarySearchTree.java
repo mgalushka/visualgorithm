@@ -1,5 +1,5 @@
 /*
- * BinarySearchTree.java v1.00 19/05/08
+ * AbstractBinarySearchTree.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
@@ -19,34 +19,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package datastructure.tree;
+package model.datastructure.tree;
 
 /**
- * Definition of binary search trees, with as node <tt>BinarySearchNode</tt>.
+ * Abstract class containing common methods of all binary search trees.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IBinaryNode
+ * @see IBinarySearchNode
  * @see IBinarySearchTree
  */
-public class BinarySearchTree extends
-        AbstractBinarySearchTree<BinarySearchNode> {
-
-    /**
-     * Builds an empty binary search tree.
-     */
-    public BinarySearchTree() {
-        root = null;
-    }
-
-    /**
-     * Builds a binary search tree whose root is initialized with the specified key.
-     * 
-     * @param key the key of the root
-     */
-    public BinarySearchTree(int key) {
-        root = new BinarySearchNode(key);
-    }
+public abstract class AbstractBinarySearchTree<N extends IBinarySearchNode<N>>
+        extends AbstractBinaryTree<N> implements IBinarySearchTree<N> {
 }

@@ -1,5 +1,5 @@
 /*
- * IAVLNode.java v1.00 19/05/08
+ * IRedBlackNode.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
@@ -19,10 +19,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package datastructure.tree;
+package model.datastructure.tree;
+
+import model.datastructure.tree.RedBlackNode.RedBlackNodeColor;
 
 /**
- * Additional methods of the nodes of AVL trees.
+ * Additional methods of the nodes of red black trees.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
@@ -30,34 +32,34 @@ package datastructure.tree;
  * @version 1.00 19/05/08
  * @see IBinarySearchNode
  */
-public interface IAVLNode<N extends IAVLNode<N>> extends
+public interface IRedBlackNode<N extends IRedBlackNode<N>> extends
         IBinarySearchNode<N> {
 
     /**
-     * Returns the height of the AVL node.
+     * Returns the color of the red black node.
      * 
-     * @return the height of the AVL node
+     * @return the color of the red black node
      */
-    public int getHeight();
+    public RedBlackNodeColor getColor();
 
     /**
-     * Replaces the height of the AVL node by the new height.
+     * Replaces the color of the red black node by the new color.
      * 
-     * @param height the new height of the AVL node
+     * @param color the new color of the red black node
      */
-    public void setHeight(int height);
+    public void setColor(RedBlackNodeColor color);
 
     /**
-     * Calculates the height of the AVL node.
+     * Returns true if the node is red or else false.
      * 
-     * @return the height of the AVL node
+     * @return true if the node is red or else false
      */
-    public int findHeight();
+    public boolean isRed();
 
     /**
-     * Calculates the balancing factor of the AVL node.
+     * Retourne true if the node is black or else false.
      * 
-     * @return the balancing factor of the AVL node
+     * @return true if the node is black or else false
      */
-    public int findBalance();
+    public boolean isBlack();
 }

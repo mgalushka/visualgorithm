@@ -1,5 +1,5 @@
 /*
- * BinaryNode.java v1.00 19/05/08
+ * BinaryTree.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
@@ -19,25 +19,33 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package datastructure.tree;
+package model.datastructure.tree;
 
 /**
- * Definition of the nodes of binary trees.
+ * Definition of binary trees, with as node <tt>BinaryNode</tt>.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
  * @see IBinaryNode
+ * @see IBinaryTree
  */
-public final class BinaryNode extends AbstractBinaryNode<BinaryNode> {
+public class BinaryTree extends AbstractBinaryTree<BinaryNode> {
 
     /**
-     * Builds a binary node with the key given in parameter.
-     * 
-     * @param key the key of the new binary node
+     * Builds an empty binary tree.
      */
-    public BinaryNode(int key) {
-        super(key);
+    public BinaryTree() {
+        root = null;
+    }
+
+    /**
+     * Builds a binary tree whose root is initialized with the specified key.
+     * 
+     * @param key the key of the root
+     */
+    public BinaryTree(int key) {
+        root = new BinaryNode(key);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * AVLTree.java v1.00 19/05/08
+ * AbstractBinarySearchNode.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
@@ -19,33 +19,27 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package datastructure.tree;
+package model.datastructure.tree;
 
 /**
- * Definition of AVL trees, with as node <tt>AVLNode</tt>.
+ * Abstract class containing common methods of all binary search nodes.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IAVLNode
- * @see IBinarySearchTree
+ * @see IBinarySearchNode
  */
-public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
+abstract class AbstractBinarySearchNode<N extends IBinarySearchNode<N>> extends
+        AbstractBinaryNode<N> implements IBinarySearchNode<N> {
 
     /**
-     * Builds an empty AVL tree.
-     */
-    public AVLTree() {
-        root = null;
-    }
-
-    /**
-     * Builds an AVL tree whose root is initialized with the specified key.
+     * Build a node with the key given in parameter, the children and
+     * father are initialized to null.
      * 
-     * @param key the key of the root
+     * @param key the key of the new node
      */
-    public AVLTree(int key) {
-        root = new AVLNode(key);
+    AbstractBinarySearchNode(int key) {
+        super(key);
     }
 }

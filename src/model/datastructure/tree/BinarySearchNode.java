@@ -1,5 +1,5 @@
 /*
- * IBinaryTree.java v1.00 19/05/08
+ * BinarySearchNode.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
@@ -19,30 +19,26 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package datastructure.tree;
+package model.datastructure.tree;
 
 /**
- * Interface describing the methods of binary trees.
+ * Definition of the nodes of binary search trees.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IBinaryNode
+ * @see IBinarySearchNode
  */
-public interface IBinaryTree<N extends IBinaryNode<N>> {
+public final class BinarySearchNode extends
+        AbstractBinarySearchNode<BinarySearchNode> {
 
     /**
-     * Returns the root of the tree.
+     * Builds a binary search node with the key given in parameter.
      * 
-     * @return the root of the tree
+     * @param key the key of the new binary search node.
      */
-    public N getRoot();
-
-    /**
-     * Replaces the root of the tree by the new node.
-     * 
-     * @param newNode the new root node
-     */
-    public void setRoot(N newNode);
+    public BinarySearchNode(int key) {
+        super(key);
+    }
 }

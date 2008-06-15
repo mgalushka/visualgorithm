@@ -1,5 +1,5 @@
 /*
- * BinaryTree.java v1.00 19/05/08
+ * AVLTree.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
@@ -19,33 +19,33 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package datastructure.tree;
+package model.datastructure.tree;
 
 /**
- * Definition of binary trees, with as node <tt>BinaryNode</tt>.
+ * Definition of AVL trees, with as node <tt>AVLNode</tt>.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IBinaryNode
- * @see IBinaryTree
+ * @see IAVLNode
+ * @see IBinarySearchTree
  */
-public class BinaryTree extends AbstractBinaryTree<BinaryNode> {
+public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
 
     /**
-     * Builds an empty binary tree.
+     * Builds an empty AVL tree.
      */
-    public BinaryTree() {
+    public AVLTree() {
         root = null;
     }
 
     /**
-     * Builds a binary tree whose root is initialized with the specified key.
+     * Builds an AVL tree whose root is initialized with the specified key.
      * 
      * @param key the key of the root
      */
-    public BinaryTree(int key) {
-        root = new BinaryNode(key);
+    public AVLTree(int key) {
+        root = new AVLNode(key);
     }
 }

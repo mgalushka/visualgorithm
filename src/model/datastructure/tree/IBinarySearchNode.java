@@ -1,5 +1,5 @@
 /*
- * AbstractBinaryTree.java v1.00 19/05/08
+ * IBinarySearchNode.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
@@ -19,30 +19,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package datastructure.tree;
+package model.datastructure.tree;
 
 /**
- * Abstract class containing common methods of all binary trees.
+ * Methods of the nodes of binary search trees.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
  * @see IBinaryNode
- * @see IBinaryTree
  */
-public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
-        IBinaryTree<N> {
-
-    protected N root;
-
-    @Override
-    public void setRoot(N newNode) {
-        root = newNode;
-    }
-
-    @Override
-    public final N getRoot() {
-        return root;
-    }
+public interface IBinarySearchNode<N extends IBinarySearchNode<N>> extends
+        IBinaryNode<N> {
 }
