@@ -2,7 +2,7 @@
  * RedBlackNode.java v1.00 19/05/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +37,6 @@ public final class RedBlackNode extends AbstractBinarySearchNode<RedBlackNode>
     /**
      * Enumeration which defines the color of red black nodes.
      * 
-     * @author Fabien Cochet
      * @author Julien Hannier
      * @author Pierre Pironin
      * @author Damien Rigoni
@@ -45,16 +44,6 @@ public final class RedBlackNode extends AbstractBinarySearchNode<RedBlackNode>
      */
     public static enum RedBlackNodeColor {
         RED, BLACK;
-
-        /**
-         * Builds a string containing the red or black color of the node.
-         * 
-         * @return a string containing the color of the node
-         */
-        @Override
-        public String toString() {
-            return this.equals(RED) ? "red" : "black";
-        }
     }
 
     private RedBlackNodeColor color;

@@ -1,5 +1,5 @@
 /*
- * AbstractViewFactory.java v1.00 16/06/08
+ * DataStructureEvent.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,48 +19,51 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package view;
+package model;
 
-import swing.SwingViewFactory;
-import model.Model;
-import model.DataStructure;
-import model.datastructure.DataStructureType;
-import controller.PrincipalController;
-import controller.TabController;
+import java.util.EventObject;
 
 /**
- * Abstract factory of swing views.
+ * Definition of the data structure event.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public abstract class AbstractViewFactory {
+public class DataStructureEvent extends EventObject {
 
     /**
-     * Creates the factory.
+     * Enumeration of the data structure event type.
      * 
-     * @return the factory
+     * @author Julien Hannier
+     * @author Pierre Pironin
+     * @author Damien Rigoni
+     * @version 1.00 16/06/08
      */
-    public static AbstractViewFactory getFactory() {
-        return new SwingViewFactory();
+    public enum DataStructureEventType  {ADD, DELETE};
+    
+    private static final long serialVersionUID = 1L;
+    
+    private DataStructureEventType type;
+    
+    /**
+     * Builds a data structure event.
+     * 
+     * @param source the source of the data structure event
+     * @param t the type of the data structure event
+     */
+    public DataStructureEvent(Object source, DataStructureEventType t) {
+        super(source);
+        type = t;
     }
     
     /**
-     * Creates the principal view of the software.
+     * Returns the type of the data structure event.
      * 
-     * @return the principal view
+     * @return the type of the data structure event
      */
-    public abstract IModelView createGraphicUserInterface(
-            Model model, PrincipalController controller);
-
-    /**
-     * Creates the tab view.
-     * 
-     * @return the tab view
-     */
-    public abstract IDataStructureView createTabPage(
-            DataStructure dataStructure, DataStructureType type,
-            TabController controller);
+    public DataStructureEventType getType() {
+        return type;
+    }
 }

@@ -2,7 +2,7 @@
  * AbstractBinaryTree.java v1.00 19/05/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,6 +21,8 @@
 
 package model.datastructure.tree;
 
+import model.datastructure.DataStructureType;
+
 /**
  * Abstract class containing common methods of all binary trees.
  * 
@@ -35,6 +37,8 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
         IBinaryTree<N> {
 
     protected N root;
+    
+    protected static DataStructureType type;
 
     @Override
     public void setRoot(N newNode) {
@@ -44,5 +48,10 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
     @Override
     public final N getRoot() {
         return root;
+    }
+    
+    @Override
+    public final DataStructureType getType() {
+        return type;
     }
 }

@@ -2,7 +2,7 @@
  * IBinaryTree.java v1.00 19/05/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,6 +21,8 @@
 
 package model.datastructure.tree;
 
+import model.datastructure.IDataStructure;
+
 /**
  * Interface describing the methods of binary trees.
  * 
@@ -30,7 +32,7 @@ package model.datastructure.tree;
  * @version 1.00 19/05/08
  * @see IBinaryNode
  */
-public interface IBinaryTree<N extends IBinaryNode<N>> {
+public interface IBinaryTree<N extends IBinaryNode<N>> extends IDataStructure {
 
     /**
      * Returns the root of the tree.

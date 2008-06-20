@@ -1,5 +1,5 @@
 /*
- * BinaryNode.java v1.00 19/05/08
+ * DataStructureFactory.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,25 +19,40 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.datastructure.tree;
+package model.datastructure;
+
+import model.datastructure.tree.AVLTree;
+import model.datastructure.tree.BinarySearchTree;
+import model.datastructure.tree.BinaryTree;
+import model.datastructure.tree.RedBlackTree;
 
 /**
- * Definition of the nodes of binary trees.
+ * Factory of data structures.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 19/05/08
- * @see IBinaryNode
+ * @version 1.00 16/06/08
  */
-public final class BinaryNode extends AbstractBinaryNode<BinaryNode> {
+public class DataStructureFactory {
 
     /**
-     * Builds a binary node with the key given in parameter.
+     * Builds a data structure thanks to its type.
      * 
-     * @param key the key of the new binary node
+     * @param type the type of the data structure
+     * @return the data structure
      */
-    public BinaryNode(int key) {
-        super(key);
+    public static IDataStructure createDataStructure(DataStructureType type) {
+        switch(type) {
+        case AVLTREE:
+            return new AVLTree();
+        case BINARYSEARCHTREE:
+            return new BinarySearchTree();
+        case BINARYTREE:
+            return new BinaryTree();
+        case REDBLACKTREE:
+            return new RedBlackTree();
+        }
+        return null;
     }
 }

@@ -2,7 +2,7 @@
  * BinaryTree.java v1.00 19/05/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (visualgorithm@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,6 +21,8 @@
 
 package model.datastructure.tree;
 
+import model.datastructure.DataStructureType;
+
 /**
  * Definition of binary trees, with as node <tt>BinaryNode</tt>.
  * 
@@ -33,6 +35,10 @@ package model.datastructure.tree;
  */
 public class BinaryTree extends AbstractBinaryTree<BinaryNode> {
 
+    {
+        type = DataStructureType.BINARYTREE;
+    }
+    
     /**
      * Builds an empty binary tree.
      */

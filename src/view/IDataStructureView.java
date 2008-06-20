@@ -1,5 +1,5 @@
 /*
- * BinaryNode.java v1.00 19/05/08
+ * IDataStructureView.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,25 +19,19 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.datastructure.tree;
+package view;
+
+import model.DataStructureListener;
 
 /**
- * Definition of the nodes of binary trees.
+ * Interface describing the methods of data structure views.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 19/05/08
- * @see IBinaryNode
+ * @version 1.00 16/06/08
+ * @see IView
+ * @see DataStructureListener
  */
-public final class BinaryNode extends AbstractBinaryNode<BinaryNode> {
-
-    /**
-     * Builds a binary node with the key given in parameter.
-     * 
-     * @param key the key of the new binary node
-     */
-    public BinaryNode(int key) {
-        super(key);
-    }
+public interface IDataStructureView extends IView, DataStructureListener {
 }

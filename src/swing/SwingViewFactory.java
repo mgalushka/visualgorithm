@@ -1,19 +1,56 @@
+/*
+ * SwingViewFactory.java v1.00 16/06/08
+ *
+ * Visualgorithm
+ * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
 package swing;
 
 import model.Model;
+import model.DataStructure;
+import model.datastructure.DataStructureType;
 import controller.PrincipalController;
-import view.IPrincipalView;
-import view.IFastTreeCreationView;
+import controller.TabController;
+import view.IDataStructureView;
+import view.IModelView;
 import view.AbstractViewFactory;
 
-
+/**
+ * Concrete factory of swing views.
+ * 
+ * @author Julien Hannier
+ * @author Pierre Pironin
+ * @author Damien Rigoni
+ * @version 1.00 16/06/08
+ * @see AbstractViewFactory
+ */
 public class SwingViewFactory extends AbstractViewFactory{
-    
-    public IFastTreeCreationView createFastTreeCreation(Model m) {
-        return new FastTreeCreation(m);
+
+    @Override
+    public IModelView createGraphicUserInterface(Model model,
+            PrincipalController controller) {
+        return new GraphicUserInterface(model, controller);
     }
 
-    public IPrincipalView createGraphicUserInterface(PrincipalController c) {
-        return new GraphicUserInterface(c);
+    @Override
+    public IDataStructureView createTabPage(
+            DataStructure dataStructure,
+            DataStructureType type, TabController controller) {
+        return new TabPage(dataStructure, type, controller);
     }
 }

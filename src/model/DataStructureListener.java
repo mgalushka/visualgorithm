@@ -1,5 +1,5 @@
 /*
- * BinaryNode.java v1.00 19/05/08
+ * DataStructureListener.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,25 +19,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.datastructure.tree;
+package model;
+
+import java.util.EventListener;
 
 /**
- * Definition of the nodes of binary trees.
+ * Methods of the data structure listeners.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 19/05/08
- * @see IBinaryNode
+ * @version 1.00 16/06/08
  */
-public final class BinaryNode extends AbstractBinaryNode<BinaryNode> {
-
+public interface DataStructureListener extends EventListener {
+    
     /**
-     * Builds a binary node with the key given in parameter.
+     * The data structure has changed.
      * 
-     * @param key the key of the new binary node
+     * @param event the data structure event
      */
-    public BinaryNode(int key) {
-        super(key);
-    }
+    void dataStructureChanged(DataStructureEvent event);
 }
