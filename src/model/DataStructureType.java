@@ -1,5 +1,5 @@
 /*
- * SwingViewFactory.java v1.00 16/06/08
+ * DataStructureType.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,38 +19,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package swing;
-
-import model.DataStructureType;
-import model.Model;
-import model.DataStructure;
-import controller.PrincipalController;
-import controller.TabController;
-import view.IDataStructureView;
-import view.IModelView;
-import view.AbstractViewFactory;
+package model;
 
 /**
- * Concrete factory of swing views.
+ * Definition of the type of data structures.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
- * @see AbstractViewFactory
  */
-public class SwingViewFactory extends AbstractViewFactory{
-
-    @Override
-    public IModelView createGraphicUserInterface(Model model,
-            PrincipalController controller) {
-        return new GraphicUserInterface(model, controller);
-    }
-
-    @Override
-    public IDataStructureView createTabPage(
-            DataStructure dataStructure,
-            DataStructureType type, TabController controller) {
-        return new TabPage(dataStructure, type, controller);
-    }
+public enum DataStructureType {
+    AVLTREE, BINARYSEARCHTREE, BINARYTREE, REDBLACKTREE;
 }

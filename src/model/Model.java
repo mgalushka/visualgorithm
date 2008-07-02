@@ -27,7 +27,6 @@ import java.util.List;
 import javax.swing.event.EventListenerList;
 
 import model.ModelEvent.ModelEventType;
-import model.datastructure.DataStructureType;
 
 /**
  * Definition of the model.
@@ -65,7 +64,7 @@ public class Model {
     /**
      * Adds a model listener to the model.
      * 
-     * @param the listener to add
+     * @param listener the listener to add
      */
     public void addModelListener(ModelListener listener) {
         listeners.add(ModelListener.class, listener);
@@ -74,7 +73,7 @@ public class Model {
     /**
      * Removes a model listener from the model.
      * 
-     * @param the listener to remove
+     * @param listener the listener to remove
      */
     public void removeModelListener(ModelListener listener) {
         listeners.remove(ModelListener.class, listener);

@@ -1,5 +1,5 @@
 /*
- * AbstractViewFactory.java v1.00 16/06/08
+ * IBinaryTree.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,48 +19,47 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package view;
+package model.tree;
 
-import swing.SwingViewFactory;
-import model.DataStructureType;
-import model.Model;
-import model.DataStructure;
-import controller.PrincipalController;
-import controller.TabController;
+import model.IDataStructure;
 
 /**
- * Abstract factory of swing views.
+ * Interface describing the methods of binary trees.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @version 1.00 19/05/08
+ * @see IBinaryNode
  */
-public abstract class AbstractViewFactory {
+public interface IBinaryTree<N extends IBinaryNode<N>> extends IDataStructure {
 
     /**
-     * Creates the factory.
+     * Returns the root of the tree.
      * 
-     * @return the factory
+     * @return the root of the tree
      */
-    public static AbstractViewFactory getFactory() {
-        return new SwingViewFactory();
-    }
+    public N getRoot();
+
+    /**
+     * Replaces the root of the tree by the new node.
+     * 
+     * @param newNode the new root node
+     */
+    public void setRoot(N newNode);
     
     /**
-     * Creates the principal view of the software.
+     * Calculates the height of the tree.
      * 
-     * @return the principal view
+     * @return the height of the tree
      */
-    public abstract IModelView createGraphicUserInterface(
-            Model model, PrincipalController controller);
-
+    public int getHeight();
+    
     /**
-     * Creates the tab view.
+     * Builds an array corresponding to the tree. The array
+     * will contain null values for the absent nodes.
      * 
-     * @return the tab view
+     * @return the array corresponding to the tree
      */
-    public abstract IDataStructureView createTabPage(
-            DataStructure dataStructure, DataStructureType type,
-            TabController controller);
+    public IBinaryNode<?>[] treeToArray();
 }

@@ -1,5 +1,5 @@
 /*
- * AbstractViewFactory.java v1.00 16/06/08
+ * IRedBlackNode.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,48 +19,47 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package view;
+package model.tree;
 
-import swing.SwingViewFactory;
-import model.DataStructureType;
-import model.Model;
-import model.DataStructure;
-import controller.PrincipalController;
-import controller.TabController;
+import model.tree.RedBlackNode.RedBlackNodeColor;
 
 /**
- * Abstract factory of swing views.
+ * Additional methods of the nodes of red black trees.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @version 1.00 19/05/08
+ * @see IBinarySearchNode
  */
-public abstract class AbstractViewFactory {
+public interface IRedBlackNode<N extends IRedBlackNode<N>> extends
+        IBinarySearchNode<N> {
 
     /**
-     * Creates the factory.
+     * Returns the color of the red black node.
      * 
-     * @return the factory
+     * @return the color of the red black node
      */
-    public static AbstractViewFactory getFactory() {
-        return new SwingViewFactory();
-    }
-    
-    /**
-     * Creates the principal view of the software.
-     * 
-     * @return the principal view
-     */
-    public abstract IModelView createGraphicUserInterface(
-            Model model, PrincipalController controller);
+    public RedBlackNodeColor getColor();
 
     /**
-     * Creates the tab view.
+     * Replaces the color of the red black node by the new color.
      * 
-     * @return the tab view
+     * @param color the new color of the red black node
      */
-    public abstract IDataStructureView createTabPage(
-            DataStructure dataStructure, DataStructureType type,
-            TabController controller);
+    public void setColor(RedBlackNodeColor color);
+
+    /**
+     * Returns true if the node is red or else false.
+     * 
+     * @return true if the node is red or else false
+     */
+    public boolean isRed();
+
+    /**
+     * Retourne true if the node is black or else false.
+     * 
+     * @return true if the node is black or else false
+     */
+    public boolean isBlack();
 }

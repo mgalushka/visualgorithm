@@ -26,8 +26,8 @@ import java.util.List;
 
 import view.IModelView;
 import view.AbstractViewFactory;
+import model.DataStructureType;
 import model.Model;
-import model.datastructure.DataStructureType;
 
 /**
  * Definition of the principal controller.

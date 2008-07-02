@@ -41,21 +41,25 @@ public class DataStructureEvent extends EventObject {
      * @author Damien Rigoni
      * @version 1.00 16/06/08
      */
-    public enum DataStructureEventType  {ADD, DELETE};
+    public enum DataStructureEventType {TREE};
     
     private static final long serialVersionUID = 1L;
     
     private DataStructureEventType type;
-    
+
+    private Object data;
+
     /**
      * Builds a data structure event.
      * 
      * @param source the source of the data structure event
      * @param t the type of the data structure event
+     * @param d the data of the data structure event
      */
-    public DataStructureEvent(Object source, DataStructureEventType t) {
+    public DataStructureEvent(Object source, DataStructureEventType t, Object d) {
         super(source);
         type = t;
+        data = d;
     }
     
     /**
@@ -65,5 +69,14 @@ public class DataStructureEvent extends EventObject {
      */
     public DataStructureEventType getType() {
         return type;
+    }
+    
+    /**
+     * Returns the data of the data structure event.
+     * 
+     * @return the data of the data structure event
+     */
+    public Object getData() {
+        return data;
     }
 }

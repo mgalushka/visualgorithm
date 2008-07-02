@@ -1,5 +1,5 @@
 /*
- * SwingViewFactory.java v1.00 16/06/08
+ * RedBlackTree.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,38 +19,39 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package swing;
+package model.tree;
 
 import model.DataStructureType;
-import model.Model;
-import model.DataStructure;
-import controller.PrincipalController;
-import controller.TabController;
-import view.IDataStructureView;
-import view.IModelView;
-import view.AbstractViewFactory;
 
 /**
- * Concrete factory of swing views.
+ * Definition of red black trees, with as node <tt>RedBlackNode</tt>.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
- * @see AbstractViewFactory
+ * @version 1.00 19/05/08
+ * @see IRedBlackNode
+ * @see IBinarySearchTree
  */
-public class SwingViewFactory extends AbstractViewFactory{
+public class RedBlackTree extends AbstractBinarySearchTree<RedBlackNode> {
 
-    @Override
-    public IModelView createGraphicUserInterface(Model model,
-            PrincipalController controller) {
-        return new GraphicUserInterface(model, controller);
+    {
+        type = DataStructureType.REDBLACKTREE;
+    }
+    
+    /**
+     * Build an empty red black tree.
+     */
+    public RedBlackTree() {
+        root = null;
     }
 
-    @Override
-    public IDataStructureView createTabPage(
-            DataStructure dataStructure,
-            DataStructureType type, TabController controller) {
-        return new TabPage(dataStructure, type, controller);
+    /**
+     * Build a red black tree whose root is initialized with the specified key.
+     * 
+     * @param key the key of the root
+     */
+    public RedBlackTree(int key) {
+        root = new RedBlackNode(key, RedBlackNode.RedBlackNodeColor.BLACK);
     }
 }

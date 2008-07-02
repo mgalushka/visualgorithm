@@ -1,5 +1,5 @@
 /*
- * SwingViewFactory.java v1.00 16/06/08
+ * DataStructureFactory.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,38 +19,40 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package swing;
+package model;
 
-import model.DataStructureType;
-import model.Model;
-import model.DataStructure;
-import controller.PrincipalController;
-import controller.TabController;
-import view.IDataStructureView;
-import view.IModelView;
-import view.AbstractViewFactory;
+import model.tree.AVLTree;
+import model.tree.BinarySearchTree;
+import model.tree.BinaryTree;
+import model.tree.RedBlackTree;
 
 /**
- * Concrete factory of swing views.
+ * Factory of data structures.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
- * @see AbstractViewFactory
  */
-public class SwingViewFactory extends AbstractViewFactory{
+public class DataStructureFactory {
 
-    @Override
-    public IModelView createGraphicUserInterface(Model model,
-            PrincipalController controller) {
-        return new GraphicUserInterface(model, controller);
-    }
-
-    @Override
-    public IDataStructureView createTabPage(
-            DataStructure dataStructure,
-            DataStructureType type, TabController controller) {
-        return new TabPage(dataStructure, type, controller);
+    /**
+     * Builds a data structure thanks to its type.
+     * 
+     * @param type the type of the data structure
+     * @return the data structure
+     */
+    public static IDataStructure createDataStructure(DataStructureType type) {
+        switch(type) {
+        case AVLTREE:
+            return new AVLTree();
+        case BINARYSEARCHTREE:
+            return new BinarySearchTree();
+        case BINARYTREE:
+            return new BinaryTree();
+        case REDBLACKTREE:
+            return new RedBlackTree();
+        }
+        return null;
     }
 }

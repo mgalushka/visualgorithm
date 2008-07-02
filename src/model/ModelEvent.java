@@ -23,7 +23,6 @@ package model;
 
 import java.util.EventObject;
 
-import model.datastructure.DataStructureType;
 
 /**
  * Definition of model event.
@@ -43,7 +42,7 @@ public class ModelEvent extends EventObject {
      * @author Damien Rigoni
      * @version 1.00 16/06/08
      */
-    public enum ModelEventType  {ADD, DELETE, EXIT};
+    public enum ModelEventType {ADD, DELETE, EXIT};
     
     private static final long serialVersionUID = 1L;
     

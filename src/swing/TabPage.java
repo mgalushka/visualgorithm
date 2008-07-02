@@ -29,11 +29,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.TabController;
+import swing.tree.FastTreeCreation;
 import view.IDataStructureView;
 import model.DataStructure;
 import model.DataStructureEvent;
+import model.DataStructureType;
 import model.DataStructureEvent.DataStructureEventType;
-import model.datastructure.DataStructureType;
 
 /**
  * Definition of the tab view.
@@ -50,7 +51,7 @@ public class TabPage extends JPanel implements IDataStructureView {
     
     private TabController controller = null;
     
-    private JPanel fastTreeCreation;
+    private FastTreeCreation fastTreeCreation;
      
     /**
      * Builds the tab view. The model is a data structure.
@@ -83,11 +84,8 @@ public class TabPage extends JPanel implements IDataStructureView {
     
     @Override
     public void dataStructureChanged(DataStructureEvent event) {
-        if (event.getType() == DataStructureEventType.ADD) {
-            
-        } else if (event.getType() == 
-                DataStructureEventType.DELETE) {
-            
+        if (event.getType() == DataStructureEventType.TREE) {
+            fastTreeCreation.updateTree(event.getData());
         }
     }
 }

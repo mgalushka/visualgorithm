@@ -36,10 +36,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
+import model.DataStructureType;
 import model.Model;
 import model.ModelEvent;
 import model.ModelEvent.ModelEventType;
-import model.datastructure.DataStructureType;
 import view.IModelView;
 import controller.PrincipalController;
 
@@ -80,7 +80,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = 
             Toolkit.getDefaultToolkit().getScreenSize();
-        setSize( screenSize.width * 9/10, screenSize.height * 9/10);
+        setSize(screenSize.width * 8/10, screenSize.height * 8/10);
     }
     
     private JComponent getTabView(int index) {
@@ -115,6 +115,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
         exit.setAccelerator(KeyStroke.getKeyStroke(
             KeyEvent.VK_X, ActionEvent.CTRL_MASK));
         exit.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 controller.exitSoftware();
             }
@@ -147,6 +148,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
                 "Black Tree");
         
         avlTree.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
                 controller.addTabDataStructure(
@@ -154,6 +156,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
             }
         });
         binarySearchTree.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
                 controller.addTabDataStructure(
@@ -161,6 +164,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
             }
         });
         redBlackTree.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
                 controller.addTabDataStructure(

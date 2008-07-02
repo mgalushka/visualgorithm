@@ -24,9 +24,7 @@ package model;
 import javax.swing.event.EventListenerList;
 
 import model.DataStructureEvent.DataStructureEventType;
-import model.datastructure.DataStructureFactory;
-import model.datastructure.DataStructureType;
-import model.datastructure.IDataStructure;
+import model.tree.IBinaryTree;
 
 /**
  * Definition of the data structure.
@@ -65,7 +63,7 @@ public class DataStructure {
     /**
      * Adds a data structure listener to the data structure.
      * 
-     * @param the listener to add
+     * @param listener the listener to add
      */
     public void addDataStructureListener(DataStructureListener
             listener) {
@@ -75,7 +73,7 @@ public class DataStructure {
     /**
      * Removes a data structure listener from the data structure.
      * 
-     * @param the listener to remove
+     * @param listener the listener to remove
      */
     public void removeDataStructureListener(DataStructureListener
             listener) {
@@ -83,33 +81,35 @@ public class DataStructure {
     }
     
     /**
-     * Adds a node to the data structure.
+     * Adds a node to the tree data structure.
      * 
      * @param key the key of the node
      */
     public void addNode(int key) {
-        
-        fireDataStructureChanged(DataStructureEventType.ADD);
+        //TODO insertion
+        fireDataStructureChanged(DataStructureEventType.TREE,
+            ((IBinaryTree<?>)dataStructure).treeToArray());
     }
     
     /**
-     * Deletes a node from the data structure.
+     * Deletes a node from the tree data structure.
      * 
      * @param key the key of the node
      */
     public void deleteNode(int key) {
-        
-        fireDataStructureChanged(DataStructureEventType.DELETE);
+        //TODO deletion
+        fireDataStructureChanged(DataStructureEventType.TREE,
+            ((IBinaryTree<?>)dataStructure).treeToArray());
     }
     
-    private void fireDataStructureChanged(DataStructureEventType
-            type) {
+    private void fireDataStructureChanged(
+            DataStructureEventType type, Object data) {
         DataStructureListener[] listenerTab = 
             (DataStructureListener[])listeners.getListeners(
             DataStructureListener.class);
         for(DataStructureListener listener : listenerTab) {
             listener.dataStructureChanged(
-                new DataStructureEvent(this, type)); 
+                new DataStructureEvent(this, type, data)); 
         }
     }
 }

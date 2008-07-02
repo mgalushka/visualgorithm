@@ -1,5 +1,5 @@
 /*
- * SwingViewFactory.java v1.00 16/06/08
+ * BinarySearchTree.java v1.00 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,38 +19,40 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package swing;
+package model.tree;
 
 import model.DataStructureType;
-import model.Model;
-import model.DataStructure;
-import controller.PrincipalController;
-import controller.TabController;
-import view.IDataStructureView;
-import view.IModelView;
-import view.AbstractViewFactory;
 
 /**
- * Concrete factory of swing views.
+ * Definition of binary search trees, with as node <tt>BinarySearchNode</tt>.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
- * @see AbstractViewFactory
+ * @version 1.00 19/05/08
+ * @see IBinaryNode
+ * @see IBinarySearchTree
  */
-public class SwingViewFactory extends AbstractViewFactory{
+public class BinarySearchTree extends
+        AbstractBinarySearchTree<BinarySearchNode> {
 
-    @Override
-    public IModelView createGraphicUserInterface(Model model,
-            PrincipalController controller) {
-        return new GraphicUserInterface(model, controller);
+    {
+        type = DataStructureType.BINARYSEARCHTREE;
+    }
+    
+    /**
+     * Builds an empty binary search tree.
+     */
+    public BinarySearchTree() {
+        root = null;
     }
 
-    @Override
-    public IDataStructureView createTabPage(
-            DataStructure dataStructure,
-            DataStructureType type, TabController controller) {
-        return new TabPage(dataStructure, type, controller);
+    /**
+     * Builds a binary search tree whose root is initialized with the specified key.
+     * 
+     * @param key the key of the root
+     */
+    public BinarySearchTree(int key) {
+        root = new BinarySearchNode(key);
     }
 }

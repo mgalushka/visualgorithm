@@ -73,6 +73,7 @@ public class TabCloseButton extends JPanel {
         JLabel tabName = new JLabel() {
             private static final long serialVersionUID = 1L;
 
+            @Override
             public String getText() {
                 int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
                 if (i != -1) {
@@ -84,6 +85,7 @@ public class TabCloseButton extends JPanel {
         setOpaque(false);
         setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
         addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 if(e.getButton() == MouseEvent.BUTTON1) {
                     int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
@@ -105,6 +107,7 @@ public class TabCloseButton extends JPanel {
         JButton closeButton = new JButton() {
             private static final long serialVersionUID = 1L;
 
+            @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2 = (Graphics2D)g.create();
@@ -126,6 +129,7 @@ public class TabCloseButton extends JPanel {
         closeButton.setFocusable(false);
         closeButton.setBorderPainted(false);
         closeButton.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseEntered(MouseEvent e) {
                 Component component = e.getComponent();
                 if (component instanceof AbstractButton) {
@@ -134,6 +138,7 @@ public class TabCloseButton extends JPanel {
                 }
             }
 
+            @Override
             public void mouseExited(MouseEvent e) {
                 Component component = e.getComponent();
                 if (component instanceof AbstractButton) {
@@ -143,6 +148,7 @@ public class TabCloseButton extends JPanel {
             }
         });
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
                 if (i != -1) {

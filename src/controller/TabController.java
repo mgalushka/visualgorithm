@@ -22,7 +22,7 @@
 package controller;
 
 import model.DataStructure;
-import model.datastructure.DataStructureType;
+import model.DataStructureType;
 import view.AbstractViewFactory;
 import view.IDataStructureView;
 import view.IView;
@@ -36,7 +36,7 @@ import view.IView;
  * @version 1.00 16/06/08
  * @see IController
  */
-public class TabController implements IController{
+public class TabController implements IController {
 
     private DataStructure dataStructure;
     
