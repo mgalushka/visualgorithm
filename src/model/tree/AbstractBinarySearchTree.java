@@ -33,4 +33,24 @@ package model.tree;
  */
 public abstract class AbstractBinarySearchTree<N extends IBinarySearchNode<N>>
         extends AbstractBinaryTree<N> implements IBinarySearchTree<N> {
+    
+    protected boolean isBST(IBinaryNode<?> node) {
+        if ((node.getLeft() == null) &&
+                (node.getRight() == null)) {
+            return true;
+        } else {
+            if (node.getLeft() == null) {
+                return (node.getRight().getKey() > node.getKey()) &&
+                    isBST(node.getRight());
+            } else if (node.getRight() == null) {
+                return (node.getLeft().getKey() < node.getKey()) &&
+                    isBST(node.getLeft());
+            } else {
+                return (node.getLeft().getKey() < node.getKey()) &&
+                    isBST(node.getLeft()) &&
+                    (node.getRight().getKey() > node.getKey()) &&
+                    isBST(node.getRight());
+            }
+        }
+    }
 }

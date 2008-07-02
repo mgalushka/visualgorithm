@@ -1,5 +1,5 @@
 /*
- * BinarySearchTree.java v1.00 19/05/08
+ * UnknownTreeTypeException.java v1.00 02/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -21,43 +21,31 @@
 
 package model.tree;
 
-import model.DataStructureType;
-
 /**
- * Definition of binary search trees, with as node <tt>BinarySearchNode</tt>.
+ * Definition of the unknown tree type exception.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 19/05/08
- * @see IBinaryNode
- * @see IBinarySearchTree
+ * @version 1.00 02/07/08
  */
-public class BinarySearchTree extends
-        AbstractBinarySearchTree<BinarySearchNode> {
+public class UnknownTreeTypeException extends Exception {
 
-    {
-        type = DataStructureType.BINARYSEARCHTREE;
-    }
+    private static final long serialVersionUID = 1L;
     
-    /**
-     * Builds an empty binary search tree.
-     */
-    public BinarySearchTree() {
-        root = null;
-    }
+    private String description;
 
     /**
-     * Builds a binary search tree whose root is initialized with the specified key.
+     * Builds the unknown tree type exception.
      * 
-     * @param key the key of the root
+     * @param description the message corresponding to the exception
      */
-    public BinarySearchTree(int key) {
-        root = new BinarySearchNode(key);
+    public UnknownTreeTypeException(String description) {
+        this.description = description;
     }
 
     @Override
-    public boolean isGoodTree() {
-        return isBST(getRoot());
+    public String getMessage() {
+        return description;
     }
 }

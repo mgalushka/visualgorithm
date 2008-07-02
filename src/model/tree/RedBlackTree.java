@@ -54,4 +54,56 @@ public class RedBlackTree extends AbstractBinarySearchTree<RedBlackNode> {
     public RedBlackTree(int key) {
         root = new RedBlackNode(key, RedBlackNode.RedBlackNodeColor.BLACK);
     }
+
+    @Override
+    public boolean isGoodTree() {
+        return (getRoot() == null) || (getRoot().isBlack() &&
+                isRedNodeHasBlackChild(getRoot()) &&
+                hasGoodHeight(getRoot()));
+    }
+    
+    private boolean hasGoodHeight(RedBlackNode node) {
+        boolean hasGoodHeight = true;
+        int leftHeight = 0;
+        int rightHeight = 0;
+
+        if (node != null) {
+            hasGoodHeight = hasGoodHeight(node.getLeft());
+            if (hasGoodHeight) {
+                hasGoodHeight = hasGoodHeight(node.getRight());
+            }
+            if (hasGoodHeight) {
+                leftHeight = node.leftFindBlackHeight();
+                rightHeight = node.rightFindBlackHeight();
+                hasGoodHeight = (leftHeight == rightHeight);
+            }
+        }
+        return hasGoodHeight;
+    }
+    
+    private boolean isRedNodeHasBlackChild(RedBlackNode node) {
+        boolean isRedHasBlackChild = true;
+
+        if (node != null) {
+            isRedHasBlackChild = isRedNodeHasBlackChild(node.getLeft());
+            if (isRedHasBlackChild) {
+                isRedHasBlackChild = isRedNodeHasBlackChild(node.getRight());
+            }
+            if (isRedHasBlackChild) {
+                if (node.isRed()) {
+                    if (node.getLeft() != null) {
+                        if (node.getLeft().isRed() || (node.getRight() == null)) {
+                            isRedHasBlackChild = false;
+                        }
+                    }
+                    if (node.getRight() != null) {
+                        if (node.getRight().isRed() || (node.getLeft() == null)) {
+                            isRedHasBlackChild = false;
+                        }
+                    }
+                }
+            }
+        }
+        return isRedHasBlackChild;
+    }
 }

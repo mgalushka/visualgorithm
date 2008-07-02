@@ -1,5 +1,5 @@
 /*
- * BinarySearchTree.java v1.00 19/05/08
+ * BinaryTreeFile.java v1.00 02/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,45 +19,38 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
+package io;
 
-import model.DataStructureType;
+import model.tree.BinaryNode;
+import model.tree.BinaryTree;
 
 /**
- * Definition of binary search trees, with as node <tt>BinarySearchNode</tt>.
+ * Loading and saving binary tree file.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 19/05/08
- * @see IBinaryNode
- * @see IBinarySearchTree
+ * @version 1.00 02/07/08
+ * @see TreeFile
  */
-public class BinarySearchTree extends
-        AbstractBinarySearchTree<BinarySearchNode> {
+class BinaryTreeFile extends TreeFile<BinaryNode, BinaryTree> {
 
-    {
-        type = DataStructureType.BINARYSEARCHTREE;
-    }
-    
-    /**
-     * Builds an empty binary search tree.
-     */
-    public BinarySearchTree() {
-        root = null;
-    }
-
-    /**
-     * Builds a binary search tree whose root is initialized with the specified key.
-     * 
-     * @param key the key of the root
-     */
-    public BinarySearchTree(int key) {
-        root = new BinarySearchNode(key);
+    @Override
+    protected void setLeftNode(BinaryNode node,
+            int childNodeNumber) {
+        node.setLeft(new BinaryNode(Integer.parseInt(nodeVector
+                .get(childNodeNumber)[KEY])));
     }
 
     @Override
-    public boolean isGoodTree() {
-        return isBST(getRoot());
+    protected void setRightNode(BinaryNode node,
+            int childNodeNumber) {
+        node.setRight(new BinaryNode(Integer.parseInt(nodeVector
+                .get(childNodeNumber)[KEY])));
+    }
+
+    @Override
+    protected BinaryTree createBinaryTree(int key) {
+        return new BinaryTree(key);
     }
 }

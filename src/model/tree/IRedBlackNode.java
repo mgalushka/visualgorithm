@@ -57,9 +57,16 @@ public interface IRedBlackNode<N extends IRedBlackNode<N>> extends
     public boolean isRed();
 
     /**
-     * Retourne true if the node is black or else false.
+     * Returns true if the node is black or else false.
      * 
      * @return true if the node is black or else false
      */
     public boolean isBlack();
+    
+    /**
+     * Calculates the black height of the node.
+     * 
+     * @return the black height of the node
+     */
+    public int findBlackHeight();
 }

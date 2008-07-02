@@ -81,44 +81,46 @@ public class FastTreeCreation extends JPanel {
             System.out.println("Formatter is bad : " + e.getMessage());
             System.exit(-1);
         }
-        final JFormattedTextField insertvalue = new JFormattedTextField(mask);
-        final JFormattedTextField deletevalue = new JFormattedTextField(mask);
-        insertvalue.setHorizontalAlignment(JTextField.CENTER);
-        deletevalue.setHorizontalAlignment(JTextField.CENTER);
+        final JFormattedTextField insertValue = new JFormattedTextField(mask);
+        final JFormattedTextField deleteValue = new JFormattedTextField(mask);
+        insertValue.setHorizontalAlignment(JTextField.CENTER);
+        deleteValue.setHorizontalAlignment(JTextField.CENTER);
         
         insert.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                String value = insertvalue.getText();
+                String value = insertValue.getText();
                 String empty = "  ";
                 if (!empty.equals(value) && (value != null)) {
                     controller.addNode(Integer.parseInt(value));
-                    insertvalue.setValue(null);
+                    insertValue.setValue(null);
                 } else {
-                    //TODO random insertion
+                    controller.addNode((int)Math.round(Math.random()*100));
                 }
             }
         });
         delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                String value = deletevalue.getText();
+                String value = deleteValue.getText();
                 String empty = "  ";
                 if (!empty.equals(value) && (value != null)) {
                     controller.deleteNode(Integer.parseInt(value));
-                    deletevalue.setValue(null);
+                    deleteValue.setValue(null);
                 } else {
                     //TODO click deletion
                 }
             }
         });
         controls.setLayout(new GridLayout(2, 2, 4, 4));
-        insert.setToolTipText ("Button Only : Random Insert");
-        delete.setToolTipText ("Button Only : " +
+        insert.setToolTipText("Button Only : Random Insert");
+        delete.setToolTipText("Button Only : " +
         		"Multiple Suppression With Cursor");
-        controls.add(insertvalue);
+        insertValue.setToolTipText("Type Integers From 00 To 99");
+        deleteValue.setToolTipText("Type Integers From 00 To 99");
+        controls.add(insertValue);
         controls.add(insert);
-        controls.add(deletevalue);
+        controls.add(deleteValue);
         controls.add(delete);
         return controls;
     }

@@ -54,4 +54,35 @@ public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
     public AVLTree(int key) {
         root = new AVLNode(key);
     }
+
+    @Override
+    public boolean isGoodTree() {
+        calculateHeight(getRoot());
+        return isBalance(getRoot()) && isBST(getRoot());
+    }
+    
+    private void calculateHeight(AVLNode node) {
+        if (node != null) {
+            calculateHeight(node.getLeft());
+            calculateHeight(node.getRight());
+            node.setHeight(node.findHeight());
+        }
+    }
+    
+    private boolean isBalance(AVLNode node) {
+        boolean isBalance = true;
+        if (node != null) {
+            isBalance = isBalance(node.getLeft());
+            if (isBalance) {
+                isBalance = isBalance(node.getRight());
+            }
+            if (isBalance) {
+                int balance = node.findBalance();
+                if (balance < -1 || balance > 1) {
+                    isBalance = false;
+                }
+            }
+        }
+        return isBalance;
+    }
 }

@@ -62,4 +62,11 @@ public interface IBinaryTree<N extends IBinaryNode<N>> extends IDataStructure {
      * @return the array corresponding to the tree
      */
     public IBinaryNode<?>[] treeToArray();
+    
+    /**
+     * Returns true if the tree is well formed.
+     * 
+     * @return true if the tree is well formed
+     */
+    public boolean isGoodTree();
 }

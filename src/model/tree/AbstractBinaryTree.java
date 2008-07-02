@@ -70,9 +70,9 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
     }
 
     @Override
-    public IBinaryNode<?>[] treeToArray() {
-        int length = (2 * (int)Math.pow(2, getHeight())) - 1;
-        IBinaryNode<?> arrayTree[] = new IBinaryNode[length];
+    public N[] treeToArray() {
+        int length = (2*(int)Math.pow(2, getHeight()))-1;
+        N arrayTree[] = new N[length];
         for (int i = 0 ; i<length ; i++ ){
             arrayTree[i] = null;
         }
@@ -80,7 +80,7 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
         return arrayTree;
     }
     
-    private void buildArray(IBinaryNode<?>[] array,
+    private void buildArray(N[] array,
             int index, N node) {
         if ((node.getLeft() == null) &&
                 (node.getRight() == null)) {

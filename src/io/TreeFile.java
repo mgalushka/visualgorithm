@@ -1,0 +1,433 @@
+/*
+ * TreeFile.java v1.00 02/07/08
+ *
+ * Visualgorithm
+ * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+package io;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import model.tree.IBinaryNode;
+import model.tree.IBinaryTree;
+import model.tree.UnknownTreeTypeException;
+
+/**
+ * Loading and saving tree file.
+ * 
+ * @author Julien Hannier
+ * @author Pierre Pironin
+ * @author Damien Rigoni
+ * @version 1.00 02/07/08
+ */
+public abstract class TreeFile<N extends IBinaryNode<? super N>,
+        T extends IBinaryTree<? extends N>> {
+
+    /**
+     * Position de l'indice correspondant \u00e0 la cl\u00e9 dans le fichier.
+     */
+    protected final static int KEY = 1;
+
+    /**
+     * Position de l'indice correspondant au fils gauche dans le fichier.
+     */
+    protected final static int LEFT_CHILD = 2;
+
+    /**
+     * Position de l'indice correspondant au fils droit dans le fichier.
+     */
+    protected final static int RIGHT_CHILD = 3;
+
+    /**
+     * Expression qui d\u00e9finit les espaces entre les donn\u00e9es lors de la
+     * sauvegarde.
+     */
+    protected static final String SPACE = "\t";
+
+    /**
+     * Expression \u00e0 rechercher pour le noeud nil.
+     */
+    protected static final String NIL_NODE = "nil";
+
+    /**
+     * Expression \u00e0 rechercher pour les commentaires.
+     */
+    protected final static String REGEX_COMMENT = "\\p{Blank}*#.*";
+
+    /**
+     * Expression \u00e0 rechercher pour les commentaires de ligne. De la forme :
+     * texte # commentaire
+     */
+    protected final static String REGEX_COMMENT_LINE = "("
+            + "\\p{Blank}*|\\p{Blank}+#.*)?";
+
+    /**
+     * Expression \u00e0 rechercher pour les espaces.
+     */
+    protected final static String REGEX_BLANK = "\\p{Blank}+";
+
+    /**
+     * Expression \u00e0 rechercher pour la cl\u00e9 des noeuds.
+     */
+    protected final static String REGEX_KEY = "\\d{1,2}";
+
+    /**
+     * Expression \u00e0 rechercher pour les types d'arbre.
+     */
+    protected final static String REGEX_WORD = "\\w+";
+
+    /**
+     * Expression \u00e0 rechercher pour les lignes vides.
+     */
+    protected final static String REGEX_EMPTY_LINE = "\\p{Blank}*";
+
+    /**
+     * Expression \u00e0 rechercher lorsqu'un noeud \u00e0 2 fils.
+     */
+    protected static String REGEX_2_CHILD;
+
+    /**
+     * Expression \u00e0 rechercher lorsqu'un noeud \u00e0 un fils gauche.
+     */
+    protected static String REGEX_LEFT_CHILD;
+
+    /**
+     * Expression \u00e0 rechercher lorsqu'un noeud \u00e0 un fils droit.
+     */
+    protected static String REGEX_RIGHT_CHILD;
+
+    /**
+     * Expression \u00e0 rechercher lorsqu'un noeud n'a pas de fils.
+     */
+    protected static String REGEX_NO_CHILD;
+
+    /**
+     * The file parser.
+     */
+    protected static HashMap<String,
+        TreeFile<? extends IBinaryNode<?>,
+        ? extends IBinaryTree<?>>> fileParser = 
+        new HashMap<String, TreeFile<? extends IBinaryNode<?>,
+        ? extends IBinaryTree<?>>>();
+
+    private int lineNumber;
+
+    /**
+     * The list of the nodes.
+     */
+    protected Vector<String[]> nodeVector;
+
+    /**
+     * The type of the tree.
+     */
+    protected String treeType;
+
+    static {
+        fileParser.put("BINARYTREE", new BinaryTreeFile());
+        fileParser.put("BINARYSEARCHTREE", new BinarySearchTreeFile());
+        fileParser.put("AVLTREE", new AVLTreeFile());
+        fileParser.put("REDBLACKTREE", new RedBlackTreeFile());
+    }
+
+    /**
+     * Builds the tree file parser.
+     */
+    protected TreeFile() {
+        nodeVector = new Vector<String[]>();
+        treeType = new String();
+    }
+
+    private static TreeFile<? extends IBinaryNode<?>,
+            ? extends IBinaryTree<?>> parse(String fileName)
+            throws ParseException, IOException,
+            FileNotFoundException {
+        BufferedReader reader = 
+            new BufferedReader(new FileReader(fileName));
+        int line = 0;
+        String lineToParse = reader.readLine();
+        Pattern pattern;
+        Matcher matcher;
+        TreeFile<? extends IBinaryNode<?>,
+                ? extends IBinaryTree<?>> parser = null;
+
+        while (lineToParse != null && parser == null) {
+            if (lineToParse.matches(REGEX_COMMENT)
+                    | lineToParse.matches(REGEX_EMPTY_LINE)) {
+                lineToParse = reader.readLine();
+                ++line;
+            } else if (lineToParse.matches(REGEX_EMPTY_LINE + "\\w+"
+                    + REGEX_COMMENT_LINE)) {
+                pattern = Pattern.compile("\\w+");
+                matcher = pattern.matcher(lineToParse);
+                matcher.find();
+                String treeType = matcher.group();
+                if (fileParser.containsKey(treeType)) {
+                    parser = fileParser.get(treeType);
+                    parser.nodeVector.clear();
+                    parser.treeType = matcher.group();
+                    parser.parse(reader);
+                    parser.lineNumber = ++line;
+                } else {
+                    throw new ParseException("Type of the tree : "
+                            + matcher.group() + " is unknown : "
+                            + lineToParse, line);
+                }
+            } else {
+                throw new ParseException(
+                        "Type of the tree is not specified," +
+                        " or specified after the nodes : "
+                        + lineToParse, line);
+            }
+        }
+        if (parser != null) {
+            return parser;
+        } else {
+            throw new ParseException("Empty file", line);
+        }
+    }
+
+    private T createBinaryTree() throws UnknownTreeTypeException {
+        T tree = createBinaryTree(
+            Integer.parseInt(nodeVector.get(0)[KEY]));
+        generateNode(tree.getRoot(), 0);
+
+        if (tree.isGoodTree())
+            return tree;
+        else {
+            throw new UnknownTreeTypeException(
+                    "The tree does not satisfy the properties " +
+                    "of a tree " + treeType);
+        }
+    }
+
+    private void generateNode(N node, int currentNodeNumber) {
+        if (currentNodeNumber >= nodeVector.size()) {
+        } else {
+            if (nodeVector.get(currentNodeNumber)[LEFT_CHILD].equals(NIL_NODE)) {
+            } else {
+                int childNodeNumber = Integer.parseInt(nodeVector
+                        .get(currentNodeNumber)[LEFT_CHILD]);
+                setLeftNode(node, childNodeNumber);
+                ((N) (node.getLeft())).setFather(node);
+                generateNode((N) node.getLeft(), childNodeNumber);
+            }
+            if (nodeVector.get(currentNodeNumber)[RIGHT_CHILD].equals(NIL_NODE)) {
+            } else {
+                int childNodeNumber = Integer.parseInt(nodeVector
+                        .get(currentNodeNumber)[RIGHT_CHILD]);
+                setRightNode(node, childNodeNumber);
+                ((N) node.getRight()).setFather(node);
+                generateNode((N) node.getRight(), childNodeNumber);
+            }
+        }
+    }
+
+    private void parse(BufferedReader reader) throws IOException,
+            ParseException {
+        int currentNodeNumber = 0;
+        int nextNodeNumber = 1;
+        String lineToParse = reader.readLine();
+        Pattern pattern;
+        Matcher matcher;
+
+        while (lineToParse != null) {
+            initREGEX(currentNodeNumber, nextNodeNumber);
+            if (lineToParse.matches(REGEX_COMMENT)
+                    | lineToParse.matches(REGEX_EMPTY_LINE)) {
+            } else if (lineToParse.matches(REGEX_2_CHILD +
+                    REGEX_COMMENT_LINE)) {
+                pattern = Pattern.compile(REGEX_2_CHILD);
+                matcher = pattern.matcher(lineToParse);
+                matcher.find();
+                nodeVector.add(matcher.group().split(REGEX_BLANK));
+                ++currentNodeNumber;
+                nextNodeNumber += 2;
+            } else if (lineToParse.matches(REGEX_LEFT_CHILD
+                    + REGEX_COMMENT_LINE)) {
+                pattern = Pattern.compile(REGEX_LEFT_CHILD);
+                matcher = pattern.matcher(lineToParse);
+                matcher.find();
+                nodeVector.add(matcher.group().split(REGEX_BLANK));
+                ++currentNodeNumber;
+                ++nextNodeNumber;
+            } else if (lineToParse.matches(REGEX_RIGHT_CHILD
+                    + REGEX_COMMENT_LINE)) {
+                pattern = Pattern.compile(REGEX_RIGHT_CHILD);
+                matcher = pattern.matcher(lineToParse);
+                matcher.find();
+                nodeVector.add(matcher.group().split(REGEX_BLANK));
+                ++currentNodeNumber;
+                ++nextNodeNumber;
+            } else if (lineToParse.matches(REGEX_NO_CHILD +
+                    REGEX_COMMENT_LINE)) {
+                if (currentNodeNumber >= nextNodeNumber) {
+                    throw new ParseException(
+                            "Too many nodes have been specified : ",
+                            lineNumber);
+                } else {
+                    pattern = Pattern.compile(REGEX_NO_CHILD);
+                    matcher = pattern.matcher(lineToParse);
+                    matcher.find();
+                    nodeVector.add(matcher.group().split(REGEX_BLANK));
+                    ++currentNodeNumber;
+                }
+            } else {
+                throw new ParseException("Syntax error on the line : "
+                        + lineToParse, lineNumber);
+            }
+            lineToParse = reader.readLine();
+            ++lineNumber;
+        }
+
+        if (currentNodeNumber == 0) {
+            throw new ParseException("No specified node : ",
+                lineNumber);
+        } else if (currentNodeNumber != nextNodeNumber) {
+            throw new ParseException("Not enough nodes : ",
+                lineNumber);
+        }
+    }
+
+    /**
+     * Creates the string corresponding to the node.
+     * 
+     * @param node the node of the line
+     * @param currentNodeNumber the number of the current node
+     * @param leftNodeNumber the number of the left child
+     * @param rightNodeNumber the number of the right child
+     * @return the string corresponding to the node
+     */
+    protected String getNode(N node, int currentNodeNumber,
+            String leftNodeNumber, String rightNodeNumber) {
+        return currentNodeNumber + SPACE + node.getKey() + SPACE
+                + leftNodeNumber + SPACE + rightNodeNumber;
+    }
+
+    /**
+     * Initializes the regular expressions.
+     * 
+     * @param currentNodeNumber the index of the current node
+     * @param nextNodeNumber the index of the next node
+     */
+    protected void initREGEX(int currentNodeNumber, int nextNodeNumber) {
+        String lineBegin = currentNodeNumber + REGEX_BLANK + REGEX_KEY
+                + REGEX_BLANK;
+        REGEX_2_CHILD = lineBegin + nextNodeNumber + REGEX_BLANK
+                + (nextNodeNumber + 1);
+        REGEX_LEFT_CHILD = lineBegin + nextNodeNumber + REGEX_BLANK + "nil";
+        REGEX_RIGHT_CHILD = lineBegin + "nil" + REGEX_BLANK + nextNodeNumber;
+        REGEX_NO_CHILD = lineBegin + "nil" + REGEX_BLANK + "nil";
+    }
+
+    /**
+     * Creates a tree with for root the key given in parameter.
+     * 
+     * @param key the key of the node
+     * @return the created tree
+     */
+    protected abstract T createBinaryTree(int key);
+
+    /**
+     * Creates the left child of the node given in parameter.
+     * 
+     * @param node the node which the left child has to be assigned
+     * @param childNodeNumber the index of the key
+     */
+    protected abstract void setLeftNode(N node, int childNodeNumber);
+
+    /**
+     * Creates the right child of the node given in parameter.
+     * 
+     * @param node the node which the right child has to be assigned
+     * @param childNodeNumber the index of the key
+     */
+    protected abstract void setRightNode(N node, int childNodeNumber);
+
+    /**
+     * Creates a tree from a load file.
+     * 
+     * @param fileName the file to load
+     * @throws FileNotFoundException
+     * @throws ParseException
+     * @throws IOException
+     * @throws UnknownTreeTypeException
+     */
+    public static IBinaryTree<? extends IBinaryNode<?>> load(String fileName)
+            throws FileNotFoundException, ParseException, IOException,
+            UnknownTreeTypeException {
+        TreeFile<?, ?> parser = TreeFile.parse(fileName);
+        return parser.createBinaryTree();
+    }
+
+    /**
+     * Saves the tree into a file.
+     * 
+     * @param tree the tree to save
+     * @param fileName the name of the file
+     * @throws IOException
+     * @throws UnknownTreeTypeException
+     */
+    public final static <NN extends IBinaryNode<NN>> void save(
+            IBinaryTree<NN> tree, String fileName) throws IOException {
+        FileWriter file = new FileWriter(fileName);
+        IBinaryNode<?> node;
+        int currentNodeNumber = 0;
+        int maxNodeNumber = 0;
+        String leftNodeNumber;
+        String rightNodeNumber;
+        TreeFile<NN, ? extends IBinaryTree<?>> treeFile =
+            (TreeFile<NN, ? extends IBinaryTree<?>>) fileParser
+                .get(tree.getType());
+        NN[] array = tree.treeToArray();
+
+        file.write(tree.getType() + "\n");
+        for (int i = 0 ; i < array.length ; i++) {
+                node = array[i];
+                if (node != null) {
+                if (node.getLeft() == null) {
+                    leftNodeNumber = NIL_NODE;
+                } else {
+                    ++maxNodeNumber;
+                    leftNodeNumber = Integer.toString(maxNodeNumber);
+                }
+                if (node.getRight() == null) {
+                    rightNodeNumber = NIL_NODE;
+                } else {
+                    ++maxNodeNumber;
+                    rightNodeNumber = Integer.toString(maxNodeNumber);
+                }
+    
+                file.write(treeFile.getNode(node, currentNodeNumber,
+                    leftNodeNumber, rightNodeNumber)
+                        + "\n");
+                ++currentNodeNumber;
+            }
+        }
+        file.close();
+    }
+}

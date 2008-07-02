@@ -54,4 +54,9 @@ public class BinaryTree extends AbstractBinaryTree<BinaryNode> {
     public BinaryTree(int key) {
         root = new BinaryNode(key);
     }
+    
+    @Override
+    public boolean isGoodTree() {
+        return true;
+    }
 }

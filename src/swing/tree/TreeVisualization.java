@@ -253,9 +253,8 @@ public class TreeVisualization extends JPanel {
      * @param array the array
      */
     public void calculatePositions(IBinaryNode<?>[] array) {
-        //int height = (int)Math.ceil(Math.sqrt((array.length+1)/2));
-        int height = 3;
-        
+        int length = array.length;
+        int height = length == 1 ? 0 : (int)Math.floor(Math.sqrt((length+1)/2));
         int width = 1;
         int indexStop = 1;
         int index = 0;

@@ -1,5 +1,5 @@
 /*
- * BinarySearchTree.java v1.00 19/05/08
+ * AVLTreeFile.java v1.00 02/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,45 +19,38 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
+package io;
 
-import model.DataStructureType;
+import model.tree.AVLNode;
+import model.tree.AVLTree;
 
 /**
- * Definition of binary search trees, with as node <tt>BinarySearchNode</tt>.
+ * Loading and saving AVL tree file.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 19/05/08
- * @see IBinaryNode
- * @see IBinarySearchTree
+ * @version 1.00 02/07/08
+ * @see TreeFile
  */
-public class BinarySearchTree extends
-        AbstractBinarySearchTree<BinarySearchNode> {
+class AVLTreeFile extends TreeFile<AVLNode, AVLTree> {
 
-    {
-        type = DataStructureType.BINARYSEARCHTREE;
-    }
-    
-    /**
-     * Builds an empty binary search tree.
-     */
-    public BinarySearchTree() {
-        root = null;
-    }
+    @Override
+    protected void setLeftNode(AVLNode node, int childNodeNumber) {
+        node.setLeft(new AVLNode(Integer.parseInt(nodeVector
+                .get(childNodeNumber)[KEY])));
 
-    /**
-     * Builds a binary search tree whose root is initialized with the specified key.
-     * 
-     * @param key the key of the root
-     */
-    public BinarySearchTree(int key) {
-        root = new BinarySearchNode(key);
     }
 
     @Override
-    public boolean isGoodTree() {
-        return isBST(getRoot());
+    protected void setRightNode(AVLNode node, int childNodeNumber) {
+        node.setRight(new AVLNode(Integer.parseInt(nodeVector
+                .get(childNodeNumber)[KEY])));
+
+    }
+
+    @Override
+    protected AVLTree createBinaryTree(int key) {
+        return new AVLTree(key);
     }
 }
