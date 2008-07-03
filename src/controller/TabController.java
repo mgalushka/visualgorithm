@@ -21,8 +21,13 @@
 
 package controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.ParseException;
 import model.DataStructure;
 import model.DataStructureType;
+import model.tree.UnknownTreeTypeException;
 import view.AbstractViewFactory;
 import view.IDataStructureView;
 import view.IView;
@@ -50,9 +55,32 @@ public class TabController implements IController {
     public TabController(DataStructureType type) {
         dataStructure = new DataStructure(type);
         
-        AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        tabPageView = viewFactory.createTabPage(dataStructure, type, this);
+        AbstractViewFactory viewFactory = 
+            AbstractViewFactory.getFactory();
+        tabPageView = viewFactory.createTabPage(
+            dataStructure, type, this);
         addListener();
+    }
+    
+    /**
+     * Builds the tab controller.
+     * 
+     * @param file the file containing the data structure
+     * @throws UnknownTreeTypeException 
+     * @throws IOException 
+     * @throws ParseException 
+     * @throws FileNotFoundException 
+     */
+    public TabController(File file) throws FileNotFoundException,
+            ParseException, IOException, UnknownTreeTypeException {
+        dataStructure = new DataStructure(file);
+        
+        AbstractViewFactory viewFactory = 
+            AbstractViewFactory.getFactory();
+        tabPageView = viewFactory.createTabPage(dataStructure,
+            dataStructure.getDataStructure().getType(), this);
+        addListener();
+        dataStructure.update();
     }
 
     /**
@@ -60,7 +88,7 @@ public class TabController implements IController {
      * 
      * @return the data structure
      */
-    public DataStructure getDataStructure() {
+    public DataStructure getModel() {
         return dataStructure;
     }
     
@@ -91,5 +119,15 @@ public class TabController implements IController {
      */
     public void deleteNode(int key) {
         dataStructure.deleteNode(key);
+    }
+    
+    /**
+     * Saves the data structure into the selected file.
+     * 
+     * @param file the file
+     * @throws IOException 
+     */
+    public void saveDataStructure(File file) throws IOException {
+        dataStructure.save(file);
     }
 }

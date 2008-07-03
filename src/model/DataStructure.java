@@ -21,10 +21,16 @@
 
 package model;
 
+import io.TreeFile;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.ParseException;
 import javax.swing.event.EventListenerList;
 
 import model.DataStructureEvent.DataStructureEventType;
 import model.tree.IBinaryTree;
+import model.tree.UnknownTreeTypeException;
 
 /**
  * Definition of the data structure.
@@ -48,6 +54,22 @@ public class DataStructure {
     public DataStructure(DataStructureType type) {
         dataStructure = 
             DataStructureFactory.createDataStructure(type);
+        listeners = new EventListenerList();
+    }
+    
+    /**
+     * Builds the data structure.
+     * 
+     * @param file the file containing the data structure
+     * @throws UnknownTreeTypeException 
+     * @throws IOException 
+     * @throws ParseException 
+     * @throws FileNotFoundException 
+     */
+    public DataStructure(File file) throws FileNotFoundException,
+            ParseException, IOException, UnknownTreeTypeException {
+        //TODO data structure file
+        dataStructure = TreeFile.load(file.getAbsolutePath());
         listeners = new EventListenerList();
     }
     
@@ -100,6 +122,26 @@ public class DataStructure {
         //TODO deletion
         fireDataStructureChanged(DataStructureEventType.TREE,
             ((IBinaryTree<?>)dataStructure).treeToArrayList());
+    }
+    
+    /**
+     * Deletes a node from the tree data structure.
+     */
+    public void update() {
+        //TODO type of the data structure
+        fireDataStructureChanged(DataStructureEventType.TREE,
+            ((IBinaryTree<?>)dataStructure).treeToArrayList());
+    }
+    
+    /**
+     * Saves the data structure into the selected file.
+     * 
+     * @param file the file
+     * @throws IOException 
+     */
+    public void save(File file) throws IOException {
+        //TODO data structure file
+        TreeFile.save((IBinaryTree<?>)dataStructure, file.getAbsolutePath());
     }
     
     private void fireDataStructureChanged(

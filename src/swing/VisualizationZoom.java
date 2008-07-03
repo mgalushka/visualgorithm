@@ -54,7 +54,7 @@ public class VisualizationZoom extends JPanel {
      */
     public VisualizationZoom(final JComponent component) {
         JScrollPane scrollPane = new JScrollPane(component);
-
+        //TODO zoom
         scrollPane.addMouseWheelListener(new MouseWheelListener() {
             int height = component.getHeight();
             int width = component.getWidth();

@@ -42,13 +42,13 @@ public class ModelEvent extends EventObject {
      * @author Damien Rigoni
      * @version 1.00 16/06/08
      */
-    public enum ModelEventType {ADD, DELETE, EXIT};
+    public enum ModelEventType {ADD, DELETE, EXIT, OPEN, SAVE};
     
     private static final long serialVersionUID = 1L;
     
     private ModelEventType type;
     
-    private DataStructureType dataStructureType;
+    private String name;
     
     private int index;
     
@@ -57,13 +57,28 @@ public class ModelEvent extends EventObject {
      * 
      * @param source the source of the model event
      * @param t the type of the model event
-     * @param dst the type of the data structure
+     * @param n the name
      */
-    public ModelEvent(Object source, ModelEventType t, DataStructureType dst) {
+    public ModelEvent(Object source, ModelEventType t, String n) {
         super(source);
         type = t;
-        dataStructureType = dst;
+        name = n;
         index = -1;
+    }
+    
+    /**
+     * Builds a model event.
+     * 
+     * @param source the source of the model event
+     * @param t the type of the model event
+     * @param i the index of the data structure
+     * @param n the name
+     */
+    public ModelEvent(Object source, ModelEventType t, int i, String n) {
+        super(source);
+        type = t;
+        name = n;
+        index = i;
     }
     
     /**
@@ -76,7 +91,7 @@ public class ModelEvent extends EventObject {
     public ModelEvent(Object source, ModelEventType t, int i) {
         super(source);
         type = t;
-        dataStructureType = null;
+        name = null;
         index = i;
     }
     
@@ -89,7 +104,7 @@ public class ModelEvent extends EventObject {
     public ModelEvent(Object source, ModelEventType t) {
         super(source);
         type = t;
-        dataStructureType = null;
+        name = null;
         index = -1;
     }
     
@@ -103,12 +118,13 @@ public class ModelEvent extends EventObject {
     }
     
     /**
-     * Returns the type of the data structure.
+     * Returns the name of the file or the type
+     * of the data structure.
      * 
-     * @return the type of the data structure
+     * @return the name
      */
-    public DataStructureType getDataStructureType() {
-        return dataStructureType;
+    public String getName() {
+        return name;
     }
     
     /**

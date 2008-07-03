@@ -253,8 +253,9 @@ public class TreeVisualization extends JPanel {
      * @param array the array
      */
     public void calculatePositions(List<IBinaryNode<?>> array) {
+        graphicNodes.clear();
         int length = array.size();
-        int height = length == 1 ? 0 : (int)Math.floor(Math.sqrt((length+1)/2));
+        int height = length == 1 ? 0 : (int)Math.round(Math.sqrt((length+1)/2));
         int width = 1;
         int indexStop = 1;
         int index = 0;
@@ -297,7 +298,7 @@ public class TreeVisualization extends JPanel {
             x -= (width-1)*positionDifference;
             if (i < height-1) {
                 if (i > 0) {
-                    positionDifference = positionDifference/2-nodeSize;
+                    positionDifference = positionDifference/2;
                 }
                 x -= positionDifference/2;
             } else {
@@ -316,7 +317,7 @@ public class TreeVisualization extends JPanel {
         } else if (height == 2) {
             return widthBetweenBrotherNodes+widthBetweenNodes+2*nodeSize;
         } else {
-            return 2*calculateNodePositionDifference(height-1)+2*nodeSize;
+            return 2*calculateNodePositionDifference(height-1);
         }
     }
 }

@@ -26,13 +26,18 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.ParseException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
@@ -40,6 +45,7 @@ import model.DataStructureType;
 import model.Model;
 import model.ModelEvent;
 import model.ModelEvent.ModelEventType;
+import model.tree.UnknownTreeTypeException;
 import view.IModelView;
 import controller.PrincipalController;
 
@@ -60,6 +66,8 @@ public class GraphicUserInterface extends JFrame implements IModelView {
     
     private JMenuBar menuBar;
     
+    private JFileChooser fileChooser;
+    
     private JTabbedPane tabbedPane;
 
     /**
@@ -73,6 +81,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
         controller = c;
         menuBar = createMenuBar(model);
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        fileChooser = new JFileChooser();
         menuBar.setBorder(
             BorderFactory.createEmptyBorder(2, 0, 2, 0));
         setJMenuBar(menuBar);
@@ -104,14 +113,64 @@ public class GraphicUserInterface extends JFrame implements IModelView {
     
     private JMenu createFileMenu(Model model) {
         JMenu file = new JMenu("File");
-        JMenuItem load = new JMenuItem("Load");
+        JMenuItem open = new JMenuItem("Open");
         JMenuItem save = new JMenuItem("Save");
         JMenuItem exit = new JMenuItem("Exit");
         
-        load.setAccelerator(KeyStroke.getKeyStroke(
-            KeyEvent.VK_L, ActionEvent.CTRL_MASK));
+        open.setAccelerator(KeyStroke.getKeyStroke(
+            KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+        open.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                int returnVal = 
+                    fileChooser.showOpenDialog(
+                    GraphicUserInterface.this);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    int index = tabbedPane.getTabCount();
+                    try {
+                        controller.openFile(
+                            fileChooser.getSelectedFile(), index);
+                    } catch (FileNotFoundException e) {
+                        JOptionPane.showMessageDialog(tabbedPane,
+                            e.getMessage(),
+                            "Open failed",
+                            JOptionPane.WARNING_MESSAGE);
+                    } catch (ParseException e) {
+                        JOptionPane.showMessageDialog(tabbedPane,
+                            e.getMessage(),
+                            "Open failed",
+                            JOptionPane.WARNING_MESSAGE);
+                    } catch (IOException e) {
+                        System.out.println("File could not be read");
+                        System.exit(1);
+                    } catch (UnknownTreeTypeException e) {
+                        JOptionPane.showMessageDialog(tabbedPane,
+                            e.getMessage(),
+                            "Open failed",
+                            JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            }
+        });
         save.setAccelerator(KeyStroke.getKeyStroke(
-            KeyEvent.VK_S, ActionEvent.CTRL_MASK));        
+            KeyEvent.VK_S, ActionEvent.CTRL_MASK));   
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                int returnVal = fileChooser.showSaveDialog(
+                    GraphicUserInterface.this);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    int index = tabbedPane.getSelectedIndex();
+                    try {
+                        controller.saveFile(
+                            fileChooser.getSelectedFile(), index);
+                    } catch (IOException e) {
+                        System.out.println("File could not be saved");
+                        System.exit(1);
+                    }
+                }
+            }
+        });
         exit.setAccelerator(KeyStroke.getKeyStroke(
             KeyEvent.VK_X, ActionEvent.CTRL_MASK));
         exit.addActionListener(new ActionListener() {
@@ -120,7 +179,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
                 controller.exitSoftware();
             }
         });
-        file.add(load);
+        file.add(open);
         file.add(save);
         file.add(exit);
         return file;
@@ -197,6 +256,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
 
     @Override
     public void closeView() {
+        setVisible(false);
         dispose();
     }
     
@@ -204,7 +264,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
     public void modelChanged(ModelEvent event) {
         if (event.getType() == ModelEventType.ADD) {
             int numTab = tabbedPane.getTabCount();
-            tabbedPane.addTab("New "+event.getDataStructureType(),
+            tabbedPane.addTab("New "+event.getName(),
                 getTabView(numTab));
             tabbedPane.setTabComponentAt(numTab,
                 new TabCloseButton(tabbedPane, controller));
@@ -216,6 +276,16 @@ public class GraphicUserInterface extends JFrame implements IModelView {
             if (i != -1) {
                 tabbedPane.remove(i);
             }
+        } else if (event.getType() == ModelEventType.OPEN) {
+            int numTab = tabbedPane.getTabCount();
+            tabbedPane.addTab(event.getName(),
+                getTabView(numTab));
+            tabbedPane.setTabComponentAt(numTab,
+                new TabCloseButton(tabbedPane, controller));
+            tabbedPane.setSelectedIndex(numTab);
+        } else if (event.getType() == ModelEventType.SAVE) {
+            tabbedPane.getTabComponentAt(
+                event.getIndex()).setName(event.getName());
         }
     }
 }

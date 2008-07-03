@@ -21,6 +21,10 @@
 
 package controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +32,7 @@ import view.IModelView;
 import view.AbstractViewFactory;
 import model.DataStructureType;
 import model.Model;
+import model.tree.UnknownTreeTypeException;
 
 /**
  * Definition of the principal controller.
@@ -91,7 +96,7 @@ public class PrincipalController implements IController {
             int index) {
         tabControllers.add(new TabController(type));
         model.addDataStructure(
-            tabControllers.get(index).getDataStructure(), type);
+            tabControllers.get(index).getModel());
     }
     
     /**
@@ -102,6 +107,32 @@ public class PrincipalController implements IController {
     public void closeTab(int index) {
         model.removeDataStructure(index);
         tabControllers.remove(index);
+    }
+    
+    /**
+     * Opens a file and loads it into a tab.
+     * 
+     * @param file the file
+     * @param index the index of the tab
+     */
+    public void openFile(File file, int index) throws
+            FileNotFoundException, ParseException,
+            IOException, UnknownTreeTypeException {
+        tabControllers.add(new TabController(file));
+        model.openDataStructureFile(
+            tabControllers.get(index).getModel(), file.getName());
+    }
+    
+    /**
+     * Saves the data structure into the selected file.
+     * 
+     * @param file the file
+     * @param index the index of the tab
+     * @throws IOException 
+     */
+    public void saveFile(File file, int index) throws IOException {
+        tabControllers.get(index).saveDataStructure(file);
+        model.saveDataStructure(index, file.getName());
     }
     
     /**

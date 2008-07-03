@@ -28,7 +28,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -195,21 +194,20 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
                     parser.parse(reader);
                     parser.lineNumber = ++line;
                 } else {
-                    throw new ParseException("Type of the tree : "
-                            + matcher.group() + " is unknown : "
-                            + lineToParse, line);
+                    throw new ParseException("The tree type "+
+                        matcher.group()+" is unknown", line);
                 }
             } else {
                 throw new ParseException(
-                        "Type of the tree is not specified," +
-                        " or specified after the nodes : "
-                        + lineToParse, line);
+                        "The type of the tree is not specified," +
+                        " or specified after the nodes"
+                        , line);
             }
         }
         if (parser != null) {
             return parser;
         } else {
-            throw new ParseException("Empty file", line);
+            throw new ParseException("The file is empty", line);
         }
     }
 
@@ -221,9 +219,11 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
         if (tree.isGoodTree())
             return tree;
         else {
+            String article = 
+                treeType.charAt(0) == 'A' ? "an " : "a ";
             throw new UnknownTreeTypeException(
                     "The tree does not satisfy the properties " +
-                    "of a tree " + treeType);
+                    "of "+ article + treeType);
         }
     }
 
@@ -289,7 +289,7 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
                     REGEX_COMMENT_LINE)) {
                 if (currentNodeNumber >= nextNodeNumber) {
                     throw new ParseException(
-                            "Too many nodes have been specified : ",
+                            "Too many nodes have been specified",
                             lineNumber);
                 } else {
                     pattern = Pattern.compile(REGEX_NO_CHILD);
@@ -299,18 +299,17 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
                     ++currentNodeNumber;
                 }
             } else {
-                throw new ParseException("Syntax error on the line : "
+                throw new ParseException("There is a syntax error on the line : "
                         + lineToParse, lineNumber);
             }
             lineToParse = reader.readLine();
             ++lineNumber;
         }
-
         if (currentNodeNumber == 0) {
-            throw new ParseException("No specified node : ",
+            throw new ParseException("No node has been specified",
                 lineNumber);
         } else if (currentNodeNumber != nextNodeNumber) {
-            throw new ParseException("Not enough nodes : ",
+            throw new ParseException("There is not enough nodes",
                 lineNumber);
         }
     }
@@ -402,8 +401,10 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
         int maxNodeNumber = 0;
         String leftNodeNumber;
         String rightNodeNumber;
-        TreeFile<NN, ? extends IBinaryTree<?>> treeFile =
-            (TreeFile<NN, ? extends IBinaryTree<?>>) fileParser
+        
+        //TreeFile<N extends IBinaryNode<? super N>, T extends IBinaryTree<? extends N>>
+        
+        TreeFile<NN, ? extends IBinaryTree<?>> treeFile = (TreeFile<NN, ? extends IBinaryTree<?>>) fileParser
                 .get(tree.getType());
         List<NN> array = tree.treeToArrayList();
 
@@ -423,10 +424,10 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
                     ++maxNodeNumber;
                     rightNodeNumber = Integer.toString(maxNodeNumber);
                 }
-    
+                System.out.println("test : "+currentNodeNumber + SPACE + node.getKey() + SPACE
+                    + leftNodeNumber + SPACE + rightNodeNumber);
                 file.write(treeFile.getNode(node, currentNodeNumber,
-                    leftNodeNumber, rightNodeNumber)
-                        + "\n");
+                    leftNodeNumber, rightNodeNumber) + "\n");
                 ++currentNodeNumber;
             }
         }

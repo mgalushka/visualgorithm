@@ -83,12 +83,11 @@ public class Model {
      * Adds a data structure to the model.
      * 
      * @param dataStructure a data structure
-     * @param type the type of the data structure
      */
-    public void addDataStructure(DataStructure dataStructure,
-            DataStructureType type) {
+    public void addDataStructure(DataStructure dataStructure) {
         model.add(dataStructure);
-        fireModelChanged(ModelEventType.ADD, type);
+        fireModelChanged(ModelEventType.ADD,
+            dataStructure.getDataStructure().getType().toString());
     }
     
     /**
@@ -109,13 +108,45 @@ public class Model {
         fireModelChanged(ModelEventType.EXIT);
     }
     
+    /**
+     * Adds a loaded data structure to the model.
+     * 
+     * @param dataStructure a data structure
+     * @param fileName the name of the file
+     */
+    public void openDataStructureFile(DataStructure dataStructure,
+            String fileName) {
+        model.add(dataStructure);
+        fireModelChanged(ModelEventType.OPEN, fileName);
+    }
+    
+    /**
+     * Launches a model event which the type is SAVE.
+     * 
+     * @param index the index of the data structure
+     * @param fileName the name of the file
+     */
+    public void saveDataStructure(int index, String fileName) {
+        fireModelChanged(ModelEventType.SAVE, index, fileName);
+    }
+    
     private void fireModelChanged(ModelEventType type,
-            DataStructureType dataStructureType) {
+            String name) {
         ModelListener[] listenerTab = (ModelListener[])
             listeners.getListeners(ModelListener.class);
         for(ModelListener listener : listenerTab) {
             listener.modelChanged(new ModelEvent(this,
-                type, dataStructureType)); 
+                type, name)); 
+        }
+    }
+    
+    private void fireModelChanged(ModelEventType type,
+            int index, String name) {
+        ModelListener[] listenerTab = (ModelListener[])
+            listeners.getListeners(ModelListener.class);
+        for(ModelListener listener : listenerTab) {
+            listener.modelChanged(new ModelEvent(
+                this, type, index, name)); 
         }
     }
     
