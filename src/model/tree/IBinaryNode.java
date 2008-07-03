@@ -29,7 +29,7 @@ package model.tree;
  * @author Damien Rigoni
  * @version 1.00 19/05/08
  */
-public interface IBinaryNode<N extends IBinaryNode<N>> {
+public interface IBinaryNode {
 
     /**
      * Returns the key of the node.

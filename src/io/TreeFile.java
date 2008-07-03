@@ -49,80 +49,82 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
         T extends IBinaryTree<? extends N>> {
 
     /**
-     * Position de l'indice correspondant \u00e0 la cl\u00e9 dans le fichier.
+     * Position of the key in the file.
      */
     protected final static int KEY = 1;
 
     /**
-     * Position de l'indice correspondant au fils gauche dans le fichier.
+     * Position of the left child in the file.
      */
     protected final static int LEFT_CHILD = 2;
 
     /**
-     * Position de l'indice correspondant au fils droit dans le fichier.
+     * Position of the right child in the file.
      */
     protected final static int RIGHT_CHILD = 3;
 
     /**
-     * Expression qui d\u00e9finit les espaces entre les donn\u00e9es lors de la
-     * sauvegarde.
+     * Definition of spaces.
      */
     protected static final String SPACE = "\t";
 
     /**
-     * Expression \u00e0 rechercher pour le noeud nil.
+     * Definition of nil nodes.
      */
     protected static final String NIL_NODE = "nil";
 
     /**
-     * Expression \u00e0 rechercher pour les commentaires.
+     * Definition of the comment regular expression.
      */
     protected final static String REGEX_COMMENT = "\\p{Blank}*#.*";
 
     /**
-     * Expression \u00e0 rechercher pour les commentaires de ligne. De la forme :
-     * texte # commentaire
+     * Definition of the line comment regular expression : text # comment.
      */
     protected final static String REGEX_COMMENT_LINE = "("
             + "\\p{Blank}*|\\p{Blank}+#.*)?";
 
     /**
-     * Expression \u00e0 rechercher pour les espaces.
+     * Definition of the blank regular expression.
      */
     protected final static String REGEX_BLANK = "\\p{Blank}+";
 
     /**
-     * Expression \u00e0 rechercher pour la cl\u00e9 des noeuds.
+     * Definition of the key regular expression.
      */
     protected final static String REGEX_KEY = "\\d{1,2}";
 
     /**
-     * Expression \u00e0 rechercher pour les types d'arbre.
+     * Definition of the tree type regular expression.
      */
     protected final static String REGEX_WORD = "\\w+";
 
     /**
-     * Expression \u00e0 rechercher pour les lignes vides.
+     * Definition of the empty line regular expression.
      */
     protected final static String REGEX_EMPTY_LINE = "\\p{Blank}*";
 
     /**
-     * Expression \u00e0 rechercher lorsqu'un noeud \u00e0 2 fils.
+     * Definition of the regular expression for the nodes
+     * which have two child.
      */
     protected static String REGEX_2_CHILD;
 
     /**
-     * Expression \u00e0 rechercher lorsqu'un noeud \u00e0 un fils gauche.
+     * Definition of the regular expression for the nodes
+     * which have only a left child.
      */
     protected static String REGEX_LEFT_CHILD;
 
     /**
-     * Expression \u00e0 rechercher lorsqu'un noeud \u00e0 un fils droit.
+     * Definition of the regular expression for the nodes
+     * which have only a right child.
      */
     protected static String REGEX_RIGHT_CHILD;
 
     /**
-     * Expression \u00e0 rechercher lorsqu'un noeud n'a pas de fils.
+     * Definition of the regular expression for the nodes
+     * which have no child.
      */
     protected static String REGEX_NO_CHILD;
 
@@ -148,7 +150,6 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
     protected String treeType;
 
     static {
-        fileParser.put("BINARYTREE", new BinaryTreeFile());
         fileParser.put("BINARYSEARCHTREE", new BinarySearchTreeFile());
         fileParser.put("AVLTREE", new AVLTreeFile());
         fileParser.put("REDBLACKTREE", new RedBlackTreeFile());

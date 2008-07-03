@@ -30,5 +30,5 @@ package model;
  * @version 1.00 16/06/08
  */
 public enum DataStructureType {
-    AVLTREE, BINARYSEARCHTREE, BINARYTREE, REDBLACKTREE;
+    AVLTREE, BINARYSEARCHTREE, REDBLACKTREE;
 }

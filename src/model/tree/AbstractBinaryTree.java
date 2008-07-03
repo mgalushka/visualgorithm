@@ -33,7 +33,7 @@ import model.DataStructureType;
  * @see IBinaryNode
  * @see IBinaryTree
  */
-public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
+public abstract class AbstractBinaryTree<N extends IBinaryNode> implements
         IBinaryTree<N> {
 
     protected N root;
