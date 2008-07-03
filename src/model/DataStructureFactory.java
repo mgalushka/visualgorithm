@@ -23,7 +23,6 @@ package model;
 
 import model.tree.AVLTree;
 import model.tree.BinarySearchTree;
-import model.tree.BinaryTree;
 import model.tree.RedBlackTree;
 
 /**
@@ -48,8 +47,6 @@ public class DataStructureFactory {
             return new AVLTree();
         case BINARYSEARCHTREE:
             return new BinarySearchTree();
-        case BINARYTREE:
-            return new BinaryTree();
         case REDBLACKTREE:
             return new RedBlackTree();
         }

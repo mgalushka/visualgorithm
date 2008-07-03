@@ -252,8 +252,8 @@ public class TreeVisualization extends JPanel {
      *  
      * @param array the array
      */
-    public void calculatePositions(IBinaryNode<?>[] array) {
-        int length = array.length;
+    public void calculatePositions(List<IBinaryNode<?>> array) {
+        int length = array.size();
         int height = length == 1 ? 0 : (int)Math.floor(Math.sqrt((length+1)/2));
         int width = 1;
         int indexStop = 1;
@@ -264,11 +264,12 @@ public class TreeVisualization extends JPanel {
         
         for (int i = 0 ; i <= height ; i++) {
             while (index < indexStop) {
-                if (array[index] != null) {
-                    key = ((IBinaryNode<?>)array[index]).getKey();
+                IBinaryNode<?> node = array.get(index);
+                if (node != null) {
+                    key = node.getKey();
                     y = yPositionRootNode+i*heightBetweenNodes;
-                    if (array[index] instanceof RedBlackNode) {
-                        if (((RedBlackNode)array[index]).isRed()) {
+                    if (node instanceof RedBlackNode) {
+                        if (((RedBlackNode)node).isRed()) {
                             color = GraphicNodeColor.RED;
                         } else {
                             color = GraphicNodeColor.BLACK;

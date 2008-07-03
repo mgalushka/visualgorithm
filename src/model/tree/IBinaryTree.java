@@ -21,6 +21,7 @@
 
 package model.tree;
 
+import java.util.List;
 import model.IDataStructure;
 
 /**
@@ -56,12 +57,12 @@ public interface IBinaryTree<N extends IBinaryNode<N>> extends IDataStructure {
     public int getHeight();
     
     /**
-     * Builds an array corresponding to the tree. The array
-     * will contain null values for the absent nodes.
+     * Builds an array list corresponding to the tree. The array
+     * list will contain null values for the absent nodes.
      * 
-     * @return the array corresponding to the tree
+     * @return the array list corresponding to the tree
      */
-    public IBinaryNode<?>[] treeToArray();
+    public List<N> treeToArrayList();
     
     /**
      * Returns true if the tree is well formed.

@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -396,7 +397,7 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
     public final static <NN extends IBinaryNode<NN>> void save(
             IBinaryTree<NN> tree, String fileName) throws IOException {
         FileWriter file = new FileWriter(fileName);
-        IBinaryNode<?> node;
+        NN node;
         int currentNodeNumber = 0;
         int maxNodeNumber = 0;
         String leftNodeNumber;
@@ -404,12 +405,12 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
         TreeFile<NN, ? extends IBinaryTree<?>> treeFile =
             (TreeFile<NN, ? extends IBinaryTree<?>>) fileParser
                 .get(tree.getType());
-        NN[] array = tree.treeToArray();
+        List<NN> array = tree.treeToArrayList();
 
         file.write(tree.getType() + "\n");
-        for (int i = 0 ; i < array.length ; i++) {
-                node = array[i];
-                if (node != null) {
+        for (int i = 0 ; i < array.size() ; i++) {
+            node = array.get(i);
+            if (node != null) {
                 if (node.getLeft() == null) {
                     leftNodeNumber = NIL_NODE;
                 } else {

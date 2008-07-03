@@ -88,7 +88,7 @@ public class DataStructure {
     public void addNode(int key) {
         //TODO insertion
         fireDataStructureChanged(DataStructureEventType.TREE,
-            ((IBinaryTree<?>)dataStructure).treeToArray());
+            ((IBinaryTree<?>)dataStructure).treeToArrayList());
     }
     
     /**
@@ -99,7 +99,7 @@ public class DataStructure {
     public void deleteNode(int key) {
         //TODO deletion
         fireDataStructureChanged(DataStructureEventType.TREE,
-            ((IBinaryTree<?>)dataStructure).treeToArray());
+            ((IBinaryTree<?>)dataStructure).treeToArrayList());
     }
     
     private void fireDataStructureChanged(

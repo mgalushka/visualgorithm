@@ -26,6 +26,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -131,6 +132,6 @@ public class FastTreeCreation extends JPanel {
      * @param data the data
      */
     public void updateTree(Object data) {
-        treeVisualization.calculatePositions((IBinaryNode<?>[])data);
+        treeVisualization.calculatePositions((List<IBinaryNode<?>>)data);
     }
 }

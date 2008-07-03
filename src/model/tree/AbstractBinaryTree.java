@@ -21,6 +21,8 @@
 
 package model.tree;
 
+import java.util.ArrayList;
+import java.util.List;
 import model.DataStructureType;
 
 /**
@@ -33,7 +35,7 @@ import model.DataStructureType;
  * @see IBinaryNode
  * @see IBinaryTree
  */
-public abstract class AbstractBinaryTree<N extends IBinaryNode> implements
+public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
         IBinaryTree<N> {
 
     protected N root;
@@ -70,21 +72,21 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode> implements
     }
 
     @Override
-    public N[] treeToArray() {
+    public List<N> treeToArrayList() {
         int length = (2*(int)Math.pow(2, getHeight()))-1;
-        N arrayTree[] = new N[length];
+        List<N> arrayTree = new ArrayList<N>();
         for (int i = 0 ; i<length ; i++ ){
-            arrayTree[i] = null;
+            arrayTree.add(null);
         }
         buildArray(arrayTree, 0, root);
         return arrayTree;
     }
     
-    private void buildArray(N[] array,
+    private void buildArray(List<N> array,
             int index, N node) {
         if ((node.getLeft() == null) &&
                 (node.getRight() == null)) {
-            array[index] = node;
+            array.set(index, node);
         } else {
             if (node.getLeft() == null) {
                 buildArray(array, 2*index+2, node.getRight());
@@ -94,7 +96,7 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode> implements
                 buildArray(array, 2*index+1, node.getLeft());
                 buildArray(array, 2*index+2, node.getRight());
             }
-            array[index] = node;
+            array.set(index, node);
         }
     }
 }
