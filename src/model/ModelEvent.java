@@ -42,7 +42,7 @@ public class ModelEvent extends EventObject {
      * @author Damien Rigoni
      * @version 1.00 16/06/08
      */
-    public enum ModelEventType {ADD, DELETE, EXIT, OPEN, SAVE};
+    public enum ModelEventType {ADD, DELETE, EXIT};
     
     private static final long serialVersionUID = 1L;
     
@@ -64,21 +64,6 @@ public class ModelEvent extends EventObject {
         type = t;
         name = n;
         index = -1;
-    }
-    
-    /**
-     * Builds a model event.
-     * 
-     * @param source the source of the model event
-     * @param t the type of the model event
-     * @param i the index of the data structure
-     * @param n the name
-     */
-    public ModelEvent(Object source, ModelEventType t, int i, String n) {
-        super(source);
-        type = t;
-        name = n;
-        index = i;
     }
     
     /**

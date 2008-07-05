@@ -87,7 +87,7 @@ public class Model {
     public void addDataStructure(DataStructure dataStructure) {
         model.add(dataStructure);
         fireModelChanged(ModelEventType.ADD,
-            dataStructure.getDataStructure().getType().toString());
+            "New "+dataStructure.getDataStructure().getType().toString());
     }
     
     /**
@@ -117,17 +117,7 @@ public class Model {
     public void openDataStructureFile(DataStructure dataStructure,
             String fileName) {
         model.add(dataStructure);
-        fireModelChanged(ModelEventType.OPEN, fileName);
-    }
-    
-    /**
-     * Launches a model event which the type is SAVE.
-     * 
-     * @param index the index of the data structure
-     * @param fileName the name of the file
-     */
-    public void saveDataStructure(int index, String fileName) {
-        fireModelChanged(ModelEventType.SAVE, index, fileName);
+        fireModelChanged(ModelEventType.ADD, fileName);
     }
     
     private void fireModelChanged(ModelEventType type,
@@ -137,16 +127,6 @@ public class Model {
         for(ModelListener listener : listenerTab) {
             listener.modelChanged(new ModelEvent(this,
                 type, name)); 
-        }
-    }
-    
-    private void fireModelChanged(ModelEventType type,
-            int index, String name) {
-        ModelListener[] listenerTab = (ModelListener[])
-            listeners.getListeners(ModelListener.class);
-        for(ModelListener listener : listenerTab) {
-            listener.modelChanged(new ModelEvent(
-                this, type, index, name)); 
         }
     }
     

@@ -72,13 +72,15 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
     }
 
     @Override
-    public List<N> treeToArrayList() {
+    public final List<N> treeToArrayList() {
         int length = (2*(int)Math.pow(2, getHeight()))-1;
         List<N> arrayTree = new ArrayList<N>();
         for (int i = 0 ; i<length ; i++ ){
             arrayTree.add(null);
         }
-        buildArray(arrayTree, 0, root);
+        if (length > 0) {
+            buildArray(arrayTree, 0, root);
+        }
         return arrayTree;
     }
     

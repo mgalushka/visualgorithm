@@ -26,6 +26,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -48,6 +51,7 @@ import model.ModelEvent.ModelEventType;
 import model.tree.UnknownTreeTypeException;
 import view.IModelView;
 import controller.PrincipalController;
+import controller.TabController;
 
 /**
  * Definition of the principal view.
@@ -62,7 +66,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
     
     private static final long serialVersionUID = 1L;
 
-    private PrincipalController controller = null;
+    private PrincipalController controller;
     
     private JMenuBar menuBar;
     
@@ -86,7 +90,14 @@ public class GraphicUserInterface extends JFrame implements IModelView {
             BorderFactory.createEmptyBorder(2, 0, 2, 0));
         setJMenuBar(menuBar);
         add(tabbedPane);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter(){
+            
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                exit();
+            }
+        });
         Dimension screenSize = 
             Toolkit.getDefaultToolkit().getScreenSize();
         setSize(screenSize.width * 8/10, screenSize.height * 8/10);
@@ -133,12 +144,12 @@ public class GraphicUserInterface extends JFrame implements IModelView {
                     } catch (FileNotFoundException e) {
                         JOptionPane.showMessageDialog(tabbedPane,
                             e.getMessage(),
-                            "Open failed",
+                            "Open Failed",
                             JOptionPane.WARNING_MESSAGE);
                     } catch (ParseException e) {
                         JOptionPane.showMessageDialog(tabbedPane,
                             e.getMessage(),
-                            "Open failed",
+                            "Open Failed",
                             JOptionPane.WARNING_MESSAGE);
                     } catch (IOException e) {
                         System.out.println("File could not be read");
@@ -146,7 +157,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
                     } catch (UnknownTreeTypeException e) {
                         JOptionPane.showMessageDialog(tabbedPane,
                             e.getMessage(),
-                            "Open failed",
+                            "Open Failed",
                             JOptionPane.WARNING_MESSAGE);
                     }
                 }
@@ -157,16 +168,30 @@ public class GraphicUserInterface extends JFrame implements IModelView {
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                int returnVal = fileChooser.showSaveDialog(
-                    GraphicUserInterface.this);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    int index = tabbedPane.getSelectedIndex();
-                    try {
-                        controller.saveFile(
-                            fileChooser.getSelectedFile(), index);
-                    } catch (IOException e) {
-                        System.out.println("File could not be saved");
-                        System.exit(1);
+                int count = tabbedPane.getTabCount();
+                if (count > 0) {
+                    int returnVal = fileChooser.showSaveDialog(
+                        GraphicUserInterface.this);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        int index = tabbedPane.getSelectedIndex();
+                        File file = fileChooser.getSelectedFile();
+                        if (file.exists()) {
+                            int choice = JOptionPane.showConfirmDialog(
+                                tabbedPane,"This file already exists." +
+                                " Do you want to replace it?",
+                                "Save Operation",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.WARNING_MESSAGE);
+                            if (choice == JOptionPane.YES_OPTION) {
+                                saveFile(index, file);
+                                tabbedPane.setTitleAt(index, file.getName());
+                                //TODO repaint close button
+                            }
+                        } else {
+                            saveFile(index, file);
+                            tabbedPane.setTitleAt(index, file.getName());
+                            //TODO repaint close button
+                        }
                     }
                 }
             }
@@ -176,13 +201,84 @@ public class GraphicUserInterface extends JFrame implements IModelView {
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                controller.exitSoftware();
+                exit();
             }
         });
         file.add(open);
         file.add(save);
         file.add(exit);
         return file;
+    }
+    
+    private void exit() {
+        int count = tabbedPane.getTabCount();
+        if (count == 0) {
+            controller.exitSoftware();
+        } else if (count == 1) {
+            if (((TabController)controller.getTabController(0)).
+                    isSaved()) {
+                controller.exitSoftware();
+            } else {
+                Object[] options = {"Save", "Discard", "Cancel"};
+                int choice = JOptionPane.showOptionDialog(tabbedPane,
+                    "Do you want to save your changes?",
+                    "Exit Operation",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.WARNING_MESSAGE, null,
+                    options, options[2]);
+                if (choice == JOptionPane.YES_OPTION) {
+                    int returnVal = fileChooser.showSaveDialog(
+                        tabbedPane);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        int index = tabbedPane.getSelectedIndex();
+                        File file = fileChooser.getSelectedFile();
+                        if (file.exists()) {
+                            int response = JOptionPane.showConfirmDialog(
+                                tabbedPane,"This file already exists." +
+                                " Do you want to replace it?",
+                                "Save Operation",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.WARNING_MESSAGE);
+                            if (response == JOptionPane.YES_OPTION) {
+                                saveFile(index, file);
+                                controller.exitSoftware();
+                            }
+                        } else {
+                            saveFile(index, file);
+                            controller.exitSoftware();
+                        }
+                    }
+                } else if (choice == JOptionPane.NO_OPTION) {
+                    controller.exitSoftware();
+                }
+            }
+        } else {
+            int choice = JOptionPane.showConfirmDialog(tabbedPane,
+                "You are about to close "+count+" tabs." +
+                        " Do you really want to continue?",
+                "Exit Operation",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+            if (choice == JOptionPane.YES_OPTION) {
+                controller.exitSoftware();
+            }
+        }
+    }
+    
+    /**
+     * Saves a tab into a file.
+     * 
+     * @param index the index of the tab
+     * @param file the file
+     */
+    void saveFile(int index, File file) {
+        try {
+            controller.saveFile(
+                file, index);
+        } catch (IOException e) {
+            System.out.println("File could not be saved");
+            System.exit(1);
+        }
     }
     
     private JMenu createEditMenu(Model model) {
@@ -264,10 +360,10 @@ public class GraphicUserInterface extends JFrame implements IModelView {
     public void modelChanged(ModelEvent event) {
         if (event.getType() == ModelEventType.ADD) {
             int numTab = tabbedPane.getTabCount();
-            tabbedPane.addTab("New "+event.getName(),
+            tabbedPane.addTab(event.getName(),
                 getTabView(numTab));
             tabbedPane.setTabComponentAt(numTab,
-                new TabCloseButton(tabbedPane, controller));
+                new TabCloseButton(tabbedPane, fileChooser, controller));
             tabbedPane.setSelectedIndex(numTab);
         } else if (event.getType() == ModelEventType.EXIT) {
             System.exit(0);
@@ -276,16 +372,6 @@ public class GraphicUserInterface extends JFrame implements IModelView {
             if (i != -1) {
                 tabbedPane.remove(i);
             }
-        } else if (event.getType() == ModelEventType.OPEN) {
-            int numTab = tabbedPane.getTabCount();
-            tabbedPane.addTab(event.getName(),
-                getTabView(numTab));
-            tabbedPane.setTabComponentAt(numTab,
-                new TabCloseButton(tabbedPane, controller));
-            tabbedPane.setSelectedIndex(numTab);
-        } else if (event.getType() == ModelEventType.SAVE) {
-            tabbedPane.getTabComponentAt(
-                event.getIndex()).setName(event.getName());
         }
     }
 }

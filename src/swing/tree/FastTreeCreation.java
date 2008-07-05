@@ -50,7 +50,7 @@ public class FastTreeCreation extends JPanel {
 
     private static final long serialVersionUID = 1L;
     
-    private TabController controller = null;
+    private TabController controller;
     
     private TreeVisualization treeVisualization;
     

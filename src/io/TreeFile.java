@@ -300,7 +300,7 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
                 }
             } else {
                 throw new ParseException("There is a syntax error on the line : "
-                        + lineToParse, lineNumber);
+                        + lineToParse.replace(SPACE, " "), lineNumber);
             }
             lineToParse = reader.readLine();
             ++lineNumber;
@@ -404,8 +404,9 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
         
         //TreeFile<N extends IBinaryNode<? super N>, T extends IBinaryTree<? extends N>>
         
-        TreeFile<NN, ? extends IBinaryTree<?>> treeFile = (TreeFile<NN, ? extends IBinaryTree<?>>) fileParser
-                .get(tree.getType());
+        TreeFile<NN, ? extends IBinaryTree<?>> treeFile =
+            (TreeFile<NN, ? extends IBinaryTree<?>>) fileParser
+                .get(tree.getType().toString());
         List<NN> array = tree.treeToArrayList();
 
         file.write(tree.getType() + "\n");
@@ -424,8 +425,6 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
                     ++maxNodeNumber;
                     rightNodeNumber = Integer.toString(maxNodeNumber);
                 }
-                System.out.println("test : "+currentNodeNumber + SPACE + node.getKey() + SPACE
-                    + leftNodeNumber + SPACE + rightNodeNumber);
                 file.write(treeFile.getNode(node, currentNodeNumber,
                     leftNodeNumber, rightNodeNumber) + "\n");
                 ++currentNodeNumber;

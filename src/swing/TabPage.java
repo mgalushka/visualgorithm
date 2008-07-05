@@ -49,7 +49,7 @@ public class TabPage extends JPanel implements IDataStructureView {
 
     private static final long serialVersionUID = 1L;
     
-    private TabController controller = null;
+    private TabController controller;
     
     private FastTreeCreation fastTreeCreation;
      

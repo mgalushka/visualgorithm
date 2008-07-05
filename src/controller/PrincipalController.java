@@ -132,7 +132,6 @@ public class PrincipalController implements IController {
      */
     public void saveFile(File file, int index) throws IOException {
         tabControllers.get(index).saveDataStructure(file);
-        model.saveDataStructure(index, file.getName());
     }
     
     /**

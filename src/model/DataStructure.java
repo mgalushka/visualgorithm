@@ -125,7 +125,7 @@ public class DataStructure {
     }
     
     /**
-     * Deletes a node from the tree data structure.
+     * Updates the view.
      */
     public void update() {
         //TODO type of the data structure

@@ -47,6 +47,8 @@ public class TabController implements IController {
     
     private IDataStructureView tabPageView;
     
+    private boolean isSaved;
+    
     /**
      * Builds the tab controller.
      * 
@@ -60,6 +62,7 @@ public class TabController implements IController {
         tabPageView = viewFactory.createTabPage(
             dataStructure, type, this);
         addListener();
+        isSaved = false;
     }
     
     /**
@@ -81,8 +84,18 @@ public class TabController implements IController {
             dataStructure.getDataStructure().getType(), this);
         addListener();
         dataStructure.update();
+        isSaved = true;
     }
 
+    /**
+     * Returns true if the data structure has been saved.
+     * 
+     * @return true if the data structure has been saved
+     */
+    public boolean isSaved() {
+        return isSaved;
+    }
+    
     /**
      * Returns the data structure.
      * 
@@ -109,6 +122,7 @@ public class TabController implements IController {
      */
     public void addNode(int key) {
         dataStructure.addNode(key);
+        isSaved = false;
     }
     
     /**
@@ -119,6 +133,7 @@ public class TabController implements IController {
      */
     public void deleteNode(int key) {
         dataStructure.deleteNode(key);
+        isSaved = false;
     }
     
     /**
@@ -129,5 +144,6 @@ public class TabController implements IController {
      */
     public void saveDataStructure(File file) throws IOException {
         dataStructure.save(file);
+        isSaved = true;
     }
 }
