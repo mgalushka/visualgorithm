@@ -43,15 +43,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileFilter;
 
-import model.DataStructureType;
-import model.Model;
-import model.ModelEvent;
-import model.ModelEvent.ModelEventType;
+import model.PrincipalModelEvent;
+import model.PrincipalModelEvent.ModelEventType;
 import model.tree.UnknownTreeTypeException;
-import view.IModelView;
+import model.tree.AbstractBinaryTree.BinaryTreeType;
+import view.IPrincipalModelView;
 import controller.PrincipalController;
-import controller.TabController;
+import controller.BinaryTreeTabController;
 
 /**
  * Definition of the principal view.
@@ -60,9 +60,9 @@ import controller.TabController;
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
- * @see IModelView
+ * @see IPrincipalModelView
  */
-public class GraphicUserInterface extends JFrame implements IModelView {
+public class GraphicUserInterface extends JFrame implements IPrincipalModelView {
     
     private static final long serialVersionUID = 1L;
 
@@ -80,22 +80,49 @@ public class GraphicUserInterface extends JFrame implements IModelView {
      * @param model the model
      * @param c the controller
      */
-    public GraphicUserInterface(Model model, PrincipalController c) {
+    public GraphicUserInterface(PrincipalController c) {
         super("Visualgorithm");
         controller = c;
-        menuBar = createMenuBar(model);
+        menuBar = createMenuBar();
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         fileChooser = new JFileChooser();
+        fileChooser.addChoosableFileFilter(new FileFilter(){
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                }
+                String s = f.getName();
+                int i = s.lastIndexOf('.');
+                String extension = null;
+                if (i > 0 &&  i < s.length() - 1) {
+                    extension = s.substring(i+1).toLowerCase();
+                }
+                if (extension != null) {
+                    if (extension.equals("bt")) {
+                            return true;
+                    } else {
+                        return false;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public String getDescription() {
+                return "Binary Tree  ( .bt )";
+            }
+        });
+        fileChooser.setAcceptAllFileFilterUsed(false);
         menuBar.setBorder(
             BorderFactory.createEmptyBorder(2, 0, 2, 0));
         setJMenuBar(menuBar);
         add(tabbedPane);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter(){
-            
             @Override
             public void windowClosing(WindowEvent evt) {
-                exit();
+                exitSoftware();
             }
         });
         Dimension screenSize = 
@@ -105,15 +132,15 @@ public class GraphicUserInterface extends JFrame implements IModelView {
     
     private JComponent getTabView(int index) {
         return (JComponent)
-            controller.getTabController(index).getView();
+            controller.getSubController(index).getView();
     }
 
-    private JMenuBar createMenuBar(Model model) {
+    private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu file = createFileMenu(model);
-        JMenu edit = createEditMenu(model);
-        JMenu trees = createTreesMenu(model);
-        JMenu algorithms = createAlgorithmsMenu(model);
+        JMenu file = createFileMenu();
+        JMenu edit = createEditMenu();
+        JMenu trees = createTreesMenu();
+        JMenu algorithms = createAlgorithmsMenu();
         
         menuBar.add(file);
         menuBar.add(edit);
@@ -122,7 +149,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
         return menuBar;
     }
     
-    private JMenu createFileMenu(Model model) {
+    private JMenu createFileMenu() {
         JMenu file = new JMenu("File");
         JMenuItem open = new JMenuItem("Open");
         JMenuItem save = new JMenuItem("Save");
@@ -140,7 +167,8 @@ public class GraphicUserInterface extends JFrame implements IModelView {
                     int index = tabbedPane.getTabCount();
                     try {
                         controller.openFile(
-                            fileChooser.getSelectedFile(), index);
+                            fileChooser.getSelectedFile()
+                            .getAbsolutePath(), index);
                     } catch (FileNotFoundException e) {
                         JOptionPane.showMessageDialog(tabbedPane,
                             e.getMessage(),
@@ -186,6 +214,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
                                 saveFile(index, file);
                                 tabbedPane.setTitleAt(index, file.getName());
                                 //TODO repaint close button
+                                tabbedPane.getTabComponentAt(index);
                             }
                         } else {
                             saveFile(index, file);
@@ -201,7 +230,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                exit();
+                exitSoftware();
             }
         });
         file.add(open);
@@ -210,12 +239,12 @@ public class GraphicUserInterface extends JFrame implements IModelView {
         return file;
     }
     
-    private void exit() {
+    private void exitSoftware() {
         int count = tabbedPane.getTabCount();
         if (count == 0) {
             controller.exitSoftware();
         } else if (count == 1) {
-            if (((TabController)controller.getTabController(0)).
+            if (((BinaryTreeTabController)controller.getSubController(0)).
                     isSaved()) {
                 controller.exitSoftware();
             } else {
@@ -274,14 +303,14 @@ public class GraphicUserInterface extends JFrame implements IModelView {
     void saveFile(int index, File file) {
         try {
             controller.saveFile(
-                file, index);
+                file.getAbsolutePath(), index);
         } catch (IOException e) {
             System.out.println("File could not be saved");
             System.exit(1);
         }
     }
     
-    private JMenu createEditMenu(Model model) {
+    private JMenu createEditMenu() {
         JMenu tools = new JMenu("Edit");
         JMenu language = new JMenu("Language");
         JMenuItem preferences = new JMenuItem("Preferences");
@@ -291,7 +320,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
         return tools;
     }
 
-    private JMenu createTreesMenu(Model model) {
+    private JMenu createTreesMenu() {
         JMenu trees = new JMenu("Trees");
         JMenu newTree = new JMenu("New");
         JMenu notes = new JMenu("Notes");
@@ -306,24 +335,24 @@ public class GraphicUserInterface extends JFrame implements IModelView {
             @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
-                controller.addTabDataStructure(
-                    DataStructureType.AVLTREE, index);
+                controller.addBinaryTreeTab(
+                    BinaryTreeType.AVLTREE, index);
             }
         });
         binarySearchTree.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
-                controller.addTabDataStructure(
-                    DataStructureType.BINARYSEARCHTREE, index);
+                controller.addBinaryTreeTab(
+                    BinaryTreeType.BINARYSEARCHTREE, index);
             }
         });
         redBlackTree.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
-                controller.addTabDataStructure(
-                    DataStructureType.REDBLACKTREE, index);
+                controller.addBinaryTreeTab(
+                    BinaryTreeType.REDBLACKTREE, index);
             }
         });
         newTree.add(randomTree);
@@ -335,7 +364,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
         return trees;
     }
     
-    private JMenu createAlgorithmsMenu(Model model) {
+    private JMenu createAlgorithmsMenu() {
         JMenu algorithms = new JMenu("Algorithms");
         JMenu apply = new JMenu("Apply");
         JMenu notes = new JMenu("Notes");
@@ -357,7 +386,7 @@ public class GraphicUserInterface extends JFrame implements IModelView {
     }
     
     @Override
-    public void modelChanged(ModelEvent event) {
+    public void modelChanged(PrincipalModelEvent event) {
         if (event.getType() == ModelEventType.ADD) {
             int numTab = tabbedPane.getTabCount();
             tabbedPane.addTab(event.getName(),

@@ -1,5 +1,5 @@
 /*
- * DataStructureFactory.java v1.00 16/06/08
+ * IModelView.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,37 +19,29 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model;
+package view;
 
-import model.tree.AVLTree;
-import model.tree.BinarySearchTree;
-import model.tree.RedBlackTree;
+import model.PrincipalModelListener;
 
 /**
- * Factory of data structures.
+ * Interface describing the methods of principal model views.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
+ * @see IView
+ * @see PrincipalModelListener
  */
-public class DataStructureFactory {
+public interface IPrincipalModelView extends IView, PrincipalModelListener {
 
     /**
-     * Builds a data structure thanks to its type.
-     * 
-     * @param type the type of the data structure
-     * @return the data structure
+     * Displays the view.
      */
-    public static IDataStructure createDataStructure(DataStructureType type) {
-        switch(type) {
-        case AVLTREE:
-            return new AVLTree();
-        case BINARYSEARCHTREE:
-            return new BinarySearchTree();
-        case REDBLACKTREE:
-            return new RedBlackTree();
-        }
-        return null;
-    }
+    public void displayView();
+    
+    /**
+     * Closes the view.
+     */
+    public void closeView();
 }

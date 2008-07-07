@@ -26,28 +26,28 @@ import java.util.List;
 
 import javax.swing.event.EventListenerList;
 
-import model.ModelEvent.ModelEventType;
+import model.PrincipalModelEvent.ModelEventType;
 
 /**
- * Definition of the model.
+ * Definition of the principal model.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class Model {
+public class PrincipalModel {
 
-    private List<DataStructure> model;
+    private List<ISubModel> model;
     
     private EventListenerList listeners;
     
     /**
-     * Builds the model. The model is a list of
-     * data structures.
+     * Builds the principal model. The principal model
+     * is a list of data structures.
      */
-    public Model() {
-        model = new ArrayList<DataStructure>();
+    public PrincipalModel() {
+        model = new ArrayList<ISubModel>();
         listeners = new EventListenerList();
     }
     
@@ -57,37 +57,37 @@ public class Model {
      * @param index the index of the data structure
      * @return the data structure
      */
-    public DataStructure getDataStructure(int index) {
+    public ISubModel getSubModel(int index) {
         return model.get(index);
     }
     
     /**
-     * Adds a model listener to the model.
+     * Adds a principal model listener to the principal model.
      * 
      * @param listener the listener to add
      */
-    public void addModelListener(ModelListener listener) {
-        listeners.add(ModelListener.class, listener);
+    public void addModelListener(PrincipalModelListener listener) {
+        listeners.add(PrincipalModelListener.class, listener);
     }
     
     /**
-     * Removes a model listener from the model.
+     * Removes a principal model listener from the principal model.
      * 
      * @param listener the listener to remove
      */
-    public void removeModelListener(ModelListener listener) {
-        listeners.remove(ModelListener.class, listener);
+    public void removeModelListener(PrincipalModelListener listener) {
+        listeners.remove(PrincipalModelListener.class, listener);
     }
     
     /**
-     * Adds a data structure to the model.
+     * Adds a data structure to the principal model.
      * 
-     * @param dataStructure a data structure
+     * @param subModel a data structure
      */
-    public void addDataStructure(DataStructure dataStructure) {
-        model.add(dataStructure);
+    public void addSubModel(ISubModel subModel) {
+        model.add(subModel);
         fireModelChanged(ModelEventType.ADD,
-            "New "+dataStructure.getDataStructure().getType().toString());
+            "New "+subModel.getDataStructure().getType().toString());
     }
     
     /**
@@ -95,56 +95,56 @@ public class Model {
      * 
      * @param index the index of the data structure
      */
-    public void removeDataStructure(int index) {
+    public void removeSubModel(int index) {
         model.remove(index);
         fireModelChanged(ModelEventType.DELETE, index);
     }
     
     /**
-     * Removes all data structures in the model.
+     * Removes all data structures in the principal model.
      */
-    public void removeAllDataStructure() {
+    public void removeAllSubModels() {
         model.clear();
         fireModelChanged(ModelEventType.EXIT);
     }
     
     /**
-     * Adds a loaded data structure to the model.
+     * Adds a loaded data structure to the principal model.
      * 
-     * @param dataStructure a data structure
+     * @param subModel a data structure
      * @param fileName the name of the file
      */
-    public void openDataStructureFile(DataStructure dataStructure,
+    public void openSubModelFile(ISubModel subModel,
             String fileName) {
-        model.add(dataStructure);
+        model.add(subModel);
         fireModelChanged(ModelEventType.ADD, fileName);
     }
     
     private void fireModelChanged(ModelEventType type,
             String name) {
-        ModelListener[] listenerTab = (ModelListener[])
-            listeners.getListeners(ModelListener.class);
-        for(ModelListener listener : listenerTab) {
-            listener.modelChanged(new ModelEvent(this,
+        PrincipalModelListener[] listenerTab = (PrincipalModelListener[])
+            listeners.getListeners(PrincipalModelListener.class);
+        for(PrincipalModelListener listener : listenerTab) {
+            listener.modelChanged(new PrincipalModelEvent(this,
                 type, name)); 
         }
     }
     
     private void fireModelChanged(ModelEventType type,
             int index) {
-        ModelListener[] listenerTab = (ModelListener[])
-            listeners.getListeners(ModelListener.class);
-        for(ModelListener listener : listenerTab) {
-            listener.modelChanged(new ModelEvent(
+        PrincipalModelListener[] listenerTab = (PrincipalModelListener[])
+            listeners.getListeners(PrincipalModelListener.class);
+        for(PrincipalModelListener listener : listenerTab) {
+            listener.modelChanged(new PrincipalModelEvent(
                 this, type, index)); 
         }
     }
     
     private void fireModelChanged(ModelEventType type) {
-        ModelListener[] listenerTab = (ModelListener[])
-            listeners.getListeners(ModelListener.class);
-        for(ModelListener listener : listenerTab) {
-            listener.modelChanged(new ModelEvent(this, type)); 
+        PrincipalModelListener[] listenerTab = (PrincipalModelListener[])
+            listeners.getListeners(PrincipalModelListener.class);
+        for(PrincipalModelListener listener : listenerTab) {
+            listener.modelChanged(new PrincipalModelEvent(this, type)); 
         }
     }
 }

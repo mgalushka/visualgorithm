@@ -1,5 +1,5 @@
 /*
- * ModelListener.java v1.00 16/06/08
+ * DataStructureListener.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,24 +19,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model;
+package model.tree;
 
 import java.util.EventListener;
 
 /**
- * Methods of the model listeners.
+ * Methods of the binary tree listeners.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public interface ModelListener extends EventListener {
+public interface BinaryTreeListener extends EventListener {
     
     /**
-     * The model has changed.
+     * The binary tree has changed.
      * 
      * @param event the data structure event
      */
-    public void modelChanged(ModelEvent event);
+    public <N extends IBinaryNode<N>> void binaryTreeChanged(BinaryTreeEvent<N> event);
 }

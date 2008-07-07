@@ -21,8 +21,6 @@
 
 package model.tree;
 
-import model.DataStructureType;
-
 /**
  * Definition of binary search trees, with as node <tt>BinarySearchNode</tt>.
  * 
@@ -37,7 +35,7 @@ public class BinarySearchTree extends
         AbstractBinarySearchTree<BinarySearchNode> {
 
     {
-        type = DataStructureType.BINARYSEARCHTREE;
+        type = BinaryTreeType.BINARYSEARCHTREE;
     }
     
     /**

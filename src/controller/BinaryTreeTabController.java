@@ -21,19 +21,20 @@
 
 package controller;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-import model.DataStructure;
-import model.DataStructureType;
+
+import model.ISubModel;
+import model.tree.BinaryTreeSubModel;
 import model.tree.UnknownTreeTypeException;
+import model.tree.AbstractBinaryTree.BinaryTreeType;
 import view.AbstractViewFactory;
-import view.IDataStructureView;
+import view.IBinaryTreeView;
 import view.IView;
 
 /**
- * Definition of the tab controller.
+ * Definition of the binary tree tab controller.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
@@ -41,68 +42,63 @@ import view.IView;
  * @version 1.00 16/06/08
  * @see IController
  */
-public class TabController implements IController {
+public class BinaryTreeTabController implements ISubController {
+    
+    private static String subControllerType = "TREE";
 
-    private DataStructure dataStructure;
+    private BinaryTreeSubModel binaryTreeSubModel;
     
-    private IDataStructureView tabPageView;
-    
-    private boolean isSaved;
-    
+    private IBinaryTreeView tabPageView;
+
     /**
-     * Builds the tab controller.
+     * Builds the binary tree tab controller.
      * 
-     * @param type the type of the data structure
+     * @param type the type of the binary tree
      */
-    public TabController(DataStructureType type) {
-        dataStructure = new DataStructure(type);
+    public BinaryTreeTabController(BinaryTreeType type) {
+        binaryTreeSubModel = new BinaryTreeSubModel(type);
         
         AbstractViewFactory viewFactory = 
             AbstractViewFactory.getFactory();
-        tabPageView = viewFactory.createTabPage(
-            dataStructure, type, this);
+        tabPageView = viewFactory.createBinaryTreeTabPage(
+            type.toString(), this);
         addListener();
-        isSaved = false;
     }
     
     /**
-     * Builds the tab controller.
+     * Builds the binary tree tab controller.
      * 
-     * @param file the file containing the data structure
+     * @param file the file containing the binary tree
      * @throws UnknownTreeTypeException 
      * @throws IOException 
      * @throws ParseException 
      * @throws FileNotFoundException 
      */
-    public TabController(File file) throws FileNotFoundException,
+    public BinaryTreeTabController(String file) throws FileNotFoundException,
             ParseException, IOException, UnknownTreeTypeException {
-        dataStructure = new DataStructure(file);
+        binaryTreeSubModel = new BinaryTreeSubModel(file);
         
         AbstractViewFactory viewFactory = 
             AbstractViewFactory.getFactory();
-        tabPageView = viewFactory.createTabPage(dataStructure,
-            dataStructure.getDataStructure().getType(), this);
+        tabPageView = viewFactory.createBinaryTreeTabPage(
+            binaryTreeSubModel.getDataStructure().getType(), this);
         addListener();
-        dataStructure.update();
-        isSaved = true;
+        binaryTreeSubModel.updateBinaryTreeView();
     }
 
-    /**
-     * Returns true if the data structure has been saved.
-     * 
-     * @return true if the data structure has been saved
-     */
-    public boolean isSaved() {
-        return isSaved;
+    @Override
+    public String getType() {
+        return subControllerType;
     }
     
-    /**
-     * Returns the data structure.
-     * 
-     * @return the data structure
-     */
-    public DataStructure getModel() {
-        return dataStructure;
+    @Override
+    public ISubModel getSubModel() {
+        return binaryTreeSubModel;
+    }
+    
+    @Override
+    public boolean isSaved() {
+        return binaryTreeSubModel.isBinaryTreeSaved();
     }
     
     @Override
@@ -111,39 +107,34 @@ public class TabController implements IController {
     }
 
     private void addListener() {
-        dataStructure.addDataStructureListener(tabPageView);
+        binaryTreeSubModel.addBinaryTreeListener(tabPageView);
     }
 
     /**
-     * Adds a node to the data structure. Only for
-     * binary trees.
+     * Adds a node to the data structure.
      * 
      * @param key the key of the node
      */
     public void addNode(int key) {
-        dataStructure.addNode(key);
-        isSaved = false;
+        binaryTreeSubModel.addNode(key);
     }
     
     /**
-     * Deletes a node from the data structure. Only for
-     * binary trees.
+     * Deletes a node from the data structure.
      * 
      * @param key the key of the node
      */
     public void deleteNode(int key) {
-        dataStructure.deleteNode(key);
-        isSaved = false;
+        binaryTreeSubModel.deleteNode(key);
     }
     
     /**
-     * Saves the data structure into the selected file.
+     * Saves the binary tree into the selected file.
      * 
      * @param file the file
      * @throws IOException 
      */
-    public void saveDataStructure(File file) throws IOException {
-        dataStructure.save(file);
-        isSaved = true;
+    public void saveBinaryTreeSubModel(String file) throws IOException {
+        binaryTreeSubModel.saveBinaryTree(file);
     }
 }

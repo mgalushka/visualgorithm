@@ -21,13 +21,11 @@
 
 package swing;
 
-import model.DataStructureType;
-import model.Model;
-import model.DataStructure;
 import controller.PrincipalController;
-import controller.TabController;
-import view.IDataStructureView;
-import view.IModelView;
+import controller.BinaryTreeTabController;
+import swing.tree.BinaryTreeTabPage;
+import view.IBinaryTreeView;
+import view.IPrincipalModelView;
 import view.AbstractViewFactory;
 
 /**
@@ -42,15 +40,14 @@ import view.AbstractViewFactory;
 public class SwingViewFactory extends AbstractViewFactory{
 
     @Override
-    public IModelView createGraphicUserInterface(Model model,
+    public IPrincipalModelView createGraphicUserInterface(
             PrincipalController controller) {
-        return new GraphicUserInterface(model, controller);
+        return new GraphicUserInterface(controller);
     }
 
     @Override
-    public IDataStructureView createTabPage(
-            DataStructure dataStructure,
-            DataStructureType type, TabController controller) {
-        return new TabPage(dataStructure, type, controller);
+    public IBinaryTreeView createBinaryTreeTabPage(
+            String type, BinaryTreeTabController controller) {
+        return new BinaryTreeTabPage(type, controller);
     }
 }

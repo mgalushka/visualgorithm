@@ -21,10 +21,9 @@
 
 package model.tree;
 
-import model.DataStructureType;
-
 /**
- * Definition of red black trees, with as node <tt>RedBlackNode</tt>.
+ * Definition of red black trees,
+ * with as node <tt>RedBlackNode</tt>.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
@@ -33,10 +32,11 @@ import model.DataStructureType;
  * @see IRedBlackNode
  * @see IBinarySearchTree
  */
-public class RedBlackTree extends AbstractBinarySearchTree<RedBlackNode> {
+public class RedBlackTree
+        extends AbstractBinarySearchTree<RedBlackNode> {
 
     {
-        type = DataStructureType.REDBLACKTREE;
+        type = BinaryTreeType.REDBLACKTREE;
     }
     
     /**
@@ -47,12 +47,14 @@ public class RedBlackTree extends AbstractBinarySearchTree<RedBlackNode> {
     }
 
     /**
-     * Build a red black tree whose root is initialized with the specified key.
+     * Build a red black tree whose root
+     * is initialized with the specified key.
      * 
      * @param key the key of the root
      */
     public RedBlackTree(int key) {
-        root = new RedBlackNode(key, RedBlackNode.RedBlackNodeColor.BLACK);
+        root = new RedBlackNode(key,
+            RedBlackNode.RedBlackNodeColor.BLACK);
     }
 
     @Override
@@ -73,7 +75,7 @@ public class RedBlackTree extends AbstractBinarySearchTree<RedBlackNode> {
                 hasGoodHeight = hasGoodHeight(node.getRight());
             }
             if (hasGoodHeight) {
-                leftHeight = node.leftFindBlackHeight();
+                leftHeight = node.findBlackHeight();
                 rightHeight = node.rightFindBlackHeight();
                 hasGoodHeight = (leftHeight == rightHeight);
             }
@@ -85,19 +87,23 @@ public class RedBlackTree extends AbstractBinarySearchTree<RedBlackNode> {
         boolean isRedHasBlackChild = true;
 
         if (node != null) {
-            isRedHasBlackChild = isRedNodeHasBlackChild(node.getLeft());
+            isRedHasBlackChild = isRedNodeHasBlackChild(
+                node.getLeft());
             if (isRedHasBlackChild) {
-                isRedHasBlackChild = isRedNodeHasBlackChild(node.getRight());
+                isRedHasBlackChild = isRedNodeHasBlackChild(
+                    node.getRight());
             }
             if (isRedHasBlackChild) {
                 if (node.isRed()) {
                     if (node.getLeft() != null) {
-                        if (node.getLeft().isRed() || (node.getRight() == null)) {
+                        if (node.getLeft().isRed() ||
+                                (node.getRight() == null)) {
                             isRedHasBlackChild = false;
                         }
                     }
                     if (node.getRight() != null) {
-                        if (node.getRight().isRed() || (node.getLeft() == null)) {
+                        if (node.getRight().isRed() ||
+                                (node.getLeft() == null)) {
                             isRedHasBlackChild = false;
                         }
                     }

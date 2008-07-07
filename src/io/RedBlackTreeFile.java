@@ -75,6 +75,11 @@ class RedBlackTreeFile extends TreeFile<RedBlackNode,
     }
 
     @Override
+    protected RedBlackTree createEmptyBinaryTree() {
+        return new RedBlackTree();
+    }
+    
+    @Override
     protected RedBlackTree createBinaryTree(int key) {
         return new RedBlackTree(key);
     }

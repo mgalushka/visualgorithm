@@ -1,5 +1,5 @@
 /*
- * IDataStructureView.java v1.00 16/06/08
+ * ISubController.java v1.00 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,19 +19,40 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package view;
+package controller;
 
-import model.DataStructureListener;
+import model.ISubModel;
 
 /**
- * Interface describing the methods of data structure views.
+ * Interface describing the methods of sub controllers.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
- * @see IView
- * @see DataStructureListener
+ * @version 1.00 07/07/08
+ * @see IController
  */
-public interface IDataStructureView extends IView, DataStructureListener {
+public interface ISubController extends IController {
+    
+    /**
+     * Returns the type of the sub controller.
+     * 
+     * @return the type of the sub controller
+     */
+    public String getType();
+    
+    /**
+     * Returns the sub model.
+     * 
+     * @return the sub model
+     */
+    public ISubModel getSubModel();
+    
+    /**
+     * Returns true if the data structure
+     * of the sub controller has been saved.
+     * 
+     * @return true if the data structure has been saved
+     */
+    public boolean isSaved();
 }

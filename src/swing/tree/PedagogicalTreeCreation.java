@@ -1,5 +1,5 @@
 /*
- * IDataStructure.java v1.00 16/06/08
+ * PedagogicTreeCreation.java v1.00 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,22 +19,33 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model;
+package swing.tree;
+
+import javax.swing.JPanel;
+
+import controller.BinaryTreeTabController;
 
 /**
- * Interface describing the methods of data structures.
+ * Definition of the pedagogical tree creation pane.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @version 1.00 07/07/08
  */
-public interface IDataStructure {
+public class PedagogicalTreeCreation extends JPanel {
+    
+    private static final long serialVersionUID = 1L;
+    
+    private BinaryTreeTabController controller;
     
     /**
-     * Returns the type of the data structure.
+     * Builds the pedagogical tree creation pane.
      * 
-     * @return the type of the data structure
+     * @param c the controller
      */
-    public String getType();
+    public PedagogicalTreeCreation(BinaryTreeTabController c) {
+        controller = c;
+        
+    }
 }

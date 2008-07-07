@@ -212,10 +212,15 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
     }
 
     private T createBinaryTree() throws UnknownTreeTypeException {
-        T tree = createBinaryTree(
-            Integer.parseInt(nodeVector.get(0)[KEY]));
-        generateNode(tree.getRoot(), 0);
-
+        T tree;
+        if (nodeVector.size() != 0) {
+            tree = createBinaryTree(
+                Integer.parseInt(nodeVector.get(0)[KEY]));
+            generateNode(tree.getRoot(), 0);
+            
+        } else {
+            tree = createEmptyBinaryTree();
+        }
         if (tree.isGoodTree())
             return tree;
         else {
@@ -257,6 +262,9 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
         Pattern pattern;
         Matcher matcher;
 
+        if (lineToParse == null) {
+            ++currentNodeNumber;
+        }
         while (lineToParse != null) {
             initREGEX(currentNodeNumber, nextNodeNumber);
             if (lineToParse.matches(REGEX_COMMENT)
@@ -305,10 +313,7 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
             lineToParse = reader.readLine();
             ++lineNumber;
         }
-        if (currentNodeNumber == 0) {
-            throw new ParseException("No node has been specified",
-                lineNumber);
-        } else if (currentNodeNumber != nextNodeNumber) {
+        if (currentNodeNumber != nextNodeNumber) {
             throw new ParseException("There is not enough nodes",
                 lineNumber);
         }
@@ -345,6 +350,13 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
         REGEX_NO_CHILD = lineBegin + "nil" + REGEX_BLANK + "nil";
     }
 
+    /**
+     * Creates an empty tree with for root null.
+     * 
+     * @return the created tree
+     */
+    protected abstract T createEmptyBinaryTree();
+    
     /**
      * Creates a tree with for root the key given in parameter.
      * 
@@ -401,14 +413,11 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
         int maxNodeNumber = 0;
         String leftNodeNumber;
         String rightNodeNumber;
-        
-        //TreeFile<N extends IBinaryNode<? super N>, T extends IBinaryTree<? extends N>>
-        
         TreeFile<NN, ? extends IBinaryTree<?>> treeFile =
             (TreeFile<NN, ? extends IBinaryTree<?>>) fileParser
                 .get(tree.getType().toString());
         List<NN> array = tree.treeToArrayList();
-
+        
         file.write(tree.getType() + "\n");
         for (int i = 0 ; i < array.size() ; i++) {
             node = array.get(i);

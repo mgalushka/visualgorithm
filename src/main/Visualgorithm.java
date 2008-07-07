@@ -23,7 +23,7 @@ package main;
 
 import javax.swing.SwingUtilities;
 import controller.PrincipalController;
-import model.Model;
+import model.PrincipalModel;
 
 /**
  * Main class of the software.
@@ -41,7 +41,7 @@ public class Visualgorithm {
      * @param args possible arguments
      */
     public static void main(String[] args) {
-        final Model model = new Model();
+        final PrincipalModel model = new PrincipalModel();
         
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

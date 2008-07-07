@@ -51,6 +51,11 @@ class BinarySearchTreeFile
     }
 
     @Override
+    protected BinarySearchTree createEmptyBinaryTree() {
+        return new BinarySearchTree();
+    }
+    
+    @Override
     protected BinarySearchTree createBinaryTree(int key) {
         return new BinarySearchTree(key);
     }

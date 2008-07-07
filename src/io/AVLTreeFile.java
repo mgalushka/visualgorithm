@@ -50,6 +50,11 @@ class AVLTreeFile extends TreeFile<AVLNode, AVLTree> {
     }
 
     @Override
+    protected AVLTree createEmptyBinaryTree() {
+        return new AVLTree();
+    }
+    
+    @Override
     protected AVLTree createBinaryTree(int key) {
         return new AVLTree(key);
     }

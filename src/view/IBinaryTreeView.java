@@ -1,5 +1,5 @@
 /*
- * DataStructureListener.java v1.00 16/06/08
+ * IDataStructureView.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -19,24 +19,19 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model;
+package view;
 
-import java.util.EventListener;
+import model.tree.BinaryTreeListener;
 
 /**
- * Methods of the data structure listeners.
+ * Interface describing the methods of binary tree views.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
+ * @see IView
+ * @see BinaryTreeListener
  */
-public interface DataStructureListener extends EventListener {
-    
-    /**
-     * The data structure has changed.
-     * 
-     * @param event the data structure event
-     */
-    void dataStructureChanged(DataStructureEvent event);
+public interface IBinaryTreeView extends IView, BinaryTreeListener {
 }

@@ -22,11 +22,8 @@
 package view;
 
 import swing.SwingViewFactory;
-import model.DataStructureType;
-import model.Model;
-import model.DataStructure;
 import controller.PrincipalController;
-import controller.TabController;
+import controller.BinaryTreeTabController;
 
 /**
  * Abstract factory of swing views.
@@ -52,15 +49,14 @@ public abstract class AbstractViewFactory {
      * 
      * @return the principal view
      */
-    public abstract IModelView createGraphicUserInterface(
-            Model model, PrincipalController controller);
+    public abstract IPrincipalModelView createGraphicUserInterface(
+            PrincipalController controller);
 
     /**
-     * Creates the tab view.
+     * Creates the binary tree tab view.
      * 
-     * @return the tab view
+     * @return the binary tree tab view
      */
-    public abstract IDataStructureView createTabPage(
-            DataStructure dataStructure, DataStructureType type,
-            TabController controller);
+    public abstract IBinaryTreeView createBinaryTreeTabPage(
+            String type, BinaryTreeTabController controller);
 }

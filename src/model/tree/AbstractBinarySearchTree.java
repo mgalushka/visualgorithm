@@ -33,24 +33,33 @@ package model.tree;
  */
 public abstract class AbstractBinarySearchTree<N extends IBinarySearchNode<N>>
         extends AbstractBinaryTree<N> implements IBinarySearchTree<N> {
-    
+
+    /**
+     * Returns true if the tree is a well formed binary search tree.
+     * 
+     * @param node a node of the tree
+     * @return true if node is a well formed binary search tree
+     */
     protected boolean isBST(IBinaryNode<?> node) {
-        if ((node.getLeft() == null) &&
-                (node.getRight() == null)) {
-            return true;
-        } else {
-            if (node.getLeft() == null) {
-                return (node.getRight().getKey() > node.getKey()) &&
-                    isBST(node.getRight());
-            } else if (node.getRight() == null) {
-                return (node.getLeft().getKey() < node.getKey()) &&
-                    isBST(node.getLeft());
+        if (node != null) {
+            if ((node.getLeft() == null) &&
+                    (node.getRight() == null)) {
+                return true;
             } else {
-                return (node.getLeft().getKey() < node.getKey()) &&
-                    isBST(node.getLeft()) &&
-                    (node.getRight().getKey() > node.getKey()) &&
-                    isBST(node.getRight());
+                if (node.getLeft() == null) {
+                    return (node.getRight().getKey() > node.getKey()) &&
+                        isBST(node.getRight());
+                } else if (node.getRight() == null) {
+                    return (node.getLeft().getKey() <= node.getKey()) &&
+                        isBST(node.getLeft());
+                } else {
+                    return (node.getLeft().getKey() <= node.getKey()) &&
+                        isBST(node.getLeft()) &&
+                        (node.getRight().getKey() > node.getKey()) &&
+                        isBST(node.getRight());
+                }
             }
         }
+        return true;
     }
 }

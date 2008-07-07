@@ -19,64 +19,42 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model;
+package model.tree;
 
 import java.util.EventObject;
+import java.util.List;
 
 /**
- * Definition of the data structure event.
+ * Definition of the binary tree event.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class DataStructureEvent extends EventObject {
+public class BinaryTreeEvent<N extends IBinaryNode<N>> extends EventObject {
 
-    /**
-     * Enumeration of the data structure event type.
-     * 
-     * @author Julien Hannier
-     * @author Pierre Pironin
-     * @author Damien Rigoni
-     * @version 1.00 16/06/08
-     */
-    public enum DataStructureEventType {TREE};
-    
     private static final long serialVersionUID = 1L;
     
-    private DataStructureEventType type;
-
-    private Object data;
+    private List<N> data;
 
     /**
-     * Builds a data structure event.
+     * Builds a binary tree event.
      * 
-     * @param source the source of the data structure event
-     * @param t the type of the data structure event
-     * @param d the data of the data structure event
+     * @param source the source of the binary tree event
+     * @param d the data of the binary tree event
      */
-    public DataStructureEvent(Object source, DataStructureEventType t, Object d) {
+    public BinaryTreeEvent(Object source, List<N> d) {
         super(source);
-        type = t;
         data = d;
     }
-    
+
     /**
-     * Returns the type of the data structure event.
+     * Returns the data of the binary tree event.
      * 
-     * @return the type of the data structure event
+     * @return the data of the binary tree event
      */
-    public DataStructureEventType getType() {
-        return type;
-    }
-    
-    /**
-     * Returns the data of the data structure event.
-     * 
-     * @return the data of the data structure event
-     */
-    public Object getData() {
+    public List<N> getData() {
         return data;
     }
 }

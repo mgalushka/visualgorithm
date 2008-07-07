@@ -1,5 +1,5 @@
 /*
- * IDataStructure.java v1.00 16/06/08
+ * ModelListener.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -21,20 +21,22 @@
 
 package model;
 
+import java.util.EventListener;
+
 /**
- * Interface describing the methods of data structures.
+ * Methods of the principal model listeners.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public interface IDataStructure {
+public interface PrincipalModelListener extends EventListener {
     
     /**
-     * Returns the type of the data structure.
+     * The principal model has changed.
      * 
-     * @return the type of the data structure
+     * @param event the data structure event
      */
-    public String getType();
+    public void modelChanged(PrincipalModelEvent event);
 }

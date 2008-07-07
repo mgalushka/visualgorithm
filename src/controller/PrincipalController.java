@@ -21,18 +21,17 @@
 
 package controller;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import view.IModelView;
+import view.IPrincipalModelView;
 import view.AbstractViewFactory;
-import model.DataStructureType;
-import model.Model;
+import model.PrincipalModel;
 import model.tree.UnknownTreeTypeException;
+import model.tree.AbstractBinaryTree.BinaryTreeType;
 
 /**
  * Definition of the principal controller.
@@ -45,40 +44,40 @@ import model.tree.UnknownTreeTypeException;
  */
 public class PrincipalController implements IController {
     
-    private Model model;
+    private PrincipalModel model;
  
-    private IModelView gui;
+    private IPrincipalModelView gui;
     
-    private List<TabController> tabControllers;
+    private List<ISubController> subControllers;
     
     /**
      * Builds the principal controller.
      * 
-     * @param m the model
+     * @param m the principal model
      */
-    public PrincipalController(Model m) {
-        tabControllers = new ArrayList<TabController>();
+    public PrincipalController(PrincipalModel m) {
+        subControllers = new ArrayList<ISubController>();
         
         model = m;
         AbstractViewFactory viewFactory = 
             AbstractViewFactory.getFactory();
-        gui = viewFactory.createGraphicUserInterface(model, this);
+        gui = viewFactory.createGraphicUserInterface(this);
         getView().displayView();
         addListener();
     }
     
     /**
-     * Returns the wanted tab controller thanks to index.
+     * Returns the wanted sub controller thanks to index.
      * 
      * @param index the index of the tab
-     * @return the tab controller
+     * @return the sub controller
      */
-    public IController getTabController(int index) {
-        return tabControllers.get(index);
+    public ISubController getSubController(int index) {
+        return subControllers.get(index);
     }
     
     @Override
-    public IModelView getView() {
+    public IPrincipalModelView getView() {
         return gui;
     }
     
@@ -87,16 +86,16 @@ public class PrincipalController implements IController {
     }
 
     /**
-     * Adds a tab.
+     * Adds a binary tree tab.
      * 
-     * @param type the type of the data structure
+     * @param type the type of the binary tree
      * @param index the index of the tab
      */
-    public void addTabDataStructure(DataStructureType type,
+    public void addBinaryTreeTab(BinaryTreeType type,
             int index) {
-        tabControllers.add(new TabController(type));
-        model.addDataStructure(
-            tabControllers.get(index).getModel());
+        subControllers.add(new BinaryTreeTabController(type));
+        model.addSubModel(
+            subControllers.get(index).getSubModel());
     }
     
     /**
@@ -105,8 +104,8 @@ public class PrincipalController implements IController {
      * @param index the index of the tab
      */
     public void closeTab(int index) {
-        model.removeDataStructure(index);
-        tabControllers.remove(index);
+        model.removeSubModel(index);
+        subControllers.remove(index);
     }
     
     /**
@@ -115,12 +114,23 @@ public class PrincipalController implements IController {
      * @param file the file
      * @param index the index of the tab
      */
-    public void openFile(File file, int index) throws
+    public void openFile(String file, int index) throws
             FileNotFoundException, ParseException,
             IOException, UnknownTreeTypeException {
-        tabControllers.add(new TabController(file));
-        model.openDataStructureFile(
-            tabControllers.get(index).getModel(), file.getName());
+        String ext = null;
+        int i = file.lastIndexOf('.');
+        if (i > 0 &&  i < file.length() - 1) {
+            ext = file.substring(i+1).toLowerCase();
+            if (ext.equals("bt")) {
+                subControllers.add(new BinaryTreeTabController(file));
+                model.openSubModelFile(
+                    subControllers.get(index).getSubModel(), file);
+            } else {
+                
+            }
+        } else {
+            
+        }
     }
     
     /**
@@ -130,8 +140,11 @@ public class PrincipalController implements IController {
      * @param index the index of the tab
      * @throws IOException 
      */
-    public void saveFile(File file, int index) throws IOException {
-        tabControllers.get(index).saveDataStructure(file);
+    public void saveFile(String file, int index) throws IOException {
+        if (getSubController(index).getType().equals("TREE")) {
+            ((BinaryTreeTabController)subControllers.get(index))
+                .saveBinaryTreeSubModel(file.concat(".bt"));
+        }
     }
     
     /**
@@ -139,7 +152,7 @@ public class PrincipalController implements IController {
      */
     public void exitSoftware() {
         gui.closeView();
-        model.removeAllDataStructure();
-        tabControllers.clear();
+        model.removeAllSubModels();
+        subControllers.clear();
     }
 }

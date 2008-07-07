@@ -1,5 +1,5 @@
 /*
- * DataStructureType.java v1.00 16/06/08
+ * ISubModel.java v1.00 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
@@ -22,13 +22,19 @@
 package model;
 
 /**
- * Definition of the type of data structures.
+ * Interface describing the methods of sub models.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @version 1.00 07/07/08
  */
-public enum DataStructureType {
-    AVLTREE, BINARYSEARCHTREE, REDBLACKTREE;
+public interface ISubModel {
+
+    /**
+     * Returns the data structure.
+     * 
+     * @return the data structure
+     */
+    public IDataStructure getDataStructure();
 }

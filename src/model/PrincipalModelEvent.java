@@ -25,17 +25,17 @@ import java.util.EventObject;
 
 
 /**
- * Definition of model event.
+ * Definition of principal model event.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class ModelEvent extends EventObject {
+public class PrincipalModelEvent extends EventObject {
     
     /**
-     * Enumeration of the model event type.
+     * Enumeration of the principal model event type.
      * 
      * @author Julien Hannier
      * @author Pierre Pironin
@@ -53,13 +53,13 @@ public class ModelEvent extends EventObject {
     private int index;
     
     /**
-     * Builds a model event.
+     * Builds a principal model event.
      * 
      * @param source the source of the model event
      * @param t the type of the model event
      * @param n the name
      */
-    public ModelEvent(Object source, ModelEventType t, String n) {
+    public PrincipalModelEvent(Object source, ModelEventType t, String n) {
         super(source);
         type = t;
         name = n;
@@ -67,13 +67,13 @@ public class ModelEvent extends EventObject {
     }
     
     /**
-     * Builds a model event.
+     * Builds a principal model event.
      * 
      * @param source the source of the model event
      * @param t the type of the model event
      * @param i the index of the data structure
      */
-    public ModelEvent(Object source, ModelEventType t, int i) {
+    public PrincipalModelEvent(Object source, ModelEventType t, int i) {
         super(source);
         type = t;
         name = null;
@@ -81,12 +81,12 @@ public class ModelEvent extends EventObject {
     }
     
     /**
-     * Builds a model event.
+     * Builds a principal model event.
      * 
      * @param source the source of the model event
      * @param t the type of the model event
      */
-    public ModelEvent(Object source, ModelEventType t) {
+    public PrincipalModelEvent(Object source, ModelEventType t) {
         super(source);
         type = t;
         name = null;
@@ -94,9 +94,9 @@ public class ModelEvent extends EventObject {
     }
     
     /**
-     * Returns the type of the model event.
+     * Returns the type of the principal model event.
      * 
-     * @return the type of the model event
+     * @return the type of the principal model event
      */
     public ModelEventType getType() {
         return type;

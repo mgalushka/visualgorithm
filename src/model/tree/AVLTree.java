@@ -21,8 +21,6 @@
 
 package model.tree;
 
-import model.DataStructureType;
-
 /**
  * Definition of AVL trees, with as node <tt>AVLNode</tt>.
  * 
@@ -36,7 +34,7 @@ import model.DataStructureType;
 public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
 
     {
-        type = DataStructureType.AVLTREE;
+        type = BinaryTreeType.AVLTREE;
     }
     
     /**

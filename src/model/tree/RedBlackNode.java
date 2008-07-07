@@ -31,7 +31,8 @@ package model.tree;
  * @see IBinarySearchNode
  * @see IRedBlackNode
  */
-public final class RedBlackNode extends AbstractBinarySearchNode<RedBlackNode>
+public final class RedBlackNode
+        extends AbstractBinarySearchNode<RedBlackNode>
         implements IRedBlackNode<RedBlackNode> {
 
     /**
@@ -92,20 +93,6 @@ public final class RedBlackNode extends AbstractBinarySearchNode<RedBlackNode>
     
     @Override
     public int findBlackHeight() {
-        if (getLeft() != null) {
-            return getLeft().isBlack() ? getLeft().findBlackHeight() + 1
-                    : getLeft().findBlackHeight();
-        } else {
-            return 1;
-        }
-    }
-
-    /**
-     * Returns the black height of the node browsing the left child.
-     * 
-     * @return the black height of the node
-     */
-    public int leftFindBlackHeight() {
         if (getLeft() != null) {
             return getLeft().isBlack() ? getLeft().findBlackHeight() + 1
                     : getLeft().findBlackHeight();

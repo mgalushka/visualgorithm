@@ -252,70 +252,76 @@ public class TreeVisualization extends JPanel {
      *  
      * @param array the array
      */
-    public void calculatePositions(List<IBinaryNode<?>> array) {
+    public <N extends IBinaryNode<N>> void calculatePositions(List<N> array) {
         graphicNodes.clear();
         int length = array.size();
-        int height = length == 1 ? 0 : (int)Math.round(Math.sqrt((length+1)/2));
-        int width = 1;
-        int indexStop = 1;
-        int index = 0;
-        int key, y, x = getWidth()/2;
-        GraphicNodeColor color;
-        int positionDifference = calculateNodePositionDifference(height);
-        
-        for (int i = 0 ; i <= height ; i++) {
-            while (index < indexStop) {
-                IBinaryNode<?> node = array.get(index);
-                if (node != null) {
-                    key = node.getKey();
-                    y = yPositionRootNode+i*heightBetweenNodes;
-                    if (node instanceof RedBlackNode) {
-                        if (((RedBlackNode)node).isRed()) {
-                            color = GraphicNodeColor.RED;
+        if (length > 0) {
+            int height = length == 1 ? 0 : 
+                (int)Math.round(Math.sqrt((length+1)/2));
+            int width = 1;
+            int indexStop = 1;
+            int index = 0;
+            int key, y, x = getWidth()/2;
+            GraphicNodeColor color;
+            int positionDifference = 
+                calculateNodePositionDifference(height);
+            
+            for (int i = 0 ; i <= height ; i++) {
+                while (index < indexStop) {
+                    IBinaryNode<?> node = array.get(index);
+                    if (node != null) {
+                        key = node.getKey();
+                        y = yPositionRootNode+i*heightBetweenNodes;
+                        if (node instanceof RedBlackNode) {
+                            if (((RedBlackNode)node).isRed()) {
+                                color = GraphicNodeColor.RED;
+                            } else {
+                                color = GraphicNodeColor.BLACK;
+                            }
                         } else {
-                            color = GraphicNodeColor.BLACK;
+                            color = GraphicNodeColor.YELLOW;
+                        }
+                        graphicNodes.add(new GraphicNode(key,
+                            x, y, nodeSize, color));
+                    } else {
+                        graphicNodes.add(null);
+                    }
+                    if (i < height) {
+                        if ((i > 0) && (index < indexStop-1)) {
+                            x += positionDifference;
                         }
                     } else {
-                        color = GraphicNodeColor.YELLOW;
+                        if ((index % 2) == 0) {
+                            x += widthBetweenNodes+nodeSize;
+                        } else {
+                            x += widthBetweenBrotherNodes+nodeSize;
+                        }
                     }
-                    graphicNodes.add(new GraphicNode(key, x, y, nodeSize, color));
+                    index++;
+                }
+                x -= (width-1)*positionDifference;
+                if (i < height-1) {
+                    if (i > 0) {
+                        positionDifference = positionDifference/2;
+                    }
+                    x -= positionDifference/2;
                 } else {
-                    graphicNodes.add(null);
+                    x -= widthBetweenBrotherNodes/2+nodeSize/2;
                 }
-                if (i < height) {
-                    if ((i > 0) && (index < indexStop-1)) {
-                        x += positionDifference;
-                    }
-                } else {
-                    if ((index % 2) == 0) {
-                        x += widthBetweenNodes+nodeSize;
-                    } else {
-                        x += widthBetweenBrotherNodes+nodeSize;
-                    }
-                }
-                index++;
+                width *= 2;
+                indexStop += width;
             }
-            x -= (width-1)*positionDifference;
-            if (i < height-1) {
-                if (i > 0) {
-                    positionDifference = positionDifference/2;
-                }
-                x -= positionDifference/2;
-            } else {
-                x -= widthBetweenBrotherNodes/2+nodeSize/2;
-            }
-            width *= 2;
-            indexStop += width;
+            //TODO optimization repaint
+            repaint();
         }
-        //TODO optimization repaint
-        repaint();
     }
     
     private int calculateNodePositionDifference(int height) {
         if ((height == 0) || (height == 1)) {
             return 0;
         } else if (height == 2) {
-            return widthBetweenBrotherNodes+widthBetweenNodes+2*nodeSize;
+            return widthBetweenBrotherNodes+
+                widthBetweenNodes+2*nodeSize;
         } else {
             return 2*calculateNodePositionDifference(height-1);
         }

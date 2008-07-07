@@ -23,7 +23,6 @@ package model.tree;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.DataStructureType;
 
 /**
  * Abstract class containing common methods of all binary trees.
@@ -38,9 +37,21 @@ import model.DataStructureType;
 public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
         IBinaryTree<N> {
 
-    protected N root;
+    /**
+     * Definition of the type of binary trees.
+     * 
+     * @author Julien Hannier
+     * @author Pierre Pironin
+     * @author Damien Rigoni
+     * @version 1.00 16/06/08
+     */
+    public enum BinaryTreeType {
+        AVLTREE, BINARYSEARCHTREE, REDBLACKTREE;
+    }
     
-    protected static DataStructureType type;
+    protected static BinaryTreeType type;
+    
+    protected N root;
 
     @Override
     public void setRoot(N newNode) {
@@ -53,8 +64,8 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
     }
     
     @Override
-    public final DataStructureType getType() {
-        return type;
+    public final String getType() {
+        return type.toString();
     }
     
     @Override

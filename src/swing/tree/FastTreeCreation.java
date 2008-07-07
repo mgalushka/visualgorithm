@@ -36,7 +36,7 @@ import javax.swing.text.MaskFormatter;
 import model.tree.IBinaryNode;
 
 import swing.VisualizationZoom;
-import controller.TabController;
+import controller.BinaryTreeTabController;
 
 /**
  * Definition of the fast tree creation pane.
@@ -50,7 +50,7 @@ public class FastTreeCreation extends JPanel {
 
     private static final long serialVersionUID = 1L;
     
-    private TabController controller;
+    private BinaryTreeTabController controller;
     
     private TreeVisualization treeVisualization;
     
@@ -61,13 +61,14 @@ public class FastTreeCreation extends JPanel {
      * 
      * @param c the controller
      */
-    public FastTreeCreation(TabController c) {
+    public FastTreeCreation(BinaryTreeTabController c) {
         treeVisualization = new TreeVisualization();
         controller = c;
         controls = createControls();  
         
         setLayout(new BorderLayout(4,4));
-        add(new VisualizationZoom(treeVisualization), BorderLayout.CENTER);
+        add(new VisualizationZoom(treeVisualization),
+            BorderLayout.CENTER);
         add(controls, BorderLayout.SOUTH);
     }
     
@@ -79,11 +80,14 @@ public class FastTreeCreation extends JPanel {
         try {
             mask = new MaskFormatter("##");
         } catch (ParseException e) {
-            System.out.println("Formatter is bad : " + e.getMessage());
+            System.out.println(
+                "Formatter is bad : " + e.getMessage());
             System.exit(-1);
         }
-        final JFormattedTextField insertValue = new JFormattedTextField(mask);
-        final JFormattedTextField deleteValue = new JFormattedTextField(mask);
+        final JFormattedTextField insertValue =
+            new JFormattedTextField(mask);
+        final JFormattedTextField deleteValue = 
+            new JFormattedTextField(mask);
         insertValue.setHorizontalAlignment(JTextField.CENTER);
         deleteValue.setHorizontalAlignment(JTextField.CENTER);
         
@@ -96,7 +100,8 @@ public class FastTreeCreation extends JPanel {
                     controller.addNode(Integer.parseInt(value));
                     insertValue.setValue(null);
                 } else {
-                    controller.addNode((int)Math.round(Math.random()*100));
+                    controller.addNode(
+                        (int)Math.round(Math.random()*100));
                 }
             }
         });
@@ -131,7 +136,7 @@ public class FastTreeCreation extends JPanel {
      *  
      * @param data the data
      */
-    public void updateTree(Object data) {
-        treeVisualization.calculatePositions((List<IBinaryNode<?>>)data);
+    public <N extends IBinaryNode<N>> void updateTree(List<N> data) {
+        treeVisualization.calculatePositions(data);
     }
 }

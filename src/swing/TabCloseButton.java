@@ -45,7 +45,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 import controller.PrincipalController;
-import controller.TabController;
+import controller.BinaryTreeTabController;
 
 /**
  * Definition of the tab close button.
@@ -112,6 +112,10 @@ public class TabCloseButton extends JPanel {
             private static final long serialVersionUID = 1L;
 
             @Override
+            public void updateUI() {
+            }
+            
+            @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2 = (Graphics2D)g.create();
@@ -162,8 +166,8 @@ public class TabCloseButton extends JPanel {
     
     private void close() {
         int index = tabbedPane.indexOfTabComponent(TabCloseButton.this);
-        if (((TabController)controller.
-                getTabController(index)).isSaved()) {
+        if (((BinaryTreeTabController)controller.
+                getSubController(index)).isSaved()) {
             controller.closeTab(index);
         } else {
             Object[] options = {"Save", "Discard", "Cancel"};
