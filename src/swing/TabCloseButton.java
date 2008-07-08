@@ -32,12 +32,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -61,8 +59,6 @@ public class TabCloseButton extends JPanel {
     
     private JTabbedPane tabbedPane;
     
-    private JFileChooser fileChooser;
-    
     private PrincipalController controller;
 
     /**
@@ -71,11 +67,10 @@ public class TabCloseButton extends JPanel {
      * @param p the tabbed pane
      * @param c the principal controller
      */
-    public TabCloseButton(JTabbedPane p, JFileChooser fc, PrincipalController c) {
+    public TabCloseButton(JTabbedPane p, PrincipalController c) {
         super(new FlowLayout(FlowLayout.LEFT, 0, 0));
         tabbedPane = p;
         controller = c;
-        fileChooser = fc;
         JButton closeButton = createCloseButton();
         JLabel tabName = new JLabel() {
             private static final long serialVersionUID = 1L;
@@ -167,7 +162,7 @@ public class TabCloseButton extends JPanel {
     private void close() {
         int index = tabbedPane.indexOfTabComponent(TabCloseButton.this);
         if (((BinaryTreeTabController)controller.
-                getSubController(index)).isSaved()) {
+                getSubController(index)).isSubModelSaved()) {
             controller.closeTab(index);
         } else {
             Object[] options = {"Save", "Discard", "Cancel"};
@@ -178,28 +173,7 @@ public class TabCloseButton extends JPanel {
                 JOptionPane.WARNING_MESSAGE, null,
                 options, options[2]);
             if (choice == JOptionPane.YES_OPTION) {
-                int returnVal = fileChooser.showSaveDialog(
-                    tabbedPane);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    File file = fileChooser.getSelectedFile();
-                    if (file.exists()) {
-                        int response = JOptionPane.showConfirmDialog(
-                            tabbedPane,"This file already exists." +
-                            " Do you want to replace it?",
-                            "Save Operation",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.WARNING_MESSAGE);
-                        if (response == JOptionPane.YES_OPTION) {
-                            ((GraphicUserInterface)controller.
-                                    getView()).saveFile(index, file);
-                            controller.closeTab(index);
-                        }
-                    } else {
-                        ((GraphicUserInterface)controller.getView()).
-                            saveFile(index, file);
-                        controller.closeTab(index);
-                    }
-                }
+                ((GraphicUserInterface)controller.getView()).saveTab("CLOSE");
             } else if (choice == JOptionPane.NO_OPTION) {
                 controller.closeTab(index);
             }

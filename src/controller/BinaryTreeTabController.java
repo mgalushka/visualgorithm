@@ -21,6 +21,7 @@
 
 package controller;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -43,8 +44,6 @@ import view.IView;
  * @see IController
  */
 public class BinaryTreeTabController implements ISubController {
-    
-    private static String subControllerType = "TREE";
 
     private BinaryTreeSubModel binaryTreeSubModel;
     
@@ -74,7 +73,7 @@ public class BinaryTreeTabController implements ISubController {
      * @throws ParseException 
      * @throws FileNotFoundException 
      */
-    public BinaryTreeTabController(String file) throws FileNotFoundException,
+    public BinaryTreeTabController(File file) throws FileNotFoundException,
             ParseException, IOException, UnknownTreeTypeException {
         binaryTreeSubModel = new BinaryTreeSubModel(file);
         
@@ -87,17 +86,17 @@ public class BinaryTreeTabController implements ISubController {
     }
 
     @Override
-    public String getType() {
-        return subControllerType;
-    }
-    
-    @Override
     public ISubModel getSubModel() {
         return binaryTreeSubModel;
     }
     
     @Override
-    public boolean isSaved() {
+    public void saveSubModel(File file) throws IOException {
+        binaryTreeSubModel.saveBinaryTree(file); 
+    }
+    
+    @Override
+    public boolean isSubModelSaved() {
         return binaryTreeSubModel.isBinaryTreeSaved();
     }
     
@@ -126,15 +125,5 @@ public class BinaryTreeTabController implements ISubController {
      */
     public void deleteNode(int key) {
         binaryTreeSubModel.deleteNode(key);
-    }
-    
-    /**
-     * Saves the binary tree into the selected file.
-     * 
-     * @param file the file
-     * @throws IOException 
-     */
-    public void saveBinaryTreeSubModel(String file) throws IOException {
-        binaryTreeSubModel.saveBinaryTree(file);
     }
 }

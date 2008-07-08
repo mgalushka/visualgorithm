@@ -84,15 +84,15 @@ public class BinaryTreeTabPage extends JPanel implements IBinaryTreeView {
                     pedagogicView.setText("Fast Creation Mode");
                     remove(fastTreeCreation);
                     add(pedagogicalTreeCreation, BorderLayout.CENTER);
-                    //TODO update
                     revalidate();
+                    repaint();
                     isFastTreeCreation = false;
                 } else {
                     pedagogicView.setText("Pedagogical Creation Mode");
                     remove(pedagogicalTreeCreation);
                     add(fastTreeCreation, BorderLayout.CENTER);
-                    //TODO update
                     revalidate();
+                    repaint();
                     isFastTreeCreation = true;
                 }
             }

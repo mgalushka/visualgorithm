@@ -1,0 +1,8 @@
+AVLTREE
+0	8	1	2
+1	5	3	4
+2	10	5	nil
+3	4	6	nil
+4	6	nil	nil
+5	9	nil	nil
+6	3	nil	nil

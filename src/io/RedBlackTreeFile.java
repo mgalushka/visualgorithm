@@ -89,6 +89,6 @@ class RedBlackTreeFile extends TreeFile<RedBlackNode,
             String rightNodeNumber, String leftNodeNumber) {
         return super.getNode(node, currentNodeNumber, rightNodeNumber,
             leftNodeNumber)
-                + SPACE + node.getColor();
+                + SPACE + node.getColor().toString().toLowerCase();
     }
 }

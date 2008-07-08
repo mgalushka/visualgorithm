@@ -1,0 +1,6 @@
+REDBLACKTREE
+0	6	1	2	black
+1	4	3	4	black
+2	8	nil	nil	black
+3	3	nil	nil	red
+4	5	nil	nil	red

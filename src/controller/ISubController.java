@@ -21,6 +21,8 @@
 
 package controller;
 
+import java.io.File;
+import java.io.IOException;
 import model.ISubModel;
 
 /**
@@ -33,14 +35,7 @@ import model.ISubModel;
  * @see IController
  */
 public interface ISubController extends IController {
-    
-    /**
-     * Returns the type of the sub controller.
-     * 
-     * @return the type of the sub controller
-     */
-    public String getType();
-    
+
     /**
      * Returns the sub model.
      * 
@@ -49,10 +44,18 @@ public interface ISubController extends IController {
     public ISubModel getSubModel();
     
     /**
+     * Saves the sub model into the selected file.
+     * 
+     * @param the file
+     * @throws IOException
+     */
+    public void saveSubModel(File file) throws IOException;
+    
+    /**
      * Returns true if the data structure
      * of the sub controller has been saved.
      * 
      * @return true if the data structure has been saved
      */
-    public boolean isSaved();
+    public boolean isSubModelSaved();
 }

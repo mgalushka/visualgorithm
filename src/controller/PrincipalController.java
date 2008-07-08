@@ -21,6 +21,7 @@
 
 package controller;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -114,22 +115,17 @@ public class PrincipalController implements IController {
      * @param file the file
      * @param index the index of the tab
      */
-    public void openFile(String file, int index) throws
+    public void openFile(File file, int index) throws
             FileNotFoundException, ParseException,
             IOException, UnknownTreeTypeException {
-        String ext = null;
-        int i = file.lastIndexOf('.');
-        if (i > 0 &&  i < file.length() - 1) {
-            ext = file.substring(i+1).toLowerCase();
-            if (ext.equals("bt")) {
-                subControllers.add(new BinaryTreeTabController(file));
-                model.openSubModelFile(
-                    subControllers.get(index).getSubModel(), file);
-            } else {
-                
-            }
-        } else {
-            
+        String fileName = file.getName();
+        int i = fileName.lastIndexOf('.');
+        String extension = fileName.substring(i+1).toLowerCase();
+        
+        if (extension.equals("bt")) {
+            subControllers.add(new BinaryTreeTabController(file));
+            model.openSubModelFile(
+                subControllers.get(index).getSubModel(), fileName);
         }
     }
     
@@ -140,11 +136,9 @@ public class PrincipalController implements IController {
      * @param index the index of the tab
      * @throws IOException 
      */
-    public void saveFile(String file, int index) throws IOException {
-        if (getSubController(index).getType().equals("TREE")) {
-            ((BinaryTreeTabController)subControllers.get(index))
-                .saveBinaryTreeSubModel(file.concat(".bt"));
-        }
+    public void saveDataStructure(File file, int index)
+            throws IOException {
+        getSubController(index).saveSubModel(file);
     }
     
     /**

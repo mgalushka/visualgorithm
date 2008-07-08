@@ -21,6 +21,7 @@
 
 package model.tree;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -70,9 +71,9 @@ public class BinaryTreeSubModel implements ISubModel{
      * @throws ParseException 
      * @throws FileNotFoundException 
      */
-    public BinaryTreeSubModel(String file) throws FileNotFoundException,
+    public BinaryTreeSubModel(File file) throws FileNotFoundException,
             ParseException, IOException, UnknownTreeTypeException {
-        dataStructure = TreeFile.load(file);
+        dataStructure = TreeFile.load(file.getAbsolutePath());
         listeners = new EventListenerList();
         isBinaryTreeSaved = true;
     }
@@ -146,8 +147,14 @@ public class BinaryTreeSubModel implements ISubModel{
      * @param file the file
      * @throws IOException 
      */
-    public void saveBinaryTree(String file) throws IOException {
-        TreeFile.save(dataStructure, file);
+    public void saveBinaryTree(File file) throws IOException {
+        String path = file.getAbsolutePath();
+        
+        if (path.endsWith(".bt")) {
+            TreeFile.save(dataStructure, path);
+        } else {
+            TreeFile.save(dataStructure, path.concat(".bt"));
+        }
         isBinaryTreeSaved = true;
     }
     

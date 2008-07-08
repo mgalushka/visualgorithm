@@ -84,36 +84,9 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
         super("Visualgorithm");
         controller = c;
         menuBar = createMenuBar();
+        fileChooser = createFileChooser();
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        fileChooser = new JFileChooser();
-        fileChooser.addChoosableFileFilter(new FileFilter(){
-            @Override
-            public boolean accept(File f) {
-                if (f.isDirectory()) {
-                    return true;
-                }
-                String s = f.getName();
-                int i = s.lastIndexOf('.');
-                String extension = null;
-                if (i > 0 &&  i < s.length() - 1) {
-                    extension = s.substring(i+1).toLowerCase();
-                }
-                if (extension != null) {
-                    if (extension.equals("bt")) {
-                            return true;
-                    } else {
-                        return false;
-                    }
-                }
-                return false;
-            }
-
-            @Override
-            public String getDescription() {
-                return "Binary Tree  ( .bt )";
-            }
-        });
-        fileChooser.setAcceptAllFileFilterUsed(false);
+        
         menuBar.setBorder(
             BorderFactory.createEmptyBorder(2, 0, 2, 0));
         setJMenuBar(menuBar);
@@ -133,6 +106,40 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
     private JComponent getTabView(int index) {
         return (JComponent)
             controller.getSubController(index).getView();
+    }
+
+    private JFileChooser createFileChooser() {
+        JFileChooser chooser = new JFileChooser();
+        
+        chooser.addChoosableFileFilter(new FileFilter(){
+            @Override
+            public boolean accept(File file) {
+                if (file.isDirectory()) {
+                    return true;
+                }
+                String name = file.getName();
+                int i = name.lastIndexOf('.');
+                String extension = null;
+                if ((i > 0) && (i < name.length()-1)) {
+                    extension = name.substring(i+1).toLowerCase();
+                }
+                if (extension != null) {
+                    if (extension.equals("bt")) {
+                            return true;
+                    } else {
+                        return false;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public String getDescription() {
+                return "Binary Tree  ( .bt )";
+            }
+        });
+        chooser.setAcceptAllFileFilterUsed(false);
+        return chooser;
     }
 
     private JMenuBar createMenuBar() {
@@ -167,8 +174,7 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
                     int index = tabbedPane.getTabCount();
                     try {
                         controller.openFile(
-                            fileChooser.getSelectedFile()
-                            .getAbsolutePath(), index);
+                            fileChooser.getSelectedFile(), index);
                     } catch (FileNotFoundException e) {
                         JOptionPane.showMessageDialog(tabbedPane,
                             e.getMessage(),
@@ -188,6 +194,7 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
                             "Open Failed",
                             JOptionPane.WARNING_MESSAGE);
                     }
+                    fileChooser.setSelectedFile(null);
                 }
             }
         });
@@ -196,33 +203,7 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                int count = tabbedPane.getTabCount();
-                if (count > 0) {
-                    int returnVal = fileChooser.showSaveDialog(
-                        GraphicUserInterface.this);
-                    if (returnVal == JFileChooser.APPROVE_OPTION) {
-                        int index = tabbedPane.getSelectedIndex();
-                        File file = fileChooser.getSelectedFile();
-                        if (file.exists()) {
-                            int choice = JOptionPane.showConfirmDialog(
-                                tabbedPane,"This file already exists." +
-                                " Do you want to replace it?",
-                                "Save Operation",
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.WARNING_MESSAGE);
-                            if (choice == JOptionPane.YES_OPTION) {
-                                saveFile(index, file);
-                                tabbedPane.setTitleAt(index, file.getName());
-                                //TODO repaint close button
-                                tabbedPane.getTabComponentAt(index);
-                            }
-                        } else {
-                            saveFile(index, file);
-                            tabbedPane.setTitleAt(index, file.getName());
-                            //TODO repaint close button
-                        }
-                    }
-                }
+                saveTab("SAVE");
             }
         });
         exit.setAccelerator(KeyStroke.getKeyStroke(
@@ -238,6 +219,59 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
         file.add(exit);
         return file;
     }
+
+    /**
+     * Saves a tab into a file. The parameter correspond
+     * to the originally event of the saving that is to say
+     * SAVE to save the tab, EXIT to save the tab and exit
+     * and CLOSE to save and close the tab.
+     * 
+     * @param event the event of the save
+     */
+    public void saveTab(String event) {
+        int count = tabbedPane.getTabCount();
+        if (count > 0) {
+            int returnVal = fileChooser.showSaveDialog(
+                GraphicUserInterface.this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                int index = tabbedPane.getSelectedIndex();
+                File file = fileChooser.getSelectedFile();
+                if (file.exists()) {
+                    int choice = JOptionPane.showConfirmDialog(
+                        tabbedPane,"This file already exists." +
+                        " Do you want to replace it?",
+                        "Save Operation",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+                    if (choice == JOptionPane.YES_OPTION) {
+                        saveAction(event, file , index);
+                    }
+                } else {
+                    saveAction(event, file , index);
+                }
+            }
+            fileChooser.setSelectedFile(null);
+        }
+    }
+    
+    private void saveAction(String action, File file, int index) {
+        try {
+            controller.saveDataStructure(
+                file, index);
+        } catch (IOException e) {
+            System.out.println("File could not be saved");
+            System.exit(1);
+        }
+        if (action.equals("SAVE")) {
+            tabbedPane.setTitleAt(index, file.getName());
+            ((TabCloseButton)tabbedPane.getTabComponentAt(index))
+                .revalidate();
+        } else if (action.equals("EXIT")) {
+            controller.exitSoftware();
+        } else if (action.equals("CLOSE")) {
+            controller.closeTab(index);
+        }
+    }
     
     private void exitSoftware() {
         int count = tabbedPane.getTabCount();
@@ -245,7 +279,7 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
             controller.exitSoftware();
         } else if (count == 1) {
             if (((BinaryTreeTabController)controller.getSubController(0)).
-                    isSaved()) {
+                    isSubModelSaved()) {
                 controller.exitSoftware();
             } else {
                 Object[] options = {"Save", "Discard", "Cancel"};
@@ -256,27 +290,7 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
                     JOptionPane.WARNING_MESSAGE, null,
                     options, options[2]);
                 if (choice == JOptionPane.YES_OPTION) {
-                    int returnVal = fileChooser.showSaveDialog(
-                        tabbedPane);
-                    if (returnVal == JFileChooser.APPROVE_OPTION) {
-                        int index = tabbedPane.getSelectedIndex();
-                        File file = fileChooser.getSelectedFile();
-                        if (file.exists()) {
-                            int response = JOptionPane.showConfirmDialog(
-                                tabbedPane,"This file already exists." +
-                                " Do you want to replace it?",
-                                "Save Operation",
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.WARNING_MESSAGE);
-                            if (response == JOptionPane.YES_OPTION) {
-                                saveFile(index, file);
-                                controller.exitSoftware();
-                            }
-                        } else {
-                            saveFile(index, file);
-                            controller.exitSoftware();
-                        }
-                    }
+                    saveTab("EXIT");
                 } else if (choice == JOptionPane.NO_OPTION) {
                     controller.exitSoftware();
                 }
@@ -291,22 +305,6 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
             if (choice == JOptionPane.YES_OPTION) {
                 controller.exitSoftware();
             }
-        }
-    }
-    
-    /**
-     * Saves a tab into a file.
-     * 
-     * @param index the index of the tab
-     * @param file the file
-     */
-    void saveFile(int index, File file) {
-        try {
-            controller.saveFile(
-                file.getAbsolutePath(), index);
-        } catch (IOException e) {
-            System.out.println("File could not be saved");
-            System.exit(1);
         }
     }
     
@@ -392,7 +390,7 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
             tabbedPane.addTab(event.getName(),
                 getTabView(numTab));
             tabbedPane.setTabComponentAt(numTab,
-                new TabCloseButton(tabbedPane, fileChooser, controller));
+                new TabCloseButton(tabbedPane, controller));
             tabbedPane.setSelectedIndex(numTab);
         } else if (event.getType() == ModelEventType.EXIT) {
             System.exit(0);
