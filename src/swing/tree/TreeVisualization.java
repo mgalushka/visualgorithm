@@ -50,13 +50,13 @@ public class TreeVisualization extends JPanel {
     
     private List<GraphicNode> graphicNodes;
 
-    private static final int nodeSize = 30;
+    private static final int nodeSize = 40;
     
-    private static final int heightBetweenNodes = 35;
+    private static final int heightBetweenNodes = 40;
     
-    private static final int widthBetweenBrotherNodes = 20;
+    private static final int widthBetweenBrotherNodes = 25;
     
-    private static final int widthBetweenNodes = 15;
+    private static final int widthBetweenNodes = 20;
     
     private static final int yPositionRootNode = 20 + nodeSize/2;
     

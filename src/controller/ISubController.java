@@ -46,7 +46,7 @@ public interface ISubController extends IController {
     /**
      * Saves the sub model into the selected file.
      * 
-     * @param the file
+     * @param file the file
      * @throws IOException
      */
     public void saveSubModel(File file) throws IOException;

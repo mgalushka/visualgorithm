@@ -59,7 +59,6 @@ public class BinaryTreeTabPage extends JPanel implements IBinaryTreeView {
     /**
      * Builds the tab view. The model is a data structure.
      * 
-     * @param dataStructure the model
      * @param c the controller
      * @param type the type of the data structure
      */

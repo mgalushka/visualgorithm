@@ -77,7 +77,6 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
     /**
      * Builds the principal view.
      * 
-     * @param model the model
      * @param c the controller
      */
     public GraphicUserInterface(PrincipalController c) {
