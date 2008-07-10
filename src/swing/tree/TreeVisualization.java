@@ -52,7 +52,7 @@ public class TreeVisualization extends JPanel {
 
     private static final int nodeSize = 40;
     
-    private static final int heightBetweenNodes = 40;
+    private static final int heightBetweenNodes = 45;
     
     private static final int widthBetweenBrotherNodes = 25;
     
@@ -110,11 +110,13 @@ public class TreeVisualization extends JPanel {
                     changeGraphicNodeColor(
                         indexOfSelectedNode,
                         colorOfSelectedNode);
-                    moveGraphicNode(indexOfSelectedNode,
-                        xPositionOfSelectedNode,
-                        yPositionOfSelectedNode);
-                    xPositionOfSelectedNode = -1;
-                    yPositionOfSelectedNode = -1;
+                    if (indexOfSelectedNode > 0) {
+                        moveGraphicNode(indexOfSelectedNode,
+                            xPositionOfSelectedNode,
+                            yPositionOfSelectedNode);
+                        xPositionOfSelectedNode = -1;
+                        yPositionOfSelectedNode = -1;
+                    }
                     indexOfSelectedNode = -1;
                     colorOfSelectedNode = null;
                 }
@@ -154,24 +156,83 @@ public class TreeVisualization extends JPanel {
         }
         return index;
     }
-        
+    
+    private int indexOfParentNode(int i) {
+        if (i == 0) {
+            return 0;
+        } else {
+            if (i%2 == 0) {
+                return (i-2)/2;
+            } else {
+                return (i-1)/2;
+            }
+        }
+    }
+    
+    private int xPositionOfMinNode(int i) {
+        int j = 0;
+        while (i < graphicNodes.size()) {
+            j = i;
+            i = 2*i+1;
+        }
+        return getNode(j).getXPosition();
+    }
+    
+    private int xPositionOfMaxNode(int i) {
+        int j = 0;
+        while (i < graphicNodes.size()) {
+            j = i;
+            i = 2*i+2;
+        }
+        return getNode(j).getXPosition();
+    }
+   
     private void changeGraphicNodeColor(int nodeIndex,
             GraphicNodeColor color) {
-        getNode(nodeIndex).changeColor(color);
-        //TODO optimization repaint
-        repaint();
+        GraphicNode node = getNode(nodeIndex);
+        node.changeColor(color);
+        repaint(node.getXPosition()-nodeSize/2-1,
+            node.getYPosition()-nodeSize/2-1, nodeSize+2,
+            nodeSize+2);
     }
 
     private void moveGraphicNode(int nodeIndex, int x,
             int y) {
         GraphicNode movedNode = getNode(nodeIndex);
-        int shiftX = x-movedNode.getXPosition();
-        int shiftY = y-movedNode.getYPosition();
+        GraphicNode parentNode = 
+            getNode(indexOfParentNode(nodeIndex));
+        //TODO height of the moved node
+        int height = (int)Math.round(
+            Math.sqrt((graphicNodes.size()+1)/2));
+        int xMovedNode = movedNode.getXPosition();
+        int yMovedNode = movedNode.getYPosition();
+        int xParentNode = parentNode.getXPosition();
+        int yParentNode = parentNode.getYPosition();
+        int xMinNode = xPositionOfMinNode(nodeIndex);
+        int xMaxNode = xPositionOfMaxNode(nodeIndex);
+        
+        repaint(xMovedNode < xParentNode ? xMovedNode : xParentNode,
+            yMovedNode < yParentNode ? yMovedNode : yParentNode,
+            Math.abs(xMovedNode-xParentNode),
+            Math.abs(yMovedNode-yParentNode));
+        repaint(xMinNode-nodeSize/2-1,
+            yMovedNode-nodeSize/2-1,
+            xMaxNode-xMinNode+2+nodeSize,
+            height*heightBetweenNodes+(height+1)*nodeSize+2-nodeSize);
         movedNode.move(x, y);
-        //TODO speed of the shift
-        moveGraphicSubNodes(nodeIndex, shiftX, shiftY);
-        //TODO optimization repaint
-        repaint();
+        moveGraphicSubNodes(nodeIndex, x-xMovedNode, y-yMovedNode);
+        xMovedNode = movedNode.getXPosition();
+        yMovedNode = movedNode.getYPosition();
+        xMinNode = xPositionOfMinNode(nodeIndex);
+        xMaxNode = xPositionOfMaxNode(nodeIndex);
+        repaint(xMovedNode < xParentNode ? xMovedNode : xParentNode,
+            yMovedNode < yParentNode ? yMovedNode : yParentNode,
+            Math.abs(xMovedNode-xParentNode),
+            Math.abs(yMovedNode-yParentNode));
+        repaint(xMinNode-nodeSize/2-1,
+            yMovedNode-nodeSize/2-1,
+            xMaxNode-xMinNode+2+nodeSize,
+            height*heightBetweenNodes+(height+1)*nodeSize+2-nodeSize);
     }
 
     private void moveGraphicSubNodes(int nodeIndex,
@@ -311,7 +372,6 @@ public class TreeVisualization extends JPanel {
                 width *= 2;
                 indexStop += width;
             }
-            //TODO optimization repaint
             repaint();
         }
     }
