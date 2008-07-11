@@ -2,7 +2,7 @@
  * AVLTreeFileTest.java v1.00 07/07/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,11 +24,9 @@ package io;
 import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-
 import model.tree.AVLNode;
 import model.tree.AVLTree;
 import model.tree.UnknownTreeTypeException;
@@ -66,18 +64,15 @@ public class AVLTreeFileTest {
     @Test
     public void testLoad() {
         try {
-            AVLTree t = (AVLTree)TreeFile.load(loadFileName);
+            AVLTree t = (AVLTree) TreeFile.load(loadFileName);
             assertEquals(t.getRoot().getHeight(), 3);
             assertEquals(t.getRoot().getLeft().getHeight(), 2);
             assertEquals(t.getRoot().getRight().getHeight(), 1);
-            assertEquals(
-                t.getRoot().getLeft().getLeft().getHeight(), 1);
-            assertEquals(
-                t.getRoot().getLeft().getRight().getHeight(), 0);
-            assertEquals(
-                t.getRoot().getRight().getLeft().getHeight(), 0);
-            assertEquals(
-                t.getRoot().getLeft().getLeft().getLeft().getHeight(), 0);
+            assertEquals(t.getRoot().getLeft().getLeft().getHeight(), 1);
+            assertEquals(t.getRoot().getLeft().getRight().getHeight(), 0);
+            assertEquals(t.getRoot().getRight().getLeft().getHeight(), 0);
+            assertEquals(t.getRoot().getLeft().getLeft().getLeft().getHeight(),
+                0);
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {

@@ -1,8 +1,8 @@
 /*
- * DataStructureFactory.java v1.00 16/06/08
+ * BinaryTreeFactory.java v1.00 16/06/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,7 +44,7 @@ public class BinaryTreeFactory {
      * @return the binary tree
      */
     public static IBinaryTree<?> createBinaryTree(BinaryTreeType type) {
-        switch(type) {
+        switch (type) {
         case AVLTREE:
             return new AVLTree();
         case BINARYSEARCHTREE:

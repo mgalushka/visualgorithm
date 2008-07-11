@@ -2,7 +2,7 @@
  * AbstractViewFactory.java v1.00 16/06/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,7 +43,7 @@ public abstract class AbstractViewFactory {
     public static AbstractViewFactory getFactory() {
         return new SwingViewFactory();
     }
-    
+
     /**
      * Creates the principal view of the software.
      * 
@@ -57,6 +57,6 @@ public abstract class AbstractViewFactory {
      * 
      * @return the binary tree tab view
      */
-    public abstract IBinaryTreeView createBinaryTreeTabPage(
-            String type, BinaryTreeTabController controller);
+    public abstract IBinaryTreeView createBinaryTreeTabPage(String type,
+            BinaryTreeTabController controller);
 }

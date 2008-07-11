@@ -2,7 +2,7 @@
  * RedBlackTree.java v1.00 19/05/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,8 +22,7 @@
 package model.tree;
 
 /**
- * Definition of red black trees,
- * with as node <tt>RedBlackNode</tt>.
+ * Definition of red black trees, with as node <tt>RedBlackNode</tt>.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
@@ -32,13 +31,12 @@ package model.tree;
  * @see IRedBlackNode
  * @see IBinarySearchTree
  */
-public class RedBlackTree
-        extends AbstractBinarySearchTree<RedBlackNode> {
+public class RedBlackTree extends AbstractBinarySearchTree<RedBlackNode> {
 
     {
         type = BinaryTreeType.REDBLACKTREE;
     }
-    
+
     /**
      * Build an empty red black tree.
      */
@@ -47,23 +45,20 @@ public class RedBlackTree
     }
 
     /**
-     * Build a red black tree whose root
-     * is initialized with the specified key.
+     * Build a red black tree whose root is initialized with the specified key.
      * 
      * @param key the key of the root
      */
     public RedBlackTree(int key) {
-        root = new RedBlackNode(key,
-            RedBlackNode.RedBlackNodeColor.BLACK);
+        root = new RedBlackNode(key, RedBlackNode.RedBlackNodeColor.BLACK);
     }
 
     @Override
     public boolean isGoodTree() {
-        return (getRoot() == null) || (getRoot().isBlack() &&
-                isRedNodeHasBlackChild(getRoot()) &&
-                hasGoodHeight(getRoot()));
+        return (getRoot() == null)
+                || (getRoot().isBlack() && isRedNodeHasBlackChild(getRoot()) && hasGoodHeight(getRoot()));
     }
-    
+
     private boolean hasGoodHeight(RedBlackNode node) {
         boolean hasGoodHeight = true;
         int leftHeight = 0;
@@ -82,28 +77,24 @@ public class RedBlackTree
         }
         return hasGoodHeight;
     }
-    
+
     private boolean isRedNodeHasBlackChild(RedBlackNode node) {
         boolean isRedHasBlackChild = true;
 
         if (node != null) {
-            isRedHasBlackChild = isRedNodeHasBlackChild(
-                node.getLeft());
+            isRedHasBlackChild = isRedNodeHasBlackChild(node.getLeft());
             if (isRedHasBlackChild) {
-                isRedHasBlackChild = isRedNodeHasBlackChild(
-                    node.getRight());
+                isRedHasBlackChild = isRedNodeHasBlackChild(node.getRight());
             }
             if (isRedHasBlackChild) {
                 if (node.isRed()) {
                     if (node.getLeft() != null) {
-                        if (node.getLeft().isRed() ||
-                                (node.getRight() == null)) {
+                        if (node.getLeft().isRed() || (node.getRight() == null)) {
                             isRedHasBlackChild = false;
                         }
                     }
                     if (node.getRight() != null) {
-                        if (node.getRight().isRed() ||
-                                (node.getLeft() == null)) {
+                        if (node.getRight().isRed() || (node.getLeft() == null)) {
                             isRedHasBlackChild = false;
                         }
                     }

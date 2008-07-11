@@ -2,7 +2,7 @@
  * PrincipalController.java v1.00 16/06/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-
 import view.IPrincipalModelView;
 import view.AbstractViewFactory;
 import model.PrincipalModel;
@@ -44,13 +43,13 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  * @see IController
  */
 public class PrincipalController implements IController {
-    
+
     private PrincipalModel model;
- 
+
     private IPrincipalModelView gui;
-    
+
     private List<ISubController> subControllers;
-    
+
     /**
      * Builds the principal controller.
      * 
@@ -58,15 +57,14 @@ public class PrincipalController implements IController {
      */
     public PrincipalController(PrincipalModel m) {
         subControllers = new ArrayList<ISubController>();
-        
+
         model = m;
-        AbstractViewFactory viewFactory = 
-            AbstractViewFactory.getFactory();
+        AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
         gui = viewFactory.createGraphicUserInterface(this);
         getView().displayView();
         addListener();
     }
-    
+
     /**
      * Returns the wanted sub controller thanks to index.
      * 
@@ -76,12 +74,12 @@ public class PrincipalController implements IController {
     public ISubController getSubController(int index) {
         return subControllers.get(index);
     }
-    
+
     @Override
     public IPrincipalModelView getView() {
         return gui;
     }
-    
+
     private void addListener() {
         model.addModelListener(gui);
     }
@@ -92,13 +90,11 @@ public class PrincipalController implements IController {
      * @param type the type of the binary tree
      * @param index the index of the tab
      */
-    public void addBinaryTreeTab(BinaryTreeType type,
-            int index) {
+    public void addBinaryTreeTab(BinaryTreeType type, int index) {
         subControllers.add(new BinaryTreeTabController(type));
-        model.addSubModel(
-            subControllers.get(index).getSubModel());
+        model.addSubModel(subControllers.get(index).getSubModel());
     }
-    
+
     /**
      * Removes the tab indicated with index.
      * 
@@ -108,39 +104,37 @@ public class PrincipalController implements IController {
         model.removeSubModel(index);
         subControllers.remove(index);
     }
-    
+
     /**
      * Opens a file and loads it into a tab.
      * 
      * @param file the file
      * @param index the index of the tab
      */
-    public void openFile(File file, int index) throws
-            FileNotFoundException, ParseException,
-            IOException, UnknownTreeTypeException {
+    public void openFile(File file, int index) throws FileNotFoundException,
+            ParseException, IOException, UnknownTreeTypeException {
         String fileName = file.getName();
         int i = fileName.lastIndexOf('.');
-        String extension = fileName.substring(i+1).toLowerCase();
-        
+        String extension = fileName.substring(i + 1).toLowerCase();
+
         if (extension.equals("bt")) {
             subControllers.add(new BinaryTreeTabController(file));
-            model.openSubModelFile(
-                subControllers.get(index).getSubModel(), fileName);
+            model.openSubModelFile(subControllers.get(index).getSubModel(),
+                fileName);
         }
     }
-    
+
     /**
      * Saves the data structure into the selected file.
      * 
      * @param file the file
      * @param index the index of the tab
-     * @throws IOException 
+     * @throws IOException
      */
-    public void saveDataStructure(File file, int index)
-            throws IOException {
+    public void saveDataStructure(File file, int index) throws IOException {
         getSubController(index).saveSubModel(file);
     }
-    
+
     /**
      * Removes all the tabs.
      */

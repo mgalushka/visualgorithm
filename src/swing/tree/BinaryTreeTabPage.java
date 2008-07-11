@@ -1,8 +1,8 @@
 /*
- * TabPage.java v1.00 16/06/08
+ * BinaryTreeTabPage.java v1.00 16/06/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,11 +25,9 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import controller.BinaryTreeTabController;
 import view.IBinaryTreeView;
 import model.tree.BinaryTreeEvent;
@@ -47,15 +45,15 @@ import model.tree.IBinaryNode;
 public class BinaryTreeTabPage extends JPanel implements IBinaryTreeView {
 
     private static final long serialVersionUID = 1L;
-    
+
     private BinaryTreeTabController controller;
-    
+
     private FastTreeCreation fastTreeCreation = null;
-    
+
     private PedagogicalTreeCreation pedagogicalTreeCreation = null;
-    
+
     private boolean isFastTreeCreation = true;
-     
+
     /**
      * Builds the tab view. The model is a data structure.
      * 
@@ -64,21 +62,22 @@ public class BinaryTreeTabPage extends JPanel implements IBinaryTreeView {
      */
     public BinaryTreeTabPage(String type, BinaryTreeTabController c) {
         fastTreeCreation = new FastTreeCreation(c);
-        final JButton pedagogicView = new JButton("Pedagogical" +
-                "Creation Mode");
+        final JButton pedagogicView = new JButton("Pedagogical"
+                + "Creation Mode");
         JPanel titlePane = new JPanel();
         JLabel title = new JLabel(type);
-        
+
         controller = c;
-        titlePane.setLayout(new FlowLayout(
-            FlowLayout.CENTER, 4, 4));
+        titlePane.setLayout(new FlowLayout(FlowLayout.CENTER, 4, 4));
         titlePane.add(title);
         pedagogicView.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent event) {
                 if (isFastTreeCreation) {
                     if (pedagogicalTreeCreation == null) {
-                        pedagogicalTreeCreation = new PedagogicalTreeCreation(controller);
+                        pedagogicalTreeCreation = new PedagogicalTreeCreation(
+                                controller);
                     }
                     pedagogicView.setText("Fast Creation Mode");
                     remove(fastTreeCreation);

@@ -2,7 +2,7 @@
  * RedBlackTreeFileTest.java v1.00 07/07/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,11 +24,9 @@ package io;
 import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-
 import model.tree.RedBlackNode;
 import model.tree.RedBlackTree;
 import model.tree.UnknownTreeTypeException;
@@ -67,26 +65,20 @@ public class RedBlackTreeFileTest {
     @Test
     public void testLoad() {
         try {
-            RedBlackTree t = (RedBlackTree)
-                TreeFile.load(loadFileName);
+            RedBlackTree t = (RedBlackTree) TreeFile.load(loadFileName);
             assertEquals(t.getRoot().getKey(), 6);
-            assertEquals(t.getRoot().getColor(),
-                RedBlackNodeColor.BLACK);
+            assertEquals(t.getRoot().getColor(), RedBlackNodeColor.BLACK);
             assertEquals(t.getRoot().getLeft().getKey(), 4);
             assertEquals(t.getRoot().getLeft().getColor(),
                 RedBlackNodeColor.BLACK);
             assertEquals(t.getRoot().getRight().getKey(), 8);
             assertEquals(t.getRoot().getRight().getColor(),
                 RedBlackNodeColor.BLACK);
-            assertEquals(
-                t.getRoot().getLeft().getLeft().getKey(), 3);
-            assertEquals(
-                t.getRoot().getLeft().getLeft().getColor(),
+            assertEquals(t.getRoot().getLeft().getLeft().getKey(), 3);
+            assertEquals(t.getRoot().getLeft().getLeft().getColor(),
                 RedBlackNodeColor.RED);
-            assertEquals(
-                t.getRoot().getLeft().getRight().getKey(), 5);
-            assertEquals(
-                t.getRoot().getLeft().getRight().getColor(),
+            assertEquals(t.getRoot().getLeft().getRight().getKey(), 5);
+            assertEquals(t.getRoot().getLeft().getRight().getColor(),
                 RedBlackNodeColor.RED);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

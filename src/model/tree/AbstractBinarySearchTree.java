@@ -2,7 +2,7 @@
  * AbstractBinarySearchTree.java v1.00 19/05/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,21 +42,20 @@ public abstract class AbstractBinarySearchTree<N extends IBinarySearchNode<N>>
      */
     protected boolean isBST(IBinaryNode<?> node) {
         if (node != null) {
-            if ((node.getLeft() == null) &&
-                    (node.getRight() == null)) {
+            if ((node.getLeft() == null) && (node.getRight() == null)) {
                 return true;
             } else {
                 if (node.getLeft() == null) {
-                    return (node.getRight().getKey() > node.getKey()) &&
-                        isBST(node.getRight());
+                    return (node.getRight().getKey() > node.getKey())
+                            && isBST(node.getRight());
                 } else if (node.getRight() == null) {
-                    return (node.getLeft().getKey() <= node.getKey()) &&
-                        isBST(node.getLeft());
+                    return (node.getLeft().getKey() <= node.getKey())
+                            && isBST(node.getLeft());
                 } else {
-                    return (node.getLeft().getKey() <= node.getKey()) &&
-                        isBST(node.getLeft()) &&
-                        (node.getRight().getKey() > node.getKey()) &&
-                        isBST(node.getRight());
+                    return (node.getLeft().getKey() <= node.getKey())
+                            && isBST(node.getLeft())
+                            && (node.getRight().getKey() > node.getKey())
+                            && isBST(node.getRight());
                 }
             }
         }

@@ -2,7 +2,7 @@
  * AVLNode.java v1.00 19/05/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,8 +37,8 @@ public final class AVLNode extends AbstractBinarySearchNode<AVLNode> implements
     private int height;
 
     /**
-     * Builds an AVL node with the key given in parameter. The
-     * height is initialized to 0.
+     * Builds an AVL node with the key given in parameter. The height is
+     * initialized to 0.
      * 
      * @param key the key of the new AVL node
      */

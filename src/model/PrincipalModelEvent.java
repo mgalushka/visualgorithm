@@ -1,8 +1,8 @@
 /*
- * ModelEvent.java v1.00 16/06/08
+ * PrincipalModelEvent.java v1.00 16/06/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,7 +23,6 @@ package model;
 
 import java.util.EventObject;
 
-
 /**
  * Definition of principal model event.
  * 
@@ -33,7 +32,7 @@ import java.util.EventObject;
  * @version 1.00 16/06/08
  */
 public class PrincipalModelEvent extends EventObject {
-    
+
     /**
      * Enumeration of the principal model event type.
      * 
@@ -42,16 +41,18 @@ public class PrincipalModelEvent extends EventObject {
      * @author Damien Rigoni
      * @version 1.00 16/06/08
      */
-    public enum ModelEventType {ADD, DELETE, EXIT};
-    
+    public enum ModelEventType {
+        ADD, DELETE, EXIT
+    };
+
     private static final long serialVersionUID = 1L;
-    
+
     private ModelEventType type;
-    
+
     private String name;
-    
+
     private int index;
-    
+
     /**
      * Builds a principal model event.
      * 
@@ -65,7 +66,7 @@ public class PrincipalModelEvent extends EventObject {
         name = n;
         index = -1;
     }
-    
+
     /**
      * Builds a principal model event.
      * 
@@ -79,7 +80,7 @@ public class PrincipalModelEvent extends EventObject {
         name = null;
         index = i;
     }
-    
+
     /**
      * Builds a principal model event.
      * 
@@ -92,7 +93,7 @@ public class PrincipalModelEvent extends EventObject {
         name = null;
         index = -1;
     }
-    
+
     /**
      * Returns the type of the principal model event.
      * 
@@ -101,17 +102,16 @@ public class PrincipalModelEvent extends EventObject {
     public ModelEventType getType() {
         return type;
     }
-    
+
     /**
-     * Returns the name of the file or the type
-     * of the data structure.
+     * Returns the name of the file or the type of the data structure.
      * 
      * @return the name
      */
     public String getName() {
         return name;
     }
-    
+
     /**
      * Returns the index of the data structure.
      * 

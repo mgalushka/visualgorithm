@@ -2,7 +2,7 @@
  * ISubController.java v1.00 07/07/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,7 +42,7 @@ public interface ISubController extends IController {
      * @return the sub model
      */
     public ISubModel getSubModel();
-    
+
     /**
      * Saves the sub model into the selected file.
      * 
@@ -50,10 +50,9 @@ public interface ISubController extends IController {
      * @throws IOException
      */
     public void saveSubModel(File file) throws IOException;
-    
+
     /**
-     * Returns true if the data structure
-     * of the sub controller has been saved.
+     * Returns true if the data structure of the sub controller has been saved.
      * 
      * @return true if the data structure has been saved
      */

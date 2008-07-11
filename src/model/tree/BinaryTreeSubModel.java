@@ -1,8 +1,8 @@
 /*
- * DataStructure.java v1.00 16/06/08
+ * BinaryTreeSubModel.java v1.00 16/06/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 import javax.swing.event.EventListenerList;
-
 import io.TreeFile;
 import model.BinaryTreeFactory;
 import model.IDataStructure;
@@ -42,34 +41,33 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class BinaryTreeSubModel implements ISubModel{
+public class BinaryTreeSubModel implements ISubModel {
 
     private IBinaryTree<?> dataStructure;
-    
+
     private EventListenerList listeners;
-    
+
     private boolean isBinaryTreeSaved;
-    
+
     /**
      * Builds the binary tree.
      * 
      * @param type the type of the binary tree
      */
     public BinaryTreeSubModel(BinaryTreeType type) {
-        dataStructure = 
-            BinaryTreeFactory.createBinaryTree(type);
+        dataStructure = BinaryTreeFactory.createBinaryTree(type);
         listeners = new EventListenerList();
         isBinaryTreeSaved = false;
     }
-    
+
     /**
      * Builds the binary tree.
      * 
      * @param file the file containing the binary tree
-     * @throws UnknownTreeTypeException 
-     * @throws IOException 
-     * @throws ParseException 
-     * @throws FileNotFoundException 
+     * @throws UnknownTreeTypeException
+     * @throws IOException
+     * @throws ParseException
+     * @throws FileNotFoundException
      */
     public BinaryTreeSubModel(File file) throws FileNotFoundException,
             ParseException, IOException, UnknownTreeTypeException {
@@ -77,7 +75,7 @@ public class BinaryTreeSubModel implements ISubModel{
         listeners = new EventListenerList();
         isBinaryTreeSaved = true;
     }
-    
+
     /**
      * Returns true if the binary tree has been saved.
      * 
@@ -86,70 +84,68 @@ public class BinaryTreeSubModel implements ISubModel{
     public boolean isBinaryTreeSaved() {
         return isBinaryTreeSaved;
     }
-    
+
     @Override
     public IDataStructure getDataStructure() {
         return dataStructure;
     }
-    
+
     /**
      * Adds a binary tree listener to the binary tree.
      * 
      * @param listener the listener to add
      */
-    public void addBinaryTreeListener(BinaryTreeListener
-            listener) {
+    public void addBinaryTreeListener(BinaryTreeListener listener) {
         listeners.add(BinaryTreeListener.class, listener);
     }
-    
+
     /**
      * Removes a binary tree listener from the binary tree.
      * 
      * @param listener the listener to remove
      */
-    public void removeBinaryTreeListener(BinaryTreeListener
-            listener) {
+    public void removeBinaryTreeListener(BinaryTreeListener listener) {
         listeners.remove(BinaryTreeListener.class, listener);
     }
-    
+
     /**
      * Adds a node to the binary tree.
      * 
      * @param key the key of the node
      */
     public void addNode(int key) {
-        //TODO insertion
+        // TODO insertion
         fireBinaryTreeChanged(dataStructure.treeToArrayList());
         isBinaryTreeSaved = false;
     }
-    
+
     /**
      * Deletes a node from the binary tree.
      * 
      * @param key the key of the node
      */
     public void deleteNode(int key) {
-        //TODO deletion
+        // TODO deletion
         fireBinaryTreeChanged(dataStructure.treeToArrayList());
         isBinaryTreeSaved = false;
     }
-    
+
     /**
      * Updates the view.
      */
     public void updateBinaryTreeView() {
         fireBinaryTreeChanged(dataStructure.treeToArrayList());
     }
-    
+
     /**
      * Saves the binary tree into the selected file.
      * 
      * @param file the file
-     * @throws IOException 
+     * @throws IOException
      */
     public void saveBinaryTree(File file) throws IOException {
         String path = file.getAbsolutePath();
-        
+
         if (path.endsWith(".bt")) {
             TreeFile.save(dataStructure, path);
         } else {
@@ -157,14 +153,12 @@ public class BinaryTreeSubModel implements ISubModel{
         }
         isBinaryTreeSaved = true;
     }
-    
+
     private <N extends IBinaryNode<N>> void fireBinaryTreeChanged(List<N> data) {
-        BinaryTreeListener[] listenerTab = 
-            (BinaryTreeListener[])listeners.getListeners(
-            BinaryTreeListener.class);
-        for(BinaryTreeListener listener : listenerTab) {
-            listener.binaryTreeChanged(
-                new BinaryTreeEvent<N>(this, data)); 
+        BinaryTreeListener[] listenerTab = (BinaryTreeListener[]) listeners
+                .getListeners(BinaryTreeListener.class);
+        for (BinaryTreeListener listener : listenerTab) {
+            listener.binaryTreeChanged(new BinaryTreeEvent<N>(this, data));
         }
     }
 }

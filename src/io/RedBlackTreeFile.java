@@ -2,7 +2,7 @@
  * RedBlackTreeFile.java v1.00 02/07/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -34,16 +34,14 @@ import model.tree.RedBlackNode.RedBlackNodeColor;
  * @version 1.00 02/07/08
  * @see TreeFile
  */
-class RedBlackTreeFile extends TreeFile<RedBlackNode,
-        RedBlackTree> {
+class RedBlackTreeFile extends TreeFile<RedBlackNode, RedBlackTree> {
 
     private static final String REGEX_COLOR = "(red|black)";
 
     private static int COLOR = 4;
 
     @Override
-    protected void initREGEX(int currentNodeNumber,
-            int nextNodeNumber) {
+    protected void initREGEX(int currentNodeNumber, int nextNodeNumber) {
         super.initREGEX(currentNodeNumber, nextNodeNumber);
         String lineEnd = REGEX_BLANK + REGEX_COLOR;
         REGEX_2_CHILD += lineEnd;
@@ -53,10 +51,8 @@ class RedBlackTreeFile extends TreeFile<RedBlackNode,
     }
 
     @Override
-    protected void setLeftNode(RedBlackNode node,
-            int childNodeNumber) {
-        RedBlackNodeColor color =
-            (nodeVector.get(childNodeNumber)[COLOR]
+    protected void setLeftNode(RedBlackNode node, int childNodeNumber) {
+        RedBlackNodeColor color = (nodeVector.get(childNodeNumber)[COLOR]
                 .equals("black")) ? RedBlackNodeColor.BLACK
                 : RedBlackNodeColor.RED;
         node.setLeft(new RedBlackNode(Integer.parseInt(nodeVector
@@ -64,10 +60,8 @@ class RedBlackTreeFile extends TreeFile<RedBlackNode,
     }
 
     @Override
-    protected void setRightNode(RedBlackNode node,
-            int childNodeNumber) {
-        RedBlackNodeColor color =
-            (nodeVector.get(childNodeNumber)[COLOR]
+    protected void setRightNode(RedBlackNode node, int childNodeNumber) {
+        RedBlackNodeColor color = (nodeVector.get(childNodeNumber)[COLOR]
                 .equals("black")) ? RedBlackNodeColor.BLACK
                 : RedBlackNodeColor.RED;
         node.setRight(new RedBlackNode(Integer.parseInt(nodeVector
@@ -78,7 +72,7 @@ class RedBlackTreeFile extends TreeFile<RedBlackNode,
     protected RedBlackTree createEmptyBinaryTree() {
         return new RedBlackTree();
     }
-    
+
     @Override
     protected RedBlackTree createBinaryTree(int key) {
         return new RedBlackTree(key);

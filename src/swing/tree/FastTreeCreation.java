@@ -2,7 +2,7 @@
  * FastTreeCreation.java v1.00 16/06/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,14 +27,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 import model.tree.IBinaryNode;
-
 import swing.VisualizationZoom;
 import controller.BinaryTreeTabController;
 
@@ -49,13 +47,13 @@ import controller.BinaryTreeTabController;
 public class FastTreeCreation extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    
+
     private BinaryTreeTabController controller;
-    
+
     private TreeVisualization treeVisualization;
-    
+
     private JPanel controls;
-    
+
     /**
      * Builds the fast tree creation pane.
      * 
@@ -64,14 +62,13 @@ public class FastTreeCreation extends JPanel {
     public FastTreeCreation(BinaryTreeTabController c) {
         treeVisualization = new TreeVisualization();
         controller = c;
-        controls = createControls();  
-        
-        setLayout(new BorderLayout(4,4));
-        add(new VisualizationZoom(treeVisualization),
-            BorderLayout.CENTER);
+        controls = createControls();
+
+        setLayout(new BorderLayout(4, 4));
+        add(new VisualizationZoom(treeVisualization), BorderLayout.CENTER);
         add(controls, BorderLayout.SOUTH);
     }
-    
+
     private JPanel createControls() {
         JPanel controls = new JPanel();
         JButton insert = new JButton("Insert");
@@ -80,18 +77,16 @@ public class FastTreeCreation extends JPanel {
         try {
             mask = new MaskFormatter("##");
         } catch (ParseException e) {
-            System.out.println(
-                "Formatter is bad : " + e.getMessage());
+            System.out.println("Formatter is bad : " + e.getMessage());
             System.exit(-1);
         }
-        final JFormattedTextField insertValue =
-            new JFormattedTextField(mask);
-        final JFormattedTextField deleteValue = 
-            new JFormattedTextField(mask);
-        insertValue.setHorizontalAlignment(JTextField.CENTER);
-        deleteValue.setHorizontalAlignment(JTextField.CENTER);
-        
+        final JFormattedTextField insertValue = new JFormattedTextField(mask);
+        final JFormattedTextField deleteValue = new JFormattedTextField(mask);
+        insertValue.setHorizontalAlignment(SwingConstants.CENTER);
+        deleteValue.setHorizontalAlignment(SwingConstants.CENTER);
+
         insert.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent event) {
                 String value = insertValue.getText();
@@ -100,12 +95,12 @@ public class FastTreeCreation extends JPanel {
                     controller.addNode(Integer.parseInt(value));
                     insertValue.setValue(null);
                 } else {
-                    controller.addNode(
-                        (int)Math.round(Math.random()*100));
+                    controller.addNode((int) Math.round(Math.random() * 100));
                 }
             }
         });
         delete.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent event) {
                 String value = deleteValue.getText();
@@ -114,14 +109,14 @@ public class FastTreeCreation extends JPanel {
                     controller.deleteNode(Integer.parseInt(value));
                     deleteValue.setValue(null);
                 } else {
-                    //TODO click deletion
+                    // TODO click deletion
                 }
             }
         });
         controls.setLayout(new GridLayout(2, 2, 4, 4));
         insert.setToolTipText("Button Only : Random Insert");
-        delete.setToolTipText("Button Only : " +
-        		"Multiple Suppression With Cursor");
+        delete.setToolTipText("Button Only : "
+                + "Multiple Suppression With Cursor");
         insertValue.setToolTipText("Type Integers From 00 To 99");
         deleteValue.setToolTipText("Type Integers From 00 To 99");
         controls.add(insertValue);
@@ -130,10 +125,10 @@ public class FastTreeCreation extends JPanel {
         controls.add(delete);
         return controls;
     }
-    
+
     /**
      * Updates the visualization of the tree.
-     *  
+     * 
      * @param data the data
      */
     public <N extends IBinaryNode<N>> void updateTree(List<N> data) {

@@ -2,7 +2,7 @@
  * BinarySearchTreeFile.java v1.00 02/07/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,19 +33,16 @@ import model.tree.BinarySearchTree;
  * @version 1.00 02/07/08
  * @see TreeFile
  */
-class BinarySearchTreeFile
-        extends TreeFile<BinarySearchNode, BinarySearchTree> {
+class BinarySearchTreeFile extends TreeFile<BinarySearchNode, BinarySearchTree> {
 
     @Override
-    protected void setLeftNode(BinarySearchNode node,
-            int childNodeNumber) {
+    protected void setLeftNode(BinarySearchNode node, int childNodeNumber) {
         node.setLeft(new BinarySearchNode(Integer.parseInt(nodeVector
                 .get(childNodeNumber)[KEY])));
     }
 
     @Override
-    protected void setRightNode(BinarySearchNode node,
-            int childNodeNumber) {
+    protected void setRightNode(BinarySearchNode node, int childNodeNumber) {
         node.setRight(new BinarySearchNode(Integer.parseInt(nodeVector
                 .get(childNodeNumber)[KEY])));
     }
@@ -54,7 +51,7 @@ class BinarySearchTreeFile
     protected BinarySearchTree createEmptyBinaryTree() {
         return new BinarySearchTree();
     }
-    
+
     @Override
     protected BinarySearchTree createBinaryTree(int key) {
         return new BinarySearchTree(key);

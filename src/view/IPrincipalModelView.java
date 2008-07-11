@@ -1,8 +1,8 @@
 /*
- * IModelView.java v1.00 16/06/08
+ * IPrincipalModelView.java v1.00 16/06/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ public interface IPrincipalModelView extends IView, PrincipalModelListener {
      * Displays the view.
      */
     public void displayView();
-    
+
     /**
      * Closes the view.
      */

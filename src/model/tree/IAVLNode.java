@@ -2,7 +2,7 @@
  * IAVLNode.java v1.00 19/05/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,8 +30,7 @@ package model.tree;
  * @version 1.00 19/05/08
  * @see IBinarySearchNode
  */
-public interface IAVLNode<N extends IAVLNode<N>> extends
-        IBinarySearchNode<N> {
+public interface IAVLNode<N extends IAVLNode<N>> extends IBinarySearchNode<N> {
 
     /**
      * Returns the height of the AVL node.

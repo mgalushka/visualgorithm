@@ -2,7 +2,7 @@
  * AVLTreeFile.java v1.00 02/07/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -53,7 +53,7 @@ class AVLTreeFile extends TreeFile<AVLNode, AVLTree> {
     protected AVLTree createEmptyBinaryTree() {
         return new AVLTree();
     }
-    
+
     @Override
     protected AVLTree createBinaryTree(int key) {
         return new AVLTree(key);

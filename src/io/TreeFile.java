@@ -2,7 +2,7 @@
  * TreeFile.java v1.00 02/07/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import model.tree.IBinaryNode;
 import model.tree.IBinaryTree;
 import model.tree.UnknownTreeTypeException;
@@ -45,8 +44,7 @@ import model.tree.UnknownTreeTypeException;
  * @author Damien Rigoni
  * @version 1.00 02/07/08
  */
-public abstract class TreeFile<N extends IBinaryNode<? super N>,
-        T extends IBinaryTree<? extends N>> {
+public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBinaryTree<? extends N>> {
 
     /**
      * Position of the key in the file.
@@ -105,37 +103,31 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
     protected final static String REGEX_EMPTY_LINE = "\\p{Blank}*";
 
     /**
-     * Definition of the regular expression for the nodes
-     * which have two child.
+     * Definition of the regular expression for the nodes which have two child.
      */
     protected static String REGEX_2_CHILD;
 
     /**
-     * Definition of the regular expression for the nodes
-     * which have only a left child.
+     * Definition of the regular expression for the nodes which have only a left
+     * child.
      */
     protected static String REGEX_LEFT_CHILD;
 
     /**
-     * Definition of the regular expression for the nodes
-     * which have only a right child.
+     * Definition of the regular expression for the nodes which have only a
+     * right child.
      */
     protected static String REGEX_RIGHT_CHILD;
 
     /**
-     * Definition of the regular expression for the nodes
-     * which have no child.
+     * Definition of the regular expression for the nodes which have no child.
      */
     protected static String REGEX_NO_CHILD;
 
     /**
      * The file parser.
      */
-    protected static HashMap<String,
-        TreeFile<? extends IBinaryNode<?>,
-        ? extends IBinaryTree<?>>> fileParser = 
-        new HashMap<String, TreeFile<? extends IBinaryNode<?>,
-        ? extends IBinaryTree<?>>>();
+    protected static HashMap<String, TreeFile<? extends IBinaryNode<?>, ? extends IBinaryTree<?>>> fileParser = new HashMap<String, TreeFile<? extends IBinaryNode<?>, ? extends IBinaryTree<?>>>();
 
     private int lineNumber;
 
@@ -163,18 +155,15 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
         treeType = new String();
     }
 
-    private static TreeFile<? extends IBinaryNode<?>,
-            ? extends IBinaryTree<?>> parse(String fileName)
-            throws ParseException, IOException,
+    private static TreeFile<? extends IBinaryNode<?>, ? extends IBinaryTree<?>> parse(
+            String fileName) throws ParseException, IOException,
             FileNotFoundException {
-        BufferedReader reader = 
-            new BufferedReader(new FileReader(fileName));
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
         int line = 0;
         String lineToParse = reader.readLine();
         Pattern pattern;
         Matcher matcher;
-        TreeFile<? extends IBinaryNode<?>,
-                ? extends IBinaryTree<?>> parser = null;
+        TreeFile<? extends IBinaryNode<?>, ? extends IBinaryTree<?>> parser = null;
 
         while (lineToParse != null && parser == null) {
             if (lineToParse.matches(REGEX_COMMENT)
@@ -194,14 +183,13 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
                     parser.parse(reader);
                     parser.lineNumber = ++line;
                 } else {
-                    throw new ParseException("The tree type "+
-                        matcher.group()+" is unknown", line);
+                    throw new ParseException("The tree type " + matcher.group()
+                            + " is unknown", line);
                 }
             } else {
                 throw new ParseException(
-                        "The type of the tree is not specified," +
-                        " or specified after the nodes"
-                        , line);
+                        "The type of the tree is not specified,"
+                                + " or specified after the nodes", line);
             }
         }
         if (parser != null) {
@@ -214,21 +202,19 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
     private T createBinaryTree() throws UnknownTreeTypeException {
         T tree;
         if (nodeVector.size() != 0) {
-            tree = createBinaryTree(
-                Integer.parseInt(nodeVector.get(0)[KEY]));
+            tree = createBinaryTree(Integer.parseInt(nodeVector.get(0)[KEY]));
             generateNode(tree.getRoot(), 0);
-            
+
         } else {
             tree = createEmptyBinaryTree();
         }
         if (tree.isGoodTree())
             return tree;
         else {
-            String article = 
-                treeType.charAt(0) == 'A' ? "an " : "a ";
+            String article = treeType.charAt(0) == 'A' ? "an " : "a ";
             throw new UnknownTreeTypeException(
-                    "The tree does not satisfy the properties " +
-                    "of "+ article + treeType);
+                    "The tree does not satisfy the properties " + "of "
+                            + article + treeType);
         }
     }
 
@@ -269,8 +255,7 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
             initREGEX(currentNodeNumber, nextNodeNumber);
             if (lineToParse.matches(REGEX_COMMENT)
                     | lineToParse.matches(REGEX_EMPTY_LINE)) {
-            } else if (lineToParse.matches(REGEX_2_CHILD +
-                    REGEX_COMMENT_LINE)) {
+            } else if (lineToParse.matches(REGEX_2_CHILD + REGEX_COMMENT_LINE)) {
                 pattern = Pattern.compile(REGEX_2_CHILD);
                 matcher = pattern.matcher(lineToParse);
                 matcher.find();
@@ -293,12 +278,10 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
                 nodeVector.add(matcher.group().split(REGEX_BLANK));
                 ++currentNodeNumber;
                 ++nextNodeNumber;
-            } else if (lineToParse.matches(REGEX_NO_CHILD +
-                    REGEX_COMMENT_LINE)) {
+            } else if (lineToParse.matches(REGEX_NO_CHILD + REGEX_COMMENT_LINE)) {
                 if (currentNodeNumber >= nextNodeNumber) {
                     throw new ParseException(
-                            "Too many nodes have been specified",
-                            lineNumber);
+                            "Too many nodes have been specified", lineNumber);
                 } else {
                     pattern = Pattern.compile(REGEX_NO_CHILD);
                     matcher = pattern.matcher(lineToParse);
@@ -307,15 +290,15 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
                     ++currentNodeNumber;
                 }
             } else {
-                throw new ParseException("There is a syntax error on the line : "
-                        + lineToParse.replace(SPACE, " "), lineNumber);
+                throw new ParseException(
+                        "There is a syntax error on the line : "
+                                + lineToParse.replace(SPACE, " "), lineNumber);
             }
             lineToParse = reader.readLine();
             ++lineNumber;
         }
         if (currentNodeNumber != nextNodeNumber) {
-            throw new ParseException("There is not enough nodes",
-                lineNumber);
+            throw new ParseException("There is not enough nodes", lineNumber);
         }
     }
 
@@ -356,7 +339,7 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
      * @return the created tree
      */
     protected abstract T createEmptyBinaryTree();
-    
+
     /**
      * Creates a tree with for root the key given in parameter.
      * 
@@ -413,13 +396,12 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
         int maxNodeNumber = 0;
         String leftNodeNumber;
         String rightNodeNumber;
-        TreeFile<NN, ? extends IBinaryTree<?>> treeFile =
-            (TreeFile<NN, ? extends IBinaryTree<?>>) fileParser
+        TreeFile<NN, ? extends IBinaryTree<?>> treeFile = (TreeFile<NN, ? extends IBinaryTree<?>>) fileParser
                 .get(tree.getType().toString());
         List<NN> array = tree.treeToArrayList();
-        
+
         file.write(tree.getType() + "\n");
-        for (int i = 0 ; i < array.size() ; i++) {
+        for (int i = 0; i < array.size(); i++) {
             node = array.get(i);
             if (node != null) {
                 if (node.getLeft() == null) {
@@ -435,7 +417,8 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>,
                     rightNodeNumber = Integer.toString(maxNodeNumber);
                 }
                 file.write(treeFile.getNode(node, currentNodeNumber,
-                    leftNodeNumber, rightNodeNumber) + "\n");
+                    leftNodeNumber, rightNodeNumber)
+                        + "\n");
                 ++currentNodeNumber;
             }
         }

@@ -2,7 +2,7 @@
  * AbstractBinarySearchNode.java v1.00 19/05/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -34,8 +34,8 @@ abstract class AbstractBinarySearchNode<N extends IBinarySearchNode<N>> extends
         AbstractBinaryNode<N> implements IBinarySearchNode<N> {
 
     /**
-     * Build a node with the key given in parameter, the children and
-     * father are initialized to null.
+     * Build a node with the key given in parameter, the children and father are
+     * initialized to null.
      * 
      * @param key the key of the new node
      */

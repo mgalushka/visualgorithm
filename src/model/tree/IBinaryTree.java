@@ -2,7 +2,7 @@
  * IBinaryTree.java v1.00 19/05/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,22 +48,22 @@ public interface IBinaryTree<N extends IBinaryNode<N>> extends IDataStructure {
      * @param newNode the new root node
      */
     public void setRoot(N newNode);
-    
+
     /**
      * Calculates the height of the tree.
      * 
      * @return the height of the tree
      */
     public int getHeight();
-    
+
     /**
-     * Builds an array list corresponding to the tree. The array
-     * list will contain null values for the absent nodes.
+     * Builds an array list corresponding to the tree. The array list will
+     * contain null values for the absent nodes.
      * 
      * @return the array list corresponding to the tree
      */
     public List<N> treeToArrayList();
-    
+
     /**
      * Returns true if the tree is well formed.
      * 

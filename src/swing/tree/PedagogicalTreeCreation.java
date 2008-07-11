@@ -1,8 +1,8 @@
 /*
- * PedagogicTreeCreation.java v1.00 07/07/08
+ * PedagogicalTreeCreation.java v1.00 07/07/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,7 +22,6 @@
 package swing.tree;
 
 import javax.swing.JPanel;
-
 import controller.BinaryTreeTabController;
 
 /**
@@ -34,11 +33,11 @@ import controller.BinaryTreeTabController;
  * @version 1.00 07/07/08
  */
 public class PedagogicalTreeCreation extends JPanel {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private BinaryTreeTabController controller;
-    
+
     /**
      * Builds the pedagogical tree creation pane.
      * 
@@ -46,6 +45,6 @@ public class PedagogicalTreeCreation extends JPanel {
      */
     public PedagogicalTreeCreation(BinaryTreeTabController c) {
         controller = c;
-        
+
     }
 }

@@ -1,8 +1,8 @@
 /*
- * TabController.java v1.00 16/06/08
+ * BinaryTreeTabController.java v1.00 16/06/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-
 import model.ISubModel;
 import model.tree.BinaryTreeSubModel;
 import model.tree.UnknownTreeTypeException;
@@ -46,7 +45,7 @@ import view.IView;
 public class BinaryTreeTabController implements ISubController {
 
     private BinaryTreeSubModel binaryTreeSubModel;
-    
+
     private IBinaryTreeView tabPageView;
 
     /**
@@ -56,31 +55,29 @@ public class BinaryTreeTabController implements ISubController {
      */
     public BinaryTreeTabController(BinaryTreeType type) {
         binaryTreeSubModel = new BinaryTreeSubModel(type);
-        
-        AbstractViewFactory viewFactory = 
-            AbstractViewFactory.getFactory();
-        tabPageView = viewFactory.createBinaryTreeTabPage(
-            type.toString(), this);
+
+        AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
+        tabPageView = viewFactory
+                .createBinaryTreeTabPage(type.toString(), this);
         addListener();
     }
-    
+
     /**
      * Builds the binary tree tab controller.
      * 
      * @param file the file containing the binary tree
-     * @throws UnknownTreeTypeException 
-     * @throws IOException 
-     * @throws ParseException 
-     * @throws FileNotFoundException 
+     * @throws UnknownTreeTypeException
+     * @throws IOException
+     * @throws ParseException
+     * @throws FileNotFoundException
      */
     public BinaryTreeTabController(File file) throws FileNotFoundException,
             ParseException, IOException, UnknownTreeTypeException {
         binaryTreeSubModel = new BinaryTreeSubModel(file);
-        
-        AbstractViewFactory viewFactory = 
-            AbstractViewFactory.getFactory();
-        tabPageView = viewFactory.createBinaryTreeTabPage(
-            binaryTreeSubModel.getDataStructure().getType(), this);
+
+        AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
+        tabPageView = viewFactory.createBinaryTreeTabPage(binaryTreeSubModel
+                .getDataStructure().getType(), this);
         addListener();
         binaryTreeSubModel.updateBinaryTreeView();
     }
@@ -89,17 +86,17 @@ public class BinaryTreeTabController implements ISubController {
     public ISubModel getSubModel() {
         return binaryTreeSubModel;
     }
-    
+
     @Override
     public void saveSubModel(File file) throws IOException {
-        binaryTreeSubModel.saveBinaryTree(file); 
+        binaryTreeSubModel.saveBinaryTree(file);
     }
-    
+
     @Override
     public boolean isSubModelSaved() {
         return binaryTreeSubModel.isBinaryTreeSaved();
     }
-    
+
     @Override
     public IView getView() {
         return tabPageView;
@@ -117,7 +114,7 @@ public class BinaryTreeTabController implements ISubController {
     public void addNode(int key) {
         binaryTreeSubModel.addNode(key);
     }
-    
+
     /**
      * Deletes a node from the data structure.
      * 

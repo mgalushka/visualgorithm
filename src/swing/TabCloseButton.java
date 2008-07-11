@@ -2,7 +2,7 @@
  * TabCloseButton.java v1.00 16/06/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -32,7 +32,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -41,7 +40,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.plaf.basic.BasicButtonUI;
-
 import controller.PrincipalController;
 import controller.BinaryTreeTabController;
 
@@ -56,9 +54,9 @@ import controller.BinaryTreeTabController;
 public class TabCloseButton extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    
+
     private JTabbedPane tabbedPane;
-    
+
     private PrincipalController controller;
 
     /**
@@ -73,6 +71,7 @@ public class TabCloseButton extends JPanel {
         controller = c;
         JButton closeButton = createCloseButton();
         JLabel tabName = new JLabel() {
+
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -87,9 +86,10 @@ public class TabCloseButton extends JPanel {
         setOpaque(false);
         setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
         addMouseListener(new MouseAdapter() {
+
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(e.getButton() == MouseEvent.BUTTON1) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
                     int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
                     tabbedPane.setSelectedIndex(i);
                 } else if (e.getButton() == MouseEvent.BUTTON2) {
@@ -104,23 +104,24 @@ public class TabCloseButton extends JPanel {
 
     private JButton createCloseButton() {
         JButton closeButton = new JButton() {
+
             private static final long serialVersionUID = 1L;
 
             @Override
             public void updateUI() {
             }
-            
+
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D)g.create();
+                Graphics2D g2 = (Graphics2D) g.create();
                 g2.setStroke(new BasicStroke(2));
                 g2.setColor(Color.RED);
                 int delta = 6;
-                g2.drawLine(delta, delta, getWidth()-delta-1,
-                    getHeight()-delta-1);
-                g2.drawLine(getWidth()-delta-1, delta, delta,
-                    getHeight()-delta-1);
+                g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight()
+                        - delta - 1);
+                g2.drawLine(getWidth() - delta - 1, delta, delta, getHeight()
+                        - delta - 1);
                 g2.dispose();
             }
         };
@@ -132,11 +133,12 @@ public class TabCloseButton extends JPanel {
         closeButton.setFocusable(false);
         closeButton.setBorderPainted(false);
         closeButton.addMouseListener(new MouseAdapter() {
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 Component component = e.getComponent();
                 if (component instanceof AbstractButton) {
-                    AbstractButton button = (AbstractButton)component;
+                    AbstractButton button = (AbstractButton) component;
                     button.setBorderPainted(true);
                 }
             }
@@ -145,12 +147,13 @@ public class TabCloseButton extends JPanel {
             public void mouseExited(MouseEvent e) {
                 Component component = e.getComponent();
                 if (component instanceof AbstractButton) {
-                    AbstractButton button = (AbstractButton)component;
+                    AbstractButton button = (AbstractButton) component;
                     button.setBorderPainted(false);
                 }
             }
         });
         closeButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 close();
@@ -158,22 +161,20 @@ public class TabCloseButton extends JPanel {
         });
         return closeButton;
     }
-    
+
     private void close() {
         int index = tabbedPane.indexOfTabComponent(TabCloseButton.this);
-        if (((BinaryTreeTabController)controller.
-                getSubController(index)).isSubModelSaved()) {
+        if (((BinaryTreeTabController) controller.getSubController(index))
+                .isSubModelSaved()) {
             controller.closeTab(index);
         } else {
-            Object[] options = {"Save", "Discard", "Cancel"};
+            Object[] options = { "Save", "Discard", "Cancel" };
             int choice = JOptionPane.showOptionDialog(tabbedPane,
-                "Do you want to save your changes?",
-                "Close Operation",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.WARNING_MESSAGE, null,
-                options, options[2]);
+                "Do you want to save your changes?", "Close Operation",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options, options[2]);
             if (choice == JOptionPane.YES_OPTION) {
-                ((GraphicUserInterface)controller.getView()).saveTab("CLOSE");
+                ((GraphicUserInterface) controller.getView()).saveTab("CLOSE");
             } else if (choice == JOptionPane.NO_OPTION) {
                 controller.closeTab(index);
             }

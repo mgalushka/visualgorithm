@@ -2,7 +2,7 @@
  * VisualizationZoom.java v1.00 16/06/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,10 +22,9 @@
 package swing;
 
 import java.awt.Dimension;
-import java.awt.event.MouseEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -43,43 +42,51 @@ public class VisualizationZoom extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private static final int zoomMin = 0;
-    
+
     private static final int zoomMax = 20;
 
     /**
-     * Builds a pane including a zoom of the component
-     * thanks to JScrollPane.
+     * Builds a pane including a zoom of the component thanks to JScrollPane.
      * 
      * @param component the component
      */
     public VisualizationZoom(final JComponent component) {
         JScrollPane scrollPane = new JScrollPane(component);
-        //TODO zoom
+        // TODO zoom
         scrollPane.addMouseWheelListener(new MouseWheelListener() {
+
             int height = component.getHeight();
+
             int width = component.getWidth();
+
             int pheight = component.getPreferredSize().height;
+
             int pwidth = component.getPreferredSize().width;
+
             int scrollzoom = zoomMin;
 
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                if ((e.getModifiersEx() & MouseEvent.CTRL_DOWN_MASK) == MouseEvent.CTRL_DOWN_MASK) {
+                if ((e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) == InputEvent.CTRL_DOWN_MASK) {
                     if (e.getWheelRotation() == -1) {
-                        scrollzoom = (scrollzoom >= zoomMax) ? zoomMax : ++scrollzoom;
+                        scrollzoom = (scrollzoom >= zoomMax) ? zoomMax
+                                : ++scrollzoom;
                     } else {
-                        scrollzoom = (scrollzoom == zoomMin) ? zoomMin : --scrollzoom;
+                        scrollzoom = (scrollzoom == zoomMin) ? zoomMin
+                                : --scrollzoom;
                     }
                     if (scrollzoom == zoomMin) {
-                        component.setPreferredSize(new Dimension(pwidth, pheight));
+                        component.setPreferredSize(new Dimension(pwidth,
+                                pheight));
                     } else {
-                        component.setPreferredSize(new Dimension(width*scrollzoom, height*scrollzoom));
+                        component.setPreferredSize(new Dimension(width
+                                * scrollzoom, height * scrollzoom));
                     }
-                    System.out.println("h "+height);
-                    System.out.println("w "+width);
-                    System.out.println("ph "+pheight);
-                    System.out.println("pw "+pwidth);
-                    System.out.println("s "+scrollzoom);
+                    System.out.println("h " + height);
+                    System.out.println("w " + width);
+                    System.out.println("ph " + pheight);
+                    System.out.println("pw " + pwidth);
+                    System.out.println("s " + scrollzoom);
                     System.out.println();
                     component.invalidate();
                 }

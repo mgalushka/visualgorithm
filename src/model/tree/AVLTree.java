@@ -2,7 +2,7 @@
  * AVLTree.java v1.00 19/05/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,7 +36,7 @@ public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
     {
         type = BinaryTreeType.AVLTREE;
     }
-    
+
     /**
      * Builds an empty AVL tree.
      */
@@ -55,18 +55,18 @@ public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
 
     @Override
     public boolean isGoodTree() {
-        calculateHeight(getRoot());
+        calculateAVLHeight(getRoot());
         return isBalance(getRoot()) && isBST(getRoot());
     }
-    
-    private void calculateHeight(AVLNode node) {
+
+    private void calculateAVLHeight(AVLNode node) {
         if (node != null) {
-            calculateHeight(node.getLeft());
-            calculateHeight(node.getRight());
+            calculateAVLHeight(node.getLeft());
+            calculateAVLHeight(node.getRight());
             node.setHeight(node.findHeight());
         }
     }
-    
+
     private boolean isBalance(AVLNode node) {
         boolean isBalance = true;
         if (node != null) {

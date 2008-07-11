@@ -2,7 +2,7 @@
  * UnknownTreeTypeException.java v1.00 02/07/08
  *
  * Visualgorithm
- * Copyright (C) Hannier, Pironin, Rigoni (bx1gl@googlegroups.com)
+ * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -32,7 +32,7 @@ package model.tree;
 public class UnknownTreeTypeException extends Exception {
 
     private static final long serialVersionUID = 1L;
-    
+
     private String description;
 
     /**
