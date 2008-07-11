@@ -54,7 +54,7 @@ public interface IBinaryTree<N extends IBinaryNode<N>> extends IDataStructure {
      * 
      * @return the height of the tree
      */
-    public int getHeight();
+    public int calculateHeight();
 
     /**
      * Builds an array list corresponding to the tree. The array list will

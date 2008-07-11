@@ -1,0 +1,27 @@
+BINARYSEARCHTREE
+
+0	43	1	2
+1	22	3	4
+2	68	5	6
+3	14	7	8
+4	32	9	nil
+5	59	10	11
+6	89	12	13
+7	13	14	nil
+8	16	15	16
+9	27	17	18
+10	54	19	20
+11	60	nil	21
+12	77	nil	22
+13	95	nil	23
+14	4	nil	nil
+15	15	nil	nil
+16	20	nil	nil
+17	24	nil	nil
+18	28	nil	nil
+19	45	nil	nil
+20	55	nil	nil
+21	62	nil	nil
+22	87	nil	nil
+23	98	nil	nil
+

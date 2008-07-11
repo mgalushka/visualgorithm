@@ -50,8 +50,8 @@ public class RedBlackTreeFileTest {
 
     @BeforeClass
     public static void setUp() {
-        loadFileName = "./test/io/loadRedBlackTreeTest";
-        saveFileName = "./test/io/saveRedBlackTreeTest";
+        loadFileName = "./test/io/loadRedBlackTreeTest.bt";
+        saveFileName = "./test/io/saveRedBlackTreeTest.bt";
         tree = new RedBlackTree(6);
 
         tree.getRoot().setLeft(new RedBlackNode(4));

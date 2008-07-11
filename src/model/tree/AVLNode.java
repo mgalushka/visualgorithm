@@ -48,39 +48,39 @@ public final class AVLNode extends AbstractBinarySearchNode<AVLNode> implements
     }
 
     @Override
-    public int getHeight() {
+    public int getAVLHeight() {
         return height;
     }
 
     @Override
-    public void setHeight(int height) {
+    public void setAVLHeight(int height) {
         this.height = height;
     }
 
     @Override
-    public int findHeight() {
+    public int calculateAVLHeight() {
         int leftHeight = 0;
         int rightHeight = 0;
 
         if (getLeft() != null) {
-            leftHeight = getLeft().getHeight() + 1;
+            leftHeight = getLeft().getAVLHeight() + 1;
         }
         if (getRight() != null) {
-            rightHeight = getRight().getHeight() + 1;
+            rightHeight = getRight().getAVLHeight() + 1;
         }
         return Math.max(leftHeight, rightHeight);
     }
 
     @Override
-    public int findBalance() {
+    public int calculateAVLBalance() {
         int l = 0;
         int r = 0;
 
         if (getLeft() != null) {
-            l = getLeft().getHeight() + 1;
+            l = getLeft().getAVLHeight() + 1;
         }
         if (getRight() != null) {
-            r = getRight().getHeight() + 1;
+            r = getRight().getAVLHeight() + 1;
         }
         return r - l;
     }

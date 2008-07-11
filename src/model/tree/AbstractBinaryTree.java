@@ -69,22 +69,22 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
     }
 
     @Override
-    public final int getHeight() {
-        return calculateHeight(root);
+    public final int calculateHeight() {
+        return recursiveHeight(root);
     }
 
-    private int calculateHeight(N node) {
+    private int recursiveHeight(N node) {
         if (node == null) {
             return -1;
         } else {
-            return Math.max(calculateHeight(node.getLeft()),
-                calculateHeight(node.getRight())) + 1;
+            return Math.max(recursiveHeight(node.getLeft()),
+                recursiveHeight(node.getRight())) + 1;
         }
     }
 
     @Override
     public final List<N> treeToArrayList() {
-        int length = (2 * (int) Math.pow(2, getHeight())) - 1;
+        int length = (2 * (int) Math.pow(2, calculateHeight())) - 1;
         List<N> arrayTree = new ArrayList<N>();
         for (int i = 0; i < length; i++) {
             arrayTree.add(null);

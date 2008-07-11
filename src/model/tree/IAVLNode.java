@@ -37,26 +37,26 @@ public interface IAVLNode<N extends IAVLNode<N>> extends IBinarySearchNode<N> {
      * 
      * @return the height of the AVL node
      */
-    public int getHeight();
+    public int getAVLHeight();
 
     /**
      * Replaces the height of the AVL node by the new height.
      * 
      * @param height the new height of the AVL node
      */
-    public void setHeight(int height);
+    public void setAVLHeight(int height);
 
     /**
      * Calculates the height of the AVL node.
      * 
      * @return the height of the AVL node
      */
-    public int findHeight();
+    public int calculateAVLHeight();
 
     /**
      * Calculates the balancing factor of the AVL node.
      * 
      * @return the balancing factor of the AVL node
      */
-    public int findBalance();
+    public int calculateAVLBalance();
 }

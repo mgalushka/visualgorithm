@@ -49,8 +49,8 @@ public class AVLTreeFileTest {
 
     @BeforeClass
     public static void setUp() {
-        loadFileName = "./test/io/loadAVLTreeTest";
-        saveFileName = "./test/io/saveAVLTreeTest";
+        loadFileName = "./test/io/loadAVLTreeTest.bt";
+        saveFileName = "./test/io/saveAVLTreeTest.bt";
         tree = new AVLTree(8);
 
         tree.getRoot().setLeft(new AVLNode(5));
@@ -65,13 +65,13 @@ public class AVLTreeFileTest {
     public void testLoad() {
         try {
             AVLTree t = (AVLTree) TreeFile.load(loadFileName);
-            assertEquals(t.getRoot().getHeight(), 3);
-            assertEquals(t.getRoot().getLeft().getHeight(), 2);
-            assertEquals(t.getRoot().getRight().getHeight(), 1);
-            assertEquals(t.getRoot().getLeft().getLeft().getHeight(), 1);
-            assertEquals(t.getRoot().getLeft().getRight().getHeight(), 0);
-            assertEquals(t.getRoot().getRight().getLeft().getHeight(), 0);
-            assertEquals(t.getRoot().getLeft().getLeft().getLeft().getHeight(),
+            assertEquals(t.getRoot().getAVLHeight(), 3);
+            assertEquals(t.getRoot().getLeft().getAVLHeight(), 2);
+            assertEquals(t.getRoot().getRight().getAVLHeight(), 1);
+            assertEquals(t.getRoot().getLeft().getLeft().getAVLHeight(), 1);
+            assertEquals(t.getRoot().getLeft().getRight().getAVLHeight(), 0);
+            assertEquals(t.getRoot().getRight().getLeft().getAVLHeight(), 0);
+            assertEquals(t.getRoot().getLeft().getLeft().getLeft().getAVLHeight(),
                 0);
         } catch (ParseException e) {
             e.printStackTrace();

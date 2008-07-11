@@ -91,24 +91,20 @@ public final class RedBlackNode extends AbstractBinarySearchNode<RedBlackNode>
     }
 
     @Override
-    public int findBlackHeight() {
+    public int calculateLeftBlackHeight() {
         if (getLeft() != null) {
-            return getLeft().isBlack() ? getLeft().findBlackHeight() + 1
-                    : getLeft().findBlackHeight();
+            return getLeft().isBlack() ? getLeft().calculateLeftBlackHeight() + 1
+                    : getLeft().calculateLeftBlackHeight();
         } else {
             return 1;
         }
     }
 
-    /**
-     * Returns the black height of the node browsing the right child.
-     * 
-     * @return the black height of the node
-     */
-    public int rightFindBlackHeight() {
+    @Override
+    public int calculateRightBlackHeight() {
         if (getRight() != null) {
-            return getRight().isBlack() ? getRight().findBlackHeight() + 1
-                    : getRight().findBlackHeight();
+            return getRight().isBlack() ? getRight().calculateRightBlackHeight() + 1
+                    : getRight().calculateRightBlackHeight();
         } else {
             return 1;
         }
