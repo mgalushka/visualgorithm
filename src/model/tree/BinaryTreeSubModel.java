@@ -77,6 +77,23 @@ public class BinaryTreeSubModel implements ISubModel {
     }
 
     /**
+     * Builds the binary tree.
+     * 
+     * @param type the type of the binary tree
+     * @param nbNode the number of nodes
+     */
+    public BinaryTreeSubModel(BinaryTreeType type, int nbNode) {
+        dataStructure = BinaryTreeFactory.createBinaryTree(type);
+        for (int i = 0; i < nbNode; i++) {
+            int key = (int) Math.round(Math.random() * 100);
+            // TODO insertion
+            System.out.println(key);
+        }
+        listeners = new EventListenerList();
+        isBinaryTreeSaved = false;
+    }
+
+    /**
      * Returns true if the binary tree has been saved.
      * 
      * @return true if the binary tree has been saved

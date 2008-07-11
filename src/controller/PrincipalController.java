@@ -96,6 +96,19 @@ public class PrincipalController implements IController {
     }
 
     /**
+     * Adds a binary tree tab with a random binary tree.
+     * 
+     * @param type the type of the binary tree
+     * @param nbNode the number of nodes
+     * @param index the index of the tab
+     */
+    public void addRandomBinaryTreeTab(BinaryTreeType type, int nbNode,
+            int index) {
+        subControllers.add(new BinaryTreeTabController(type, nbNode));
+        model.addSubModel(subControllers.get(index).getSubModel());
+    }
+    
+    /**
      * Removes the tab indicated with index.
      * 
      * @param index the index of the tab

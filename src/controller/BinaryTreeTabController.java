@@ -82,6 +82,22 @@ public class BinaryTreeTabController implements ISubController {
         binaryTreeSubModel.updateBinaryTreeView();
     }
 
+    /**
+     * Builds the binary tree tab controller.
+     * 
+     * @param type the type of the binary tree
+     * @param nbNode the number of nodes
+     */
+    public BinaryTreeTabController(BinaryTreeType type, int nbNode) {
+        binaryTreeSubModel = new BinaryTreeSubModel(type, nbNode);
+
+        AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
+        tabPageView = viewFactory
+                .createBinaryTreeTabPage(type.toString(), this);
+        addListener();
+        binaryTreeSubModel.updateBinaryTreeView();
+    }
+
     @Override
     public ISubModel getSubModel() {
         return binaryTreeSubModel;

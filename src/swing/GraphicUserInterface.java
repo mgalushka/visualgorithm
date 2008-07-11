@@ -22,6 +22,7 @@
 package swing;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,15 +34,22 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileFilter;
@@ -320,9 +328,65 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
 
             @Override
             public void actionPerformed(ActionEvent event) {
-                int index = tabbedPane.getTabCount();
-                
-                //TODO random creation
+                final JDialog dialog = new JDialog(GraphicUserInterface.this,
+                        "Random Tree", true);
+                JPanel panel = new JPanel(new GridLayout(2, 1, 4, 4));
+                JPanel buttons = new JPanel(new GridLayout(1, 2, 4, 4));
+                JPanel content = new JPanel(new GridLayout(2, 2, 4, 4));
+                JLabel list = new JLabel("Select the type of tree : ");
+                JLabel nb = new JLabel("Select the number of nodes : ");
+                String[] treeStrings = { "AVL Tree", "Binary Search Tree",
+                        "Red Black Tree" };
+                final JComboBox treeList = new JComboBox(treeStrings);
+                SpinnerNumberModel model = new SpinnerNumberModel(new Integer(15),
+                    new Integer(1), new Integer(30), new Integer(1));
+                final JSpinner spinner = new JSpinner(model);
+                JButton ok = new JButton("Ok");
+                JButton cancel = new JButton("Cancel");
+
+                content.add(list);
+                content.add(treeList);
+                content.add(nb);
+                content.add(spinner);
+                ok.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        int index = tabbedPane.getTabCount();
+                        String stringType = (String) treeList.getSelectedItem();
+                        BinaryTreeType type;
+                        if (stringType.equals("AVL Tree")) {
+                            type = BinaryTreeType.AVLTREE;
+                        } else if (stringType.equals("Binary Search Tree")) {
+                            type = BinaryTreeType.BINARYSEARCHTREE;
+                        } else {
+                            type = BinaryTreeType.REDBLACKTREE;
+                        }
+                        int nbNode = (Integer) spinner.getModel().getValue();
+
+                        controller.addRandomBinaryTreeTab(type, nbNode, index);
+                        dialog.setVisible(false);
+                        dialog.dispose();
+                    }
+                });
+                cancel.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        dialog.setVisible(false);
+                        dialog.dispose();
+                    }
+                });
+                buttons.add(ok);
+                buttons.add(cancel);
+                panel.add(content);
+                panel.add(buttons);
+                //TODO good JDialog
+                dialog.setContentPane(panel);
+                dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                dialog.setLocationRelativeTo(GraphicUserInterface.this);
+                dialog.pack();
+                dialog.setVisible(true);
             }
         });
         avlTree.addActionListener(new ActionListener() {
@@ -330,7 +394,8 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
             @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
-                controller.addBinaryTreeTab(BinaryTreeType.AVLTREE, index);
+                controller.addBinaryTreeTab(BinaryTreeType.AVLTREE,
+                    index);
             }
         });
         binarySearchTree.addActionListener(new ActionListener() {
