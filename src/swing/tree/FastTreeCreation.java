@@ -53,13 +53,13 @@ public class FastTreeCreation extends JPanel {
     private TreeVisualization treeVisualization;
 
     private JPanel controls;
-
+    
     /**
      * Builds the fast tree creation pane.
      * 
      * @param c the controller
      */
-    public FastTreeCreation(BinaryTreeTabController c) {
+    FastTreeCreation(BinaryTreeTabController c) {
         treeVisualization = new TreeVisualization();
         controller = c;
         controls = createControls();
@@ -109,7 +109,7 @@ public class FastTreeCreation extends JPanel {
                     controller.deleteNode(Integer.parseInt(value));
                     deleteValue.setValue(null);
                 } else {
-                    // TODO click deletion
+                    treeVisualization.launchDeleteMode();
                 }
             }
         });
@@ -131,7 +131,7 @@ public class FastTreeCreation extends JPanel {
      * 
      * @param data the data
      */
-    public <N extends IBinaryNode<N>> void updateTree(List<N> data) {
+    <N extends IBinaryNode<N>> void updateTree(List<N> data) {
         treeVisualization.calculatePositions(data);
     }
 }

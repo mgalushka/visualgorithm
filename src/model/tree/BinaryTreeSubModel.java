@@ -115,6 +115,7 @@ public class BinaryTreeSubModel implements ISubModel {
      */
     public void addNode(int key) {
         // TODO insertion
+        System.out.println(key);
         fireBinaryTreeChanged(dataStructure.treeToArrayList());
         isBinaryTreeSaved = false;
     }
@@ -126,6 +127,7 @@ public class BinaryTreeSubModel implements ISubModel {
      */
     public void deleteNode(int key) {
         // TODO deletion
+        System.out.println(key);
         fireBinaryTreeChanged(dataStructure.treeToArrayList());
         isBinaryTreeSaved = false;
     }

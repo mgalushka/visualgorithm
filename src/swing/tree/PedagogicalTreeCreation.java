@@ -43,7 +43,7 @@ public class PedagogicalTreeCreation extends JPanel {
      * 
      * @param c the controller
      */
-    public PedagogicalTreeCreation(BinaryTreeTabController c) {
+    PedagogicalTreeCreation(BinaryTreeTabController c) {
         controller = c;
 
     }

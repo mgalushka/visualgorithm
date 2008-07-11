@@ -314,8 +314,17 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
         JMenuItem randomTree = new JMenuItem("Random Tree");
         JMenuItem avlTree = new JMenuItem("AVL Tree");
         JMenuItem binarySearchTree = new JMenuItem("Binary Search Tree");
-        JMenuItem redBlackTree = new JMenuItem("Red " + "Black Tree");
+        JMenuItem redBlackTree = new JMenuItem("Red Black Tree");
 
+        randomTree.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                int index = tabbedPane.getTabCount();
+                
+                //TODO random creation
+            }
+        });
         avlTree.addActionListener(new ActionListener() {
 
             @Override

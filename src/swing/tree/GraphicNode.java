@@ -45,7 +45,7 @@ public class GraphicNode {
      * @author Damien Rigoni
      * @version 1.00 16/06/08
      */
-    public enum GraphicNodeColor {
+    enum GraphicNodeColor {
         BLACK, BLUE, RED, YELLOW
     };
 
@@ -66,25 +66,25 @@ public class GraphicNode {
      * @param s the size of the node
      * @param c the color of the node
      */
-    public GraphicNode(int k, int x, int y, int s, GraphicNodeColor c) {
+    GraphicNode(int k, int x, int y, int s, GraphicNodeColor c) {
         key = k;
         xPosition = x;
         yPosition = y;
         nodeSize = s;
         color = c;
         if (color == GraphicNodeColor.BLACK) {
-            image = loadImage("black");
+            image = loadImage("black", nodeSize);
         } else if (color == GraphicNodeColor.BLUE) {
-            image = loadImage("blue");
+            image = loadImage("blue", nodeSize);
         } else if (color == GraphicNodeColor.RED) {
-            image = loadImage("red");
+            image = loadImage("red", nodeSize);
         } else {
-            image = loadImage("yellow");
+            image = loadImage("yellow", nodeSize);
         }
     }
 
-    private BufferedImage loadImage(String name) {
-        String imgFileName = "img/node_" + name + ".png";
+    private BufferedImage loadImage(String name, int size) {
+        String imgFileName = "img/node_" + name + "_" + size + ".png";
         BufferedImage img = null;
         try {
             img = ImageIO.read(new File(imgFileName));
@@ -96,11 +96,20 @@ public class GraphicNode {
     }
 
     /**
+     * Returns the key of the node.
+     * 
+     * @return the key of the node
+     */
+    int getNodeKey() {
+        return key;
+    }
+    
+    /**
      * Returns the color of the node.
      * 
      * @return the color of the node
      */
-    public GraphicNodeColor getNodeColor() {
+    GraphicNodeColor getNodeColor() {
         return color;
     }
 
@@ -109,7 +118,7 @@ public class GraphicNode {
      * 
      * @return the size of the node
      */
-    public int getNodeSize() {
+    int getNodeSize() {
         return nodeSize;
     }
 
@@ -118,7 +127,7 @@ public class GraphicNode {
      * 
      * @return the x position of the node
      */
-    public int getXPosition() {
+    int getXPosition() {
         return xPosition;
     }
 
@@ -127,7 +136,7 @@ public class GraphicNode {
      * 
      * @return the y position of the node
      */
-    public int getYPosition() {
+    int getYPosition() {
         return yPosition;
     }
 
@@ -136,16 +145,16 @@ public class GraphicNode {
      * 
      * @param c the new color of the node
      */
-    public void changeColor(GraphicNodeColor c) {
+    void changeColor(GraphicNodeColor c) {
         color = c;
         if (color == GraphicNodeColor.BLACK) {
-            image = loadImage("black");
+            image = loadImage("black", nodeSize);
         } else if (color == GraphicNodeColor.BLUE) {
-            image = loadImage("blue");
+            image = loadImage("blue", nodeSize);
         } else if (color == GraphicNodeColor.RED) {
-            image = loadImage("red");
+            image = loadImage("red", nodeSize);
         } else {
-            image = loadImage("yellow");
+            image = loadImage("yellow", nodeSize);
         }
     }
 
@@ -155,7 +164,7 @@ public class GraphicNode {
      * @param x the new x position of the node
      * @param y the new y position of the node
      */
-    public void move(int x, int y) {
+    void move(int x, int y) {
         xPosition = x;
         yPosition = y;
     }
@@ -165,7 +174,7 @@ public class GraphicNode {
      * 
      * @param g the graphics
      */
-    public void paint(Graphics g) {
+    void paint(Graphics g) {
         g.drawImage(image, xPosition - nodeSize / 2, yPosition - nodeSize / 2,
             nodeSize, nodeSize, null);
         String stringKey = key.toString();
