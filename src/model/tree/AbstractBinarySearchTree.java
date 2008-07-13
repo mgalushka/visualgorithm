@@ -49,10 +49,10 @@ public abstract class AbstractBinarySearchTree<N extends IBinarySearchNode<N>>
                     return (node.getRight().getKey() > node.getKey())
                             && isBST(node.getRight());
                 } else if (node.getRight() == null) {
-                    return (node.getLeft().getKey() <= node.getKey())
+                    return (node.getLeft().getKey() < node.getKey())
                             && isBST(node.getLeft());
                 } else {
-                    return (node.getLeft().getKey() <= node.getKey())
+                    return (node.getLeft().getKey() < node.getKey())
                             && isBST(node.getLeft())
                             && (node.getRight().getKey() > node.getKey())
                             && isBST(node.getRight());
