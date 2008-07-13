@@ -23,6 +23,7 @@ package io;
 
 import model.tree.BinarySearchNode;
 import model.tree.BinarySearchTree;
+import model.tree.IBinaryNode;
 
 /**
  * Loading and saving binary search tree file.
@@ -33,18 +34,10 @@ import model.tree.BinarySearchTree;
  * @version 1.00 02/07/08
  * @see TreeFile
  */
-class BinarySearchTreeFile extends TreeFile<BinarySearchNode, BinarySearchTree> {
+class BinarySearchTreeFile extends TreeFile {
 
-    @Override
-    protected void setLeftNode(BinarySearchNode node, int childNodeNumber) {
-        node.setLeft(new BinarySearchNode(Integer.parseInt(nodeVector
-                .get(childNodeNumber)[KEY])));
-    }
-
-    @Override
-    protected void setRightNode(BinarySearchNode node, int childNodeNumber) {
-        node.setRight(new BinarySearchNode(Integer.parseInt(nodeVector
-                .get(childNodeNumber)[KEY])));
+    BinarySearchTreeFile() {
+        super();
     }
 
     @Override
@@ -55,5 +48,21 @@ class BinarySearchTreeFile extends TreeFile<BinarySearchNode, BinarySearchTree> 
     @Override
     protected BinarySearchTree createBinaryTree(int key) {
         return new BinarySearchTree(key);
+    }
+
+    @Override
+    protected <N extends IBinaryNode<?>> void setLeftNode(N node,
+            int childNodeNumber) {
+        assert (node instanceof BinarySearchNode);
+        ((BinarySearchNode) node).setLeft(new BinarySearchNode(Integer
+                .parseInt(nodeVector.get(childNodeNumber)[KEY])));
+    }
+
+    @Override
+    protected <N extends IBinaryNode<?>> void setRightNode(N node,
+            int childNodeNumber) {
+        assert (node instanceof BinarySearchNode);
+        ((BinarySearchNode) node).setRight(new BinarySearchNode(Integer
+                .parseInt(nodeVector.get(childNodeNumber)[KEY])));
     }
 }

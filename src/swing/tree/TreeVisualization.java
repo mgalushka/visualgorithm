@@ -281,14 +281,11 @@ public class TreeVisualization extends JPanel {
                         key = node.getKey();
                         y = yPositionRootNode + i * heightBetweenNodes;
                         if (node instanceof RedBlackNode) {
-                            if (((RedBlackNode) node).isRed()) {
-                                color = GraphicNodeColor.RED;
-                            } else {
-                                color = GraphicNodeColor.BLACK;
-                            }
-                        } else {
-                            color = GraphicNodeColor.YELLOW;
-                        }
+    						color = ((RedBlackNode)node).isRed() ? GraphicNodeColor.RED
+    								: GraphicNodeColor.BLACK;
+    					} else {
+    						color = GraphicNodeColor.YELLOW;
+    					}
                         graphicNodes.add(new GraphicNode(key, x, y, nodeSize,
                                 color));
                     } else {

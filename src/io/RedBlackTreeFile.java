@@ -21,6 +21,7 @@
 
 package io;
 
+import model.tree.IBinaryNode;
 import model.tree.RedBlackNode;
 import model.tree.RedBlackTree;
 import model.tree.RedBlackNode.RedBlackNodeColor;
@@ -34,11 +35,18 @@ import model.tree.RedBlackNode.RedBlackNodeColor;
  * @version 1.00 02/07/08
  * @see TreeFile
  */
-class RedBlackTreeFile extends TreeFile<RedBlackNode, RedBlackTree> {
+final class RedBlackTreeFile extends TreeFile {
 
     private static final String REGEX_COLOR = "(red|black)";
 
     private static int COLOR = 4;
+
+    /**
+	 * 
+	 */
+    RedBlackTreeFile() {
+        super();
+    }
 
     @Override
     protected void initREGEX(int currentNodeNumber, int nextNodeNumber) {
@@ -48,24 +56,6 @@ class RedBlackTreeFile extends TreeFile<RedBlackNode, RedBlackTree> {
         REGEX_LEFT_CHILD += lineEnd;
         REGEX_RIGHT_CHILD += lineEnd;
         REGEX_NO_CHILD += lineEnd;
-    }
-
-    @Override
-    protected void setLeftNode(RedBlackNode node, int childNodeNumber) {
-        RedBlackNodeColor color = (nodeVector.get(childNodeNumber)[COLOR]
-                .equals("black")) ? RedBlackNodeColor.BLACK
-                : RedBlackNodeColor.RED;
-        node.setLeft(new RedBlackNode(Integer.parseInt(nodeVector
-                .get(childNodeNumber)[KEY]), color));
-    }
-
-    @Override
-    protected void setRightNode(RedBlackNode node, int childNodeNumber) {
-        RedBlackNodeColor color = (nodeVector.get(childNodeNumber)[COLOR]
-                .equals("black")) ? RedBlackNodeColor.BLACK
-                : RedBlackNodeColor.RED;
-        node.setRight(new RedBlackNode(Integer.parseInt(nodeVector
-                .get(childNodeNumber)[KEY]), color));
     }
 
     @Override
@@ -79,10 +69,34 @@ class RedBlackTreeFile extends TreeFile<RedBlackNode, RedBlackTree> {
     }
 
     @Override
-    protected String getNode(RedBlackNode node, int currentNodeNumber,
-            String rightNodeNumber, String leftNodeNumber) {
-        return super.getNode(node, currentNodeNumber, rightNodeNumber,
-            leftNodeNumber)
-                + SPACE + node.getColor().toString().toLowerCase();
+    protected <N extends IBinaryNode<?>> void setLeftNode(N node,
+            int childNodeNumber) {
+        assert (node instanceof RedBlackNode);
+        RedBlackNodeColor color = (nodeVector.get(childNodeNumber)[COLOR]
+                .equals("black")) ? RedBlackNodeColor.BLACK
+                : RedBlackNodeColor.RED;
+        ((RedBlackNode) node).setLeft(new RedBlackNode(Integer
+                .parseInt(nodeVector.get(childNodeNumber)[KEY]), color));
+    }
+
+    @Override
+    protected <N extends IBinaryNode<?>> void setRightNode(N node,
+            int childNodeNumber) {
+        assert (node instanceof RedBlackNode);
+        RedBlackNodeColor color = (nodeVector.get(childNodeNumber)[COLOR]
+                .equals("black")) ? RedBlackNodeColor.BLACK
+                : RedBlackNodeColor.RED;
+        ((RedBlackNode) node).setRight(new RedBlackNode(Integer
+                .parseInt(nodeVector.get(childNodeNumber)[KEY]), color));
+    }
+
+    @Override
+    protected <N extends IBinaryNode<?>> String getNode(N node,
+            int currentNodeNumber, String leftNodeNumber, String rightNodeNumber) {
+        assert (node instanceof RedBlackNode);
+        return super.getNode(node, currentNodeNumber, leftNodeNumber,
+            rightNodeNumber)
+                + SPACE
+                + ((RedBlackNode) node).getColor().toString().toLowerCase();
     }
 }

@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 import model.tree.IBinaryNode;
 import model.tree.IBinaryTree;
 import model.tree.UnknownTreeTypeException;
+import model.tree.AbstractBinaryTree.BinaryTreeType;
 
 /**
  * Loading and saving tree file.
@@ -44,7 +45,7 @@ import model.tree.UnknownTreeTypeException;
  * @author Damien Rigoni
  * @version 1.00 02/07/08
  */
-public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBinaryTree<? extends N>> {
+public abstract class TreeFile {
 
     /**
      * Position of the key in the file.
@@ -127,7 +128,7 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
     /**
      * The file parser.
      */
-    protected static HashMap<String, TreeFile<? extends IBinaryNode<?>, ? extends IBinaryTree<?>>> fileParser = new HashMap<String, TreeFile<? extends IBinaryNode<?>, ? extends IBinaryTree<?>>>();
+    protected static HashMap<String, TreeFile> fileParser = new HashMap<String, TreeFile>();
 
     private int lineNumber;
 
@@ -142,9 +143,11 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
     protected String treeType;
 
     static {
-        fileParser.put("BINARYSEARCHTREE", new BinarySearchTreeFile());
-        fileParser.put("AVLTREE", new AVLTreeFile());
-        fileParser.put("REDBLACKTREE", new RedBlackTreeFile());
+        fileParser.put(BinaryTreeType.BINARYSEARCHTREE.toString(),
+            new BinarySearchTreeFile());
+        fileParser.put(BinaryTreeType.AVLTREE.toString(), new AVLTreeFile());
+        fileParser.put(BinaryTreeType.REDBLACKTREE.toString(),
+            new RedBlackTreeFile());
     }
 
     /**
@@ -155,15 +158,14 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
         treeType = new String();
     }
 
-    private static TreeFile<? extends IBinaryNode<?>, ? extends IBinaryTree<?>> parse(
-            String fileName) throws ParseException, IOException,
-            FileNotFoundException {
+    private static TreeFile parse(String fileName) throws ParseException,
+            IOException, FileNotFoundException {
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
         int line = 0;
         String lineToParse = reader.readLine();
         Pattern pattern;
         Matcher matcher;
-        TreeFile<? extends IBinaryNode<?>, ? extends IBinaryTree<?>> parser = null;
+        TreeFile parser = null;
 
         while (lineToParse != null && parser == null) {
             if (lineToParse.matches(REGEX_COMMENT)
@@ -199,8 +201,8 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
         }
     }
 
-    private T createBinaryTree() throws UnknownTreeTypeException {
-        T tree;
+    private IBinaryTree<?> createBinaryTree() throws UnknownTreeTypeException {
+        IBinaryTree<?> tree;
         if (nodeVector.size() != 0) {
             tree = createBinaryTree(Integer.parseInt(nodeVector.get(0)[KEY]));
             generateNode(tree.getRoot(), 0);
@@ -218,7 +220,8 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
         }
     }
 
-    private void generateNode(N node, int currentNodeNumber) {
+    private <N extends IBinaryNode<N>> void generateNode(N node,
+            int currentNodeNumber) {
         if (currentNodeNumber >= nodeVector.size()) {
         } else {
             if (nodeVector.get(currentNodeNumber)[LEFT_CHILD].equals(NIL_NODE)) {
@@ -226,16 +229,16 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
                 int childNodeNumber = Integer.parseInt(nodeVector
                         .get(currentNodeNumber)[LEFT_CHILD]);
                 setLeftNode(node, childNodeNumber);
-                ((N) (node.getLeft())).setFather(node);
-                generateNode((N) node.getLeft(), childNodeNumber);
+                node.getLeft().setFather(node);
+                generateNode(node.getLeft(), childNodeNumber);
             }
             if (nodeVector.get(currentNodeNumber)[RIGHT_CHILD].equals(NIL_NODE)) {
             } else {
                 int childNodeNumber = Integer.parseInt(nodeVector
                         .get(currentNodeNumber)[RIGHT_CHILD]);
                 setRightNode(node, childNodeNumber);
-                ((N) node.getRight()).setFather(node);
-                generateNode((N) node.getRight(), childNodeNumber);
+                node.getRight().setFather(node);
+                generateNode(node.getRight(), childNodeNumber);
             }
         }
     }
@@ -311,8 +314,8 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
      * @param rightNodeNumber the number of the right child
      * @return the string corresponding to the node
      */
-    protected String getNode(N node, int currentNodeNumber,
-            String leftNodeNumber, String rightNodeNumber) {
+    protected <N extends IBinaryNode<?>> String getNode(N node,
+            int currentNodeNumber, String leftNodeNumber, String rightNodeNumber) {
         return currentNodeNumber + SPACE + node.getKey() + SPACE
                 + leftNodeNumber + SPACE + rightNodeNumber;
     }
@@ -338,7 +341,7 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
      * 
      * @return the created tree
      */
-    protected abstract T createEmptyBinaryTree();
+    protected abstract IBinaryTree<?> createEmptyBinaryTree();
 
     /**
      * Creates a tree with for root the key given in parameter.
@@ -346,7 +349,7 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
      * @param key the key of the node
      * @return the created tree
      */
-    protected abstract T createBinaryTree(int key);
+    protected abstract IBinaryTree<?> createBinaryTree(int key);
 
     /**
      * Creates the left child of the node given in parameter.
@@ -354,7 +357,8 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
      * @param node the node which the left child has to be assigned
      * @param childNodeNumber the index of the key
      */
-    protected abstract void setLeftNode(N node, int childNodeNumber);
+    protected abstract <N extends IBinaryNode<?>> void setLeftNode(N node,
+            int childNodeNumber);
 
     /**
      * Creates the right child of the node given in parameter.
@@ -362,7 +366,8 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
      * @param node the node which the right child has to be assigned
      * @param childNodeNumber the index of the key
      */
-    protected abstract void setRightNode(N node, int childNodeNumber);
+    protected abstract <N extends IBinaryNode<?>> void setRightNode(N node,
+            int childNodeNumber);
 
     /**
      * Creates a tree from a load file.
@@ -373,10 +378,10 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
      * @throws IOException
      * @throws UnknownTreeTypeException
      */
-    public static IBinaryTree<? extends IBinaryNode<?>> load(String fileName)
+    public static IBinaryTree<?> load(String fileName)
             throws FileNotFoundException, ParseException, IOException,
             UnknownTreeTypeException {
-        TreeFile<?, ?> parser = TreeFile.parse(fileName);
+        TreeFile parser = TreeFile.parse(fileName);
         return parser.createBinaryTree();
     }
 
@@ -388,17 +393,15 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
      * @throws IOException
      * @throws UnknownTreeTypeException
      */
-    public final static <NN extends IBinaryNode<NN>> void save(
-            IBinaryTree<NN> tree, String fileName) throws IOException {
+    public final static <N extends IBinaryNode<N>> void save(
+            IBinaryTree<N> tree, String fileName) throws IOException {
         FileWriter file = new FileWriter(fileName);
-        NN node;
+        N node;
         int currentNodeNumber = 0;
         int maxNodeNumber = 0;
         String leftNodeNumber;
         String rightNodeNumber;
-        TreeFile<NN, ? extends IBinaryTree<?>> treeFile = (TreeFile<NN, ? extends IBinaryTree<?>>) fileParser
-                .get(tree.getType().toString());
-        List<NN> array = tree.treeToArrayList();
+        List<N> array = tree.treeToArrayList();
 
         file.write(tree.getType() + "\n");
         for (int i = 0; i < array.size(); i++) {
@@ -416,8 +419,8 @@ public abstract class TreeFile<N extends IBinaryNode<? super N>, T extends IBina
                     ++maxNodeNumber;
                     rightNodeNumber = Integer.toString(maxNodeNumber);
                 }
-                file.write(treeFile.getNode(node, currentNodeNumber,
-                    leftNodeNumber, rightNodeNumber)
+                file.write(fileParser.get(tree.getType().toString()).getNode(
+                    node, currentNodeNumber, leftNodeNumber, rightNodeNumber)
                         + "\n");
                 ++currentNodeNumber;
             }

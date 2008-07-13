@@ -23,6 +23,7 @@ package io;
 
 import model.tree.AVLNode;
 import model.tree.AVLTree;
+import model.tree.IBinaryNode;
 
 /**
  * Loading and saving AVL tree file.
@@ -33,21 +34,7 @@ import model.tree.AVLTree;
  * @version 1.00 02/07/08
  * @see TreeFile
  */
-class AVLTreeFile extends TreeFile<AVLNode, AVLTree> {
-
-    @Override
-    protected void setLeftNode(AVLNode node, int childNodeNumber) {
-        node.setLeft(new AVLNode(Integer.parseInt(nodeVector
-                .get(childNodeNumber)[KEY])));
-
-    }
-
-    @Override
-    protected void setRightNode(AVLNode node, int childNodeNumber) {
-        node.setRight(new AVLNode(Integer.parseInt(nodeVector
-                .get(childNodeNumber)[KEY])));
-
-    }
+final class AVLTreeFile extends TreeFile {
 
     @Override
     protected AVLTree createEmptyBinaryTree() {
@@ -57,5 +44,23 @@ class AVLTreeFile extends TreeFile<AVLNode, AVLTree> {
     @Override
     protected AVLTree createBinaryTree(int key) {
         return new AVLTree(key);
+    }
+
+    @Override
+    protected <N extends IBinaryNode<?>> void setLeftNode(N node,
+            int childNodeNumber) {
+        assert (node instanceof AVLNode);
+        ((AVLNode) node).setLeft(new AVLNode(Integer.parseInt(nodeVector
+                .get(childNodeNumber)[KEY])));
+
+    }
+
+    @Override
+    protected <N extends IBinaryNode<?>> void setRightNode(N node,
+            int childNodeNumber) {
+        assert (node instanceof AVLNode);
+        ((AVLNode) node).setRight(new AVLNode(Integer.parseInt(nodeVector
+                .get(childNodeNumber)[KEY])));
+
     }
 }
