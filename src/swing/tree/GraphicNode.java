@@ -35,7 +35,7 @@ import javax.imageio.ImageIO;
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class GraphicNode {
+class GraphicNode {
 
     /**
      * Definition of the graphic node color.

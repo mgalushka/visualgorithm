@@ -33,7 +33,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 import model.tree.IBinaryNode;
-import swing.VisualizationZoom;
 import controller.BinaryTreeTabController;
 
 /**
@@ -44,7 +43,7 @@ import controller.BinaryTreeTabController;
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class FastTreeCreation extends JPanel {
+class FastTreeCreation extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
@@ -60,12 +59,12 @@ public class FastTreeCreation extends JPanel {
      * @param c the controller
      */
     FastTreeCreation(BinaryTreeTabController c) {
-        treeVisualization = new TreeVisualization();
+        treeVisualization = new TreeVisualization(c);
         controller = c;
         controls = createControls();
 
         setLayout(new BorderLayout(4, 4));
-        add(new VisualizationZoom(treeVisualization), BorderLayout.CENTER);
+        add(new TreeVisualizationZoom(treeVisualization), BorderLayout.CENTER);
         add(controls, BorderLayout.SOUTH);
     }
 

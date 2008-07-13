@@ -51,7 +51,7 @@ import controller.BinaryTreeTabController;
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class TabCloseButton extends JPanel {
+class TabCloseButton extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
@@ -65,9 +65,9 @@ public class TabCloseButton extends JPanel {
      * @param p the tabbed pane
      * @param c the principal controller
      */
-    public TabCloseButton(JTabbedPane p, PrincipalController c) {
+    TabCloseButton(JTabbedPane tp, PrincipalController c) {
         super(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        tabbedPane = p;
+        tabbedPane = tp;
         controller = c;
         JButton closeButton = createCloseButton();
         JLabel tabName = new JLabel() {

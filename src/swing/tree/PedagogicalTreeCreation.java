@@ -32,7 +32,7 @@ import controller.BinaryTreeTabController;
  * @author Damien Rigoni
  * @version 1.00 07/07/08
  */
-public class PedagogicalTreeCreation extends JPanel {
+class PedagogicalTreeCreation extends JPanel {
 
     private static final long serialVersionUID = 1L;
 

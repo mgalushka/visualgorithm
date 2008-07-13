@@ -31,6 +31,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
+import controller.BinaryTreeTabController;
 import model.tree.IBinaryNode;
 import model.tree.RedBlackNode;
 import swing.tree.GraphicNode.GraphicNodeColor;
@@ -43,9 +44,11 @@ import swing.tree.GraphicNode.GraphicNodeColor;
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class TreeVisualization extends JPanel {
+class TreeVisualization extends JPanel {
 
     private static final long serialVersionUID = 1L;
+    
+    private BinaryTreeTabController controller;
 
     private List<GraphicNode> graphicNodes;
 
@@ -72,7 +75,8 @@ public class TreeVisualization extends JPanel {
     /**
      * Builds the tree visualization.
      */
-    TreeVisualization() {
+    TreeVisualization(BinaryTreeTabController c) {
+        controller = c;
         deleteMode = false;
         graphicNodes = new ArrayList<GraphicNode>();
         indexOfSelectedNode = -1;
@@ -92,8 +96,7 @@ public class TreeVisualization extends JPanel {
                     int nodeIndex = indexOfSelectedNode(e.getX(), e.getY());
                     if (nodeIndex > -1) {
                         GraphicNode node = getGraphicNode(nodeIndex);
-                        // TODO deletion : pb with two identical keys
-                        System.out.println(node.getNodeKey());
+                        controller.deleteNode(node.getNodeKey());
                     }
                 }
             }

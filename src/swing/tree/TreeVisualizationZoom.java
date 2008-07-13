@@ -1,5 +1,5 @@
 /*
- * VisualizationZoom.java v1.00 16/06/08
+ * TreeVisualizationZoom.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package swing;
+package swing.tree;
 
 import java.awt.Dimension;
 import java.awt.event.InputEvent;
@@ -37,7 +37,7 @@ import javax.swing.JScrollPane;
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class VisualizationZoom extends JPanel {
+class TreeVisualizationZoom extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
@@ -50,7 +50,7 @@ public class VisualizationZoom extends JPanel {
      * 
      * @param component the component
      */
-    public VisualizationZoom(final JComponent component) {
+    TreeVisualizationZoom(final JComponent component) {
         JScrollPane scrollPane = new JScrollPane(component);
         // TODO zoom
         scrollPane.addMouseWheelListener(new MouseWheelListener() {
