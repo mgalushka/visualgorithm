@@ -59,9 +59,11 @@ public class BinaryTreeTabPage extends JPanel implements IBinaryTreeView {
      * 
      * @param c the controller
      * @param type the type of the data structure
+     * @param width the width of the tree visualization
+     * @param height the height of the tree visualization
      */
-    public BinaryTreeTabPage(String type, BinaryTreeTabController c) {
-        fastTreeCreation = new FastTreeCreation(c);
+    public BinaryTreeTabPage(String type, BinaryTreeTabController c, int width, int height) {
+        fastTreeCreation = new FastTreeCreation(c, width, height);
         final JButton pedagogicView = new JButton("Pedagogical"
                 + "Creation Mode");
         JPanel titlePane = new JPanel();

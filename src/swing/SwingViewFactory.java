@@ -47,7 +47,7 @@ public class SwingViewFactory extends AbstractViewFactory {
 
     @Override
     public IBinaryTreeView createBinaryTreeTabPage(String type,
-            BinaryTreeTabController controller) {
-        return new BinaryTreeTabPage(type, controller);
+            BinaryTreeTabController controller, int width, int height) {
+        return new BinaryTreeTabPage(type, controller, width, height);
     }
 }

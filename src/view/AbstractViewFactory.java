@@ -47,6 +47,7 @@ public abstract class AbstractViewFactory {
     /**
      * Creates the principal view of the software.
      * 
+     * @param controller the principal controller
      * @return the principal view
      */
     public abstract IPrincipalModelView createGraphicUserInterface(
@@ -55,8 +56,12 @@ public abstract class AbstractViewFactory {
     /**
      * Creates the binary tree tab view.
      * 
+     * @param type the type of the tree
+     * @param controller the tab controller
+     * @param width the width of the tree visualization
+     * @param height the height of the tree visualization
      * @return the binary tree tab view
      */
     public abstract IBinaryTreeView createBinaryTreeTabPage(String type,
-            BinaryTreeTabController controller);
+            BinaryTreeTabController controller, int width, int height);
 }

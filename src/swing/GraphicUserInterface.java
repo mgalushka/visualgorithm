@@ -21,6 +21,7 @@
 
 package swing;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -85,11 +86,11 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
         controller = c;
         menuBar = createMenuBar();
         fileChooser = createFileChooser();
-        tabbedPane = new JTabbedPane(SwingConstants.TOP);
+        tabbedPane = new JTabbedPane(SwingConstants.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 
         menuBar.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
         setJMenuBar(menuBar);
-        add(tabbedPane);
+        getContentPane().add(tabbedPane, BorderLayout.CENTER);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
 
@@ -99,7 +100,7 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
             }
         });
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(screenSize.width * 8 / 10, screenSize.height * 8 / 10);
+        setSize(screenSize);
     }
 
     private JComponent getTabView(int index) {
@@ -173,20 +174,20 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
                     int index = tabbedPane.getTabCount();
                     try {
                         controller.openFile(fileChooser.getSelectedFile(),
-                            index);
+                            index, tabbedPane.getWidth(), tabbedPane.getHeight());
                     } catch (FileNotFoundException e) {
-                        JOptionPane.showMessageDialog(tabbedPane, e
+                        JOptionPane.showMessageDialog(GraphicUserInterface.this, e
                                 .getMessage(), "Open Failed",
                             JOptionPane.WARNING_MESSAGE);
                     } catch (ParseException e) {
-                        JOptionPane.showMessageDialog(tabbedPane, e
+                        JOptionPane.showMessageDialog(GraphicUserInterface.this, e
                                 .getMessage(), "Open Failed",
                             JOptionPane.WARNING_MESSAGE);
                     } catch (IOException e) {
                         System.out.println("File could not be read");
                         System.exit(1);
                     } catch (UnknownTreeTypeException e) {
-                        JOptionPane.showMessageDialog(tabbedPane, e
+                        JOptionPane.showMessageDialog(GraphicUserInterface.this, e
                                 .getMessage(), "Open Failed",
                             JOptionPane.WARNING_MESSAGE);
                     }
@@ -234,7 +235,7 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
                 int index = tabbedPane.getSelectedIndex();
                 File file = fileChooser.getSelectedFile();
                 if (file.exists()) {
-                    int choice = JOptionPane.showConfirmDialog(tabbedPane,
+                    int choice = JOptionPane.showConfirmDialog(GraphicUserInterface.this,
                         "This file already exists."
                                 + " Do you want to replace it?",
                         "Save Operation", JOptionPane.YES_NO_OPTION,
@@ -277,7 +278,7 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
                 controller.exitSoftware();
             } else {
                 Object[] options = { "Save", "Discard", "Cancel" };
-                int choice = JOptionPane.showOptionDialog(tabbedPane,
+                int choice = JOptionPane.showOptionDialog(GraphicUserInterface.this,
                     "Do you want to save your changes?", "Exit Operation",
                     JOptionPane.YES_NO_CANCEL_OPTION,
                     JOptionPane.WARNING_MESSAGE, null, options, options[2]);
@@ -288,7 +289,7 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
                 }
             }
         } else {
-            int choice = JOptionPane.showConfirmDialog(tabbedPane,
+            int choice = JOptionPane.showConfirmDialog(GraphicUserInterface.this,
                 "You are about to close " + count + " tabs."
                         + " Do you really want to continue?", "Exit Operation",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -332,7 +333,7 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
                 controller.addBinaryTreeTab(BinaryTreeType.AVLTREE,
-                    index);
+                    index, tabbedPane.getWidth(), tabbedPane.getHeight());
             }
         });
         binarySearchTree.addActionListener(new ActionListener() {
@@ -341,7 +342,7 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
                 controller.addBinaryTreeTab(BinaryTreeType.BINARYSEARCHTREE,
-                    index);
+                    index, tabbedPane.getWidth(), tabbedPane.getHeight());
             }
         });
         redBlackTree.addActionListener(new ActionListener() {
@@ -349,7 +350,8 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
             @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
-                controller.addBinaryTreeTab(BinaryTreeType.REDBLACKTREE, index);
+                controller.addBinaryTreeTab(BinaryTreeType.REDBLACKTREE, index,
+                    tabbedPane.getWidth(), tabbedPane.getHeight());
             }
         });
         newTree.add(randomTree);

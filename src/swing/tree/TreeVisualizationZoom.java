@@ -21,11 +21,11 @@
 
 package swing.tree;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -41,57 +41,55 @@ class TreeVisualizationZoom extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
+    private Dimension visualizationArea;
+
     private static final int zoomMin = 0;
 
-    private static final int zoomMax = 20;
+    private static final int zoomMax = 3;
 
     /**
-     * Builds a pane including a zoom of the component thanks to JScrollPane.
+     * Builds a pane including a zoom of the tree visualization
+     * thanks to JScrollPane.
      * 
-     * @param component the component
+     * @param treeVisualization the tree visualization
      */
-    TreeVisualizationZoom(final JComponent component) {
-        JScrollPane scrollPane = new JScrollPane(component);
-        // TODO zoom
+    TreeVisualizationZoom(final TreeVisualization treeVisualization) {
+        super(new BorderLayout(4, 4));
+        visualizationArea = new Dimension(0, 0);
+        JScrollPane scrollPane = new JScrollPane(treeVisualization);
+
         scrollPane.addMouseWheelListener(new MouseWheelListener() {
 
-            int height = component.getHeight();
-
-            int width = component.getWidth();
-
-            int pheight = component.getPreferredSize().height;
-
-            int pwidth = component.getPreferredSize().width;
-
-            int scrollzoom = zoomMin;
+            int zoomValue = zoomMin;
 
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
                 if ((e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) == InputEvent.CTRL_DOWN_MASK) {
                     if (e.getWheelRotation() == -1) {
-                        scrollzoom = (scrollzoom >= zoomMax) ? zoomMax
-                                : ++scrollzoom;
+                        if (zoomValue > zoomMin) {
+                            treeVisualization.changeSize(--zoomValue);
+                            visualizationArea = treeVisualization.getSizeOfDrawingArea();
+                            treeVisualization.setPreferredSize(visualizationArea);
+                            treeVisualization.revalidate();
+                        }
                     } else {
-                        scrollzoom = (scrollzoom == zoomMin) ? zoomMin
-                                : --scrollzoom;
+                        if (zoomValue < zoomMax) {
+                            treeVisualization.changeSize(++zoomValue);
+                            visualizationArea = treeVisualization.getSizeOfDrawingArea();
+                            System.out.println("w "+treeVisualization.getWidth());
+                            System.out.println("h "+treeVisualization.getHeight());
+                            System.out.println("wi "+visualizationArea.width);
+                            System.out.println("he "+visualizationArea.height);
+                            treeVisualization.setPreferredSize(visualizationArea);
+                            treeVisualization.revalidate();
+                        }
                     }
-                    if (scrollzoom == zoomMin) {
-                        component.setPreferredSize(new Dimension(pwidth,
-                                pheight));
-                    } else {
-                        component.setPreferredSize(new Dimension(width
-                                * scrollzoom, height * scrollzoom));
-                    }
-                    System.out.println("h " + height);
-                    System.out.println("w " + width);
-                    System.out.println("ph " + pheight);
-                    System.out.println("pw " + pwidth);
-                    System.out.println("s " + scrollzoom);
-                    System.out.println();
-                    component.invalidate();
+                    treeVisualization.repaint();
                 }
             }
         });
-        add(scrollPane);
+        scrollPane.setPreferredSize(new Dimension(treeVisualization.getWidth(),
+                treeVisualization.getHeight()));
+        add(scrollPane, BorderLayout.CENTER);
     }
 }

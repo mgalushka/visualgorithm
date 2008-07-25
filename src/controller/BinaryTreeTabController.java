@@ -52,13 +52,15 @@ public class BinaryTreeTabController implements ISubController {
      * Builds the binary tree tab controller.
      * 
      * @param type the type of the binary tree
+     * @param width the width of the tree visualization
+     * @param height the height of the tree visualization
      */
-    public BinaryTreeTabController(BinaryTreeType type) {
+    public BinaryTreeTabController(BinaryTreeType type, int width, int height) {
         binaryTreeSubModel = new BinaryTreeSubModel(type);
 
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        tabPageView = viewFactory
-                .createBinaryTreeTabPage(type.toString(), this);
+        tabPageView = viewFactory.createBinaryTreeTabPage(type.toString(),
+            this, width, height);
         addListener();
     }
 
@@ -66,18 +68,21 @@ public class BinaryTreeTabController implements ISubController {
      * Builds the binary tree tab controller.
      * 
      * @param file the file containing the binary tree
+     * @param width the width of the tree visualization
+     * @param height the height of the tree visualization
      * @throws UnknownTreeTypeException
      * @throws IOException
      * @throws ParseException
      * @throws FileNotFoundException
      */
-    public BinaryTreeTabController(File file) throws FileNotFoundException,
-            ParseException, IOException, UnknownTreeTypeException {
+    public BinaryTreeTabController(File file, int width, int height)
+            throws FileNotFoundException, ParseException, IOException,
+            UnknownTreeTypeException {
         binaryTreeSubModel = new BinaryTreeSubModel(file);
 
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
         tabPageView = viewFactory.createBinaryTreeTabPage(binaryTreeSubModel
-                .getDataStructure().getType(), this);
+                .getDataStructure().getType(), this, width, height);
         addListener();
         binaryTreeSubModel.updateBinaryTreeView();
     }
@@ -87,13 +92,16 @@ public class BinaryTreeTabController implements ISubController {
      * 
      * @param type the type of the binary tree
      * @param nbNode the number of nodes
+     * @param width the width of the tree visualization
+     * @param height the height of the tree visualization
      */
-    public BinaryTreeTabController(BinaryTreeType type, int nbNode) {
+    public BinaryTreeTabController(BinaryTreeType type, int nbNode, int width,
+            int height) {
         binaryTreeSubModel = new BinaryTreeSubModel(type, nbNode);
 
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
         tabPageView = viewFactory
-                .createBinaryTreeTabPage(type.toString(), this);
+                .createBinaryTreeTabPage(type.toString(), this, width, height);
         addListener();
         binaryTreeSubModel.updateBinaryTreeView();
     }

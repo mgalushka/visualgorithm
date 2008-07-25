@@ -22,6 +22,7 @@
 package swing.tree;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -103,7 +104,7 @@ class GraphicNode {
     int getNodeKey() {
         return key;
     }
-    
+
     /**
      * Returns the color of the node.
      * 
@@ -141,21 +142,13 @@ class GraphicNode {
     }
 
     /**
-     * Changes the color of the node.
+     * Changes the size of the node.
      * 
-     * @param c the new color of the node
+     * @param value the new size of the node
      */
-    void changeColor(GraphicNodeColor c) {
-        color = c;
-        if (color == GraphicNodeColor.BLACK) {
-            image = loadImage("black", nodeSize);
-        } else if (color == GraphicNodeColor.BLUE) {
-            image = loadImage("blue", nodeSize);
-        } else if (color == GraphicNodeColor.RED) {
-            image = loadImage("red", nodeSize);
-        } else {
-            image = loadImage("yellow", nodeSize);
-        }
+    void changeNodeSize(int value) {
+        nodeSize = value;
+        image = loadImage(color.toString().toLowerCase(), nodeSize);
     }
 
     /**
@@ -164,7 +157,7 @@ class GraphicNode {
      * @param x the new x position of the node
      * @param y the new y position of the node
      */
-    void move(int x, int y) {
+    void changeNodePosition(int x, int y) {
         xPosition = x;
         yPosition = y;
     }
@@ -175,6 +168,9 @@ class GraphicNode {
      * @param g the graphics
      */
     void paint(Graphics g) {
+        int xString = 0;
+        int yString = 0;
+
         g.drawImage(image, xPosition - nodeSize / 2, yPosition - nodeSize / 2,
             nodeSize, nodeSize, null);
         String stringKey = key.toString();
@@ -182,10 +178,48 @@ class GraphicNode {
                 || (color == GraphicNodeColor.RED)) {
             g.setColor(Color.WHITE);
         }
-        if (stringKey.length() == 1) {
-            g.drawString(stringKey, xPosition - 3, yPosition + 4);
-        } else {
-            g.drawString(stringKey, xPosition - 8, yPosition + 4);
+        switch (nodeSize) {
+        case 30:
+            g.setFont(new Font(null, Font.PLAIN, 12));
+            xString = xPosition - 8;
+            yString = yPosition + 4;
+            break;
+        case 45:
+            g.setFont(new Font(null, Font.PLAIN, 20));
+            xString = xPosition - 12;
+            yString = yPosition + 7;
+            break;
+        case 60:
+            g.setFont(new Font(null, Font.PLAIN, 28));
+            xString = xPosition - 17;
+            yString = yPosition + 9;
+            break;
+        case 75:
+            g.setFont(new Font(null, Font.PLAIN, 36));
+            xString = xPosition - 22;
+            yString = yPosition + 13;
+            break;
         }
+        if (stringKey.length() == 1) {
+            switch (nodeSize) {
+            case 30:
+                xString = xPosition - 4;
+                yString = yPosition + 4;
+                break;
+            case 45:
+                xString = xPosition - 7;
+                yString = yPosition + 7;
+                break;
+            case 60:
+                xString = xPosition - 10;
+                yString = yPosition + 9;
+                break;
+            case 75:
+                xString = xPosition - 13;
+                yString = yPosition + 13;
+                break;
+            }
+        }
+        g.drawString(stringKey, xString, yString);
     }
 }

@@ -89,9 +89,12 @@ public class PrincipalController implements IController {
      * 
      * @param type the type of the binary tree
      * @param index the index of the tab
+     * @param width the width of the tree visualization
+     * @param height the height of the tree visualization
      */
-    public void addBinaryTreeTab(BinaryTreeType type, int index) {
-        subControllers.add(new BinaryTreeTabController(type));
+    public void addBinaryTreeTab(BinaryTreeType type, int index, int width,
+            int height) {
+        subControllers.add(new BinaryTreeTabController(type, width, height));
         model.addSubModel(subControllers.get(index).getSubModel());
     }
 
@@ -101,13 +104,16 @@ public class PrincipalController implements IController {
      * @param type the type of the binary tree
      * @param nbNode the number of nodes
      * @param index the index of the tab
+     * @param width the width of the tree visualization
+     * @param height the height of the tree visualization
      */
     public void addRandomBinaryTreeTab(BinaryTreeType type, int nbNode,
-            int index) {
-        subControllers.add(new BinaryTreeTabController(type, nbNode));
+            int index, int width, int height) {
+        subControllers.add(new BinaryTreeTabController(type, nbNode, width,
+                height));
         model.addSubModel(subControllers.get(index).getSubModel());
     }
-    
+
     /**
      * Removes the tab indicated with index.
      * 
@@ -123,15 +129,19 @@ public class PrincipalController implements IController {
      * 
      * @param file the file
      * @param index the index of the tab
+     * @param width the width of the tree visualization
+     * @param height the height of the tree visualization
      */
-    public void openFile(File file, int index) throws FileNotFoundException,
-            ParseException, IOException, UnknownTreeTypeException {
+    public void openFile(File file, int index, int width, int height)
+            throws FileNotFoundException, ParseException, IOException,
+            UnknownTreeTypeException {
         String fileName = file.getName();
         int i = fileName.lastIndexOf('.');
         String extension = fileName.substring(i + 1).toLowerCase();
 
         if (extension.equals("bt")) {
-            subControllers.add(new BinaryTreeTabController(file));
+            subControllers
+                    .add(new BinaryTreeTabController(file, width, height));
             model.openSubModelFile(subControllers.get(index).getSubModel(),
                 fileName);
         }

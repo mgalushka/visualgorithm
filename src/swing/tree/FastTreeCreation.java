@@ -57,9 +57,11 @@ class FastTreeCreation extends JPanel {
      * Builds the fast tree creation pane.
      * 
      * @param c the controller
+     * @param width the width of the tree visualization
+     * @param height the height of the tree visualization
      */
-    FastTreeCreation(BinaryTreeTabController c) {
-        treeVisualization = new TreeVisualization(c);
+    FastTreeCreation(BinaryTreeTabController c, int width, int height) {
+        treeVisualization = new TreeVisualization(c, width - 8, height - 148);
         controller = c;
         controls = createControls();
 
@@ -116,8 +118,6 @@ class FastTreeCreation extends JPanel {
         insert.setToolTipText("Button Only : Random Insert");
         delete.setToolTipText("Button Only : "
                 + "Multiple Suppression With Cursor");
-        insertValue.setToolTipText("Type Integers From 00 To 99");
-        deleteValue.setToolTipText("Type Integers From 00 To 99");
         controls.add(insertValue);
         controls.add(insert);
         controls.add(deleteValue);
