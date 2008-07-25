@@ -152,6 +152,24 @@ class GraphicNode {
     }
 
     /**
+     * Changes the color of the node.
+     * 
+     * @param c the new color of the node
+     */
+    void changeColor(GraphicNodeColor c) {
+        color = c;
+        if (color == GraphicNodeColor.BLACK) {
+            image = loadImage("black", nodeSize);
+        } else if (color == GraphicNodeColor.BLUE) {
+            image = loadImage("blue", nodeSize);
+        } else if (color == GraphicNodeColor.RED) {
+            image = loadImage("red", nodeSize);
+        } else {
+            image = loadImage("yellow", nodeSize);
+        }
+    }
+    
+    /**
      * Changes the position of the node.
      * 
      * @param x the new x position of the node

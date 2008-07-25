@@ -25,6 +25,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -60,6 +61,14 @@ class TreeVisualization extends JPanel {
     private int widthBetweenNodes;
 
     private int yPositionRootNode;
+    
+    private int indexOfSelectedNode;
+
+    private int xPositionOfSelectedNode;
+
+    private int yPositionOfSelectedNode;
+
+    private GraphicNodeColor colorOfSelectedNode;
 
     private boolean justCalculate, deleteMode;
 
@@ -105,6 +114,52 @@ class TreeVisualization extends JPanel {
                 setCursor(Cursor.getDefaultCursor());
                 deleteMode = false;
             }
+            
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (!deleteMode) {
+                    if (e.getButton() == MouseEvent.BUTTON1) {
+                        int mouseX = e.getX();
+                        int mouseY = e.getY();
+                        int nodeIndex = indexOfSelectedNode(mouseX, mouseY);
+                        if (nodeIndex != -1) {
+                            GraphicNode node = getGraphicNode(nodeIndex);
+                            indexOfSelectedNode = nodeIndex;
+                            xPositionOfSelectedNode = node.getXPosition();
+                            yPositionOfSelectedNode = node.getYPosition();
+                            colorOfSelectedNode = node.getNodeColor();
+                            changeGraphicNodeColor(nodeIndex, GraphicNodeColor.BLUE);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (indexOfSelectedNode != -1) {
+                    changeGraphicNodeColor(indexOfSelectedNode,
+                        colorOfSelectedNode);
+                    if (indexOfSelectedNode > 0) {
+                        moveGraphicNode(indexOfSelectedNode,
+                            xPositionOfSelectedNode, yPositionOfSelectedNode);
+                        xPositionOfSelectedNode = -1;
+                        yPositionOfSelectedNode = -1;
+                    }
+                    indexOfSelectedNode = -1;
+                    colorOfSelectedNode = null;
+                }
+            }
+        });
+        addMouseMotionListener(new MouseAdapter() {
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if ((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) == InputEvent.BUTTON1_DOWN_MASK) {
+                    if (indexOfSelectedNode > 0) {
+                        moveGraphicNode(indexOfSelectedNode, e.getX(), e.getY());
+                    }
+                }
+            }
         });
     }
 
@@ -116,6 +171,43 @@ class TreeVisualization extends JPanel {
         deleteMode = true;
     }
 
+    private void changeGraphicNodeColor(int nodeIndex, GraphicNodeColor color) {
+        GraphicNode node = getGraphicNode(nodeIndex);
+        node.changeColor(color);
+        repaint(node.getXPosition() - sizeOfNodes / 2 - 1, node.getYPosition()
+                - sizeOfNodes / 2 - 1, sizeOfNodes + 2, sizeOfNodes + 2);
+    }
+
+    private void moveGraphicNode(int nodeIndex, int x, int y) {
+        justCalculate = true;
+        GraphicNode movedNode = getGraphicNode(nodeIndex);
+        int xMovedNode = movedNode.getXPosition();
+        int yMovedNode = movedNode.getYPosition();
+
+        movedNode.changeNodePosition(x, y);
+        moveGraphicSubNodes(nodeIndex, x - xMovedNode, y - yMovedNode);
+        repaint();
+    }
+
+    private void moveGraphicSubNodes(int nodeIndex, int shiftX, int shiftY) {
+        if (2 * nodeIndex + 1 < graphicNodes.size()) {
+            GraphicNode left = getGraphicNode(2 * nodeIndex + 1);
+            if (left != null) {
+                moveGraphicSubNodes(2 * nodeIndex + 1, shiftX, shiftY);
+                left.changeNodePosition(left.getXPosition() + shiftX, left.getYPosition()
+                        + shiftY);
+            }
+        }
+        if (2 * nodeIndex + 2 < graphicNodes.size()) {
+            GraphicNode right = getGraphicNode(2 * nodeIndex + 2);
+            if (right != null) {
+                moveGraphicSubNodes(2 * nodeIndex + 2, shiftX, shiftY);
+                right.changeNodePosition(right.getXPosition() + shiftX, right.getYPosition()
+                        + shiftY);
+            }
+        }
+    }
+    
     /**
      * Changes the size of the graphic tree. Size factor must be between 0 and 3
      * included.
@@ -151,6 +243,10 @@ class TreeVisualization extends JPanel {
         return index;
     }
 
+    private GraphicNode getGraphicNode(int index) {
+        return graphicNodes.get(index);
+    }
+    
     private int xPositionOfMinNode() {
         int i = 0, j = 0;
         while ((i < graphicNodes.size()) && (graphicNodes.get(i) != null)) {
