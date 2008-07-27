@@ -156,7 +156,7 @@ class GraphicNode {
      * 
      * @param c the new color of the node
      */
-    void changeColor(GraphicNodeColor c) {
+    void changeNodeColor(GraphicNodeColor c) {
         color = c;
         if (color == GraphicNodeColor.BLACK) {
             image = loadImage("black", nodeSize);
@@ -168,7 +168,7 @@ class GraphicNode {
             image = loadImage("yellow", nodeSize);
         }
     }
-    
+
     /**
      * Changes the position of the node.
      * 
@@ -188,13 +188,15 @@ class GraphicNode {
     void paint(Graphics g) {
         int xString = 0;
         int yString = 0;
+        String stringKey = key.toString();
 
         g.drawImage(image, xPosition - nodeSize / 2, yPosition - nodeSize / 2,
             nodeSize, nodeSize, null);
-        String stringKey = key.toString();
         if ((color == GraphicNodeColor.BLACK)
                 || (color == GraphicNodeColor.RED)) {
             g.setColor(Color.WHITE);
+        } else {
+            g.setColor(Color.BLACK);
         }
         switch (nodeSize) {
         case 30:

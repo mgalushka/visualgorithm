@@ -28,8 +28,8 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 import model.tree.IBinaryNode;
@@ -74,15 +74,8 @@ class FastTreeCreation extends JPanel {
         JPanel controls = new JPanel();
         JButton insert = new JButton("Insert");
         JButton delete = new JButton("Delete");
-        MaskFormatter mask = null;
-        try {
-            mask = new MaskFormatter("##");
-        } catch (ParseException e) {
-            System.out.println("Formatter is bad : " + e.getMessage());
-            System.exit(-1);
-        }
-        final JFormattedTextField insertValue = new JFormattedTextField(mask);
-        final JFormattedTextField deleteValue = new JFormattedTextField(mask);
+        final JTextField insertValue = new JTextField();
+        final JTextField deleteValue = new JTextField();
         insertValue.setHorizontalAlignment(SwingConstants.CENTER);
         deleteValue.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -91,10 +84,20 @@ class FastTreeCreation extends JPanel {
             @Override
             public void actionPerformed(ActionEvent event) {
                 String value = insertValue.getText();
-                String empty = "  ";
+                String empty = "";
                 if (!empty.equals(value) && (value != null)) {
-                    controller.addNode(Integer.parseInt(value));
-                    insertValue.setValue(null);
+                    if (value.length() == 2) {
+                        if ((value.charAt(0) >= '0') && (value.charAt(0) <= '9')) {
+                            if ((value.charAt(1) >= '0') && (value.charAt(1) <= '9')) {
+                                controller.addNode(Integer.parseInt(value));
+                            }
+                        }
+                    } else if (value.length() == 1) {
+                        if ((value.charAt(0) >= '0') && (value.charAt(0) <= '9')) {
+                            controller.addNode(Integer.parseInt(value));
+                        }
+                    }
+                    insertValue.setText(null);
                 } else {
                     controller.addNode((int) Math.round(Math.random() * 100));
                 }
@@ -105,10 +108,20 @@ class FastTreeCreation extends JPanel {
             @Override
             public void actionPerformed(ActionEvent event) {
                 String value = deleteValue.getText();
-                String empty = "  ";
+                String empty = "";
                 if (!empty.equals(value) && (value != null)) {
-                    controller.deleteNode(Integer.parseInt(value));
-                    deleteValue.setValue(null);
+                    if (value.length() == 2) {
+                        if ((value.charAt(0) >= '0') && (value.charAt(0) <= '9')) {
+                            if ((value.charAt(1) >= '0') && (value.charAt(1) <= '9')) {
+                                controller.deleteNode(Integer.parseInt(value));
+                            }
+                        }
+                    } else if (value.length() == 1) {
+                        if ((value.charAt(0) >= '0') && (value.charAt(0) <= '9')) {
+                            controller.deleteNode(Integer.parseInt(value));
+                        }
+                    }
+                    deleteValue.setText(null);
                 } else {
                     treeVisualization.launchDeleteMode();
                 }

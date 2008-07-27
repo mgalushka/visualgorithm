@@ -1,5 +1,5 @@
 /*
- * IBinaryTreeAlgorithm.java v1.00 9 juil. 2008
+ * IBinaryTreeAlgorithm.java v1.00 09/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -18,19 +18,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 package algorithm.tree;
 
 /**
- * This is the common interface to apply an algorithm to a binary tree.
- * If you need parameters to apply an algorithm, you must implement this interface
- * and create a constructor with the desired parameters. 
+ * This is the common interface to apply an algorithm to a binary tree. If you
+ * need parameters to apply an algorithm, you must implement this interface and
+ * create a constructor with the desired parameters.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 9 juil. 2008
+ * @version 1.00 09/07/08
  */
 interface IBinaryTreeAlgorithm {
 
-	public Object apply();
+    public Object apply();
 }

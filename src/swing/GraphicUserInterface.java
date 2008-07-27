@@ -100,7 +100,7 @@ public class GraphicUserInterface extends JFrame implements IPrincipalModelView 
             }
         });
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(screenSize);
+        setSize(screenSize.width * 8 / 10, screenSize.height * 8 / 10);
     }
 
     private JComponent getTabView(int index) {
