@@ -1,4 +1,7 @@
-package model.tree;
+package algorithm.tree;
+
+import model.tree.BinarySearchNode;
+import model.tree.BinarySearchTree;
 
 class InsertBT implements IBinaryTreeAlgorithm {
 

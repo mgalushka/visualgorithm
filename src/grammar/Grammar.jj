@@ -76,7 +76,7 @@ import java.io.IOException;
 	  public static void main(String args[])throws ParseException{    VisuAlgoGrammar parser = null;    if (args.length == 0){      System.out.println("Reading from standard input . . .");      parser = new VisuAlgoGrammar(System.in);    }    else if (args.length == 1){      System.out.println("Reading from file "+args[0]+" . . .");      try {        parser = new VisuAlgoGrammar(new java.io.FileInputStream(args[0]));      }      catch (java.io.FileNotFoundException e){        System.out.println("File "+args[0]+" not found.");        return ;      }    }    else {      System.out.println("Usage is one of:");      System.out.println("java JavaParser < inputfile");      System.out.println("OR");      System.out.println("java JavaParser inputfile");      return ;    }    try {
       parser.program();
       try {
-        FileWriter file = new FileWriter("src/model/tree/"+ALGONAME+".java");
+        FileWriter file = new FileWriter("src/algorithm/tree/"+ALGONAME+".java");
         file.write(PROG.toString());
         file.close();
       } catch (IOException e) {
@@ -99,7 +99,7 @@ import java.io.IOException;
   
   className=id()"("
   {
-  	PROG.append("package model.tree;\n\n");
+  	PROG.append("package algorithm.tree;\n\n");
   	PROG.append(INDENT(CURRENTINDENT) + "class " +  className + " implements IBinaryTreeAlgorithm {\n\n");
     CURRENTINDENT += NBINDENT;
   }
