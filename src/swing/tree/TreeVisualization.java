@@ -234,9 +234,12 @@ class TreeVisualization extends JPanel {
         if (length > 0) {
             int height = length == 1 ? 0 : (int) Math.round(Math
                     .sqrt((length + 1) / 2));
-            widthSize = getGraphicNode(indexOfMaxNode(0)).getXPosition()
-                    - getGraphicNode(indexOfMinNode(0)).getXPosition()
-                    + sizeOfNodes + 40;
+            int nbNodes = (int) Math.pow(2, height);
+            int nbWidthBetweenBrotherNodes = nbNodes / 2;
+            int nbWidthBetweenNodes = nbNodes / 2 - 1;
+            widthSize = nbNodes * sizeOfNodes + nbWidthBetweenBrotherNodes
+                    * widthBetweenBrotherNodes + nbWidthBetweenNodes
+                    * widthBetweenNodes + 40;
             heightSize = height * heightBetweenNodes + yPositionRootNode
                     + sizeOfNodes / 2 + 10;
         }
@@ -258,6 +261,7 @@ class TreeVisualization extends JPanel {
      * @param sizeFactor the size factor
      */
     void changeSize(int sizeFactor) {
+        justCalculate = true;
         sizeOfNodes = 30 + sizeFactor * 15;
         heightBetweenNodes = 35 + sizeFactor * 15;
         widthBetweenBrotherNodes = 20 + sizeFactor * 15;
@@ -380,7 +384,10 @@ class TreeVisualization extends JPanel {
         }
     }
 
-    private void updatePositions() {
+    /**
+     * Updates the position of the nodes.
+     */
+    void updatePositions() {
         int length = graphicNodes.size();
         if (length > 0) {
             int height = length == 1 ? 0 : (int) Math.round(Math
@@ -424,6 +431,7 @@ class TreeVisualization extends JPanel {
                 indexStop += width;
             }
         }
+        setPreferredSize(getSizeOfDrawingArea());
     }
 
     /**
@@ -487,6 +495,7 @@ class TreeVisualization extends JPanel {
                 width *= 2;
                 indexStop += width;
             }
+            setPreferredSize(getSizeOfDrawingArea());
             repaint();
         }
     }

@@ -55,7 +55,6 @@ class TreeVisualizationZoom extends JPanel {
      */
     TreeVisualizationZoom(final TreeVisualization treeVisualization) {
         super(new BorderLayout(4, 4));
-        visualizationArea = new Dimension(0, 0);
         JScrollPane scrollPane = new JScrollPane(treeVisualization);
 
         scrollPane.addMouseWheelListener(new MouseWheelListener() {
@@ -69,22 +68,21 @@ class TreeVisualizationZoom extends JPanel {
                         if (zoomValue > zoomMin) {
                             treeVisualization.changeSize(--zoomValue);
                             visualizationArea = treeVisualization.getSizeOfDrawingArea();
-                            treeVisualization.setPreferredSize(visualizationArea);
+                            treeVisualization.setSize(visualizationArea);
+                            treeVisualization.updatePositions();
                             treeVisualization.revalidate();
+                            treeVisualization.repaint();
                         }
                     } else {
                         if (zoomValue < zoomMax) {
                             treeVisualization.changeSize(++zoomValue);
                             visualizationArea = treeVisualization.getSizeOfDrawingArea();
-                            System.out.println("w "+treeVisualization.getWidth());
-                            System.out.println("h "+treeVisualization.getHeight());
-                            System.out.println("wi "+visualizationArea.width);
-                            System.out.println("he "+visualizationArea.height);
-                            treeVisualization.setPreferredSize(visualizationArea);
+                            treeVisualization.setSize(visualizationArea);
+                            treeVisualization.updatePositions();
                             treeVisualization.revalidate();
+                            treeVisualization.repaint();
                         }
                     }
-                    treeVisualization.repaint();
                 }
             }
         });
