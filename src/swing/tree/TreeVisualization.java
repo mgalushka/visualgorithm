@@ -25,6 +25,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -138,16 +139,18 @@ class TreeVisualization extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (indexOfSelectedNode != -1) {
-                    changeGraphicNodeColor(colorOfSelectedNode);
-                    if (indexOfSelectedNode > 0) {
-                        moveGraphicNode(xPositionOfSelectedNode,
-                            yPositionOfSelectedNode);
-                        xPositionOfSelectedNode = -1;
-                        yPositionOfSelectedNode = -1;
+                if (!deleteMode) {
+                    if (indexOfSelectedNode != -1) {
+                        changeGraphicNodeColor(colorOfSelectedNode);
+                        if (indexOfSelectedNode > 0) {
+                            moveGraphicNode(xPositionOfSelectedNode,
+                                yPositionOfSelectedNode);
+                            xPositionOfSelectedNode = -1;
+                            yPositionOfSelectedNode = -1;
+                        }
+                        indexOfSelectedNode = -1;
+                        colorOfSelectedNode = null;
                     }
-                    indexOfSelectedNode = -1;
-                    colorOfSelectedNode = null;
                 }
             }
         });
@@ -156,14 +159,38 @@ class TreeVisualization extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if ((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) == InputEvent.BUTTON1_DOWN_MASK) {
-                    if (indexOfSelectedNode > 0) {
-                        moveGraphicNode(e.getX(), e.getY());
+                    if (!deleteMode) {
+                        if (indexOfSelectedNode > 0) {
+                            moveGraphicNode(e.getX(), e.getY());
+                        }
                     }
                 }
             }
         });
     }
 
+    @Override
+    public Dimension getPreferredSize() {
+        int widthSize = 0, heightSize = 0;
+        int length = graphicNodes.size();
+        if (length > 0) {
+            int height = length == 1 ? 0 : (int) Math.round(Math
+                    .sqrt((length + 1) / 2));
+            int nbNodes = (int) Math.pow(2, height);
+            int nbWidthBetweenBrotherNodes = nbNodes / 2;
+            int nbWidthBetweenNodes = nbNodes / 2 - 1;
+            widthSize = nbNodes * sizeOfNodes + nbWidthBetweenBrotherNodes
+                    * widthBetweenBrotherNodes + nbWidthBetweenNodes
+                    * widthBetweenNodes + 40;
+            heightSize = height * heightBetweenNodes + yPositionRootNode
+                    + sizeOfNodes / 2 + 10;
+        } else {
+            widthSize = 0;
+            heightSize = 0;
+        }
+        return new Dimension(widthSize, heightSize);
+    }
+    
     private GraphicNode getGraphicNode(int index) {
         return graphicNodes.get(index);
     }
@@ -224,29 +251,6 @@ class TreeVisualization extends JPanel {
     }
 
     /**
-     * Returns the dimension of the drawing area.
-     * 
-     * @return the dimension of the drawing area
-     */
-    Dimension getSizeOfDrawingArea() {
-        int widthSize = 0, heightSize = 0;
-        int length = graphicNodes.size();
-        if (length > 0) {
-            int height = length == 1 ? 0 : (int) Math.round(Math
-                    .sqrt((length + 1) / 2));
-            int nbNodes = (int) Math.pow(2, height);
-            int nbWidthBetweenBrotherNodes = nbNodes / 2;
-            int nbWidthBetweenNodes = nbNodes / 2 - 1;
-            widthSize = nbNodes * sizeOfNodes + nbWidthBetweenBrotherNodes
-                    * widthBetweenBrotherNodes + nbWidthBetweenNodes
-                    * widthBetweenNodes + 40;
-            heightSize = height * heightBetweenNodes + yPositionRootNode
-                    + sizeOfNodes / 2 + 10;
-        }
-        return new Dimension(widthSize, heightSize);
-    }
-
-    /**
      * Launches the deleteMode.
      */
     void launchDeleteMode() {
@@ -272,6 +276,14 @@ class TreeVisualization extends JPanel {
                 node.changeNodeSize(sizeOfNodes);
             }
         }
+        Rectangle visibleArea = getVisibleRect();
+        Dimension visualizationArea = getPreferredSize();
+        if (visualizationArea.width <= visibleArea.width) {
+            setSize(visibleArea.width, visibleArea.height);
+        } else {
+            setSize(visualizationArea);
+        }
+        updatePositions();
     }
 
     private void changeGraphicNodeColor(GraphicNodeColor color) {
@@ -384,10 +396,7 @@ class TreeVisualization extends JPanel {
         }
     }
 
-    /**
-     * Updates the position of the nodes.
-     */
-    void updatePositions() {
+    private void updatePositions() {
         int length = graphicNodes.size();
         if (length > 0) {
             int height = length == 1 ? 0 : (int) Math.round(Math
@@ -431,7 +440,6 @@ class TreeVisualization extends JPanel {
                 indexStop += width;
             }
         }
-        setPreferredSize(getSizeOfDrawingArea());
     }
 
     /**
@@ -495,7 +503,6 @@ class TreeVisualization extends JPanel {
                 width *= 2;
                 indexStop += width;
             }
-            setPreferredSize(getSizeOfDrawingArea());
             repaint();
         }
     }

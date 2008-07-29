@@ -41,15 +41,13 @@ class TreeVisualizationZoom extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private Dimension visualizationArea;
-
     private static final int zoomMin = 0;
 
     private static final int zoomMax = 3;
 
     /**
-     * Builds a pane including a zoom of the tree visualization
-     * thanks to JScrollPane.
+     * Builds a pane including a zoom of the tree visualization thanks to
+     * JScrollPane.
      * 
      * @param treeVisualization the tree visualization
      */
@@ -64,28 +62,27 @@ class TreeVisualizationZoom extends JPanel {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
                 if ((e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) == InputEvent.CTRL_DOWN_MASK) {
+                    boolean changed = false;
                     if (e.getWheelRotation() == -1) {
                         if (zoomValue > zoomMin) {
-                            treeVisualization.changeSize(--zoomValue);
-                            visualizationArea = treeVisualization.getSizeOfDrawingArea();
-                            treeVisualization.setSize(visualizationArea);
-                            treeVisualization.updatePositions();
-                            treeVisualization.revalidate();
-                            treeVisualization.repaint();
+                            --zoomValue;
+                            changed = true;
                         }
                     } else {
                         if (zoomValue < zoomMax) {
-                            treeVisualization.changeSize(++zoomValue);
-                            visualizationArea = treeVisualization.getSizeOfDrawingArea();
-                            treeVisualization.setSize(visualizationArea);
-                            treeVisualization.updatePositions();
-                            treeVisualization.revalidate();
-                            treeVisualization.repaint();
+                            ++zoomValue;
+                            changed = true;
                         }
+                    }
+                    if (changed) {
+                        treeVisualization.changeSize(zoomValue);
+                        treeVisualization.revalidate();
+                        treeVisualization.repaint();
                     }
                 }
             }
         });
+        scrollPane.setWheelScrollingEnabled(false);
         scrollPane.setPreferredSize(new Dimension(treeVisualization.getWidth(),
                 treeVisualization.getHeight()));
         add(scrollPane, BorderLayout.CENTER);
