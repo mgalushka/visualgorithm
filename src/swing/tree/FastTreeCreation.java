@@ -97,7 +97,7 @@ class FastTreeCreation extends JPanel {
                     }
                     insertValue.setText(null);
                 } else {
-                    controller.addNode((int) Math.round(Math.random() * 100));
+                    controller.addNode((int) Math.round(Math.random() * 99));
                 }
             }
         });

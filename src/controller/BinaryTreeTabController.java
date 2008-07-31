@@ -59,8 +59,8 @@ public class BinaryTreeTabController implements ISubController {
         binaryTreeSubModel = new BinaryTreeSubModel(type);
 
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        tabPageView = viewFactory.createBinaryTreeTabPage(type.toString(),
-            this, width, height);
+        tabPageView = viewFactory.createBinaryTreeTabPage("Type Of The Tree : "
+                + type.toString(), this, width, height);
         addListener();
     }
 
@@ -81,8 +81,9 @@ public class BinaryTreeTabController implements ISubController {
         binaryTreeSubModel = new BinaryTreeSubModel(file);
 
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        tabPageView = viewFactory.createBinaryTreeTabPage(binaryTreeSubModel
-                .getDataStructure().getType(), this, width, height);
+        tabPageView = viewFactory.createBinaryTreeTabPage("Type Of The Tree : "
+                + binaryTreeSubModel.getDataStructure().getType(), this, width,
+            height);
         addListener();
         binaryTreeSubModel.updateBinaryTreeView();
     }
@@ -100,8 +101,8 @@ public class BinaryTreeTabController implements ISubController {
         binaryTreeSubModel = new BinaryTreeSubModel(type, nbNode);
 
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        tabPageView = viewFactory
-                .createBinaryTreeTabPage(type.toString(), this, width, height);
+        tabPageView = viewFactory.createBinaryTreeTabPage("Type Of The Tree : "
+                + type.toString(), this, width, height);
         addListener();
         binaryTreeSubModel.updateBinaryTreeView();
     }

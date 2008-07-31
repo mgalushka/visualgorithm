@@ -28,6 +28,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 /**
  * Zoom pane for all visualization panels.
@@ -63,25 +64,32 @@ class TreeVisualizationZoom extends JPanel {
             public void mouseWheelMoved(MouseWheelEvent e) {
                 if ((e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) == InputEvent.CTRL_DOWN_MASK) {
                     boolean changed = false;
+                    boolean zoom = false;
                     if (e.getWheelRotation() == -1) {
                         if (zoomValue > zoomMin) {
                             --zoomValue;
                             changed = true;
+                            zoom = false;
                         }
                     } else {
                         if (zoomValue < zoomMax) {
                             ++zoomValue;
                             changed = true;
+                            zoom = true;
                         }
                     }
                     if (changed) {
-                        treeVisualization.changeSize(zoomValue);
+                        treeVisualization.changeSize(zoomValue, zoom);
                         treeVisualization.revalidate();
                         treeVisualization.repaint();
                     }
                 }
             }
         });
+        scrollPane
+                .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane
+                .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setWheelScrollingEnabled(false);
         scrollPane.setPreferredSize(new Dimension(treeVisualization.getWidth(),
                 treeVisualization.getHeight()));

@@ -190,7 +190,7 @@ class TreeVisualization extends JPanel {
         }
         return new Dimension(widthSize, heightSize);
     }
-    
+
     private GraphicNode getGraphicNode(int index) {
         return graphicNodes.get(index);
     }
@@ -263,8 +263,9 @@ class TreeVisualization extends JPanel {
      * included.
      * 
      * @param sizeFactor the size factor
+     * @param zoom true if it is a zoom
      */
-    void changeSize(int sizeFactor) {
+    void changeSize(int sizeFactor, boolean zoom) {
         justCalculate = true;
         sizeOfNodes = 30 + sizeFactor * 15;
         heightBetweenNodes = 35 + sizeFactor * 15;
