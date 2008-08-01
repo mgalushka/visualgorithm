@@ -34,34 +34,33 @@ import java.util.List;
 import javax.swing.JPanel;
 import controller.BinaryTreeTabController;
 import model.tree.IBinaryNode;
-import model.tree.RedBlackNode;
 import swing.tree.GraphicNode.GraphicNodeColor;
 
 /**
- * Visualization of all types of binary trees.
+ * Abstract class containing the common methods of all tree visualizations.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-class TreeVisualization extends JPanel {
+abstract class TreeVisualization extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
     private BinaryTreeTabController controller;
 
-    private List<GraphicNode> graphicNodes;
+    protected List<GraphicNode> graphicNodes;
 
-    private int sizeOfNodes;
+    protected int sizeOfNodes;
 
-    private int heightBetweenNodes;
+    protected int heightBetweenNodes;
 
-    private int widthBetweenBrotherNodes;
+    protected int widthBetweenBrotherNodes;
 
-    private int widthBetweenNodes;
+    protected int widthBetweenNodes;
 
-    private int yPositionRootNode;
+    protected int yPositionRootNode;
 
     private int indexOfSelectedNode;
 
@@ -71,7 +70,9 @@ class TreeVisualization extends JPanel {
 
     private GraphicNodeColor colorOfSelectedNode;
 
-    private boolean justCalculate, deleteMode;
+    private boolean deleteMode;
+    
+    protected boolean justCalculate;
 
     /**
      * Builds the tree visualization.
@@ -191,6 +192,10 @@ class TreeVisualization extends JPanel {
         return new Dimension(widthSize, heightSize);
     }
 
+    private List<GraphicNode> getGraphicNodes() {
+        return graphicNodes;
+    }
+
     private GraphicNode getGraphicNode(int index) {
         return graphicNodes.get(index);
     }
@@ -259,13 +264,27 @@ class TreeVisualization extends JPanel {
     }
 
     /**
+     * Replaces the graphic nodes by the new ones.
+     * 
+     * @param treeVisualisation the tree visualization containing the new
+     *            graphic nodes
+     */
+    void copyGraphicNodes(TreeVisualization treeVisualisation) {
+        graphicNodes = treeVisualisation.getGraphicNodes();
+        for (GraphicNode node : graphicNodes) {
+            if (node != null) {
+                node.changeNodeSize(sizeOfNodes);
+            }
+        }
+    }
+
+    /**
      * Changes the size of the graphic tree. Size factor must be between 0 and 3
      * included.
      * 
      * @param sizeFactor the size factor
-     * @param zoom true if it is a zoom
      */
-    void changeSize(int sizeFactor, boolean zoom) {
+    void changeSize(int sizeFactor) {
         justCalculate = true;
         sizeOfNodes = 30 + sizeFactor * 15;
         heightBetweenNodes = 35 + sizeFactor * 15;
@@ -448,67 +467,9 @@ class TreeVisualization extends JPanel {
      * 
      * @param array the array
      */
-    <N extends IBinaryNode<N>> void calculatePositions(List<N> array) {
-        justCalculate = true;
-        graphicNodes.clear();
-        int length = array.size();
-        if (length > 0) {
-            int height = length == 1 ? 0 : (int) Math.round(Math
-                    .sqrt((length + 1) / 2));
-            int width = 1;
-            int indexStop = 1;
-            int index = 0;
-            int key, y, x = getWidth() / 2;
-            GraphicNodeColor color;
-            int positionDifference = calculateNodePositionDifference(height);
+    abstract <N extends IBinaryNode<N>> void calculatePositions(List<N> array);
 
-            for (int i = 0; i <= height; i++) {
-                while (index < indexStop) {
-                    IBinaryNode<?> node = array.get(index);
-                    if (node != null) {
-                        key = node.getKey();
-                        y = yPositionRootNode + i * heightBetweenNodes;
-                        if (node instanceof RedBlackNode) {
-                            color = ((RedBlackNode) node).isRed() ? GraphicNodeColor.RED
-                                    : GraphicNodeColor.BLACK;
-                        } else {
-                            color = GraphicNodeColor.YELLOW;
-                        }
-                        graphicNodes.add(new GraphicNode(key, x, y,
-                                sizeOfNodes, color));
-                    } else {
-                        graphicNodes.add(null);
-                    }
-                    if (i < height) {
-                        if ((i > 0) && (index < indexStop - 1)) {
-                            x += positionDifference;
-                        }
-                    } else {
-                        if ((index % 2) == 0) {
-                            x += widthBetweenNodes + sizeOfNodes;
-                        } else {
-                            x += widthBetweenBrotherNodes + sizeOfNodes;
-                        }
-                    }
-                    index++;
-                }
-                x -= (width - 1) * positionDifference;
-                if (i < height - 1) {
-                    if (i > 0) {
-                        positionDifference = positionDifference / 2;
-                    }
-                    x -= positionDifference / 2;
-                } else {
-                    x -= widthBetweenBrotherNodes / 2 + sizeOfNodes / 2;
-                }
-                width *= 2;
-                indexStop += width;
-            }
-            repaint();
-        }
-    }
-
-    private int calculateNodePositionDifference(int height) {
+    protected int calculateNodePositionDifference(int height) {
         if ((height == 0) || (height == 1)) {
             return 0;
         } else if (height == 2) {

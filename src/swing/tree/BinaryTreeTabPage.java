@@ -62,7 +62,8 @@ public class BinaryTreeTabPage extends JPanel implements IBinaryTreeView {
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      */
-    public BinaryTreeTabPage(String type, BinaryTreeTabController c, int width, int height) {
+    public BinaryTreeTabPage(String type, BinaryTreeTabController c, int width,
+            int height) {
         fastTreeCreation = new FastTreeCreation(c, width, height);
         final JButton pedagogicView = new JButton("Pedagogical"
                 + "Creation Mode");
@@ -81,6 +82,9 @@ public class BinaryTreeTabPage extends JPanel implements IBinaryTreeView {
                         pedagogicalTreeCreation = new PedagogicalTreeCreation(
                                 controller);
                     }
+                    pedagogicalTreeCreation.getPedagogicalTreeVisualization()
+                            .copyGraphicNodes(
+                                fastTreeCreation.getFastTreeVisualization());
                     pedagogicView.setText("Fast Creation Mode");
                     remove(fastTreeCreation);
                     add(pedagogicalTreeCreation, BorderLayout.CENTER);
@@ -88,6 +92,10 @@ public class BinaryTreeTabPage extends JPanel implements IBinaryTreeView {
                     repaint();
                     isFastTreeCreation = false;
                 } else {
+                    fastTreeCreation.getFastTreeVisualization()
+                            .copyGraphicNodes(
+                                pedagogicalTreeCreation
+                                        .getPedagogicalTreeVisualization());
                     pedagogicView.setText("Pedagogical Creation Mode");
                     remove(pedagogicalTreeCreation);
                     add(fastTreeCreation, BorderLayout.CENTER);
@@ -106,6 +114,10 @@ public class BinaryTreeTabPage extends JPanel implements IBinaryTreeView {
     @Override
     public <N extends IBinaryNode<N>> void binaryTreeChanged(
             BinaryTreeEvent<N> event) {
-        fastTreeCreation.updateTree(event.getData());
+        if (isFastTreeCreation) {
+            fastTreeCreation.updateTree(event.getData());
+        } else {
+            pedagogicalTreeCreation.updateTree(event.getData());
+        }
     }
 }

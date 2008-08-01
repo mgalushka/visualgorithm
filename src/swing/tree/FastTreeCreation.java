@@ -47,10 +47,8 @@ class FastTreeCreation extends JPanel {
 
     private BinaryTreeTabController controller;
 
-    private TreeVisualization treeVisualization;
+    private TreeVisualization fastTreeVisualization;
 
-    private JPanel controls;
-    
     /**
      * Builds the fast tree creation pane.
      * 
@@ -59,13 +57,14 @@ class FastTreeCreation extends JPanel {
      * @param height the height of the tree visualization
      */
     FastTreeCreation(BinaryTreeTabController c, int width, int height) {
-        treeVisualization = new TreeVisualization(c, width - 8, height - 148);
+        fastTreeVisualization = new FastTreeVisualization(c, width - 23,
+                height - 148);
         controller = c;
-        controls = createControls();
 
         setLayout(new BorderLayout(4, 4));
-        add(new TreeVisualizationZoom(treeVisualization), BorderLayout.CENTER);
-        add(controls, BorderLayout.SOUTH);
+        add(new TreeVisualizationZoom(fastTreeVisualization),
+            BorderLayout.CENTER);
+        add(createControls(), BorderLayout.SOUTH);
     }
 
     private JPanel createControls() {
@@ -85,13 +84,16 @@ class FastTreeCreation extends JPanel {
                 String empty = "";
                 if (!empty.equals(value) && (value != null)) {
                     if (value.length() == 2) {
-                        if ((value.charAt(0) >= '0') && (value.charAt(0) <= '9')) {
-                            if ((value.charAt(1) >= '0') && (value.charAt(1) <= '9')) {
+                        if ((value.charAt(0) >= '0')
+                                && (value.charAt(0) <= '9')) {
+                            if ((value.charAt(1) >= '0')
+                                    && (value.charAt(1) <= '9')) {
                                 controller.addNode(Integer.parseInt(value));
                             }
                         }
                     } else if (value.length() == 1) {
-                        if ((value.charAt(0) >= '0') && (value.charAt(0) <= '9')) {
+                        if ((value.charAt(0) >= '0')
+                                && (value.charAt(0) <= '9')) {
                             controller.addNode(Integer.parseInt(value));
                         }
                     }
@@ -109,19 +111,22 @@ class FastTreeCreation extends JPanel {
                 String empty = "";
                 if (!empty.equals(value) && (value != null)) {
                     if (value.length() == 2) {
-                        if ((value.charAt(0) >= '0') && (value.charAt(0) <= '9')) {
-                            if ((value.charAt(1) >= '0') && (value.charAt(1) <= '9')) {
+                        if ((value.charAt(0) >= '0')
+                                && (value.charAt(0) <= '9')) {
+                            if ((value.charAt(1) >= '0')
+                                    && (value.charAt(1) <= '9')) {
                                 controller.deleteNode(Integer.parseInt(value));
                             }
                         }
                     } else if (value.length() == 1) {
-                        if ((value.charAt(0) >= '0') && (value.charAt(0) <= '9')) {
+                        if ((value.charAt(0) >= '0')
+                                && (value.charAt(0) <= '9')) {
                             controller.deleteNode(Integer.parseInt(value));
                         }
                     }
                     deleteValue.setText(null);
                 } else {
-                    treeVisualization.launchDeleteMode();
+                    fastTreeVisualization.launchDeleteMode();
                 }
             }
         });
@@ -137,11 +142,20 @@ class FastTreeCreation extends JPanel {
     }
 
     /**
+     * Returns the fast tree visualization.
+     * 
+     * @return the fast tree visualization
+     */
+    TreeVisualization getFastTreeVisualization() {
+        return fastTreeVisualization;
+    }
+    
+    /**
      * Updates the visualization of the tree.
      * 
      * @param data the data
      */
     <N extends IBinaryNode<N>> void updateTree(List<N> data) {
-        treeVisualization.calculatePositions(data);
+        fastTreeVisualization.calculatePositions(data);
     }
 }

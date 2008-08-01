@@ -64,22 +64,19 @@ class TreeVisualizationZoom extends JPanel {
             public void mouseWheelMoved(MouseWheelEvent e) {
                 if ((e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) == InputEvent.CTRL_DOWN_MASK) {
                     boolean changed = false;
-                    boolean zoom = false;
                     if (e.getWheelRotation() == -1) {
                         if (zoomValue > zoomMin) {
                             --zoomValue;
                             changed = true;
-                            zoom = false;
                         }
                     } else {
                         if (zoomValue < zoomMax) {
                             ++zoomValue;
                             changed = true;
-                            zoom = true;
                         }
                     }
                     if (changed) {
-                        treeVisualization.changeSize(zoomValue, zoom);
+                        treeVisualization.changeSize(zoomValue);
                         treeVisualization.revalidate();
                         treeVisualization.repaint();
                     }
