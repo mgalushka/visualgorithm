@@ -23,11 +23,14 @@ package swing.tree;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -50,7 +53,7 @@ class PedagogicalTreeCreation extends JPanel {
 
     private BinaryTreeTabController controller;
 
-    private TreeVisualization pedagogicalTreeVisualization;
+    private PedagogicalTreeVisualization pedagogicalTreeVisualization;
 
     private JTextArea informations;
 
@@ -61,15 +64,16 @@ class PedagogicalTreeCreation extends JPanel {
      */
     PedagogicalTreeCreation(BinaryTreeTabController c) {
         pedagogicalTreeVisualization = new PedagogicalTreeVisualization(c, 0, 0);
-        informations = new JTextArea("  Informations", 1, 2);
+        informations = new JTextArea("  Informations", 2, 1);
         JPanel components = new JPanel();
         controller = c;
 
         informations.setEditable(false);
         informations.setLineWrap(true);
         informations.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        components.setLayout(new GridLayout(2, 1, 4, 4));
+        components.setLayout(new BoxLayout(components, BoxLayout.PAGE_AXIS));
         components.add(informations);
+        components.add(Box.createRigidArea(new Dimension(0, 4)));
         components.add(createControls());
         setLayout(new BorderLayout(4, 4));
         add(new TreeVisualizationZoom(pedagogicalTreeVisualization),
@@ -79,6 +83,8 @@ class PedagogicalTreeCreation extends JPanel {
 
     private JPanel createControls() {
         JPanel controls = new JPanel();
+        JButton help = new JButton("Help");
+        JButton solution = new JButton("Solution");
         JButton insert = new JButton("Insert");
         JButton delete = new JButton("Delete");
         final JTextField insertValue = new JTextField();
@@ -86,6 +92,20 @@ class PedagogicalTreeCreation extends JPanel {
         insertValue.setHorizontalAlignment(SwingConstants.CENTER);
         deleteValue.setHorizontalAlignment(SwingConstants.CENTER);
 
+        help.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent event) {
+
+            }
+        });
+        solution.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent event) {
+
+            }
+        });
         insert.addActionListener(new ActionListener() {
 
             @Override
@@ -98,13 +118,15 @@ class PedagogicalTreeCreation extends JPanel {
                                 && (value.charAt(0) <= '9')) {
                             if ((value.charAt(1) >= '0')
                                     && (value.charAt(1) <= '9')) {
-                                controller.addNode(Integer.parseInt(value));
+                                pedagogicalTreeVisualization.createNode(Integer
+                                        .parseInt(value));
                             }
                         }
                     } else if (value.length() == 1) {
                         if ((value.charAt(0) >= '0')
                                 && (value.charAt(0) <= '9')) {
-                            controller.addNode(Integer.parseInt(value));
+                            pedagogicalTreeVisualization.createNode(Integer
+                                    .parseInt(value));
                         }
                     }
                     insertValue.setText(null);
@@ -123,20 +145,26 @@ class PedagogicalTreeCreation extends JPanel {
                                 && (value.charAt(0) <= '9')) {
                             if ((value.charAt(1) >= '0')
                                     && (value.charAt(1) <= '9')) {
-                                controller.deleteNode(Integer.parseInt(value));
+                                controller.pedagogicalDeleteNode(Integer
+                                        .parseInt(value));
                             }
                         }
                     } else if (value.length() == 1) {
                         if ((value.charAt(0) >= '0')
                                 && (value.charAt(0) <= '9')) {
-                            controller.deleteNode(Integer.parseInt(value));
+                            controller.pedagogicalDeleteNode(Integer
+                                    .parseInt(value));
                         }
                     }
                     deleteValue.setText(null);
                 }
             }
         });
-        controls.setLayout(new GridLayout(2, 2, 4, 4));
+        controls.setLayout(new GridLayout(3, 2, 4, 4));
+        help.setToolTipText("An Help For The Action");
+        solution.setToolTipText("The Solution Of The Action");
+        controls.add(help);
+        controls.add(solution);
         controls.add(insertValue);
         controls.add(insert);
         controls.add(deleteValue);

@@ -47,7 +47,7 @@ class FastTreeCreation extends JPanel {
 
     private BinaryTreeTabController controller;
 
-    private TreeVisualization fastTreeVisualization;
+    private FastTreeVisualization fastTreeVisualization;
 
     /**
      * Builds the fast tree creation pane.

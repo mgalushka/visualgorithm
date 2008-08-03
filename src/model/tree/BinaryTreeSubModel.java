@@ -148,6 +148,19 @@ public class BinaryTreeSubModel implements ISubModel {
         fireBinaryTreeChanged(dataStructure.treeToArrayList());
         isBinaryTreeSaved = false;
     }
+    
+    /**
+     * Deletes a node from the data structure. It is a delete from
+     * the pedagogical creation mode.
+     * 
+     * @param key the key of the node
+     */
+    public void pedagogicalDeleteNode(int key) {
+        // TODO deletion with BST delete algorithm
+        System.out.println(key);
+        fireBinaryTreeChanged(dataStructure.treeToArrayList());
+        isBinaryTreeSaved = false;
+    }
 
     /**
      * Updates the view.

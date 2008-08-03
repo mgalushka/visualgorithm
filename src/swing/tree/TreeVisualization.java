@@ -22,7 +22,6 @@
 package swing.tree;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -34,6 +33,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import controller.BinaryTreeTabController;
 import model.tree.IBinaryNode;
+import model.tree.RedBlackNode;
 import swing.tree.GraphicNode.GraphicNodeColor;
 
 /**
@@ -48,7 +48,7 @@ abstract class TreeVisualization extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private BinaryTreeTabController controller;
+    protected BinaryTreeTabController controller;
 
     protected List<GraphicNode> graphicNodes;
 
@@ -70,8 +70,6 @@ abstract class TreeVisualization extends JPanel {
 
     private GraphicNodeColor colorOfSelectedNode;
 
-    private boolean deleteMode;
-    
     protected boolean justCalculate;
 
     /**
@@ -90,7 +88,6 @@ abstract class TreeVisualization extends JPanel {
         widthBetweenNodes = 15;
         yPositionRootNode = 10 + sizeOfNodes / 2;
         justCalculate = false;
-        deleteMode = false;
 
         setSize(width, height);
         setBackground(Color.WHITE);
@@ -101,57 +98,32 @@ abstract class TreeVisualization extends JPanel {
         addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mouseClicked(MouseEvent e) {
-                if (deleteMode) {
-                    indexOfSelectedNode = indexOfSelectedNode(e.getX(), e
-                            .getY());
-                    if (indexOfSelectedNode > -1) {
-                        GraphicNode node = graphicNodes
-                                .get(indexOfSelectedNode);
-                        controller.deleteNode(node.getNodeKey());
-                    }
-                }
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                setCursor(Cursor.getDefaultCursor());
-                deleteMode = false;
-            }
-
-            @Override
             public void mousePressed(MouseEvent e) {
-                if (!deleteMode) {
-                    if (e.getButton() == MouseEvent.BUTTON1) {
-                        int mouseX = e.getX();
-                        int mouseY = e.getY();
-                        indexOfSelectedNode = indexOfSelectedNode(mouseX,
-                            mouseY);
-                        if (indexOfSelectedNode != -1) {
-                            GraphicNode node = getGraphicNode(indexOfSelectedNode);
-                            xPositionOfSelectedNode = node.getXPosition();
-                            yPositionOfSelectedNode = node.getYPosition();
-                            colorOfSelectedNode = node.getNodeColor();
-                            changeGraphicNodeColor(GraphicNodeColor.BLUE);
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    indexOfSelectedNode = indexOfSelectedNode(e.getX(),
+                        e.getY());
+                    if (indexOfSelectedNode != -1) {
+                        GraphicNode node = getGraphicNode(indexOfSelectedNode);
+                        xPositionOfSelectedNode = node.getXPosition();
+                        yPositionOfSelectedNode = node.getYPosition();
+                        colorOfSelectedNode = node.getNodeColor();
+                        changeGraphicNodeColor(GraphicNodeColor.BLUE);
                         }
                     }
-                }
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (!deleteMode) {
-                    if (indexOfSelectedNode != -1) {
-                        changeGraphicNodeColor(colorOfSelectedNode);
-                        if (indexOfSelectedNode > 0) {
-                            moveGraphicNode(xPositionOfSelectedNode,
-                                yPositionOfSelectedNode);
-                            xPositionOfSelectedNode = -1;
-                            yPositionOfSelectedNode = -1;
-                        }
-                        indexOfSelectedNode = -1;
-                        colorOfSelectedNode = null;
+                if (indexOfSelectedNode != -1) {
+                    changeGraphicNodeColor(colorOfSelectedNode);
+                    if (indexOfSelectedNode > 0) {
+                        moveGraphicNode(xPositionOfSelectedNode,
+                            yPositionOfSelectedNode);
+                        xPositionOfSelectedNode = -1;
+                        yPositionOfSelectedNode = -1;
                     }
+                    indexOfSelectedNode = -1;
+                    colorOfSelectedNode = null;
                 }
             }
         });
@@ -160,10 +132,8 @@ abstract class TreeVisualization extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if ((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) == InputEvent.BUTTON1_DOWN_MASK) {
-                    if (!deleteMode) {
-                        if (indexOfSelectedNode > 0) {
-                            moveGraphicNode(e.getX(), e.getY());
-                        }
+                    if (indexOfSelectedNode > 0) {
+                        moveGraphicNode(e.getX(), e.getY());
                     }
                 }
             }
@@ -191,12 +161,8 @@ abstract class TreeVisualization extends JPanel {
         }
         return new Dimension(widthSize, heightSize);
     }
-
-    private List<GraphicNode> getGraphicNodes() {
-        return graphicNodes;
-    }
-
-    private GraphicNode getGraphicNode(int index) {
+    
+    protected GraphicNode getGraphicNode(int index) {
         return graphicNodes.get(index);
     }
 
@@ -209,7 +175,7 @@ abstract class TreeVisualization extends JPanel {
         }
     }
 
-    private int indexOfSelectedNode(int x, int y) {
+    protected int indexOfSelectedNode(int x, int y) {
         int index = -1;
         for (int i = 0; i < graphicNodes.size(); i++) {
             GraphicNode node = graphicNodes.get(i);
@@ -256,27 +222,24 @@ abstract class TreeVisualization extends JPanel {
     }
 
     /**
-     * Launches the deleteMode.
-     */
-    void launchDeleteMode() {
-        setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-        deleteMode = true;
-    }
-
-    /**
      * Replaces the graphic nodes by the new ones.
      * 
      * @param treeVisualisation the tree visualization containing the new
      *            graphic nodes
      */
     void copyGraphicNodes(TreeVisualization treeVisualisation) {
-        graphicNodes = treeVisualisation.getGraphicNodes();
+        graphicNodes.clear();
+        for (GraphicNode node : treeVisualisation.graphicNodes) {
+            graphicNodes.add(node);
+        }
         for (GraphicNode node : graphicNodes) {
             if (node != null) {
                 node.changeNodeSize(sizeOfNodes);
             }
         }
     }
+    
+    abstract protected void changeSizeHandle();
 
     /**
      * Changes the size of the graphic tree. Size factor must be between 0 and 3
@@ -296,6 +259,7 @@ abstract class TreeVisualization extends JPanel {
                 node.changeNodeSize(sizeOfNodes);
             }
         }
+        changeSizeHandle();
         Rectangle visibleArea = getVisibleRect();
         Dimension visualizationArea = getPreferredSize();
         if (visualizationArea.width <= visibleArea.width) {
@@ -399,6 +363,8 @@ abstract class TreeVisualization extends JPanel {
             i++;
         }
     }
+    
+    abstract protected void drawSomethingElse(Graphics g);
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -414,6 +380,7 @@ abstract class TreeVisualization extends JPanel {
                 node.paint(g);
             }
         }
+        drawSomethingElse(g);
     }
 
     private void updatePositions() {
@@ -467,9 +434,67 @@ abstract class TreeVisualization extends JPanel {
      * 
      * @param array the array
      */
-    abstract <N extends IBinaryNode<N>> void calculatePositions(List<N> array);
+    <N extends IBinaryNode<N>> void calculatePositions(List<N> array) {
+        justCalculate = true;
+        graphicNodes.clear();
+        int length = array.size();
+        if (length > 0) {
+            int height = length == 1 ? 0 : (int) Math.round(Math
+                    .sqrt((length + 1) / 2));
+            int width = 1;
+            int indexStop = 1;
+            int index = 0;
+            int key, y, x = getWidth() / 2;
+            GraphicNodeColor color;
+            int positionDifference = calculateNodePositionDifference(height);
 
-    protected int calculateNodePositionDifference(int height) {
+            for (int i = 0; i <= height; i++) {
+                while (index < indexStop) {
+                    IBinaryNode<?> node = array.get(index);
+                    if (node != null) {
+                        key = node.getKey();
+                        y = yPositionRootNode + i * heightBetweenNodes;
+                        if (node instanceof RedBlackNode) {
+                            color = ((RedBlackNode) node).isRed() ? GraphicNodeColor.RED
+                                    : GraphicNodeColor.BLACK;
+                        } else {
+                            color = GraphicNodeColor.YELLOW;
+                        }
+                        graphicNodes.add(new GraphicNode(key, x, y,
+                                sizeOfNodes, color));
+                    } else {
+                        graphicNodes.add(null);
+                    }
+                    if (i < height) {
+                        if ((i > 0) && (index < indexStop - 1)) {
+                            x += positionDifference;
+                        }
+                    } else {
+                        if ((index % 2) == 0) {
+                            x += widthBetweenNodes + sizeOfNodes;
+                        } else {
+                            x += widthBetweenBrotherNodes + sizeOfNodes;
+                        }
+                    }
+                    index++;
+                }
+                x -= (width - 1) * positionDifference;
+                if (i < height - 1) {
+                    if (i > 0) {
+                        positionDifference = positionDifference / 2;
+                    }
+                    x -= positionDifference / 2;
+                } else {
+                    x -= widthBetweenBrotherNodes / 2 + sizeOfNodes / 2;
+                }
+                width *= 2;
+                indexStop += width;
+            }
+            repaint();
+        }
+    }
+
+    private int calculateNodePositionDifference(int height) {
         if ((height == 0) || (height == 1)) {
             return 0;
         } else if (height == 2) {

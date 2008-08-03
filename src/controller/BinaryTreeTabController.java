@@ -148,4 +148,14 @@ public class BinaryTreeTabController implements ISubController {
     public void deleteNode(int key) {
         binaryTreeSubModel.deleteNode(key);
     }
+
+    /**
+     * Deletes a node from the data structure. It is a delete from
+     * the pedagogical creation mode.
+     * 
+     * @param key the key of the node
+     */
+    public void pedagogicalDeleteNode(int key) {
+        binaryTreeSubModel.pedagogicalDeleteNode(key);
+    }
 }

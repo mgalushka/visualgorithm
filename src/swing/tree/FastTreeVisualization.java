@@ -21,10 +21,10 @@
 
 package swing.tree;
 
-import java.util.List;
-import model.tree.IBinaryNode;
-import model.tree.RedBlackNode;
-import swing.tree.GraphicNode.GraphicNodeColor;
+import java.awt.Cursor;
+import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import controller.BinaryTreeTabController;
 
 /**
@@ -40,68 +40,49 @@ public class FastTreeVisualization extends TreeVisualization {
 
     private static final long serialVersionUID = 1L;
     
+    private boolean deleteMode;
+    
     FastTreeVisualization(BinaryTreeTabController c, int width, int height) {
         super(c, width, height);
+        deleteMode = false;
+        
+        addDeleteModeListeners();
     }
     
-    @Override
-    <N extends IBinaryNode<N>> void calculatePositions(List<N> array) {
-        justCalculate = true;
-        graphicNodes.clear();
-        int length = array.size();
-        if (length > 0) {
-            int height = length == 1 ? 0 : (int) Math.round(Math
-                    .sqrt((length + 1) / 2));
-            int width = 1;
-            int indexStop = 1;
-            int index = 0;
-            int key, y, x = getWidth() / 2;
-            GraphicNodeColor color;
-            int positionDifference = calculateNodePositionDifference(height);
+    private void addDeleteModeListeners() {
+        addMouseListener(new MouseAdapter() {
 
-            for (int i = 0; i <= height; i++) {
-                while (index < indexStop) {
-                    IBinaryNode<?> node = array.get(index);
-                    if (node != null) {
-                        key = node.getKey();
-                        y = yPositionRootNode + i * heightBetweenNodes;
-                        if (node instanceof RedBlackNode) {
-                            color = ((RedBlackNode) node).isRed() ? GraphicNodeColor.RED
-                                    : GraphicNodeColor.BLACK;
-                        } else {
-                            color = GraphicNodeColor.YELLOW;
-                        }
-                        graphicNodes.add(new GraphicNode(key, x, y,
-                                sizeOfNodes, color));
-                    } else {
-                        graphicNodes.add(null);
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (deleteMode) {
+                    int indexOfNode = indexOfSelectedNode(e.getX(), e
+                            .getY());
+                    if (indexOfNode > -1) {
+                        GraphicNode node = getGraphicNode(indexOfNode);
+                        controller.deleteNode(node.getNodeKey());
                     }
-                    if (i < height) {
-                        if ((i > 0) && (index < indexStop - 1)) {
-                            x += positionDifference;
-                        }
-                    } else {
-                        if ((index % 2) == 0) {
-                            x += widthBetweenNodes + sizeOfNodes;
-                        } else {
-                            x += widthBetweenBrotherNodes + sizeOfNodes;
-                        }
-                    }
-                    index++;
                 }
-                x -= (width - 1) * positionDifference;
-                if (i < height - 1) {
-                    if (i > 0) {
-                        positionDifference = positionDifference / 2;
-                    }
-                    x -= positionDifference / 2;
-                } else {
-                    x -= widthBetweenBrotherNodes / 2 + sizeOfNodes / 2;
-                }
-                width *= 2;
-                indexStop += width;
             }
-            repaint();
-        }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(Cursor.getDefaultCursor());
+                deleteMode = false;
+            }
+        });
+    }
+
+    /**
+     * Launches the deleteMode.
+     */
+    void launchDeleteMode() {
+        setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+        deleteMode = true;
+    }
+    
+    protected void changeSizeHandle() {
+    }
+    
+    protected void drawSomethingElse(Graphics g) {
     }
 }

@@ -21,8 +21,11 @@
 
 package swing.tree;
 
-import java.util.List;
-import model.tree.IBinaryNode;
+import java.awt.Graphics;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import swing.tree.GraphicNode.GraphicNodeColor;
 import controller.BinaryTreeTabController;
 
 /**
@@ -38,13 +41,115 @@ public class PedagogicalTreeVisualization extends TreeVisualization {
 
     private static final long serialVersionUID = 1L;
 
+    private GraphicNode newNode;
+
+    private GraphicNodeColor colorOfSelectedNode;
+
+    private boolean isNewNodeSelected;
+
     PedagogicalTreeVisualization(BinaryTreeTabController c, int width,
             int height) {
         super(c, width, height);
+        newNode = null;
+        isNewNodeSelected = false;
+
+        addNewNodeListeners();
+    }
+
+    private void addNewNodeListeners() {
+        addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    // TODO stop parent move
+                    isNewNodeSelected(e.getX(), e.getY());
+                    if (isNewNodeSelected) {
+                        colorOfSelectedNode = newNode.getNodeColor();
+                        changeNewNodeColor(GraphicNodeColor.BLUE);
+                    }
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (isNewNodeSelected) {
+                    changeNewNodeColor(colorOfSelectedNode);
+                    isNewNodeSelected = false;
+                }
+            }
+        });
+        addMouseMotionListener(new MouseAdapter() {
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if ((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) == InputEvent.BUTTON1_DOWN_MASK) {
+                    if (isNewNodeSelected) {
+                        moveNewNode(e.getX(), e.getY());
+                    }
+                }
+            }
+        });
+    }
+
+    private void isNewNodeSelected(int x, int y) {
+        if (newNode != null) {
+            if ((x < newNode.getXPosition() + newNode.getNodeSize() / 2)
+                    && (x > newNode.getXPosition() - newNode.getNodeSize() / 2)
+                    && (y < newNode.getYPosition() + newNode.getNodeSize() / 2)
+                    && (y > newNode.getYPosition() - newNode.getNodeSize() / 2)) {
+                isNewNodeSelected = true;
+            }
+        }
+    }
+
+    private void moveNewNode(int x, int y) {
+        justCalculate = true;
+        int xPosition = newNode.getXPosition();
+        int yPosition = newNode.getYPosition();
+
+        repaint(xPosition - sizeOfNodes / 2 - 1, yPosition - sizeOfNodes / 2
+                - 1, sizeOfNodes + 2, sizeOfNodes + 2);
+        newNode.changeNodePosition(x, y);
+        xPosition = newNode.getXPosition();
+        yPosition = newNode.getYPosition();
+        repaint(xPosition - sizeOfNodes / 2 - 1, yPosition - sizeOfNodes / 2
+                - 1, sizeOfNodes + 2, sizeOfNodes + 2);
+    }
+
+    private void changeNewNodeColor(GraphicNodeColor color) {
+        justCalculate = true;
+        newNode.changeNodeColor(color);
+        repaint(newNode.getXPosition() - sizeOfNodes / 2 - 1, newNode
+                .getYPosition()
+                - sizeOfNodes / 2 - 1, sizeOfNodes + 2, sizeOfNodes + 2);
+    }
+
+    /**
+     * Creates a node.
+     * 
+     * @param key the key of the node
+     */
+    void createNode(int key) {
+        if (newNode == null) {
+            justCalculate = true;
+            // TODO green
+            newNode = new GraphicNode(key, 10 + sizeOfNodes / 2,
+                    10 + sizeOfNodes / 2, sizeOfNodes, GraphicNodeColor.YELLOW);
+            repaint(9, 9, sizeOfNodes + 2, sizeOfNodes + 2);
+        }
+    }
+
+    protected void changeSizeHandle() {
+        if (newNode != null) {
+            newNode.changeNodeSize(sizeOfNodes);
+            // TODO move new node
+        }
     }
     
-    @Override
-    <N extends IBinaryNode<N>> void calculatePositions(List<N> array) {
-        
+    protected void drawSomethingElse(Graphics g) {
+        if (newNode != null) {
+            newNode.paint(g);
+        }
     }
 }
