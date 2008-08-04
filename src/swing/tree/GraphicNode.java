@@ -47,7 +47,7 @@ class GraphicNode {
      * @version 1.00 16/06/08
      */
     enum GraphicNodeColor {
-        BLACK, BLUE, RED, YELLOW
+        BLACK, BLUE, GREEN, RED, YELLOW
     };
 
     private Integer key;
@@ -77,6 +77,8 @@ class GraphicNode {
             image = loadImage("black", nodeSize);
         } else if (color == GraphicNodeColor.BLUE) {
             image = loadImage("blue", nodeSize);
+        } else if (color == GraphicNodeColor.GREEN) {
+            image = loadImage("green", nodeSize);
         } else if (color == GraphicNodeColor.RED) {
             image = loadImage("red", nodeSize);
         } else {
@@ -162,6 +164,8 @@ class GraphicNode {
             image = loadImage("black", nodeSize);
         } else if (color == GraphicNodeColor.BLUE) {
             image = loadImage("blue", nodeSize);
+        } else if (color == GraphicNodeColor.GREEN) {
+            image = loadImage("green", nodeSize);
         } else if (color == GraphicNodeColor.RED) {
             image = loadImage("red", nodeSize);
         } else {

@@ -107,7 +107,7 @@ abstract class TreeVisualization extends JPanel {
                         xPositionOfSelectedNode = node.getXPosition();
                         yPositionOfSelectedNode = node.getYPosition();
                         colorOfSelectedNode = node.getNodeColor();
-                        changeGraphicNodeColor(GraphicNodeColor.BLUE);
+                        changeGraphicNodeColor(GraphicNodeColor.GREEN);
                         }
                     }
             }

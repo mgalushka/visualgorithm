@@ -43,8 +43,6 @@ public class PedagogicalTreeVisualization extends TreeVisualization {
 
     private GraphicNode newNode;
 
-    private GraphicNodeColor colorOfSelectedNode;
-
     private boolean isNewNodeSelected;
 
     PedagogicalTreeVisualization(BinaryTreeTabController c, int width,
@@ -65,8 +63,7 @@ public class PedagogicalTreeVisualization extends TreeVisualization {
                     // TODO stop parent move
                     isNewNodeSelected(e.getX(), e.getY());
                     if (isNewNodeSelected) {
-                        colorOfSelectedNode = newNode.getNodeColor();
-                        changeNewNodeColor(GraphicNodeColor.BLUE);
+                        changeNewNodeColor(GraphicNodeColor.GREEN);
                     }
                 }
             }
@@ -74,7 +71,7 @@ public class PedagogicalTreeVisualization extends TreeVisualization {
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (isNewNodeSelected) {
-                    changeNewNodeColor(colorOfSelectedNode);
+                    changeNewNodeColor(GraphicNodeColor.BLUE);
                     isNewNodeSelected = false;
                 }
             }
@@ -133,9 +130,8 @@ public class PedagogicalTreeVisualization extends TreeVisualization {
     void createNode(int key) {
         if (newNode == null) {
             justCalculate = true;
-            // TODO green
             newNode = new GraphicNode(key, 10 + sizeOfNodes / 2,
-                    10 + sizeOfNodes / 2, sizeOfNodes, GraphicNodeColor.YELLOW);
+                    10 + sizeOfNodes / 2, sizeOfNodes, GraphicNodeColor.BLUE);
             repaint(9, 9, sizeOfNodes + 2, sizeOfNodes + 2);
         }
     }
