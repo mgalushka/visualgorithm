@@ -118,15 +118,23 @@ class PedagogicalTreeCreation extends JPanel {
                                 && (value.charAt(0) <= '9')) {
                             if ((value.charAt(1) >= '0')
                                     && (value.charAt(1) <= '9')) {
-                                pedagogicalTreeVisualization.createNode(Integer
+                                if (pedagogicalTreeVisualization.isEmpty()) {
+                                    controller.addNode(Integer.parseInt(value));
+                                } else {
+                                    pedagogicalTreeVisualization.createNode(Integer
                                         .parseInt(value));
+                                }
                             }
                         }
                     } else if (value.length() == 1) {
                         if ((value.charAt(0) >= '0')
                                 && (value.charAt(0) <= '9')) {
-                            pedagogicalTreeVisualization.createNode(Integer
+                            if (pedagogicalTreeVisualization.isEmpty()) {
+                                controller.addNode(Integer.parseInt(value));
+                            } else {
+                                pedagogicalTreeVisualization.createNode(Integer
                                     .parseInt(value));
+                            }
                         }
                     }
                     insertValue.setText(null);

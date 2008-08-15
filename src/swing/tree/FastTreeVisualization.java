@@ -81,6 +81,7 @@ public class FastTreeVisualization extends TreeVisualization {
     }
     
     protected void changeSizeHandle() {
+        sizingArea();
     }
     
     protected void drawSomethingElse(Graphics g) {

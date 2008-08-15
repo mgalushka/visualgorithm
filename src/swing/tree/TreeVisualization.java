@@ -260,6 +260,9 @@ abstract class TreeVisualization extends JPanel {
             }
         }
         changeSizeHandle();
+    }
+
+    protected void sizingArea() {
         Rectangle visibleArea = getVisibleRect();
         Dimension visualizationArea = getPreferredSize();
         if (visualizationArea.width <= visibleArea.width) {
@@ -269,7 +272,7 @@ abstract class TreeVisualization extends JPanel {
         }
         updatePositions();
     }
-
+    
     private void changeGraphicNodeColor(GraphicNodeColor color) {
         justCalculate = true;
         GraphicNode node = getGraphicNode(indexOfSelectedNode);
@@ -383,7 +386,7 @@ abstract class TreeVisualization extends JPanel {
         drawSomethingElse(g);
     }
 
-    private void updatePositions() {
+    protected void updatePositions() {
         int length = graphicNodes.size();
         if (length > 0) {
             int height = length == 1 ? 0 : (int) Math.round(Math

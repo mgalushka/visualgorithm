@@ -21,7 +21,9 @@
 
 package swing.tree;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -136,13 +138,39 @@ public class PedagogicalTreeVisualization extends TreeVisualization {
         }
     }
 
+    /**
+     * Test if the graphic tree is empty.
+     * 
+     * @return true if the graphic tree is empty
+     */
+    boolean isEmpty() {
+        return graphicNodes.size() == 0;
+    }
+
+    @Override
     protected void changeSizeHandle() {
         if (newNode != null) {
+            int xFirstNode = getGraphicNode(0).getXPosition();
+            int yFirstNode = getGraphicNode(0).getYPosition();
             newNode.changeNodeSize(sizeOfNodes);
-            // TODO move new node
+            Rectangle visibleArea = getVisibleRect();
+            Dimension visualizationArea = getPreferredSize();
+            if (visualizationArea.width <= visibleArea.width) {
+                setSize(visibleArea.width, visibleArea.height);
+            } else {
+                setSize(visualizationArea);
+            }
+            updatePositions();
+            newNode.changeNodePosition(newNode.getXPosition()
+                    + getGraphicNode(0).getXPosition() - xFirstNode, newNode
+                    .getYPosition()
+                    + getGraphicNode(0).getYPosition() - yFirstNode);
+        } else {
+            sizingArea();
         }
     }
-    
+
+    @Override
     protected void drawSomethingElse(Graphics g) {
         if (newNode != null) {
             newNode.paint(g);
