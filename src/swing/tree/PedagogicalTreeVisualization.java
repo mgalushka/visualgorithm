@@ -150,6 +150,7 @@ public class PedagogicalTreeVisualization extends TreeVisualization {
     @Override
     protected void changeSizeHandle() {
         if (newNode != null) {
+            // TODO
             int xFirstNode = getGraphicNode(0).getXPosition();
             int yFirstNode = getGraphicNode(0).getYPosition();
             newNode.changeNodeSize(sizeOfNodes);
