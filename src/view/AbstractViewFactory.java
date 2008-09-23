@@ -22,7 +22,7 @@
 package view;
 
 import swing.SwingViewFactory;
-import controller.PrincipalController;
+import controller.SoftwareController;
 import controller.BinaryTreeTabController;
 
 /**
@@ -45,23 +45,23 @@ public abstract class AbstractViewFactory {
     }
 
     /**
-     * Creates the principal view of the software.
+     * Creates the software view.
      * 
-     * @param controller the principal controller
-     * @return the principal view
+     * @param softwareController the software controller
+     * @return the software view
      */
-    public abstract IPrincipalModelView createGraphicUserInterface(
-            PrincipalController controller);
+    public abstract ISoftwareView createSoftwareView(
+            SoftwareController softwareController);
 
     /**
      * Creates the binary tree tab view.
      * 
      * @param type the type of the tree
-     * @param controller the tab controller
+     * @param binaryTreeTabController the tab controller
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      * @return the binary tree tab view
      */
-    public abstract IBinaryTreeView createBinaryTreeTabPage(String type,
-            BinaryTreeTabController controller, int width, int height);
+    public abstract IBinaryTreeTabView createBinaryTreeTabView(String type,
+            BinaryTreeTabController binaryTreeTabController, int width, int height);
 }

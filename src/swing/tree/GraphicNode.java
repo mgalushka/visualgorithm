@@ -29,7 +29,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 /**
- * Definition of the graphic node of binary trees.
+ * Definition of the graphic node.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
@@ -52,37 +52,37 @@ class GraphicNode {
 
     private Integer key;
 
-    private BufferedImage image;
+    private BufferedImage nodeImage;
 
-    private GraphicNodeColor color;
+    private GraphicNodeColor nodeColor;
 
     private int xPosition, yPosition, nodeSize;
 
     /**
      * Builds the graphic node.
      * 
-     * @param k the key of the node
-     * @param x the x position of the node
-     * @param y the y position of the node
-     * @param s the size of the node
-     * @param c the color of the node
+     * @param k the key of the graphic node
+     * @param x the x position of the graphic node
+     * @param y the y position of the graphic node
+     * @param s the size of the graphic node
+     * @param c the color of the graphic node
      */
     GraphicNode(int k, int x, int y, int s, GraphicNodeColor c) {
         key = k;
         xPosition = x;
         yPosition = y;
         nodeSize = s;
-        color = c;
-        if (color == GraphicNodeColor.BLACK) {
-            image = loadImage("black", nodeSize);
-        } else if (color == GraphicNodeColor.BLUE) {
-            image = loadImage("blue", nodeSize);
-        } else if (color == GraphicNodeColor.GREEN) {
-            image = loadImage("green", nodeSize);
-        } else if (color == GraphicNodeColor.RED) {
-            image = loadImage("red", nodeSize);
+        nodeColor = c;
+        if (getNodeColor() == GraphicNodeColor.BLACK) {
+            nodeImage = loadImage("black", getNodeSize());
+        } else if (getNodeColor() == GraphicNodeColor.BLUE) {
+            nodeImage = loadImage("blue", getNodeSize());
+        } else if (getNodeColor() == GraphicNodeColor.GREEN) {
+            nodeImage = loadImage("green", getNodeSize());
+        } else if (getNodeColor() == GraphicNodeColor.RED) {
+            nodeImage = loadImage("red", getNodeSize());
         } else {
-            image = loadImage("yellow", nodeSize);
+            nodeImage = loadImage("yellow", getNodeSize());
         }
     }
 
@@ -99,85 +99,86 @@ class GraphicNode {
     }
 
     /**
-     * Returns the key of the node.
+     * Returns the key of the graphic node.
      * 
-     * @return the key of the node
+     * @return the key of the graphic node
      */
     int getNodeKey() {
         return key;
     }
 
     /**
-     * Returns the color of the node.
+     * Returns the color of the graphic node.
      * 
-     * @return the color of the node
+     * @return the color of the graphic node
      */
     GraphicNodeColor getNodeColor() {
-        return color;
+        return nodeColor;
     }
 
     /**
-     * Returns the size of the node.
+     * Returns the size of the graphic node.
      * 
-     * @return the size of the node
+     * @return the size of the graphic node
      */
     int getNodeSize() {
         return nodeSize;
     }
 
     /**
-     * Returns the x position of the node.
+     * Returns the x position of the graphic node.
      * 
-     * @return the x position of the node
+     * @return the x position of the graphic node
      */
     int getXPosition() {
         return xPosition;
     }
 
     /**
-     * Returns the y position of the node.
+     * Returns the y position of the graphic node.
      * 
-     * @return the y position of the node
+     * @return the y position of the graphic node
      */
     int getYPosition() {
         return yPosition;
     }
 
     /**
-     * Changes the size of the node.
+     * Changes the size of the graphic node.
      * 
-     * @param value the new size of the node
+     * @param value the new size of the graphic node
      */
     void changeNodeSize(int value) {
         nodeSize = value;
-        image = loadImage(color.toString().toLowerCase(), nodeSize);
+        nodeImage = loadImage(getNodeColor().toString().toLowerCase(),
+            getNodeSize());
     }
 
     /**
-     * Changes the color of the node.
+     * Changes the color of the graphic node.
      * 
-     * @param c the new color of the node
+     * @param c the new color of the graphic node
      */
     void changeNodeColor(GraphicNodeColor c) {
-        color = c;
-        if (color == GraphicNodeColor.BLACK) {
-            image = loadImage("black", nodeSize);
-        } else if (color == GraphicNodeColor.BLUE) {
-            image = loadImage("blue", nodeSize);
-        } else if (color == GraphicNodeColor.GREEN) {
-            image = loadImage("green", nodeSize);
-        } else if (color == GraphicNodeColor.RED) {
-            image = loadImage("red", nodeSize);
+        nodeColor = c;
+        if (getNodeColor() == GraphicNodeColor.BLACK) {
+            nodeImage = loadImage("black", getNodeSize());
+        } else if (getNodeColor() == GraphicNodeColor.BLUE) {
+            nodeImage = loadImage("blue", getNodeSize());
+        } else if (getNodeColor() == GraphicNodeColor.GREEN) {
+            nodeImage = loadImage("green", getNodeSize());
+        } else if (getNodeColor() == GraphicNodeColor.RED) {
+            nodeImage = loadImage("red", getNodeSize());
         } else {
-            image = loadImage("yellow", nodeSize);
+            nodeImage = loadImage("yellow", getNodeSize());
         }
     }
 
     /**
-     * Changes the position of the node.
+     * Changes the position of the graphic node.
      * 
-     * @param x the new x position of the node
-     * @param y the new y position of the node
+     * @param x the new x position of the graphic node
+     * @param y the new y position of the graphic node
      */
     void changeNodePosition(int x, int y) {
         xPosition = x;
@@ -185,7 +186,7 @@ class GraphicNode {
     }
 
     /**
-     * Draws the node.
+     * Draws the graphic node.
      * 
      * @param g the graphics
      */
@@ -194,53 +195,54 @@ class GraphicNode {
         int yString = 0;
         String stringKey = key.toString();
 
-        g.drawImage(image, xPosition - nodeSize / 2, yPosition - nodeSize / 2,
-            nodeSize, nodeSize, null);
-        if ((color == GraphicNodeColor.BLACK)
-                || (color == GraphicNodeColor.RED)) {
+        g.drawImage(nodeImage, getXPosition() - getNodeSize() / 2,
+            getYPosition() - getNodeSize() / 2, getNodeSize(), getNodeSize(),
+            null);
+        if ((getNodeColor() == GraphicNodeColor.BLACK)
+                || (getNodeColor() == GraphicNodeColor.RED)) {
             g.setColor(Color.WHITE);
         } else {
             g.setColor(Color.BLACK);
         }
-        switch (nodeSize) {
+        switch (getNodeSize()) {
         case 30:
             g.setFont(new Font(null, Font.PLAIN, 12));
-            xString = xPosition - 8;
-            yString = yPosition + 4;
+            xString = getXPosition() - 8;
+            yString = getYPosition() + 4;
             break;
         case 45:
             g.setFont(new Font(null, Font.PLAIN, 20));
-            xString = xPosition - 12;
-            yString = yPosition + 7;
+            xString = getXPosition() - 12;
+            yString = getYPosition() + 7;
             break;
         case 60:
             g.setFont(new Font(null, Font.PLAIN, 28));
-            xString = xPosition - 17;
-            yString = yPosition + 9;
+            xString = getXPosition() - 17;
+            yString = getYPosition() + 9;
             break;
         case 75:
             g.setFont(new Font(null, Font.PLAIN, 36));
-            xString = xPosition - 22;
-            yString = yPosition + 13;
+            xString = getXPosition() - 22;
+            yString = getYPosition() + 13;
             break;
         }
         if (stringKey.length() == 1) {
-            switch (nodeSize) {
+            switch (getNodeSize()) {
             case 30:
-                xString = xPosition - 4;
-                yString = yPosition + 4;
+                xString = getXPosition() - 4;
+                yString = getYPosition() + 4;
                 break;
             case 45:
-                xString = xPosition - 7;
-                yString = yPosition + 7;
+                xString = getXPosition() - 7;
+                yString = getYPosition() + 7;
                 break;
             case 60:
-                xString = xPosition - 10;
-                yString = yPosition + 9;
+                xString = getXPosition() - 10;
+                yString = getYPosition() + 9;
                 break;
             case 75:
-                xString = xPosition - 13;
-                yString = yPosition + 13;
+                xString = getXPosition() - 13;
+                yString = getYPosition() + 13;
                 break;
             }
         }

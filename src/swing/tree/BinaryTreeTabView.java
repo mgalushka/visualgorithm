@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabPage.java v1.00 16/06/08
+ * BinaryTreeTabView.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -29,48 +29,48 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import controller.BinaryTreeTabController;
-import view.IBinaryTreeView;
-import model.tree.BinaryTreeEvent;
+import view.IBinaryTreeTabView;
+import model.tree.BinaryTreeTabEvent;
 import model.tree.IBinaryNode;
 
 /**
- * Definition of the tab view.
+ * Definition of the binary tree tab view.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
- * @see IBinaryTreeView
+ * @see IBinaryTreeTabView
  */
-public class BinaryTreeTabPage extends JPanel implements IBinaryTreeView {
+public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
 
     private static final long serialVersionUID = 1L;
 
-    private BinaryTreeTabController controller;
+    private BinaryTreeTabController binaryTreeTabController;
 
-    private FastTreeCreation fastTreeCreation = null;
+    private FastTreeCreationPanel fastTreeCreationPanel = null;
 
-    private PedagogicalTreeCreation pedagogicalTreeCreation = null;
+    private PedagogicalTreeCreationPanel pedagogicalTreeCreationPanel = null;
 
     private boolean isFastTreeCreation = true;
 
     /**
-     * Builds the tab view. The model is a data structure.
+     * Builds the binary tree tab view.
      * 
-     * @param c the controller
-     * @param type the type of the data structure
+     * @param c the binary tree tab controller
+     * @param type the type of the binary tree
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      */
-    public BinaryTreeTabPage(String type, BinaryTreeTabController c, int width,
+    public BinaryTreeTabView(String type, BinaryTreeTabController c, int width,
             int height) {
-        fastTreeCreation = new FastTreeCreation(c, width, height);
+        fastTreeCreationPanel = new FastTreeCreationPanel(c, width, height);
         final JButton pedagogicView = new JButton("Pedagogical"
                 + "Creation Mode");
         JPanel titlePane = new JPanel();
         JLabel title = new JLabel(type);
 
-        controller = c;
+        binaryTreeTabController = c;
         titlePane.setLayout(new FlowLayout(FlowLayout.CENTER, 4, 4));
         titlePane.add(title);
         pedagogicView.addActionListener(new ActionListener() {
@@ -78,27 +78,27 @@ public class BinaryTreeTabPage extends JPanel implements IBinaryTreeView {
             @Override
             public void actionPerformed(ActionEvent event) {
                 if (isFastTreeCreation) {
-                    if (pedagogicalTreeCreation == null) {
-                        pedagogicalTreeCreation = new PedagogicalTreeCreation(
-                                controller);
+                    if (pedagogicalTreeCreationPanel == null) {
+                        pedagogicalTreeCreationPanel = new PedagogicalTreeCreationPanel(
+                            binaryTreeTabController);
                     }
-                    pedagogicalTreeCreation.getPedagogicalTreeVisualization()
+                    pedagogicalTreeCreationPanel.getPedagogicalTreeVisualization()
                             .copyGraphicNodes(
-                                fastTreeCreation.getFastTreeVisualization());
+                                fastTreeCreationPanel.getFastTreeVisualization());
                     pedagogicView.setText("Fast Creation Mode");
-                    remove(fastTreeCreation);
-                    add(pedagogicalTreeCreation, BorderLayout.CENTER);
+                    remove(fastTreeCreationPanel);
+                    add(pedagogicalTreeCreationPanel, BorderLayout.CENTER);
                     revalidate();
                     repaint();
                     isFastTreeCreation = false;
                 } else {
-                    fastTreeCreation.getFastTreeVisualization()
+                    fastTreeCreationPanel.getFastTreeVisualization()
                             .copyGraphicNodes(
-                                pedagogicalTreeCreation
+                                pedagogicalTreeCreationPanel
                                         .getPedagogicalTreeVisualization());
                     pedagogicView.setText("Pedagogical Creation Mode");
-                    remove(pedagogicalTreeCreation);
-                    add(fastTreeCreation, BorderLayout.CENTER);
+                    remove(pedagogicalTreeCreationPanel);
+                    add(fastTreeCreationPanel, BorderLayout.CENTER);
                     revalidate();
                     repaint();
                     isFastTreeCreation = true;
@@ -107,17 +107,17 @@ public class BinaryTreeTabPage extends JPanel implements IBinaryTreeView {
         });
         setLayout(new BorderLayout(4, 4));
         add(titlePane, BorderLayout.NORTH);
-        add(fastTreeCreation, BorderLayout.CENTER);
+        add(fastTreeCreationPanel, BorderLayout.CENTER);
         add(pedagogicView, BorderLayout.SOUTH);
     }
 
     @Override
     public <N extends IBinaryNode<N>> void binaryTreeChanged(
-            BinaryTreeEvent<N> event) {
+            BinaryTreeTabEvent<N> event) {
         if (isFastTreeCreation) {
-            fastTreeCreation.updateTree(event.getData());
+            fastTreeCreationPanel.updateTree(event.getData());
         } else {
-            pedagogicalTreeCreation.updateTree(event.getData());
+            pedagogicalTreeCreationPanel.updateTree(event.getData());
         }
     }
 }

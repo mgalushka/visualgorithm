@@ -22,7 +22,6 @@
 package swing.tree;
 
 import java.awt.Cursor;
-import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import controller.BinaryTreeTabController;
@@ -59,7 +58,7 @@ public class FastTreeVisualization extends TreeVisualization {
                             .getY());
                     if (indexOfNode > -1) {
                         GraphicNode node = getGraphicNode(indexOfNode);
-                        controller.deleteNode(node.getNodeKey());
+                        binaryTreeTabController.deleteNode(node.getNodeKey());
                     }
                 }
             }
@@ -78,12 +77,5 @@ public class FastTreeVisualization extends TreeVisualization {
     void launchDeleteMode() {
         setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
         deleteMode = true;
-    }
-    
-    protected void changeSizeHandle() {
-        sizingArea();
-    }
-    
-    protected void drawSomethingElse(Graphics g) {
     }
 }

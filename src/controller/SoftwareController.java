@@ -1,5 +1,5 @@
 /*
- * PrincipalController.java v1.00 16/06/08
+ * SoftwareController.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -27,14 +27,14 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import view.IPrincipalModelView;
+import view.ISoftwareView;
 import view.AbstractViewFactory;
-import model.PrincipalModel;
+import model.SoftwareModel;
 import model.tree.UnknownTreeTypeException;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 
 /**
- * Definition of the principal controller.
+ * Definition of the software controller.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
@@ -42,46 +42,46 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  * @version 1.00 16/06/08
  * @see IController
  */
-public class PrincipalController implements IController {
+public class SoftwareController implements IController {
 
-    private PrincipalModel model;
+    private SoftwareModel softwareModel;
 
-    private IPrincipalModelView gui;
+    private ISoftwareView softwareView;
 
-    private List<ISubController> subControllers;
+    private List<ITabController> tabControllers;
 
     /**
-     * Builds the principal controller.
+     * Builds the software controller.
      * 
-     * @param m the principal model
+     * @param m the software model
      */
-    public PrincipalController(PrincipalModel m) {
-        subControllers = new ArrayList<ISubController>();
+    public SoftwareController(SoftwareModel m) {
+    	tabControllers = new ArrayList<ITabController>();
 
-        model = m;
+        softwareModel = m;
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        gui = viewFactory.createGraphicUserInterface(this);
+        softwareView = viewFactory.createSoftwareView(this);
         getView().displayView();
         addListener();
     }
 
     /**
-     * Returns the wanted sub controller thanks to index.
+     * Returns the wanted tab controller thanks to index.
      * 
      * @param index the index of the tab
-     * @return the sub controller
+     * @return the tab controller
      */
-    public ISubController getSubController(int index) {
-        return subControllers.get(index);
+    public ITabController getTabController(int index) {
+        return tabControllers.get(index);
     }
 
     @Override
-    public IPrincipalModelView getView() {
-        return gui;
+    public ISoftwareView getView() {
+        return softwareView;
     }
 
     private void addListener() {
-        model.addModelListener(gui);
+    	softwareModel.addModelListener(softwareView);
     }
 
     /**
@@ -94,8 +94,8 @@ public class PrincipalController implements IController {
      */
     public void addBinaryTreeTab(BinaryTreeType type, int index, int width,
             int height) {
-        subControllers.add(new BinaryTreeTabController(type, width, height));
-        model.addSubModel(subControllers.get(index).getSubModel());
+    	tabControllers.add(new BinaryTreeTabController(type, width, height));
+        softwareModel.addTabModel(getTabController(index).getTabModel());
     }
 
     /**
@@ -109,9 +109,9 @@ public class PrincipalController implements IController {
      */
     public void addRandomBinaryTreeTab(BinaryTreeType type, int nbNode,
             int index, int width, int height) {
-        subControllers.add(new BinaryTreeTabController(type, nbNode, width,
+    	tabControllers.add(new BinaryTreeTabController(type, nbNode, width,
                 height));
-        model.addSubModel(subControllers.get(index).getSubModel());
+        softwareModel.addTabModel(getTabController(index).getTabModel());
     }
 
     /**
@@ -120,8 +120,8 @@ public class PrincipalController implements IController {
      * @param index the index of the tab
      */
     public void closeTab(int index) {
-        model.removeSubModel(index);
-        subControllers.remove(index);
+    	softwareModel.removeTabModel(index);
+    	tabControllers.remove(index);
     }
 
     /**
@@ -132,7 +132,7 @@ public class PrincipalController implements IController {
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      */
-    public void openFile(File file, int index, int width, int height)
+    public void openDataStructureFile(File file, int index, int width, int height)
             throws FileNotFoundException, ParseException, IOException,
             UnknownTreeTypeException {
         String fileName = file.getName();
@@ -140,30 +140,30 @@ public class PrincipalController implements IController {
         String extension = fileName.substring(i + 1).toLowerCase();
 
         if (extension.equals("bt")) {
-            subControllers
+        	tabControllers
                     .add(new BinaryTreeTabController(file, width, height));
-            model.openSubModelFile(subControllers.get(index).getSubModel(),
+            softwareModel.addTabModelFromDataStructureFile(getTabController(index).getTabModel(),
                 fileName);
         }
     }
 
     /**
-     * Saves the data structure into the selected file.
+     * Saves the data structure from the tab into the selected file.
      * 
      * @param file the file
      * @param index the index of the tab
      * @throws IOException
      */
-    public void saveDataStructure(File file, int index) throws IOException {
-        getSubController(index).saveSubModel(file);
+    public void saveTabModel(File file, int index) throws IOException {
+        getTabController(index).saveTabModel(file);
     }
 
     /**
      * Removes all the tabs.
      */
     public void exitSoftware() {
-        gui.closeView();
-        model.removeAllSubModels();
-        subControllers.clear();
+    	softwareView.closeView();
+        softwareModel.removeAllTabModels();
+        tabControllers.clear();
     }
 }

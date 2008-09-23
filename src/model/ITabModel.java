@@ -1,5 +1,5 @@
 /*
- * IBinaryTreeView.java v1.00 16/06/08
+ * ITabModel.java v1.00 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,19 +19,40 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package view;
+package model;
 
-import model.tree.BinaryTreeListener;
+import java.io.File;
+import java.io.IOException;
 
 /**
- * Interface describing the methods of binary tree views.
+ * Interface describing the methods of tab models.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
- * @see IView
- * @see BinaryTreeListener
+ * @version 1.00 07/07/08
  */
-public interface IBinaryTreeView extends IView, BinaryTreeListener {
+public interface ITabModel {
+
+    /**
+     * Returns the tab model.
+     * 
+     * @return the tab model
+     */
+    public IDataStructure getTabModel();
+    
+    /**
+     * Returns true if the tab model has been saved.
+     * 
+     * @return true if the tab model has been saved
+     */
+    public boolean isTabModelSaved();
+    
+    /**
+     * Saves the tab model into the selected file.
+     * 
+     * @param file the file
+     * @throws IOException
+     */
+    public void saveTabModel(File file) throws IOException;
 }

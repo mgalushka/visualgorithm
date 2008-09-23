@@ -32,15 +32,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.plaf.basic.BasicButtonUI;
-import controller.PrincipalController;
+import controller.SoftwareController;
 import controller.BinaryTreeTabController;
 
 /**
@@ -57,18 +60,22 @@ class TabCloseButton extends JPanel {
 
     private JTabbedPane tabbedPane;
 
-    private PrincipalController controller;
+    private JFileChooser fileChooser;
+
+    private SoftwareController softwareController;
 
     /**
      * Builds the tab close button.
      * 
      * @param p the tabbed pane
-     * @param c the principal controller
+     * @param fc the file chooser
+     * @param c the software controller
      */
-    TabCloseButton(JTabbedPane tp, PrincipalController c) {
+    TabCloseButton(JTabbedPane tp, JFileChooser fc, SoftwareController c) {
         super(new FlowLayout(FlowLayout.LEFT, 0, 0));
         tabbedPane = tp;
-        controller = c;
+        fileChooser = fc;
+        softwareController = c;
         JButton closeButton = createCloseButton();
         JLabel tabName = new JLabel() {
 
@@ -93,7 +100,7 @@ class TabCloseButton extends JPanel {
                     int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
                     tabbedPane.setSelectedIndex(i);
                 } else if (e.getButton() == MouseEvent.BUTTON2) {
-                    close();
+                    closeAction();
                 }
             }
         });
@@ -156,28 +163,57 @@ class TabCloseButton extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                close();
+                closeAction();
             }
         });
         return closeButton;
     }
 
-    private void close() {
+    private void closeAction() {
         int index = tabbedPane.indexOfTabComponent(TabCloseButton.this);
-        if (((BinaryTreeTabController) controller.getSubController(index))
-                .isSubModelSaved()) {
-            controller.closeTab(index);
+        if (((BinaryTreeTabController) softwareController
+                .getTabController(index)).isTabModelSaved()) {
+            softwareController.closeTab(index);
         } else {
             Object[] options = { "Save", "Discard", "Cancel" };
-            int choice = JOptionPane.showOptionDialog(tabbedPane,
+            int choice = JOptionPane.showOptionDialog(/*TODO*/tabbedPane,
                 "Do you want to save your changes?", "Close Operation",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
                 null, options, options[2]);
             if (choice == JOptionPane.YES_OPTION) {
-                ((GraphicUserInterface) controller.getView()).saveTab("CLOSE");
+                int count = tabbedPane.getTabCount();
+                if (count > 0) {
+                    int returnVal = fileChooser.showSaveDialog(tabbedPane);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        File file = fileChooser.getSelectedFile();
+                        if (file.exists()) {
+                            int secondChoice = JOptionPane.showConfirmDialog(
+                                /*TODO*/tabbedPane, "This file already exists."
+                                        + " Do you want to replace it?",
+                                "Save Operation", JOptionPane.YES_NO_OPTION,
+                                JOptionPane.WARNING_MESSAGE);
+                            if (secondChoice == JOptionPane.YES_OPTION) {
+                                saveAndCloseTab(file, index);
+                            }
+                        } else {
+                            saveAndCloseTab(file, index);
+                        }
+                    }
+                    fileChooser.setSelectedFile(null);
+                }
             } else if (choice == JOptionPane.NO_OPTION) {
-                controller.closeTab(index);
+                softwareController.closeTab(index);
             }
         }
+    }
+
+    private void saveAndCloseTab(File file, int index) {
+        try {
+            softwareController.saveTabModel(file, index);
+        } catch (IOException e) {
+            System.out.println("File could not be saved");
+            System.exit(1);
+        }
+        softwareController.closeTab(index);
     }
 }

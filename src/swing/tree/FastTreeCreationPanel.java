@@ -1,5 +1,5 @@
 /*
- * PedagogicalTreeCreation.java v1.00 07/07/08
+ * FastTreeCreationPanel.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -22,69 +22,53 @@
 package swing.tree;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import model.tree.IBinaryNode;
 import controller.BinaryTreeTabController;
 
 /**
- * Definition of the pedagogical tree creation pane.
+ * Definition of the fast tree creation panel.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 07/07/08
+ * @version 1.00 16/06/08
  */
-class PedagogicalTreeCreation extends JPanel {
+class FastTreeCreationPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private BinaryTreeTabController controller;
+    private BinaryTreeTabController binaryTreeTabController;
 
-    private PedagogicalTreeVisualization pedagogicalTreeVisualization;
-
-    private JTextArea informations;
+    private FastTreeVisualization fastTreeVisualization;
 
     /**
-     * Builds the pedagogical tree creation pane.
+     * Builds the fast tree creation panel.
      * 
-     * @param c the controller
+     * @param c the binary tree tab controller
+     * @param width the width of the tree visualization
+     * @param height the height of the tree visualization
      */
-    PedagogicalTreeCreation(BinaryTreeTabController c) {
-        pedagogicalTreeVisualization = new PedagogicalTreeVisualization(c, 0, 0);
-        informations = new JTextArea("  Informations", 2, 1);
-        JPanel components = new JPanel();
-        controller = c;
+    FastTreeCreationPanel(BinaryTreeTabController c, int width, int height) {
+        fastTreeVisualization = new FastTreeVisualization(c, width - 23,
+                height - 148);
+        binaryTreeTabController = c;
 
-        informations.setEditable(false);
-        informations.setLineWrap(true);
-        informations.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        components.setLayout(new BoxLayout(components, BoxLayout.PAGE_AXIS));
-        components.add(informations);
-        components.add(Box.createRigidArea(new Dimension(0, 4)));
-        components.add(createControls());
         setLayout(new BorderLayout(4, 4));
-        add(new TreeVisualizationZoom(pedagogicalTreeVisualization),
+        add(new TreeVisualizationZoom(fastTreeVisualization),
             BorderLayout.CENTER);
-        add(components, BorderLayout.SOUTH);
+        add(createControls(), BorderLayout.SOUTH);
     }
 
     private JPanel createControls() {
         JPanel controls = new JPanel();
-        JButton help = new JButton("Help");
-        JButton solution = new JButton("Solution");
         JButton insert = new JButton("Insert");
         JButton delete = new JButton("Delete");
         final JTextField insertValue = new JTextField();
@@ -92,20 +76,6 @@ class PedagogicalTreeCreation extends JPanel {
         insertValue.setHorizontalAlignment(SwingConstants.CENTER);
         deleteValue.setHorizontalAlignment(SwingConstants.CENTER);
 
-        help.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-
-            }
-        });
-        solution.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-
-            }
-        });
         insert.addActionListener(new ActionListener() {
 
             @Override
@@ -118,26 +88,21 @@ class PedagogicalTreeCreation extends JPanel {
                                 && (value.charAt(0) <= '9')) {
                             if ((value.charAt(1) >= '0')
                                     && (value.charAt(1) <= '9')) {
-                                if (pedagogicalTreeVisualization.isEmpty()) {
-                                    controller.addNode(Integer.parseInt(value));
-                                } else {
-                                    pedagogicalTreeVisualization.createNode(Integer
+                                binaryTreeTabController.addNode(Integer
                                         .parseInt(value));
-                                }
                             }
                         }
                     } else if (value.length() == 1) {
                         if ((value.charAt(0) >= '0')
                                 && (value.charAt(0) <= '9')) {
-                            if (pedagogicalTreeVisualization.isEmpty()) {
-                                controller.addNode(Integer.parseInt(value));
-                            } else {
-                                pedagogicalTreeVisualization.createNode(Integer
+                            binaryTreeTabController.addNode(Integer
                                     .parseInt(value));
-                            }
                         }
                     }
                     insertValue.setText(null);
+                } else {
+                    binaryTreeTabController.addNode((int) Math.round(Math
+                            .random() * 99));
                 }
             }
         });
@@ -153,26 +118,27 @@ class PedagogicalTreeCreation extends JPanel {
                                 && (value.charAt(0) <= '9')) {
                             if ((value.charAt(1) >= '0')
                                     && (value.charAt(1) <= '9')) {
-                                controller.pedagogicalDeleteNode(Integer
+                                binaryTreeTabController.deleteNode(Integer
                                         .parseInt(value));
                             }
                         }
                     } else if (value.length() == 1) {
                         if ((value.charAt(0) >= '0')
                                 && (value.charAt(0) <= '9')) {
-                            controller.pedagogicalDeleteNode(Integer
+                            binaryTreeTabController.deleteNode(Integer
                                     .parseInt(value));
                         }
                     }
                     deleteValue.setText(null);
+                } else {
+                    fastTreeVisualization.launchDeleteMode();
                 }
             }
         });
-        controls.setLayout(new GridLayout(3, 2, 4, 4));
-        help.setToolTipText("An Help For The Action");
-        solution.setToolTipText("The Solution Of The Action");
-        controls.add(help);
-        controls.add(solution);
+        controls.setLayout(new GridLayout(2, 2, 4, 4));
+        insert.setToolTipText("Button Only : Random Insert");
+        delete.setToolTipText("Button Only : "
+                + "Multiple Suppression With Cursor");
         controls.add(insertValue);
         controls.add(insert);
         controls.add(deleteValue);
@@ -181,12 +147,12 @@ class PedagogicalTreeCreation extends JPanel {
     }
 
     /**
-     * Returns the pedagogical tree visualization.
+     * Returns the fast tree visualization.
      * 
-     * @return the pedagogical tree visualization
+     * @return the fast tree visualization
      */
-    TreeVisualization getPedagogicalTreeVisualization() {
-        return pedagogicalTreeVisualization;
+    TreeVisualization getFastTreeVisualization() {
+        return fastTreeVisualization;
     }
 
     /**
@@ -195,6 +161,6 @@ class PedagogicalTreeCreation extends JPanel {
      * @param data the data
      */
     <N extends IBinaryNode<N>> void updateTree(List<N> data) {
-        pedagogicalTreeVisualization.calculatePositions(data);
+        fastTreeVisualization.calculatePositions(data);
     }
 }

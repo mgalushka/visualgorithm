@@ -48,7 +48,7 @@ abstract class TreeVisualization extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    protected BinaryTreeTabController controller;
+    protected BinaryTreeTabController binaryTreeTabController;
 
     protected List<GraphicNode> graphicNodes;
 
@@ -75,12 +75,12 @@ abstract class TreeVisualization extends JPanel {
     /**
      * Builds the tree visualization.
      * 
-     * @param c the controller
+     * @param c the binary tree tab controller
      * @param width the width of the panel
      * @param height the height of the panel
      */
     TreeVisualization(BinaryTreeTabController c, int width, int height) {
-        controller = c;
+        binaryTreeTabController = c;
         graphicNodes = new ArrayList<GraphicNode>();
         sizeOfNodes = 30;
         heightBetweenNodes = 35;
@@ -100,16 +100,16 @@ abstract class TreeVisualization extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    indexOfSelectedNode = indexOfSelectedNode(e.getX(),
-                        e.getY());
+                    indexOfSelectedNode = indexOfSelectedNode(e.getX(), e
+                            .getY());
                     if (indexOfSelectedNode != -1) {
                         GraphicNode node = getGraphicNode(indexOfSelectedNode);
                         xPositionOfSelectedNode = node.getXPosition();
                         yPositionOfSelectedNode = node.getYPosition();
                         colorOfSelectedNode = node.getNodeColor();
                         changeGraphicNodeColor(GraphicNodeColor.GREEN);
-                        }
                     }
+                }
             }
 
             @Override
@@ -161,7 +161,7 @@ abstract class TreeVisualization extends JPanel {
         }
         return new Dimension(widthSize, heightSize);
     }
-    
+
     protected GraphicNode getGraphicNode(int index) {
         return graphicNodes.get(index);
     }
@@ -178,7 +178,7 @@ abstract class TreeVisualization extends JPanel {
     protected int indexOfSelectedNode(int x, int y) {
         int index = -1;
         for (int i = 0; i < graphicNodes.size(); i++) {
-            GraphicNode node = graphicNodes.get(i);
+            GraphicNode node = getGraphicNode(i);
             if (node != null) {
                 if ((x < node.getXPosition() + node.getNodeSize() / 2)
                         && (x > node.getXPosition() - node.getNodeSize() / 2)
@@ -205,7 +205,7 @@ abstract class TreeVisualization extends JPanel {
 
     private int indexOfMinNode(int index) {
         int i = index, j = 0;
-        while ((i < graphicNodes.size()) && (graphicNodes.get(i) != null)) {
+        while ((i < graphicNodes.size()) && (getGraphicNode(i) != null)) {
             j = i;
             i = 2 * i + 1;
         }
@@ -214,7 +214,7 @@ abstract class TreeVisualization extends JPanel {
 
     private int indexOfMaxNode(int index) {
         int i = index, j = 0;
-        while ((i < graphicNodes.size()) && (graphicNodes.get(i) != null)) {
+        while ((i < graphicNodes.size()) && (getGraphicNode(i) != null)) {
             j = i;
             i = 2 * i + 2;
         }
@@ -238,12 +238,10 @@ abstract class TreeVisualization extends JPanel {
             }
         }
     }
-    
-    abstract protected void changeSizeHandle();
 
     /**
-     * Changes the size of the graphic tree. Size factor must be between 0 and 3
-     * included.
+     * Changes the size of the tree visualization. Size factor must be between 0
+     * and 3 included.
      * 
      * @param sizeFactor the size factor
      */
@@ -259,7 +257,6 @@ abstract class TreeVisualization extends JPanel {
                 node.changeNodeSize(sizeOfNodes);
             }
         }
-        changeSizeHandle();
     }
 
     protected void sizingArea() {
@@ -272,7 +269,7 @@ abstract class TreeVisualization extends JPanel {
         }
         updatePositions();
     }
-    
+
     private void changeGraphicNodeColor(GraphicNodeColor color) {
         justCalculate = true;
         GraphicNode node = getGraphicNode(indexOfSelectedNode);
@@ -347,15 +344,15 @@ abstract class TreeVisualization extends JPanel {
     private void drawEdges(Graphics g) {
         int i = 0;
         while ((2 * i + 1) < graphicNodes.size()) {
-            GraphicNode father = graphicNodes.get(i);
+            GraphicNode father = getGraphicNode(i);
             if (father != null) {
-                GraphicNode left = graphicNodes.get(2 * i + 1);
+                GraphicNode left = getGraphicNode(2 * i + 1);
                 if (left != null) {
                     g.drawLine(father.getXPosition(), father.getYPosition(),
                         left.getXPosition(), left.getYPosition());
                 }
                 if ((2 * i + 2) < graphicNodes.size()) {
-                    GraphicNode right = graphicNodes.get(2 * i + 2);
+                    GraphicNode right = getGraphicNode(2 * i + 2);
                     if (right != null) {
                         g.drawLine(father.getXPosition(),
                             father.getYPosition(), right.getXPosition(), right
@@ -366,8 +363,6 @@ abstract class TreeVisualization extends JPanel {
             i++;
         }
     }
-    
-    abstract protected void drawSomethingElse(Graphics g);
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -383,7 +378,6 @@ abstract class TreeVisualization extends JPanel {
                 node.paint(g);
             }
         }
-        drawSomethingElse(g);
     }
 
     protected void updatePositions() {
@@ -399,7 +393,7 @@ abstract class TreeVisualization extends JPanel {
 
             for (int i = 0; i <= height; i++) {
                 while (index < indexStop) {
-                    GraphicNode node = graphicNodes.get(index);
+                    GraphicNode node = getGraphicNode(index);
                     if (node != null) {
                         y = yPositionRootNode + i * heightBetweenNodes;
                         node.changeNodePosition(x, y);

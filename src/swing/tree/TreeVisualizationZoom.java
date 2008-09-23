@@ -31,7 +31,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 /**
- * Zoom pane for all visualization panels.
+ * Zoom panel for all tree visualization.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
@@ -47,7 +47,7 @@ class TreeVisualizationZoom extends JPanel {
     private static final int zoomMax = 3;
 
     /**
-     * Builds a pane including a zoom of the tree visualization thanks to
+     * Builds a panel including a zoom of the tree visualization thanks to
      * JScrollPane.
      * 
      * @param treeVisualization the tree visualization

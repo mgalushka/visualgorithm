@@ -1,5 +1,5 @@
 /*
- * PrincipalModelEvent.java v1.00 16/06/08
+ * SoftwareModelEvent.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -24,43 +24,43 @@ package model;
 import java.util.EventObject;
 
 /**
- * Definition of principal model event.
+ * Definition of the software model event.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class PrincipalModelEvent extends EventObject {
+public class SoftwareModelEvent extends EventObject {
 
     /**
-     * Enumeration of the principal model event type.
+     * Enumeration of the software model event type.
      * 
      * @author Julien Hannier
      * @author Pierre Pironin
      * @author Damien Rigoni
      * @version 1.00 16/06/08
      */
-    public enum ModelEventType {
+    public enum SoftwareModelEventType {
         ADD, DELETE, EXIT
     };
 
     private static final long serialVersionUID = 1L;
 
-    private ModelEventType type;
+    private SoftwareModelEventType type;
 
     private String name;
 
     private int index;
 
     /**
-     * Builds a principal model event.
+     * Builds a software model event.
      * 
-     * @param source the source of the model event
-     * @param t the type of the model event
+     * @param source the source of the software model event
+     * @param t the type of the software model event
      * @param n the name
      */
-    public PrincipalModelEvent(Object source, ModelEventType t, String n) {
+    public SoftwareModelEvent(Object source, SoftwareModelEventType t, String n) {
         super(source);
         type = t;
         name = n;
@@ -68,13 +68,13 @@ public class PrincipalModelEvent extends EventObject {
     }
 
     /**
-     * Builds a principal model event.
+     * Builds a software model event.
      * 
-     * @param source the source of the model event
-     * @param t the type of the model event
+     * @param source the source of the software model event
+     * @param t the type of the software model event
      * @param i the index of the data structure
      */
-    public PrincipalModelEvent(Object source, ModelEventType t, int i) {
+    public SoftwareModelEvent(Object source, SoftwareModelEventType t, int i) {
         super(source);
         type = t;
         name = null;
@@ -82,12 +82,12 @@ public class PrincipalModelEvent extends EventObject {
     }
 
     /**
-     * Builds a principal model event.
+     * Builds a software model event.
      * 
-     * @param source the source of the model event
+     * @param source the source of the software model event
      * @param t the type of the model event
      */
-    public PrincipalModelEvent(Object source, ModelEventType t) {
+    public SoftwareModelEvent(Object source, SoftwareModelEventType t) {
         super(source);
         type = t;
         name = null;
@@ -95,16 +95,18 @@ public class PrincipalModelEvent extends EventObject {
     }
 
     /**
-     * Returns the type of the principal model event.
+     * Returns the type of the software model event.
      * 
-     * @return the type of the principal model event
+     * @return the type of the software model event
      */
-    public ModelEventType getType() {
+    public SoftwareModelEventType getType() {
         return type;
     }
 
     /**
-     * Returns the name of the file or the type of the data structure.
+     * Returns the name of the data structure. If the data structure
+     * is saved into a file, returns the name of the file  or else returns
+     * the type of the data structure.
      * 
      * @return the name
      */

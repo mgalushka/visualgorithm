@@ -1,5 +1,5 @@
 /*
- * ISubModel.java v1.00 07/07/08
+ * ITabController.java v1.00 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,22 +19,42 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model;
+package controller;
+
+import java.io.File;
+import java.io.IOException;
+import model.ITabModel;
 
 /**
- * Interface describing the methods of sub models.
+ * Interface describing the methods of tab controllers.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 07/07/08
+ * @see IController
  */
-public interface ISubModel {
+public interface ITabController extends IController {
 
     /**
-     * Returns the data structure.
+     * Returns the tab model.
      * 
-     * @return the data structure
+     * @return the tab model
      */
-    public IDataStructure getDataStructure();
+    public ITabModel getTabModel();
+    
+    /**
+     * Saves the tab model into the selected file.
+     * 
+     * @param file the file
+     * @throws IOException
+     */
+    public void saveTabModel(File file) throws IOException;
+
+    /**
+     * Returns true if the data structure of the tab controller has been saved.
+     * 
+     * @return true if the data structure has been saved
+     */
+    public boolean isTabModelSaved();
 }

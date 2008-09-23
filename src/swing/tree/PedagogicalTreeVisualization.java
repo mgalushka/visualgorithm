@@ -147,7 +147,6 @@ public class PedagogicalTreeVisualization extends TreeVisualization {
         return graphicNodes.size() == 0;
     }
 
-    @Override
     protected void changeSizeHandle() {
         if (newNode != null) {
             // TODO
@@ -172,7 +171,8 @@ public class PedagogicalTreeVisualization extends TreeVisualization {
     }
 
     @Override
-    protected void drawSomethingElse(Graphics g) {
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         if (newNode != null) {
             newNode.paint(g);
         }

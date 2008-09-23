@@ -22,8 +22,10 @@
 package swing.tree;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -35,8 +37,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
-import swing.GraphicUserInterface;
-import controller.PrincipalController;
+import swing.SoftwareView;
+import controller.SoftwareController;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 
 /**
@@ -51,7 +53,7 @@ public class RandomTreeCreationDialog extends JDialog {
 
     private static final long serialVersionUID = 1L;
 
-    private PrincipalController controller;
+    private SoftwareController softwareController;
 
     private JTabbedPane tabbedPane;
 
@@ -60,22 +62,20 @@ public class RandomTreeCreationDialog extends JDialog {
     private JSpinner numberOfNodes;
 
     /**
-     * Builds a random creation dialog.
+     * Builds a random tree creation dialog.
      * 
      * @param parent the parent component
      * @param tp the tabbed pane
-     * @param c the principal controller
+     * @param c the software controller
      */
-    public RandomTreeCreationDialog(GraphicUserInterface parent,
-            JTabbedPane tp, PrincipalController c) {
+    public RandomTreeCreationDialog(SoftwareView parent, JTabbedPane tp,
+            SoftwareController c) {
         super(parent, "Random Tree", true);
-        controller = c;
+        softwareController = c;
         tabbedPane = tp;
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-        panel.add(createPanel());
-        setContentPane(panel);
-        setSize(new Dimension(400, 140));
+        setContentPane(createPanel());
+        setSize(new Dimension(370, 150));
         int xCenter = parent.getX() + parent.getWidth() / 2;
         int yCenter = parent.getY() + parent.getHeight() / 2;
         setLocation(xCenter - getWidth() / 2, yCenter - getHeight() / 2);
@@ -84,7 +84,8 @@ public class RandomTreeCreationDialog extends JDialog {
     }
 
     private JPanel createPanel() {
-        JPanel contentPane = new JPanel(new GridLayout(3, 2, 8, 8));
+        JPanel contentPane = new JPanel(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
         JLabel list = new JLabel("Select the type of tree : ");
         JLabel nb = new JLabel("Select the number of nodes : ");
         String[] treeStrings = { "AVL Tree", "Binary Search Tree",
@@ -93,6 +94,39 @@ public class RandomTreeCreationDialog extends JDialog {
         SpinnerNumberModel nbModel = new SpinnerNumberModel(new Integer(15),
                 new Integer(1), new Integer(30), new Integer(1));
         numberOfNodes = new JSpinner(nbModel);
+
+        constraints.insets = new Insets(5, 0, 0, 0);
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        contentPane.add(list, constraints);
+        constraints.insets = new Insets(5, 10, 0, 0);
+        constraints.fill = GridBagConstraints.NONE;
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        contentPane.add(treeList, constraints);
+        constraints.insets = new Insets(12, 0, 0, 0);
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        contentPane.add(nb, constraints);
+        constraints.insets = new Insets(12, 10, 0, 0);
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        constraints.ipady = 3;
+        contentPane.add(numberOfNodes, constraints);
+        constraints.insets = new Insets(12, 0, 0, 0);
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        constraints.ipady = 0;
+        constraints.gridwidth = 2;
+        contentPane.add(createButtons(), constraints);
+        return contentPane;
+    }
+
+    private JPanel createButtons() {
+        JPanel buttons = new JPanel(new GridLayout(1, 2, 10, 10));
         JButton ok = new JButton("Ok");
         JButton cancel = new JButton("Cancel");
 
@@ -112,7 +146,7 @@ public class RandomTreeCreationDialog extends JDialog {
                 }
                 int nbNode = (Integer) numberOfNodes.getModel().getValue();
 
-                controller.addRandomBinaryTreeTab(type, nbNode, index,
+                softwareController.addRandomBinaryTreeTab(type, nbNode, index,
                     tabbedPane.getWidth(), tabbedPane.getHeight());
                 setVisible(false);
                 dispose();
@@ -126,12 +160,8 @@ public class RandomTreeCreationDialog extends JDialog {
                 dispose();
             }
         });
-        contentPane.add(list);
-        contentPane.add(treeList);
-        contentPane.add(nb);
-        contentPane.add(numberOfNodes);
-        contentPane.add(ok);
-        contentPane.add(cancel);
-        return contentPane;
+        buttons.add(ok);
+        buttons.add(cancel);
+        return buttons;
     }
 }

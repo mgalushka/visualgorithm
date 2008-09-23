@@ -25,12 +25,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-import model.ISubModel;
-import model.tree.BinaryTreeSubModel;
+import model.ITabModel;
+import model.tree.BinaryTreeTabModel;
 import model.tree.UnknownTreeTypeException;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 import view.AbstractViewFactory;
-import view.IBinaryTreeView;
+import view.IBinaryTreeTabView;
 import view.IView;
 
 /**
@@ -40,13 +40,13 @@ import view.IView;
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
- * @see IController
+ * @see ITabController
  */
-public class BinaryTreeTabController implements ISubController {
+public class BinaryTreeTabController implements ITabController {
 
-    private BinaryTreeSubModel binaryTreeSubModel;
+    private BinaryTreeTabModel binaryTreeTabModel;
 
-    private IBinaryTreeView tabPageView;
+    private IBinaryTreeTabView binaryTreeTabView;
 
     /**
      * Builds the binary tree tab controller.
@@ -56,10 +56,10 @@ public class BinaryTreeTabController implements ISubController {
      * @param height the height of the tree visualization
      */
     public BinaryTreeTabController(BinaryTreeType type, int width, int height) {
-        binaryTreeSubModel = new BinaryTreeSubModel(type);
+        binaryTreeTabModel = new BinaryTreeTabModel(type);
 
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        tabPageView = viewFactory.createBinaryTreeTabPage("Type Of The Tree : "
+        binaryTreeTabView = viewFactory.createBinaryTreeTabView("Type Of The Tree : "
                 + type.toString(), this, width, height);
         addListener();
     }
@@ -78,14 +78,14 @@ public class BinaryTreeTabController implements ISubController {
     public BinaryTreeTabController(File file, int width, int height)
             throws FileNotFoundException, ParseException, IOException,
             UnknownTreeTypeException {
-        binaryTreeSubModel = new BinaryTreeSubModel(file);
+        binaryTreeTabModel = new BinaryTreeTabModel(file);
 
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        tabPageView = viewFactory.createBinaryTreeTabPage("Type Of The Tree : "
-                + binaryTreeSubModel.getDataStructure().getType(), this, width,
+        binaryTreeTabView = viewFactory.createBinaryTreeTabView("Type Of The Tree : "
+                + binaryTreeTabModel.getTabModel().getType(), this, width,
             height);
         addListener();
-        binaryTreeSubModel.updateBinaryTreeView();
+        binaryTreeTabModel.updateBinaryTreeView();
     }
 
     /**
@@ -98,64 +98,64 @@ public class BinaryTreeTabController implements ISubController {
      */
     public BinaryTreeTabController(BinaryTreeType type, int nbNode, int width,
             int height) {
-        binaryTreeSubModel = new BinaryTreeSubModel(type, nbNode);
+        binaryTreeTabModel = new BinaryTreeTabModel(type, nbNode);
 
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        tabPageView = viewFactory.createBinaryTreeTabPage("Type Of The Tree : "
+        binaryTreeTabView = viewFactory.createBinaryTreeTabView("Type Of The Tree : "
                 + type.toString(), this, width, height);
         addListener();
-        binaryTreeSubModel.updateBinaryTreeView();
+        binaryTreeTabModel.updateBinaryTreeView();
     }
 
     @Override
-    public ISubModel getSubModel() {
-        return binaryTreeSubModel;
+    public ITabModel getTabModel() {
+        return binaryTreeTabModel;
     }
 
     @Override
-    public void saveSubModel(File file) throws IOException {
-        binaryTreeSubModel.saveBinaryTree(file);
+    public void saveTabModel(File file) throws IOException {
+        binaryTreeTabModel.saveTabModel(file);
     }
 
     @Override
-    public boolean isSubModelSaved() {
-        return binaryTreeSubModel.isBinaryTreeSaved();
+    public boolean isTabModelSaved() {
+        return binaryTreeTabModel.isTabModelSaved();
     }
 
     @Override
     public IView getView() {
-        return tabPageView;
+        return binaryTreeTabView;
     }
 
     private void addListener() {
-        binaryTreeSubModel.addBinaryTreeListener(tabPageView);
+        binaryTreeTabModel.addBinaryTreeListener(binaryTreeTabView);
     }
 
     /**
-     * Adds a node to the data structure.
+     * Adds a node to the binary tree.
      * 
      * @param key the key of the node
      */
     public void addNode(int key) {
-        binaryTreeSubModel.addNode(key);
+        binaryTreeTabModel.addNode(key);
     }
 
     /**
-     * Deletes a node from the data structure.
+     * Deletes a node from the binary tree.
      * 
      * @param key the key of the node
      */
     public void deleteNode(int key) {
-        binaryTreeSubModel.deleteNode(key);
+        binaryTreeTabModel.deleteNode(key);
     }
 
     /**
-     * Deletes a node from the data structure. It is a delete from
+     * Deletes a node from the binary tree. It is a delete from
      * the pedagogical creation mode.
      * 
      * @param key the key of the node
      */
     public void pedagogicalDeleteNode(int key) {
-        binaryTreeSubModel.pedagogicalDeleteNode(key);
+        binaryTreeTabModel.pedagogicalDeleteNode(key);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * BinaryTreeEvent.java v1.00 16/06/08
+ * SoftwareModelListener.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,42 +19,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
+package model;
 
-import java.util.EventObject;
-import java.util.List;
+import java.util.EventListener;
 
 /**
- * Definition of the binary tree event.
+ * Methods of the software model listeners.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class BinaryTreeEvent<N extends IBinaryNode<N>> extends EventObject {
-
-    private static final long serialVersionUID = 1L;
-
-    private List<N> data;
+public interface SoftwareModelListener extends EventListener {
 
     /**
-     * Builds a binary tree event.
+     * The software model has changed.
      * 
-     * @param source the source of the binary tree event
-     * @param d the data of the binary tree event
+     * @param event the software model event
      */
-    public BinaryTreeEvent(Object source, List<N> d) {
-        super(source);
-        data = d;
-    }
-
-    /**
-     * Returns the data of the binary tree event.
-     * 
-     * @return the data of the binary tree event
-     */
-    public List<N> getData() {
-        return data;
-    }
+    public void modelChanged(SoftwareModelEvent event);
 }

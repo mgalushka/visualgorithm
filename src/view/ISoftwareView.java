@@ -1,5 +1,5 @@
 /*
- * ISubController.java v1.00 07/07/08
+ * ISoftwareView.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,42 +19,29 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package controller;
+package view;
 
-import java.io.File;
-import java.io.IOException;
-import model.ISubModel;
+import model.SoftwareModelListener;
 
 /**
- * Interface describing the methods of sub controllers.
+ * Interface describing the methods of software views.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 07/07/08
- * @see IController
+ * @version 1.00 16/06/08
+ * @see IView
+ * @see SoftwareModelListener
  */
-public interface ISubController extends IController {
+public interface ISoftwareView extends IView, SoftwareModelListener {
 
     /**
-     * Returns the sub model.
-     * 
-     * @return the sub model
+     * Displays the view.
      */
-    public ISubModel getSubModel();
+    public void displayView();
 
     /**
-     * Saves the sub model into the selected file.
-     * 
-     * @param file the file
-     * @throws IOException
+     * Closes the view.
      */
-    public void saveSubModel(File file) throws IOException;
-
-    /**
-     * Returns true if the data structure of the sub controller has been saved.
-     * 
-     * @return true if the data structure has been saved
-     */
-    public boolean isSubModelSaved();
+    public void closeView();
 }

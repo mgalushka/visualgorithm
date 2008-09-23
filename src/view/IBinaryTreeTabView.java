@@ -1,5 +1,5 @@
 /*
- * PrincipalModelListener.java v1.00 16/06/08
+ * IBinaryTreeTabView.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,24 +19,19 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model;
+package view;
 
-import java.util.EventListener;
+import model.tree.BinaryTreeTabListener;
 
 /**
- * Methods of the principal model listeners.
+ * Interface describing the methods of binary tree tab views.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
+ * @see IView
+ * @see BinaryTreeTabListener
  */
-public interface PrincipalModelListener extends EventListener {
-
-    /**
-     * The principal model has changed.
-     * 
-     * @param event the data structure event
-     */
-    public void modelChanged(PrincipalModelEvent event);
+public interface IBinaryTreeTabView extends IView, BinaryTreeTabListener {
 }

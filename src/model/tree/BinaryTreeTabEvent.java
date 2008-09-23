@@ -1,5 +1,5 @@
 /*
- * IPrincipalModelView.java v1.00 16/06/08
+ * BinaryTreeTabEvent.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,29 +19,42 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package view;
+package model.tree;
 
-import model.PrincipalModelListener;
+import java.util.EventObject;
+import java.util.List;
 
 /**
- * Interface describing the methods of principal model views.
+ * Definition of the binary tree tab event.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
- * @see IView
- * @see PrincipalModelListener
  */
-public interface IPrincipalModelView extends IView, PrincipalModelListener {
+public class BinaryTreeTabEvent<N extends IBinaryNode<N>> extends EventObject {
+
+    private static final long serialVersionUID = 1L;
+
+    private List<N> data;
 
     /**
-     * Displays the view.
+     * Builds a binary tree tab event.
+     * 
+     * @param source the source of the binary tree tab event
+     * @param d the data of the binary tree event
      */
-    public void displayView();
+    public BinaryTreeTabEvent(Object source, List<N> d) {
+        super(source);
+        data = d;
+    }
 
     /**
-     * Closes the view.
+     * Returns the data of the binary tree tab event.
+     * 
+     * @return the data of the binary tree tab event
      */
-    public void closeView();
+    public List<N> getData() {
+        return data;
+    }
 }

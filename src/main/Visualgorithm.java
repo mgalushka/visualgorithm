@@ -22,8 +22,8 @@
 package main;
 
 import javax.swing.SwingUtilities;
-import controller.PrincipalController;
-import model.PrincipalModel;
+import controller.SoftwareController;
+import model.SoftwareModel;
 
 /**
  * Main class of the software.
@@ -41,12 +41,12 @@ public class Visualgorithm {
      * @param args possible arguments
      */
     public static void main(String[] args) {
-        final PrincipalModel model = new PrincipalModel();
+        final SoftwareModel model = new SoftwareModel();
 
         SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
-                new PrincipalController(model);
+                new SoftwareController(model);
             }
         });
     }
