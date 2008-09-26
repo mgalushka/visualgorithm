@@ -1,5 +1,5 @@
 /*
- * UnknownTreeTypeException.java v1.00 02/07/08
+ * UnknownDataStructureException.java v1.00 02/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,29 +19,29 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
+package model;
 
 /**
- * Definition of the unknown tree type exception.
+ * Definition of the unknown data structure exception.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 02/07/08
  */
-public class UnknownTreeTypeException extends Exception {
+public class UnknownDataStructureException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
     private String description;
 
     /**
-     * Builds the unknown tree type exception.
+     * Builds the unknown data structure exception.
      * 
-     * @param description the message corresponding to the exception
+     * @param d the message corresponding to the exception
      */
-    public UnknownTreeTypeException(String description) {
-        this.description = description;
+    public UnknownDataStructureException(String d) {
+        description = d;
     }
 
     @Override

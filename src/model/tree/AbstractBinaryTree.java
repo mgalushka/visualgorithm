@@ -49,7 +49,7 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
         AVLTREE, BINARYSEARCHTREE, REDBLACKTREE;
     }
 
-    protected static BinaryTreeType type;
+    protected BinaryTreeType type;
 
     protected N root;
 

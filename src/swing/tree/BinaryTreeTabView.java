@@ -65,15 +65,24 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
     public BinaryTreeTabView(String type, BinaryTreeTabController c, int width,
             int height) {
         fastTreeCreationPanel = new FastTreeCreationPanel(c, width, height);
-        final JButton pedagogicView = new JButton("Pedagogical"
-                + "Creation Mode");
         JPanel titlePane = new JPanel();
         JLabel title = new JLabel(type);
 
         binaryTreeTabController = c;
         titlePane.setLayout(new FlowLayout(FlowLayout.CENTER, 4, 4));
         titlePane.add(title);
-        pedagogicView.addActionListener(new ActionListener() {
+        
+        setLayout(new BorderLayout(4, 4));
+        add(titlePane, BorderLayout.NORTH);
+        add(fastTreeCreationPanel, BorderLayout.CENTER);
+        add(createButtonBetweenViews(), BorderLayout.SOUTH);
+    }
+    
+    private JButton createButtonBetweenViews() {
+    	final JButton button = new JButton("Pedagogical"
+                + "Creation Mode");
+    	
+    	button.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -85,7 +94,7 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
                     pedagogicalTreeCreationPanel.getPedagogicalTreeVisualization()
                             .copyGraphicNodes(
                                 fastTreeCreationPanel.getFastTreeVisualization());
-                    pedagogicView.setText("Fast Creation Mode");
+                    button.setText("Fast Creation Mode");
                     remove(fastTreeCreationPanel);
                     add(pedagogicalTreeCreationPanel, BorderLayout.CENTER);
                     revalidate();
@@ -96,7 +105,7 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
                             .copyGraphicNodes(
                                 pedagogicalTreeCreationPanel
                                         .getPedagogicalTreeVisualization());
-                    pedagogicView.setText("Pedagogical Creation Mode");
+                    button.setText("Pedagogical Creation Mode");
                     remove(pedagogicalTreeCreationPanel);
                     add(fastTreeCreationPanel, BorderLayout.CENTER);
                     revalidate();
@@ -105,10 +114,7 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
                 }
             }
         });
-        setLayout(new BorderLayout(4, 4));
-        add(titlePane, BorderLayout.NORTH);
-        add(fastTreeCreationPanel, BorderLayout.CENTER);
-        add(pedagogicView, BorderLayout.SOUTH);
+    	return button;
     }
 
     @Override

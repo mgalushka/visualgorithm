@@ -32,9 +32,10 @@ import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import model.UnknownDataStructureException;
 import model.tree.IBinaryNode;
 import model.tree.IBinaryTree;
-import model.tree.UnknownTreeTypeException;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 
 /**
@@ -201,7 +202,7 @@ public abstract class TreeFile {
         }
     }
 
-    private IBinaryTree<?> createBinaryTree() throws UnknownTreeTypeException {
+    private IBinaryTree<?> createBinaryTree() throws UnknownDataStructureException {
         IBinaryTree<?> tree;
         if (nodeVector.size() != 0) {
             tree = createBinaryTree(Integer.parseInt(nodeVector.get(0)[KEY]));
@@ -214,7 +215,7 @@ public abstract class TreeFile {
             return tree;
         else {
             String article = treeType.charAt(0) == 'A' ? "an " : "a ";
-            throw new UnknownTreeTypeException(
+            throw new UnknownDataStructureException(
                     "The tree does not satisfy the properties " + "of "
                             + article + treeType);
         }
@@ -376,11 +377,11 @@ public abstract class TreeFile {
      * @throws FileNotFoundException
      * @throws ParseException
      * @throws IOException
-     * @throws UnknownTreeTypeException
+     * @throws UnknownDataStructureException
      */
     public static IBinaryTree<?> load(String fileName)
             throws FileNotFoundException, ParseException, IOException,
-            UnknownTreeTypeException {
+            UnknownDataStructureException {
         TreeFile parser = TreeFile.parse(fileName);
         return parser.createBinaryTree();
     }
@@ -391,7 +392,7 @@ public abstract class TreeFile {
      * @param tree the tree to save
      * @param fileName the name of the file
      * @throws IOException
-     * @throws UnknownTreeTypeException
+     * @throws UnknownDataStructureException
      */
     public final static <N extends IBinaryNode<N>> void save(
             IBinaryTree<N> tree, String fileName) throws IOException {

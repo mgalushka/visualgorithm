@@ -27,9 +27,10 @@ import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+
+import model.UnknownDataStructureException;
 import model.tree.AVLNode;
 import model.tree.AVLTree;
-import model.tree.UnknownTreeTypeException;
 
 /**
  * Test of the loading and saving of an AVL tree.
@@ -79,7 +80,7 @@ public class AVLTreeFileTest {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (UnknownTreeTypeException e) {
+        } catch (UnknownDataStructureException e) {
             e.printStackTrace();
         }
     }

@@ -41,9 +41,6 @@ final class RedBlackTreeFile extends TreeFile {
 
     private static int COLOR = 4;
 
-    /**
-	 * 
-	 */
     RedBlackTreeFile() {
         super();
     }

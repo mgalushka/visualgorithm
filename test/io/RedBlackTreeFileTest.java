@@ -27,9 +27,10 @@ import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+
+import model.UnknownDataStructureException;
 import model.tree.RedBlackNode;
 import model.tree.RedBlackTree;
-import model.tree.UnknownTreeTypeException;
 import model.tree.RedBlackNode.RedBlackNodeColor;
 
 /**
@@ -89,7 +90,7 @@ public class RedBlackTreeFileTest {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
-        } catch (UnknownTreeTypeException e) {
+        } catch (UnknownDataStructureException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }

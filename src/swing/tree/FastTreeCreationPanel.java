@@ -151,7 +151,7 @@ class FastTreeCreationPanel extends JPanel {
      * 
      * @return the fast tree visualization
      */
-    TreeVisualization getFastTreeVisualization() {
+    AbstractTreeVisualization getFastTreeVisualization() {
         return fastTreeVisualization;
     }
 

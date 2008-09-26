@@ -32,17 +32,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.plaf.basic.BasicButtonUI;
+
+import swing.SoftwareView.SaveEventType;
 import controller.SoftwareController;
 import controller.BinaryTreeTabController;
 
@@ -56,164 +55,133 @@ import controller.BinaryTreeTabController;
  */
 class TabCloseButton extends JPanel {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private JTabbedPane tabbedPane;
+	private JTabbedPane tabbedPane;
 
-    private JFileChooser fileChooser;
+	private SoftwareController softwareController;
 
-    private SoftwareController softwareController;
+	/**
+	 * Builds the tab close button.
+	 * 
+	 * @param tp the tabbed pane
+	 * @param c the software controller
+	 */
+	TabCloseButton(JTabbedPane tp, SoftwareController c) {
+		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		tabbedPane = tp;
+		softwareController = c;
+		JButton closeButton = createCloseButton();
+		JLabel tabName = new JLabel() {
 
-    /**
-     * Builds the tab close button.
-     * 
-     * @param p the tabbed pane
-     * @param fc the file chooser
-     * @param c the software controller
-     */
-    TabCloseButton(JTabbedPane tp, JFileChooser fc, SoftwareController c) {
-        super(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        tabbedPane = tp;
-        fileChooser = fc;
-        softwareController = c;
-        JButton closeButton = createCloseButton();
-        JLabel tabName = new JLabel() {
+			private static final long serialVersionUID = 1L;
 
-            private static final long serialVersionUID = 1L;
+			@Override
+			public String getText() {
+				int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
+				if (i != -1) {
+					return tabbedPane.getTitleAt(i);
+				}
+				return null;
+			}
+		};
+		setOpaque(false);
+		setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
+		addMouseListener(new MouseAdapter() {
 
-            @Override
-            public String getText() {
-                int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
-                if (i != -1) {
-                    return tabbedPane.getTitleAt(i);
-                }
-                return null;
-            }
-        };
-        setOpaque(false);
-        setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
-        addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON1) {
+					int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
+					tabbedPane.setSelectedIndex(i);
+				} else if (e.getButton() == MouseEvent.BUTTON2) {
+					closeAction();
+				}
+			}
+		});
+		tabName.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+		add(tabName);
+		add(closeButton);
+	}
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
-                    tabbedPane.setSelectedIndex(i);
-                } else if (e.getButton() == MouseEvent.BUTTON2) {
-                    closeAction();
-                }
-            }
-        });
-        tabName.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
-        add(tabName);
-        add(closeButton);
-    }
+	private JButton createCloseButton() {
+		JButton closeButton = new JButton() {
 
-    private JButton createCloseButton() {
-        JButton closeButton = new JButton() {
+			private static final long serialVersionUID = 1L;
 
-            private static final long serialVersionUID = 1L;
+			@Override
+			public void updateUI() {
+			}
 
-            @Override
-            public void updateUI() {
-            }
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				Graphics2D g2 = (Graphics2D) g.create();
+				g2.setStroke(new BasicStroke(2));
+				g2.setColor(Color.RED);
+				int delta = 6;
+				g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight()
+						- delta - 1);
+				g2.drawLine(getWidth() - delta - 1, delta, delta, getHeight()
+						- delta - 1);
+				g2.dispose();
+			}
+		};
+		int size = 17;
+		closeButton.setPreferredSize(new Dimension(size, size));
+		closeButton.setToolTipText("Close Tab");
+		closeButton.setUI(new BasicButtonUI());
+		closeButton.setContentAreaFilled(false);
+		closeButton.setFocusable(false);
+		closeButton.setBorderPainted(false);
+		closeButton.addMouseListener(new MouseAdapter() {
 
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setStroke(new BasicStroke(2));
-                g2.setColor(Color.RED);
-                int delta = 6;
-                g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight()
-                        - delta - 1);
-                g2.drawLine(getWidth() - delta - 1, delta, delta, getHeight()
-                        - delta - 1);
-                g2.dispose();
-            }
-        };
-        int size = 17;
-        closeButton.setPreferredSize(new Dimension(size, size));
-        closeButton.setToolTipText("Close Tab");
-        closeButton.setUI(new BasicButtonUI());
-        closeButton.setContentAreaFilled(false);
-        closeButton.setFocusable(false);
-        closeButton.setBorderPainted(false);
-        closeButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				Component component = e.getComponent();
+				if (component instanceof AbstractButton) {
+					AbstractButton button = (AbstractButton) component;
+					button.setBorderPainted(true);
+				}
+			}
 
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                Component component = e.getComponent();
-                if (component instanceof AbstractButton) {
-                    AbstractButton button = (AbstractButton) component;
-                    button.setBorderPainted(true);
-                }
-            }
+			@Override
+			public void mouseExited(MouseEvent e) {
+				Component component = e.getComponent();
+				if (component instanceof AbstractButton) {
+					AbstractButton button = (AbstractButton) component;
+					button.setBorderPainted(false);
+				}
+			}
+		});
+		closeButton.addActionListener(new ActionListener() {
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                Component component = e.getComponent();
-                if (component instanceof AbstractButton) {
-                    AbstractButton button = (AbstractButton) component;
-                    button.setBorderPainted(false);
-                }
-            }
-        });
-        closeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				closeAction();
+			}
+		});
+		return closeButton;
+	}
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                closeAction();
-            }
-        });
-        return closeButton;
-    }
-
-    private void closeAction() {
-        int index = tabbedPane.indexOfTabComponent(TabCloseButton.this);
-        if (((BinaryTreeTabController) softwareController
-                .getTabController(index)).isTabModelSaved()) {
-            softwareController.closeTab(index);
-        } else {
-            Object[] options = { "Save", "Discard", "Cancel" };
-            int choice = JOptionPane.showOptionDialog(/*TODO*/tabbedPane,
-                "Do you want to save your changes?", "Close Operation",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
-                null, options, options[2]);
-            if (choice == JOptionPane.YES_OPTION) {
-                int count = tabbedPane.getTabCount();
-                if (count > 0) {
-                    int returnVal = fileChooser.showSaveDialog(tabbedPane);
-                    if (returnVal == JFileChooser.APPROVE_OPTION) {
-                        File file = fileChooser.getSelectedFile();
-                        if (file.exists()) {
-                            int secondChoice = JOptionPane.showConfirmDialog(
-                                /*TODO*/tabbedPane, "This file already exists."
-                                        + " Do you want to replace it?",
-                                "Save Operation", JOptionPane.YES_NO_OPTION,
-                                JOptionPane.WARNING_MESSAGE);
-                            if (secondChoice == JOptionPane.YES_OPTION) {
-                                saveAndCloseTab(file, index);
-                            }
-                        } else {
-                            saveAndCloseTab(file, index);
-                        }
-                    }
-                    fileChooser.setSelectedFile(null);
-                }
-            } else if (choice == JOptionPane.NO_OPTION) {
-                softwareController.closeTab(index);
-            }
-        }
-    }
-
-    private void saveAndCloseTab(File file, int index) {
-        try {
-            softwareController.saveTabModel(file, index);
-        } catch (IOException e) {
-            System.out.println("File could not be saved");
-            System.exit(1);
-        }
-        softwareController.closeTab(index);
-    }
+	private void closeAction() {
+		int index = tabbedPane.indexOfTabComponent(TabCloseButton.this);
+		if (((BinaryTreeTabController) softwareController
+				.getTabController(index)).isTabModelSaved()) {
+			softwareController.closeTab(index);
+		} else {
+			Object[] options = { "Save", "Discard", "Cancel" };
+			int choice = JOptionPane.showOptionDialog(
+					(SoftwareView) softwareController.getView(),
+					"Do you want to save your changes?", "Close Operation",
+					JOptionPane.YES_NO_CANCEL_OPTION,
+					JOptionPane.WARNING_MESSAGE, null, options, options[2]);
+			if (choice == JOptionPane.YES_OPTION) {
+				((SoftwareView) softwareController
+						.getView()).saveAction(SaveEventType.CLOSE);
+			} else if (choice == JOptionPane.NO_OPTION) {
+				softwareController.closeTab(index);
+			}
+		}
+	}
 }

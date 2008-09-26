@@ -1,5 +1,5 @@
 /*
- * TreeVisualization.java v1.00 16/06/08
+ * AbstractTreeVisualization.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -44,7 +44,7 @@ import swing.tree.GraphicNode.GraphicNodeColor;
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-abstract class TreeVisualization extends JPanel {
+abstract class AbstractTreeVisualization extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
@@ -79,7 +79,7 @@ abstract class TreeVisualization extends JPanel {
      * @param width the width of the panel
      * @param height the height of the panel
      */
-    TreeVisualization(BinaryTreeTabController c, int width, int height) {
+    AbstractTreeVisualization(BinaryTreeTabController c, int width, int height) {
         binaryTreeTabController = c;
         graphicNodes = new ArrayList<GraphicNode>();
         sizeOfNodes = 30;
@@ -227,7 +227,7 @@ abstract class TreeVisualization extends JPanel {
      * @param treeVisualisation the tree visualization containing the new
      *            graphic nodes
      */
-    void copyGraphicNodes(TreeVisualization treeVisualisation) {
+    void copyGraphicNodes(AbstractTreeVisualization treeVisualisation) {
         graphicNodes.clear();
         for (GraphicNode node : treeVisualisation.graphicNodes) {
             graphicNodes.add(node);
@@ -257,9 +257,10 @@ abstract class TreeVisualization extends JPanel {
                 node.changeNodeSize(sizeOfNodes);
             }
         }
+        sizingArea();
     }
 
-    protected void sizingArea() {
+    private void sizingArea() {
         Rectangle visibleArea = getVisibleRect();
         Dimension visualizationArea = getPreferredSize();
         if (visualizationArea.width <= visibleArea.width) {

@@ -36,7 +36,7 @@ public interface BinaryTreeTabListener extends EventListener {
     /**
      * The binary tree has changed.
      * 
-     * @param event the data structure event
+     * @param event the binary tree tab event
      */
     public <N extends IBinaryNode<N>> void binaryTreeChanged(
             BinaryTreeTabEvent<N> event);

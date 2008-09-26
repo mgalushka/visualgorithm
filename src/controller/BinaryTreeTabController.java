@@ -26,8 +26,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import model.ITabModel;
+import model.UnknownDataStructureException;
 import model.tree.BinaryTreeTabModel;
-import model.tree.UnknownTreeTypeException;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 import view.AbstractViewFactory;
 import view.IBinaryTreeTabView;
@@ -70,14 +70,14 @@ public class BinaryTreeTabController implements ITabController {
      * @param file the file containing the binary tree
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
-     * @throws UnknownTreeTypeException
+     * @throws UnknownDataStructureException
      * @throws IOException
      * @throws ParseException
      * @throws FileNotFoundException
      */
     public BinaryTreeTabController(File file, int width, int height)
             throws FileNotFoundException, ParseException, IOException,
-            UnknownTreeTypeException {
+            UnknownDataStructureException {
         binaryTreeTabModel = new BinaryTreeTabModel(file);
 
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();

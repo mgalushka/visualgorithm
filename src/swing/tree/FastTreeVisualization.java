@@ -33,14 +33,21 @@ import controller.BinaryTreeTabController;
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 01/08/08
- * @see TreeVisualization
+ * @see AbstractTreeVisualization
  */
-public class FastTreeVisualization extends TreeVisualization {
+public class FastTreeVisualization extends AbstractTreeVisualization {
 
     private static final long serialVersionUID = 1L;
     
     private boolean deleteMode;
     
+    /**
+     * Builds the fast tree visualization.
+     * 
+     * @param c the binary tree tab controller
+     * @param width the width of the panel
+     * @param height the height of the panel
+     */
     FastTreeVisualization(BinaryTreeTabController c, int width, int height) {
         super(c, width, height);
         deleteMode = false;

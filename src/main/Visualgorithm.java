@@ -36,7 +36,7 @@ import model.SoftwareModel;
 public class Visualgorithm {
 
     /**
-     * Launchs the software.
+     * Launches the software.
      * 
      * @param args possible arguments
      */

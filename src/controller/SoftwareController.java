@@ -30,7 +30,7 @@ import java.util.List;
 import view.ISoftwareView;
 import view.AbstractViewFactory;
 import model.SoftwareModel;
-import model.tree.UnknownTreeTypeException;
+import model.UnknownDataStructureException;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 
 /**
@@ -134,7 +134,7 @@ public class SoftwareController implements IController {
      */
     public void openDataStructureFile(File file, int index, int width, int height)
             throws FileNotFoundException, ParseException, IOException,
-            UnknownTreeTypeException {
+            UnknownDataStructureException {
         String fileName = file.getName();
         int i = fileName.lastIndexOf('.');
         String extension = fileName.substring(i + 1).toLowerCase();

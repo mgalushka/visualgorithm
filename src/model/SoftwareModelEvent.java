@@ -54,7 +54,9 @@ public class SoftwareModelEvent extends EventObject {
     private int index;
 
     /**
-     * Builds a software model event.
+     * Builds a software model event for the type ADD. If the data structure
+     * is saved into a file, name is the file name or else name is the
+     * type of the data structure.
      * 
      * @param source the source of the software model event
      * @param t the type of the software model event
@@ -68,7 +70,7 @@ public class SoftwareModelEvent extends EventObject {
     }
 
     /**
-     * Builds a software model event.
+     * Builds a software model event for the type DELETE.
      * 
      * @param source the source of the software model event
      * @param t the type of the software model event
@@ -82,7 +84,7 @@ public class SoftwareModelEvent extends EventObject {
     }
 
     /**
-     * Builds a software model event.
+     * Builds a software model event for the type EXIT.
      * 
      * @param source the source of the software model event
      * @param t the type of the model event
@@ -105,7 +107,7 @@ public class SoftwareModelEvent extends EventObject {
 
     /**
      * Returns the name of the data structure. If the data structure
-     * is saved into a file, returns the name of the file  or else returns
+     * is saved into a file, returns the name of the file or else returns
      * the type of the data structure.
      * 
      * @return the name

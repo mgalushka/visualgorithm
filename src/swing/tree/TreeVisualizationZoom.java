@@ -52,7 +52,7 @@ class TreeVisualizationZoom extends JPanel {
      * 
      * @param treeVisualization the tree visualization
      */
-    TreeVisualizationZoom(final TreeVisualization treeVisualization) {
+    TreeVisualizationZoom(final AbstractTreeVisualization treeVisualization) {
         super(new BorderLayout(4, 4));
         JScrollPane scrollPane = new JScrollPane(treeVisualization);
 

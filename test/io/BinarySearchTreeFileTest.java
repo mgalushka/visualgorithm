@@ -27,9 +27,10 @@ import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+
+import model.UnknownDataStructureException;
 import model.tree.BinarySearchNode;
 import model.tree.BinarySearchTree;
-import model.tree.UnknownTreeTypeException;
 
 /**
  * Test of the loading and saving of a binary search tree.
@@ -74,7 +75,7 @@ public class BinarySearchTreeFileTest {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (UnknownTreeTypeException e) {
+        } catch (UnknownDataStructureException e) {
             e.printStackTrace();
         }
     }

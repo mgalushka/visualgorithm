@@ -31,6 +31,7 @@ import io.TreeFile;
 import model.BinaryTreeFactory;
 import model.IDataStructure;
 import model.ITabModel;
+import model.UnknownDataStructureException;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 
 /**
@@ -64,13 +65,13 @@ public class BinaryTreeTabModel implements ITabModel {
      * Builds the binary tree tab model.
      * 
      * @param file the file containing the binary tree
-     * @throws UnknownTreeTypeException
+     * @throws UnknownDataStructureException
      * @throws IOException
      * @throws ParseException
      * @throws FileNotFoundException
      */
     public BinaryTreeTabModel(File file) throws FileNotFoundException,
-            ParseException, IOException, UnknownTreeTypeException {
+            ParseException, IOException, UnknownDataStructureException {
         binaryTree = TreeFile.load(file.getAbsolutePath());
         listeners = new EventListenerList();
         isBinaryTreeSaved = true;

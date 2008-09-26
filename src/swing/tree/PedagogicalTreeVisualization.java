@@ -21,9 +21,7 @@
 
 package swing.tree;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -37,9 +35,9 @@ import controller.BinaryTreeTabController;
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 01/08/08
- * @see TreeVisualization
+ * @see AbstractTreeVisualization
  */
-public class PedagogicalTreeVisualization extends TreeVisualization {
+public class PedagogicalTreeVisualization extends AbstractTreeVisualization {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,6 +45,13 @@ public class PedagogicalTreeVisualization extends TreeVisualization {
 
     private boolean isNewNodeSelected;
 
+    /**
+     * Builds the pedagogical tree visualization.
+     * 
+     * @param c the binary tree tab controller
+     * @param width the width of the panel
+     * @param height the height of the panel
+     */
     PedagogicalTreeVisualization(BinaryTreeTabController c, int width,
             int height) {
         super(c, width, height);
@@ -125,9 +130,9 @@ public class PedagogicalTreeVisualization extends TreeVisualization {
     }
 
     /**
-     * Creates a node.
+     * Creates the newNode.
      * 
-     * @param key the key of the node
+     * @param key the key of the newNode
      */
     void createNode(int key) {
         if (newNode == null) {
@@ -146,30 +151,12 @@ public class PedagogicalTreeVisualization extends TreeVisualization {
     boolean isEmpty() {
         return graphicNodes.size() == 0;
     }
-
-    protected void changeSizeHandle() {
-        if (newNode != null) {
-            // TODO
-            int xFirstNode = getGraphicNode(0).getXPosition();
-            int yFirstNode = getGraphicNode(0).getYPosition();
-            newNode.changeNodeSize(sizeOfNodes);
-            Rectangle visibleArea = getVisibleRect();
-            Dimension visualizationArea = getPreferredSize();
-            if (visualizationArea.width <= visibleArea.width) {
-                setSize(visibleArea.width, visibleArea.height);
-            } else {
-                setSize(visualizationArea);
-            }
-            updatePositions();
-            newNode.changeNodePosition(newNode.getXPosition()
-                    + getGraphicNode(0).getXPosition() - xFirstNode, newNode
-                    .getYPosition()
-                    + getGraphicNode(0).getYPosition() - yFirstNode);
-        } else {
-            sizingArea();
-        }
+    
+    @Override
+    void changeSize(int sizeFactor) {
+        // TODO
     }
-
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
