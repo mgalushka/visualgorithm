@@ -90,10 +90,16 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
                     if (pedagogicalTreeCreationPanel == null) {
                         pedagogicalTreeCreationPanel = new PedagogicalTreeCreationPanel(
                             binaryTreeTabController);
+                        pedagogicalTreeCreationPanel.getPedagogicalTreeVisualization()
+                        .copyGraphicNodes(
+                            fastTreeCreationPanel.getFastTreeVisualization());
+                    } else {
+	                    if (!binaryTreeTabController.isTabModelSaved()) {
+		                    pedagogicalTreeCreationPanel.getPedagogicalTreeVisualization()
+		                            .copyGraphicNodes(
+		                                fastTreeCreationPanel.getFastTreeVisualization());
+	                    }
                     }
-                    pedagogicalTreeCreationPanel.getPedagogicalTreeVisualization()
-                            .copyGraphicNodes(
-                                fastTreeCreationPanel.getFastTreeVisualization());
                     button.setText("Fast Creation Mode");
                     remove(fastTreeCreationPanel);
                     add(pedagogicalTreeCreationPanel, BorderLayout.CENTER);
@@ -101,10 +107,12 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
                     repaint();
                     isFastTreeCreation = false;
                 } else {
-                    fastTreeCreationPanel.getFastTreeVisualization()
-                            .copyGraphicNodes(
-                                pedagogicalTreeCreationPanel
-                                        .getPedagogicalTreeVisualization());
+                    if (!binaryTreeTabController.isTabModelSaved()) {
+	                	fastTreeCreationPanel.getFastTreeVisualization()
+	                            .copyGraphicNodes(
+	                                pedagogicalTreeCreationPanel
+	                                        .getPedagogicalTreeVisualization());
+                    }
                     button.setText("Pedagogical Creation Mode");
                     remove(pedagogicalTreeCreationPanel);
                     add(fastTreeCreationPanel, BorderLayout.CENTER);

@@ -36,14 +36,9 @@ import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.plaf.basic.BasicButtonUI;
-
-import swing.SoftwareView.SaveEventType;
-import controller.SoftwareController;
-import controller.BinaryTreeTabController;
 
 /**
  * Definition of the tab close button.
@@ -59,18 +54,18 @@ class TabCloseButton extends JPanel {
 
 	private JTabbedPane tabbedPane;
 
-	private SoftwareController softwareController;
+	private SoftwareIO ioOperation;
 
 	/**
 	 * Builds the tab close button.
 	 * 
 	 * @param tp the tabbed pane
-	 * @param c the software controller
+	 * @param io the software IO
 	 */
-	TabCloseButton(JTabbedPane tp, SoftwareController c) {
+	TabCloseButton(JTabbedPane tp, SoftwareIO io) {
 		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		tabbedPane = tp;
-		softwareController = c;
+		ioOperation = io;
 		JButton closeButton = createCloseButton();
 		JLabel tabName = new JLabel() {
 
@@ -95,7 +90,8 @@ class TabCloseButton extends JPanel {
 					int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
 					tabbedPane.setSelectedIndex(i);
 				} else if (e.getButton() == MouseEvent.BUTTON2) {
-					closeAction();
+					ioOperation.closeTabOperation(tabbedPane
+							.indexOfTabComponent(TabCloseButton.this));
 				}
 			}
 		});
@@ -158,30 +154,10 @@ class TabCloseButton extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				closeAction();
+				ioOperation.closeTabOperation(tabbedPane
+						.indexOfTabComponent(TabCloseButton.this));
 			}
 		});
 		return closeButton;
-	}
-
-	private void closeAction() {
-		int index = tabbedPane.indexOfTabComponent(TabCloseButton.this);
-		if (((BinaryTreeTabController) softwareController
-				.getTabController(index)).isTabModelSaved()) {
-			softwareController.closeTab(index);
-		} else {
-			Object[] options = { "Save", "Discard", "Cancel" };
-			int choice = JOptionPane.showOptionDialog(
-					(SoftwareView) softwareController.getView(),
-					"Do you want to save your changes?", "Close Operation",
-					JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.WARNING_MESSAGE, null, options, options[2]);
-			if (choice == JOptionPane.YES_OPTION) {
-				((SoftwareView) softwareController
-						.getView()).saveAction(SaveEventType.CLOSE);
-			} else if (choice == JOptionPane.NO_OPTION) {
-				softwareController.closeTab(index);
-			}
-		}
 	}
 }

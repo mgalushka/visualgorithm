@@ -29,31 +29,25 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.ParseException;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileFilter;
+
 import model.SoftwareModelEvent;
-import model.UnknownDataStructureException;
 import model.SoftwareModelEvent.SoftwareModelEventType;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
+import swing.SoftwareIO.SaveEventType;
 import swing.tree.RandomTreeCreationDialog;
 import view.ISoftwareView;
 import controller.SoftwareController;
-import controller.BinaryTreeTabController;
 
 /**
  * Definition of the software view.
@@ -65,18 +59,6 @@ import controller.BinaryTreeTabController;
  * @see ISoftwareView
  */
 public class SoftwareView extends JFrame implements ISoftwareView {
-
-	/**
-     * Enumeration of the save event type.
-     * 
-     * @author Julien Hannier
-     * @author Pierre Pironin
-     * @author Damien Rigoni
-     * @version 1.00 26/09/08
-     */
-    public enum SaveEventType {
-        CLOSE, EXIT, SAVE
-    };
 	
 	private static final long serialVersionUID = 1L;
 
@@ -86,7 +68,7 @@ public class SoftwareView extends JFrame implements ISoftwareView {
 	
 	private JMenu algorithms;
 
-	private JFileChooser fileChooser;
+	private SoftwareIO ioOperation;
 
 	private JTabbedPane tabbedPane;
 
@@ -95,13 +77,13 @@ public class SoftwareView extends JFrame implements ISoftwareView {
 	 * 
 	 * @param c the software controller
 	 */
-	public SoftwareView(SoftwareController c) {
+	SoftwareView(SoftwareController c) {
 		super("Visualgorithm");
 		softwareController = c;
 		createMenuBar();
-		createFileChooser();
 		tabbedPane = new JTabbedPane(SwingConstants.TOP,
 				JTabbedPane.SCROLL_TAB_LAYOUT);
+		ioOperation = new SoftwareIO(tabbedPane, softwareController);
 		
 		menuBar.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
 		setJMenuBar(menuBar);
@@ -111,70 +93,21 @@ public class SoftwareView extends JFrame implements ISoftwareView {
 
 			@Override
 			public void windowClosing(WindowEvent evt) {
-				exitSoftware();
+				ioOperation.exitSoftwareOperation();
 			}
 		});
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(screenSize.width * 8 / 10, screenSize.height * 8 / 10);
 	}
 
-	private JComponent getTabView(int index) {
-		return (JComponent) softwareController.getTabController(index)
-				.getView();
-	}
-
-	private void createFileChooser() {
-		fileChooser = new JFileChooser();
-		addFileFilter(new FileFilter() {
-
-			@Override
-			public boolean accept(File file) {
-				if (file.isDirectory()) {
-					return true;
-				}
-				String name = file.getName();
-				int i = name.lastIndexOf('.');
-				String extension = null;
-				if ((i > 0) && (i < name.length() - 1)) {
-					extension = name.substring(i + 1).toLowerCase();
-				}
-				if (extension != null) {
-					if (extension.equals("bt")) {
-						return true;
-					} else {
-						return false;
-					}
-				}
-				return false;
-			}
-
-			@Override
-			public String getDescription() {
-				return "Binary Tree  ( .bt )";
-			}
-		});
-		fileChooser.setAcceptAllFileFilterUsed(false);
-	}
-	
-	public void addFileFilter(FileFilter fileFilter) {
-		fileChooser.addChoosableFileFilter(fileFilter);
-	}
-	
-	public void addDataStructureMenu(JMenu newMenu) {
-		menuBar.remove(algorithms);
-		menuBar.add(newMenu);
-		menuBar.add(algorithms);
-	}
-
 	private void createMenuBar() {
 		menuBar = new JMenuBar();
-		algorithms = createAlgorithmsMenu();
+		createAlgorithmsMenu();
 
 		menuBar.add(createFileMenu());
 		menuBar.add(createEditMenu());
 		menuBar.add(createTreesMenu());
-		menuBar.add(createTreesMenu());
-		
+		menuBar.add(algorithms);
 	}
 
 	private JMenu createFileMenu() {
@@ -189,31 +122,8 @@ public class SoftwareView extends JFrame implements ISoftwareView {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				int returnVal = fileChooser.showOpenDialog(SoftwareView.this);
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					int index = tabbedPane.getTabCount();
-					try {
-						softwareController.openDataStructureFile(fileChooser
-								.getSelectedFile(), index, tabbedPane
-								.getWidth(), tabbedPane.getHeight());
-					} catch (FileNotFoundException e) {
-						JOptionPane.showMessageDialog(SoftwareView.this, e
-								.getMessage(), "Open Failed",
-								JOptionPane.WARNING_MESSAGE);
-					} catch (ParseException e) {
-						JOptionPane.showMessageDialog(SoftwareView.this, e
-								.getMessage(), "Open Failed",
-								JOptionPane.WARNING_MESSAGE);
-					} catch (IOException e) {
-						System.out.println("File could not be read");
-						System.exit(1);
-					} catch (UnknownDataStructureException e) {
-						JOptionPane.showMessageDialog(SoftwareView.this, e
-								.getMessage(), "Open Failed",
-								JOptionPane.WARNING_MESSAGE);
-					}
-					fileChooser.setSelectedFile(null);
-				}
+				ioOperation.openOperation();
+				
 			}
 		});
 		save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
@@ -222,7 +132,7 @@ public class SoftwareView extends JFrame implements ISoftwareView {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				saveAction(SaveEventType.SAVE);
+				ioOperation.saveOperation(SaveEventType.SAVE);
 			}
 		});
 		exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
@@ -231,7 +141,7 @@ public class SoftwareView extends JFrame implements ISoftwareView {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				exitSoftware();
+				ioOperation.exitSoftwareOperation();
 			}
 		});
 		file.add(open);
@@ -240,89 +150,25 @@ public class SoftwareView extends JFrame implements ISoftwareView {
 		return file;
 	}
 
-	/**
-     * Saves a tab into a file.
-     * 
-     * @param type the type of the save event
-     */
-	void saveAction(SaveEventType type) {
-		int count = tabbedPane.getTabCount();
-		if (count > 0) {
-			int returnVal = fileChooser
-					.showSaveDialog(SoftwareView.this);
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				int index = tabbedPane.getSelectedIndex();
-				File file = fileChooser.getSelectedFile();
-				int choice = JOptionPane.NO_OPTION;
-				if (file.exists()) {
-					choice = JOptionPane.showConfirmDialog(
-							SoftwareView.this,
-							"This file already exists."
-									+ " Do you want to replace it?",
-							"Save Operation",
-							JOptionPane.YES_NO_OPTION,
-							JOptionPane.WARNING_MESSAGE);
-				}
-				if ((!file.exists())
-						|| (choice == JOptionPane.YES_OPTION)) {
-					try {
-						softwareController.saveTabModel(file, index);
-					} catch (IOException e) {
-						System.out.println("File could not be saved");
-						System.exit(1);
-					}
-					if (type == SaveEventType.CLOSE) {
-						softwareController.closeTab(index);
-					} else if (type == SaveEventType.EXIT) {
-						softwareController.exitSoftware();
-					} else if (type == SaveEventType.SAVE) {
-						tabbedPane.setTitleAt(index, file.getName());
-						((TabCloseButton) tabbedPane.getTabComponentAt(index))
-								.revalidate();
-					}
-				}
-			}
-			fileChooser.setSelectedFile(null);
-		}
-	}
-	
-	private void exitSoftware() {
-		int count = tabbedPane.getTabCount();
-		if (count == 0) {
-			softwareController.exitSoftware();
-		} else if (count == 1) {
-			if (((BinaryTreeTabController) softwareController
-					.getTabController(0)).isTabModelSaved()) {
-				softwareController.exitSoftware();
-			} else {
-				Object[] options = { "Save", "Discard", "Cancel" };
-				int choice = JOptionPane.showOptionDialog(SoftwareView.this,
-						"Do you want to save your changes?", "Exit Operation",
-						JOptionPane.YES_NO_CANCEL_OPTION,
-						JOptionPane.WARNING_MESSAGE, null, options, options[2]);
-				if (choice == JOptionPane.YES_OPTION) {
-					saveAction(SaveEventType.EXIT);
-				} else if (choice == JOptionPane.NO_OPTION) {
-					softwareController.exitSoftware();
-				}
-			}
-		} else {
-			int choice = JOptionPane.showConfirmDialog(SoftwareView.this,
-					"You are about to close " + count + " tabs."
-							+ " Do you really want to continue?",
-					"Exit Operation", JOptionPane.YES_NO_OPTION,
-					JOptionPane.WARNING_MESSAGE);
-			if (choice == JOptionPane.YES_OPTION) {
-				softwareController.exitSoftware();
-			}
-		}
-	}
-
 	private JMenu createEditMenu() {
 		JMenu tools = new JMenu("Edit");
 		JMenu language = new JMenu("Language");
 		JMenuItem preferences = new JMenuItem("Preferences");
 
+		language.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				// TODO language
+			}
+		});
+		preferences.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				// TODO preferences
+			}
+		});
 		tools.add(language);
 		tools.add(preferences);
 		return tools;
@@ -375,6 +221,7 @@ public class SoftwareView extends JFrame implements ISoftwareView {
 								.getWidth(), tabbedPane.getHeight());
 			}
 		});
+		// TODO notes
 		newTree.add(randomTree);
 		newTree.add(binarySearchTree);
 		newTree.add(avlTree);
@@ -384,16 +231,42 @@ public class SoftwareView extends JFrame implements ISoftwareView {
 		return trees;
 	}
 
-	private JMenu createAlgorithmsMenu() {
-		JMenu algorithms = new JMenu("Algorithms");
+	private void createAlgorithmsMenu() {
+		algorithms = new JMenu("Algorithms");
 		JMenu apply = new JMenu("Apply");
 		JMenu notes = new JMenu("Notes");
 
+		// TODO apply
+		// TODO notes
 		algorithms.add(apply);
 		algorithms.add(notes);
-		return algorithms;
 	}
 
+	private JComponent getTabView(int index) {
+		return (JComponent) softwareController.getTabController(index)
+				.getView();
+	}
+	
+	/**
+     * Adds a file filter to the software IO.
+     * 
+     * @param fileFilter the filter to add
+     */
+	void addFileFilter(FileFilter fileFilter) {
+		ioOperation.addFileFilter(fileFilter);
+	}
+	
+	/**
+     * Adds a data structure menu to the menu bar.
+     * 
+     * @param newMenu the data structure menu to add
+     */
+	void addDataStructureMenu(JMenu newMenu) {
+		menuBar.remove(algorithms);
+		menuBar.add(newMenu);
+		menuBar.add(algorithms);
+	}
+	
 	@Override
 	public void displayView() {
 		setVisible(true);
@@ -411,7 +284,7 @@ public class SoftwareView extends JFrame implements ISoftwareView {
 			int numTab = tabbedPane.getTabCount();
 			tabbedPane.addTab(event.getName(), getTabView(numTab));
 			tabbedPane.setTabComponentAt(numTab, new TabCloseButton(tabbedPane,
-					softwareController));
+					ioOperation));
 			tabbedPane.setSelectedIndex(numTab);
 		} else if (event.getType() == SoftwareModelEventType.EXIT) {
 			System.exit(0);
