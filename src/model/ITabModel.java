@@ -40,14 +40,14 @@ public interface ITabModel {
      * @return the tab model
      */
     public IDataStructure getTabModel();
-    
+
     /**
      * Returns true if the tab model has been saved.
      * 
      * @return true if the tab model has been saved
      */
     public boolean isTabModelSaved();
-    
+
     /**
      * Saves the tab model into the selected file.
      * 

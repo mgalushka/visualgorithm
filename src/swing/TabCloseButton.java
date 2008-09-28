@@ -50,114 +50,114 @@ import javax.swing.plaf.basic.BasicButtonUI;
  */
 class TabCloseButton extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private JTabbedPane tabbedPane;
+    private JTabbedPane tabbedPane;
 
-	private SoftwareIO ioOperation;
+    private SoftwareIO ioOperation;
 
-	/**
-	 * Builds the tab close button.
-	 * 
-	 * @param tp the tabbed pane
-	 * @param io the software IO
-	 */
-	TabCloseButton(JTabbedPane tp, SoftwareIO io) {
-		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		tabbedPane = tp;
-		ioOperation = io;
-		JButton closeButton = createCloseButton();
-		JLabel tabName = new JLabel() {
+    /**
+     * Builds the tab close button.
+     * 
+     * @param tp the tabbed pane
+     * @param io the software IO
+     */
+    TabCloseButton(JTabbedPane tp, SoftwareIO io) {
+        super(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        tabbedPane = tp;
+        ioOperation = io;
+        JButton closeButton = createCloseButton();
+        JLabel tabName = new JLabel() {
 
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public String getText() {
-				int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
-				if (i != -1) {
-					return tabbedPane.getTitleAt(i);
-				}
-				return null;
-			}
-		};
-		setOpaque(false);
-		setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
-		addMouseListener(new MouseAdapter() {
+            @Override
+            public String getText() {
+                int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
+                if (i != -1) {
+                    return tabbedPane.getTitleAt(i);
+                }
+                return null;
+            }
+        };
+        setOpaque(false);
+        setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
+        addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON1) {
-					int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
-					tabbedPane.setSelectedIndex(i);
-				} else if (e.getButton() == MouseEvent.BUTTON2) {
-					ioOperation.closeTabOperation(tabbedPane
-							.indexOfTabComponent(TabCloseButton.this));
-				}
-			}
-		});
-		tabName.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
-		add(tabName);
-		add(closeButton);
-	}
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    int i = tabbedPane.indexOfTabComponent(TabCloseButton.this);
+                    tabbedPane.setSelectedIndex(i);
+                } else if (e.getButton() == MouseEvent.BUTTON2) {
+                    ioOperation.closeTabOperation(tabbedPane
+                            .indexOfTabComponent(TabCloseButton.this));
+                }
+            }
+        });
+        tabName.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+        add(tabName);
+        add(closeButton);
+    }
 
-	private JButton createCloseButton() {
-		JButton closeButton = new JButton() {
+    private JButton createCloseButton() {
+        JButton closeButton = new JButton() {
 
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void updateUI() {
-			}
+            @Override
+            public void updateUI() {
+            }
 
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				Graphics2D g2 = (Graphics2D) g.create();
-				g2.setStroke(new BasicStroke(2));
-				g2.setColor(Color.RED);
-				int delta = 6;
-				g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight()
-						- delta - 1);
-				g2.drawLine(getWidth() - delta - 1, delta, delta, getHeight()
-						- delta - 1);
-				g2.dispose();
-			}
-		};
-		int size = 17;
-		closeButton.setPreferredSize(new Dimension(size, size));
-		closeButton.setToolTipText("Close Tab");
-		closeButton.setUI(new BasicButtonUI());
-		closeButton.setContentAreaFilled(false);
-		closeButton.setFocusable(false);
-		closeButton.setBorderPainted(false);
-		closeButton.addMouseListener(new MouseAdapter() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setStroke(new BasicStroke(2));
+                g2.setColor(Color.RED);
+                int delta = 6;
+                g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight()
+                        - delta - 1);
+                g2.drawLine(getWidth() - delta - 1, delta, delta, getHeight()
+                        - delta - 1);
+                g2.dispose();
+            }
+        };
+        int size = 17;
+        closeButton.setPreferredSize(new Dimension(size, size));
+        closeButton.setToolTipText("Close Tab");
+        closeButton.setUI(new BasicButtonUI());
+        closeButton.setContentAreaFilled(false);
+        closeButton.setFocusable(false);
+        closeButton.setBorderPainted(false);
+        closeButton.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				Component component = e.getComponent();
-				if (component instanceof AbstractButton) {
-					AbstractButton button = (AbstractButton) component;
-					button.setBorderPainted(true);
-				}
-			}
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                Component component = e.getComponent();
+                if (component instanceof AbstractButton) {
+                    AbstractButton button = (AbstractButton) component;
+                    button.setBorderPainted(true);
+                }
+            }
 
-			@Override
-			public void mouseExited(MouseEvent e) {
-				Component component = e.getComponent();
-				if (component instanceof AbstractButton) {
-					AbstractButton button = (AbstractButton) component;
-					button.setBorderPainted(false);
-				}
-			}
-		});
-		closeButton.addActionListener(new ActionListener() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                Component component = e.getComponent();
+                if (component instanceof AbstractButton) {
+                    AbstractButton button = (AbstractButton) component;
+                    button.setBorderPainted(false);
+                }
+            }
+        });
+        closeButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ioOperation.closeTabOperation(tabbedPane
-						.indexOfTabComponent(TabCloseButton.this));
-			}
-		});
-		return closeButton;
-	}
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ioOperation.closeTabOperation(tabbedPane
+                        .indexOfTabComponent(TabCloseButton.this));
+            }
+        });
+        return closeButton;
+    }
 }

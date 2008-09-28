@@ -48,6 +48,16 @@ abstract class AbstractTreeVisualization extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
+    private static final int SMALLEST_NODE_SIZE = 30;
+
+    private static final int ROOT_NODE_SHIFT = 10;
+
+    private static final int INITIAL_HEIGHT_BETWEEN_NODES = 35;
+
+    private static final int INITIAL_WIDTH_BETWEEN_BROTHER_NODES = 20;
+
+    private static final int INITIAL_WIDTH_BETWEEN_NODES = 15;
+
     protected BinaryTreeTabController binaryTreeTabController;
 
     protected List<GraphicNode> graphicNodes;
@@ -82,11 +92,11 @@ abstract class AbstractTreeVisualization extends JPanel {
     AbstractTreeVisualization(BinaryTreeTabController c, int width, int height) {
         binaryTreeTabController = c;
         graphicNodes = new ArrayList<GraphicNode>();
-        sizeOfNodes = 30;
-        heightBetweenNodes = 35;
-        widthBetweenBrotherNodes = 20;
-        widthBetweenNodes = 15;
-        yPositionRootNode = 10 + sizeOfNodes / 2;
+        sizeOfNodes = SMALLEST_NODE_SIZE;
+        heightBetweenNodes = INITIAL_HEIGHT_BETWEEN_NODES;
+        widthBetweenBrotherNodes = INITIAL_WIDTH_BETWEEN_BROTHER_NODES;
+        widthBetweenNodes = INITIAL_WIDTH_BETWEEN_NODES;
+        yPositionRootNode = ROOT_NODE_SHIFT + sizeOfNodes / 2;
         justCalculate = false;
 
         setSize(width, height);
@@ -246,12 +256,18 @@ abstract class AbstractTreeVisualization extends JPanel {
      * @param sizeFactor the size factor
      */
     void changeSize(int sizeFactor) {
+        final int sizeDifferenceBetweenImages = 15;
+
         justCalculate = true;
-        sizeOfNodes = 30 + sizeFactor * 15;
-        heightBetweenNodes = 35 + sizeFactor * 15;
-        widthBetweenBrotherNodes = 20 + sizeFactor * 15;
-        widthBetweenNodes = 15 + sizeFactor * 15;
-        yPositionRootNode = 10 + sizeOfNodes / 2;
+        sizeOfNodes = SMALLEST_NODE_SIZE + sizeFactor
+                * sizeDifferenceBetweenImages;
+        heightBetweenNodes = INITIAL_HEIGHT_BETWEEN_NODES + sizeFactor
+                * sizeDifferenceBetweenImages;
+        widthBetweenBrotherNodes = INITIAL_WIDTH_BETWEEN_BROTHER_NODES
+                + sizeFactor * sizeDifferenceBetweenImages;
+        widthBetweenNodes = INITIAL_WIDTH_BETWEEN_NODES + sizeFactor
+                * sizeDifferenceBetweenImages;
+        yPositionRootNode = ROOT_NODE_SHIFT + sizeOfNodes / 2;
         for (GraphicNode node : graphicNodes) {
             if (node != null) {
                 node.changeNodeSize(sizeOfNodes);

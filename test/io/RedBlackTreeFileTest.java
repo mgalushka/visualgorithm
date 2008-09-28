@@ -22,12 +22,11 @@
 package io;
 
 import static org.junit.Assert.assertEquals;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-
 import model.UnknownDataStructureException;
 import model.tree.RedBlackNode;
 import model.tree.RedBlackTree;
@@ -43,14 +42,14 @@ import model.tree.RedBlackNode.RedBlackNodeColor;
  */
 public class RedBlackTreeFileTest {
 
-    private static String loadFileName;
+    private String loadFileName;
 
-    private static String saveFileName;
+    private String saveFileName;
 
-    private static RedBlackTree tree;
+    private RedBlackTree tree;
 
-    @BeforeClass
-    public static void setUp() {
+    @Before
+    public void setUp() {
         loadFileName = "./test/io/loadRedBlackTreeTest.bt";
         saveFileName = "./test/io/saveRedBlackTreeTest.bt";
         tree = new RedBlackTree(6);

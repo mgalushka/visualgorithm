@@ -22,12 +22,11 @@
 package io;
 
 import static org.junit.Assert.assertEquals;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-
 import model.UnknownDataStructureException;
 import model.tree.AVLNode;
 import model.tree.AVLTree;
@@ -42,14 +41,14 @@ import model.tree.AVLTree;
  */
 public class AVLTreeFileTest {
 
-    private static String loadFileName;
+    private String loadFileName;
 
-    private static String saveFileName;
+    private String saveFileName;
 
-    private static AVLTree tree;
+    private AVLTree tree;
 
-    @BeforeClass
-    public static void setUp() {
+    @Before
+    public void setUp() {
         loadFileName = "./test/io/loadAVLTreeTest.bt";
         saveFileName = "./test/io/saveAVLTreeTest.bt";
         tree = new AVLTree(8);
@@ -72,8 +71,8 @@ public class AVLTreeFileTest {
             assertEquals(t.getRoot().getLeft().getLeft().getAVLHeight(), 1);
             assertEquals(t.getRoot().getLeft().getRight().getAVLHeight(), 0);
             assertEquals(t.getRoot().getRight().getLeft().getAVLHeight(), 0);
-            assertEquals(t.getRoot().getLeft().getLeft().getLeft().getAVLHeight(),
-                0);
+            assertEquals(t.getRoot().getLeft().getLeft().getLeft()
+                    .getAVLHeight(), 0);
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {

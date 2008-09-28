@@ -145,10 +145,10 @@ public class BinaryTreeTabModel implements ITabModel {
         fireBinaryTreeChanged(binaryTree.treeToArrayList());
         isBinaryTreeSaved = false;
     }
-    
+
     /**
-     * Deletes a node from the binary tree. It is a delete from
-     * the pedagogical creation mode.
+     * Deletes a node from the binary tree. It is a delete from the pedagogical
+     * creation mode.
      * 
      * @param key the key of the node
      */

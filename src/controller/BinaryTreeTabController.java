@@ -59,8 +59,8 @@ public class BinaryTreeTabController implements ITabController {
         binaryTreeTabModel = new BinaryTreeTabModel(type);
 
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        binaryTreeTabView = viewFactory.createBinaryTreeTabView("Type Of The Tree : "
-                + type.toString(), this, width, height);
+        binaryTreeTabView = viewFactory.createBinaryTreeTabView(
+            "Type of the Tree : " + type.toString(), this, width, height);
         addListener();
     }
 
@@ -81,9 +81,9 @@ public class BinaryTreeTabController implements ITabController {
         binaryTreeTabModel = new BinaryTreeTabModel(file);
 
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        binaryTreeTabView = viewFactory.createBinaryTreeTabView("Type Of The Tree : "
-                + binaryTreeTabModel.getTabModel().getType(), this, width,
-            height);
+        binaryTreeTabView = viewFactory.createBinaryTreeTabView(
+            "Type of the Tree : " + binaryTreeTabModel.getTabModel().getType(),
+            this, width, height);
         addListener();
         binaryTreeTabModel.updateBinaryTreeView();
     }
@@ -101,8 +101,8 @@ public class BinaryTreeTabController implements ITabController {
         binaryTreeTabModel = new BinaryTreeTabModel(type, nbNode);
 
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        binaryTreeTabView = viewFactory.createBinaryTreeTabView("Type Of The Tree : "
-                + type.toString(), this, width, height);
+        binaryTreeTabView = viewFactory.createBinaryTreeTabView(
+            "Type Of The Tree : " + type.toString(), this, width, height);
         addListener();
         binaryTreeTabModel.updateBinaryTreeView();
     }
@@ -150,8 +150,8 @@ public class BinaryTreeTabController implements ITabController {
     }
 
     /**
-     * Deletes a node from the binary tree. It is a delete from
-     * the pedagogical creation mode.
+     * Deletes a node from the binary tree. It is a delete from the pedagogical
+     * creation mode.
      * 
      * @param key the key of the node
      */

@@ -22,9 +22,9 @@
 package model;
 
 import static org.junit.Assert.assertEquals;
-import org.junit.BeforeClass;
+import static org.junit.Assert.assertFalse;
+import org.junit.Before;
 import org.junit.Test;
-
 import model.tree.BinaryTreeTabModel;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 
@@ -38,45 +38,45 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  */
 public class ModelTest {
 
-	private static SoftwareModel softwareModel;
+    private SoftwareModel softwareModel;
 
-	private static BinaryTreeTabModel tabModel1;
+    private BinaryTreeTabModel tabModel1;
 
-	private static BinaryTreeTabModel tabModel2;
+    private BinaryTreeTabModel tabModel2;
 
-	private static BinaryTreeTabModel tabModel3;
+    private BinaryTreeTabModel tabModel3;
 
-	@BeforeClass
-	public static void setUp() {
-		softwareModel = new SoftwareModel();
-		tabModel1 = new BinaryTreeTabModel(BinaryTreeType.AVLTREE);
-		tabModel2 = new BinaryTreeTabModel(BinaryTreeType.BINARYSEARCHTREE);
-		tabModel3 = new BinaryTreeTabModel(BinaryTreeType.REDBLACKTREE);
-	}
+    @Before
+    public void setUp() {
+        softwareModel = new SoftwareModel();
+        tabModel1 = new BinaryTreeTabModel(BinaryTreeType.AVLTREE);
+        tabModel2 = new BinaryTreeTabModel(BinaryTreeType.BINARYSEARCHTREE);
+        tabModel3 = new BinaryTreeTabModel(BinaryTreeType.REDBLACKTREE);
+    }
 
-	@Test
-	public void testSoftwareModel() {
-		softwareModel.addTabModel(tabModel1);
-		softwareModel.addTabModel(tabModel2);
-		softwareModel.addTabModel(tabModel3);
-		assertEquals(softwareModel.getTabModel(0), tabModel1);
-		assertEquals(softwareModel.getTabModel(1), tabModel2);
-		assertEquals(softwareModel.getTabModel(2), tabModel3);
-		softwareModel.removeTabModel(1);
-		assertEquals(softwareModel.getTabModel(0), tabModel1);
-		assertEquals(softwareModel.getTabModel(1), tabModel3);
-		softwareModel.removeTabModel(0);
-		assertEquals(softwareModel.getTabModel(0), tabModel3);
-	}
+    @Test
+    public void testSoftwareModel() {
+        softwareModel.addTabModel(tabModel1);
+        softwareModel.addTabModel(tabModel2);
+        softwareModel.addTabModel(tabModel3);
+        assertEquals(softwareModel.getTabModel(0), tabModel1);
+        assertEquals(softwareModel.getTabModel(1), tabModel2);
+        assertEquals(softwareModel.getTabModel(2), tabModel3);
+        softwareModel.removeTabModel(1);
+        assertEquals(softwareModel.getTabModel(0), tabModel1);
+        assertEquals(softwareModel.getTabModel(1), tabModel3);
+        softwareModel.removeTabModel(0);
+        assertEquals(softwareModel.getTabModel(0), tabModel3);
+    }
 
-	@Test
-	public void testBinaryTreeTabModel() {
-		assertEquals(tabModel1.isTabModelSaved(), false);
-		assertEquals(tabModel1.getTabModel().getType(), BinaryTreeType.AVLTREE
-				.toString());
-		assertEquals(tabModel2.getTabModel().getType(),
-				BinaryTreeType.BINARYSEARCHTREE.toString());
-		assertEquals(tabModel3.getTabModel().getType(),
-				BinaryTreeType.REDBLACKTREE.toString());
-	}
+    @Test
+    public void testBinaryTreeTabModel() {
+        assertFalse(tabModel1.isTabModelSaved());
+        assertEquals(tabModel1.getTabModel().getType(), BinaryTreeType.AVLTREE
+                .toString());
+        assertEquals(tabModel2.getTabModel().getType(),
+            BinaryTreeType.BINARYSEARCHTREE.toString());
+        assertEquals(tabModel3.getTabModel().getType(),
+            BinaryTreeType.REDBLACKTREE.toString());
+    }
 }

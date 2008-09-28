@@ -42,7 +42,7 @@ public interface ITabController extends IController {
      * @return the tab model
      */
     public ITabModel getTabModel();
-    
+
     /**
      * Saves the tab model into the selected file.
      * 

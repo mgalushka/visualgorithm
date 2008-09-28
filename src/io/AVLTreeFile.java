@@ -36,10 +36,10 @@ import model.tree.IBinaryNode;
  */
 final class AVLTreeFile extends TreeFile {
 
-	AVLTreeFile() {
+    AVLTreeFile() {
         super();
     }
-	
+
     @Override
     protected AVLTree createEmptyBinaryTree() {
         return new AVLTree();

@@ -151,12 +151,12 @@ public class PedagogicalTreeVisualization extends AbstractTreeVisualization {
     boolean isEmpty() {
         return graphicNodes.size() == 0;
     }
-    
+
     @Override
     void changeSize(int sizeFactor) {
         // TODO
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -22,12 +22,11 @@
 package io;
 
 import static org.junit.Assert.assertEquals;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-
 import model.UnknownDataStructureException;
 import model.tree.BinarySearchNode;
 import model.tree.BinarySearchTree;
@@ -42,14 +41,14 @@ import model.tree.BinarySearchTree;
  */
 public class BinarySearchTreeFileTest {
 
-    private static String loadFileName;
+    private String loadFileName;
 
-    private static String saveFileName;
+    private String saveFileName;
 
-    private static BinarySearchTree tree;
+    private BinarySearchTree tree;
 
-    @BeforeClass
-    public static void setUp() {
+    @Before
+    public void setUp() {
         loadFileName = "./test/io/loadBinarySearchTreeTest.bt";
         saveFileName = "./test/io/saveBinarySearchTreeTest.bt";
         tree = new BinarySearchTree(8);

@@ -56,7 +56,7 @@ public class SoftwareController implements IController {
      * @param m the software model
      */
     public SoftwareController(SoftwareModel m) {
-    	tabControllers = new ArrayList<ITabController>();
+        tabControllers = new ArrayList<ITabController>();
 
         softwareModel = m;
         AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
@@ -81,7 +81,7 @@ public class SoftwareController implements IController {
     }
 
     private void addListener() {
-    	softwareModel.addModelListener(softwareView);
+        softwareModel.addModelListener(softwareView);
     }
 
     /**
@@ -94,7 +94,7 @@ public class SoftwareController implements IController {
      */
     public void addBinaryTreeTab(BinaryTreeType type, int index, int width,
             int height) {
-    	tabControllers.add(new BinaryTreeTabController(type, width, height));
+        tabControllers.add(new BinaryTreeTabController(type, width, height));
         softwareModel.addTabModel(getTabController(index).getTabModel());
     }
 
@@ -109,7 +109,7 @@ public class SoftwareController implements IController {
      */
     public void addRandomBinaryTreeTab(BinaryTreeType type, int nbNode,
             int index, int width, int height) {
-    	tabControllers.add(new BinaryTreeTabController(type, nbNode, width,
+        tabControllers.add(new BinaryTreeTabController(type, nbNode, width,
                 height));
         softwareModel.addTabModel(getTabController(index).getTabModel());
     }
@@ -120,8 +120,8 @@ public class SoftwareController implements IController {
      * @param index the index of the tab
      */
     public void closeTab(int index) {
-    	softwareModel.removeTabModel(index);
-    	tabControllers.remove(index);
+        softwareModel.removeTabModel(index);
+        tabControllers.remove(index);
     }
 
     /**
@@ -132,18 +132,18 @@ public class SoftwareController implements IController {
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      */
-    public void openDataStructureFile(File file, int index, int width, int height)
-            throws FileNotFoundException, ParseException, IOException,
-            UnknownDataStructureException {
+    public void openDataStructureFile(File file, int index, int width,
+            int height) throws FileNotFoundException, ParseException,
+            IOException, UnknownDataStructureException {
         String fileName = file.getName();
         int i = fileName.lastIndexOf('.');
         String extension = fileName.substring(i + 1).toLowerCase();
 
         if (extension.equals("bt")) {
-        	tabControllers
+            tabControllers
                     .add(new BinaryTreeTabController(file, width, height));
-            softwareModel.addTabModelFromDataStructureFile(getTabController(index).getTabModel(),
-                fileName);
+            softwareModel.addTabModelFromDataStructureFile(getTabController(
+                index).getTabModel(), fileName);
         }
     }
 
@@ -162,7 +162,7 @@ public class SoftwareController implements IController {
      * Removes all the tabs.
      */
     public void exitSoftware() {
-    	softwareView.closeView();
+        softwareView.closeView();
         softwareModel.removeAllTabModels();
         tabControllers.clear();
     }

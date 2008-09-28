@@ -113,7 +113,8 @@ public class SoftwareModel {
      * @param tabModel a tab model
      * @param fileName the name of the file
      */
-    public void addTabModelFromDataStructureFile(ITabModel tabModel, String fileName) {
+    public void addTabModelFromDataStructureFile(ITabModel tabModel,
+            String fileName) {
         tabModels.add(tabModel);
         fireModelChanged(SoftwareModelEventType.ADD, fileName);
     }

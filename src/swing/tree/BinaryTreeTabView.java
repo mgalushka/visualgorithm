@@ -71,34 +71,37 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
         binaryTreeTabController = c;
         titlePane.setLayout(new FlowLayout(FlowLayout.CENTER, 4, 4));
         titlePane.add(title);
-        
+
         setLayout(new BorderLayout(4, 4));
         add(titlePane, BorderLayout.NORTH);
         add(fastTreeCreationPanel, BorderLayout.CENTER);
         add(createButtonBetweenViews(), BorderLayout.SOUTH);
     }
-    
+
     private JButton createButtonBetweenViews() {
-    	final JButton button = new JButton("Pedagogical"
-                + "Creation Mode");
-    	
-    	button.addActionListener(new ActionListener() {
+        final JButton button = new JButton("Pedagogical" + "Creation Mode");
+
+        button.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent event) {
                 if (isFastTreeCreation) {
                     if (pedagogicalTreeCreationPanel == null) {
                         pedagogicalTreeCreationPanel = new PedagogicalTreeCreationPanel(
-                            binaryTreeTabController);
-                        pedagogicalTreeCreationPanel.getPedagogicalTreeVisualization()
-                        .copyGraphicNodes(
-                            fastTreeCreationPanel.getFastTreeVisualization());
+                                binaryTreeTabController);
+                        pedagogicalTreeCreationPanel
+                                .getPedagogicalTreeVisualization()
+                                .copyGraphicNodes(
+                                    fastTreeCreationPanel
+                                            .getFastTreeVisualization());
                     } else {
-	                    if (!binaryTreeTabController.isTabModelSaved()) {
-		                    pedagogicalTreeCreationPanel.getPedagogicalTreeVisualization()
-		                            .copyGraphicNodes(
-		                                fastTreeCreationPanel.getFastTreeVisualization());
-	                    }
+                        if (!binaryTreeTabController.isTabModelSaved()) {
+                            pedagogicalTreeCreationPanel
+                                    .getPedagogicalTreeVisualization()
+                                    .copyGraphicNodes(
+                                        fastTreeCreationPanel
+                                                .getFastTreeVisualization());
+                        }
                     }
                     button.setText("Fast Creation Mode");
                     remove(fastTreeCreationPanel);
@@ -108,10 +111,10 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
                     isFastTreeCreation = false;
                 } else {
                     if (!binaryTreeTabController.isTabModelSaved()) {
-	                	fastTreeCreationPanel.getFastTreeVisualization()
-	                            .copyGraphicNodes(
-	                                pedagogicalTreeCreationPanel
-	                                        .getPedagogicalTreeVisualization());
+                        fastTreeCreationPanel.getFastTreeVisualization()
+                                .copyGraphicNodes(
+                                    pedagogicalTreeCreationPanel
+                                            .getPedagogicalTreeVisualization());
                     }
                     button.setText("Pedagogical Creation Mode");
                     remove(pedagogicalTreeCreationPanel);
@@ -122,7 +125,7 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
                 }
             }
         });
-    	return button;
+        return button;
     }
 
     @Override

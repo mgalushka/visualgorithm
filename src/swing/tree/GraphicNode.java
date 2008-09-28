@@ -144,7 +144,8 @@ class GraphicNode {
     }
 
     /**
-     * Changes the size of the graphic node.
+     * Changes the size of the graphic node. The node size must be 30, 45, 60 or
+     * 75 or else an exception is launched.
      * 
      * @param value the new size of the graphic node
      */
@@ -191,6 +192,16 @@ class GraphicNode {
      * @param g the graphics
      */
     void paint(Graphics g) {
+        final int smallestNodeSize = 30;
+        final int stringSizeFactor = getNodeSize() / 15 - 2;
+        final int initialFont = 12;
+        final int initialYString = 4;
+        final int initialXStringOneChar = 4;
+        final int initialXStringTwoChar = 7;
+        final int differenceBetweenFontSize = 8;
+        final int yStringDifferenceBetweenFont = 3;
+        final int xStringOneCharDifferenceBetweenFont = 3;
+        final int xStringTwoCharDifferenceBetweenFont = 5;
         int xString = 0;
         int yString = 0;
         String stringKey = key.toString();
@@ -204,47 +215,25 @@ class GraphicNode {
         } else {
             g.setColor(Color.BLACK);
         }
-        switch (getNodeSize()) {
-        case 30:
-            g.setFont(new Font(null, Font.PLAIN, 12));
-            xString = getXPosition() - 8;
-            yString = getYPosition() + 4;
-            break;
-        case 45:
-            g.setFont(new Font(null, Font.PLAIN, 20));
-            xString = getXPosition() - 12;
-            yString = getYPosition() + 7;
-            break;
-        case 60:
-            g.setFont(new Font(null, Font.PLAIN, 28));
-            xString = getXPosition() - 17;
-            yString = getYPosition() + 9;
-            break;
-        case 75:
-            g.setFont(new Font(null, Font.PLAIN, 36));
-            xString = getXPosition() - 22;
-            yString = getYPosition() + 13;
-            break;
-        }
+        g.setFont(new Font(null, Font.PLAIN,
+                getNodeSize() == smallestNodeSize ? initialFont : initialFont
+                        + differenceBetweenFontSize * stringSizeFactor));
+        yString = getYPosition()
+                + (getNodeSize() == smallestNodeSize ? initialYString
+                        : initialYString + yStringDifferenceBetweenFont
+                                * stringSizeFactor);
         if (stringKey.length() == 1) {
-            switch (getNodeSize()) {
-            case 30:
-                xString = getXPosition() - 4;
-                yString = getYPosition() + 4;
-                break;
-            case 45:
-                xString = getXPosition() - 7;
-                yString = getYPosition() + 7;
-                break;
-            case 60:
-                xString = getXPosition() - 10;
-                yString = getYPosition() + 9;
-                break;
-            case 75:
-                xString = getXPosition() - 13;
-                yString = getYPosition() + 13;
-                break;
-            }
+            xString = getXPosition()
+                    - (getNodeSize() == smallestNodeSize ? initialXStringOneChar
+                            : initialXStringOneChar
+                                    + xStringOneCharDifferenceBetweenFont
+                                    * stringSizeFactor);
+        } else if (stringKey.length() == 2) {
+            xString = getXPosition()
+                    - (getNodeSize() == smallestNodeSize ? initialXStringTwoChar
+                            : initialXStringTwoChar
+                                    + xStringTwoCharDifferenceBetweenFont
+                                    * stringSizeFactor);
         }
         g.drawString(stringKey, xString, yString);
     }

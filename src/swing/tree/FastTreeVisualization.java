@@ -38,9 +38,9 @@ import controller.BinaryTreeTabController;
 public class FastTreeVisualization extends AbstractTreeVisualization {
 
     private static final long serialVersionUID = 1L;
-    
+
     private boolean deleteMode;
-    
+
     /**
      * Builds the fast tree visualization.
      * 
@@ -51,18 +51,17 @@ public class FastTreeVisualization extends AbstractTreeVisualization {
     FastTreeVisualization(BinaryTreeTabController c, int width, int height) {
         super(c, width, height);
         deleteMode = false;
-        
+
         addDeleteModeListeners();
     }
-    
+
     private void addDeleteModeListeners() {
         addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (deleteMode) {
-                    int indexOfNode = indexOfSelectedNode(e.getX(), e
-                            .getY());
+                    int indexOfNode = indexOfSelectedNode(e.getX(), e.getY());
                     if (indexOfNode > -1) {
                         GraphicNode node = getGraphicNode(indexOfNode);
                         binaryTreeTabController.deleteNode(node.getNodeKey());

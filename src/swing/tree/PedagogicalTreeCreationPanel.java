@@ -89,21 +89,21 @@ class PedagogicalTreeCreationPanel extends JPanel {
         JButton delete = new JButton("Delete");
         final JTextField insertValue = new JTextField();
         final JTextField deleteValue = new JTextField();
-        
+
         insertValue.setHorizontalAlignment(SwingConstants.CENTER);
         deleteValue.setHorizontalAlignment(SwingConstants.CENTER);
         help.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent event) {
-            	// TODO
+                // TODO
             }
         });
         solution.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent event) {
-            	// TODO
+                // TODO
             }
         });
         insert.addActionListener(new ActionListener() {
