@@ -23,7 +23,6 @@ package swing.tree;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.InputEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import javax.swing.JPanel;
@@ -62,24 +61,22 @@ class TreeVisualizationZoom extends JPanel {
 
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                if ((e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) == InputEvent.CTRL_DOWN_MASK) {
-                    boolean changed = false;
-                    if (e.getWheelRotation() == -1) {
-                        if (zoomValue > zoomMin) {
-                            --zoomValue;
-                            changed = true;
-                        }
-                    } else {
-                        if (zoomValue < zoomMax) {
-                            ++zoomValue;
-                            changed = true;
-                        }
+                boolean changed = false;
+                if (e.getWheelRotation() == -1) {
+                    if (zoomValue > zoomMin) {
+                        --zoomValue;
+                        changed = true;
                     }
-                    if (changed) {
-                        treeVisualization.changeSize(zoomValue);
-                        treeVisualization.revalidate();
-                        treeVisualization.repaint();
+                } else {
+                    if (zoomValue < zoomMax) {
+                        ++zoomValue;
+                        changed = true;
                     }
+                }
+                if (changed) {
+                    treeVisualization.changeSize(zoomValue);
+                    treeVisualization.revalidate();
+                    treeVisualization.repaint();
                 }
             }
         });

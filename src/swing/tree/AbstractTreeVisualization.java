@@ -256,7 +256,7 @@ abstract class AbstractTreeVisualization extends JPanel {
      * @param sizeFactor the size factor
      */
     void changeSize(int sizeFactor) {
-        final int sizeDifferenceBetweenImages = 15;
+        int sizeDifferenceBetweenImages = 15;
 
         justCalculate = true;
         sizeOfNodes = SMALLEST_NODE_SIZE + sizeFactor

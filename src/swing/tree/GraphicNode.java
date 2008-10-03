@@ -192,16 +192,16 @@ class GraphicNode {
      * @param g the graphics
      */
     void paint(Graphics g) {
-        final int smallestNodeSize = 30;
-        final int stringSizeFactor = getNodeSize() / 15 - 2;
-        final int initialFont = 12;
-        final int initialYString = 4;
-        final int initialXStringOneChar = 4;
-        final int initialXStringTwoChar = 7;
-        final int differenceBetweenFontSize = 8;
-        final int yStringDifferenceBetweenFont = 3;
-        final int xStringOneCharDifferenceBetweenFont = 3;
-        final int xStringTwoCharDifferenceBetweenFont = 5;
+        int smallestNodeSize = 30;
+        int stringSizeFactor = getNodeSize() / 15 - 2;
+        int initialFont = 12;
+        int initialYString = 4;
+        int initialXStringOneChar = 4;
+        int initialXStringTwoChar = 7;
+        int differenceBetweenFontSize = 8;
+        int yStringDifferenceBetweenFont = 3;
+        int xStringOneCharDifferenceBetweenFont = 3;
+        int xStringTwoCharDifferenceBetweenFont = 5;
         int xString = 0;
         int yString = 0;
         String stringKey = key.toString();
