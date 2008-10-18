@@ -125,16 +125,16 @@ public class SoftwareController implements IController {
     }
 
     /**
-     * Opens a file and loads it into a tab.
+     * Opens a file.
      * 
      * @param file the file
-     * @param index the index of the tab
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      */
-    public void openDataStructureFile(File file, int index, int width,
+    public void openFile(File file, int width,
             int height) throws FileNotFoundException, ParseException,
             IOException, UnknownDataStructureException {
+        int index = tabControllers.size();
         String fileName = file.getName();
         int i = fileName.lastIndexOf('.');
         String extension = fileName.substring(i + 1).toLowerCase();

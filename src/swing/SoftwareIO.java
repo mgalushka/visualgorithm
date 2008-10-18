@@ -122,10 +122,9 @@ public class SoftwareIO {
         int returnVal = fileChooser
                 .showOpenDialog((SoftwareView) softwareController.getView());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            int index = tabbedPane.getTabCount();
             try {
-                softwareController.openDataStructureFile(fileChooser
-                        .getSelectedFile(), index, tabbedPane.getWidth(),
+                softwareController.openFile(fileChooser
+                        .getSelectedFile(), tabbedPane.getWidth(),
                     tabbedPane.getHeight());
             } catch (FileNotFoundException e) {
                 JOptionPane.showMessageDialog((SoftwareView) softwareController
