@@ -52,15 +52,16 @@ public class BinaryTreeTabController implements ITabController {
      * Builds the binary tree tab controller.
      * 
      * @param type the type of the binary tree
+     * @param v the view factory
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      */
-    public BinaryTreeTabController(BinaryTreeType type, int width, int height) {
+    public BinaryTreeTabController(BinaryTreeType type, AbstractViewFactory v,
+            int width, int height) {
         binaryTreeTabModel = new BinaryTreeTabModel(type);
 
-        AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        binaryTreeTabView = viewFactory.createBinaryTreeTabView(
-            "Type of the Tree : " + type.toString(), this, width, height);
+        binaryTreeTabView = v.createBinaryTreeTabView("Type of the Tree : "
+                + type.toString(), this, width, height);
         addListener();
     }
 
@@ -68,6 +69,7 @@ public class BinaryTreeTabController implements ITabController {
      * Builds the binary tree tab controller.
      * 
      * @param file the file containing the binary tree
+     * @param v the view factory
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      * @throws UnknownDataStructureException
@@ -75,15 +77,14 @@ public class BinaryTreeTabController implements ITabController {
      * @throws ParseException
      * @throws FileNotFoundException
      */
-    public BinaryTreeTabController(File file, int width, int height)
-            throws FileNotFoundException, ParseException, IOException,
-            UnknownDataStructureException {
+    public BinaryTreeTabController(File file, AbstractViewFactory v, int width,
+            int height) throws FileNotFoundException, ParseException,
+            IOException, UnknownDataStructureException {
         binaryTreeTabModel = new BinaryTreeTabModel(file);
 
-        AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        binaryTreeTabView = viewFactory.createBinaryTreeTabView(
-            "Type of the Tree : " + binaryTreeTabModel.getTabModel().getType(),
-            this, width, height);
+        binaryTreeTabView = v.createBinaryTreeTabView("Type of the Tree : "
+                + binaryTreeTabModel.getTabModel().getType(), this, width,
+            height);
         addListener();
         binaryTreeTabModel.updateBinaryTreeView();
     }
@@ -92,17 +93,17 @@ public class BinaryTreeTabController implements ITabController {
      * Builds the binary tree tab controller.
      * 
      * @param type the type of the binary tree
+     * @param v the view factory
      * @param nbNode the number of nodes
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      */
-    public BinaryTreeTabController(BinaryTreeType type, int nbNode, int width,
-            int height) {
+    public BinaryTreeTabController(BinaryTreeType type, AbstractViewFactory v,
+            int nbNode, int width, int height) {
         binaryTreeTabModel = new BinaryTreeTabModel(type, nbNode);
 
-        AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
-        binaryTreeTabView = viewFactory.createBinaryTreeTabView(
-            "Type Of The Tree : " + type.toString(), this, width, height);
+        binaryTreeTabView = v.createBinaryTreeTabView("Type Of The Tree : "
+                + type.toString(), this, width, height);
         addListener();
         binaryTreeTabModel.updateBinaryTreeView();
     }

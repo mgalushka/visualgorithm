@@ -39,6 +39,20 @@ import view.AbstractViewFactory;
  */
 public class SwingViewFactory extends AbstractViewFactory {
 
+    private static AbstractViewFactory instance = null;
+    
+    /**
+     * Creates the factory.
+     * 
+     * @return the factory
+     */
+    public static AbstractViewFactory getFactory() {
+        if (instance == null) {
+            instance = new SwingViewFactory();
+        }
+        return instance;
+    }
+    
     @Override
     public ISoftwareView createSoftwareView(
             SoftwareController softwareController) {

@@ -21,7 +21,6 @@
 
 package view;
 
-import swing.SwingViewFactory;
 import controller.SoftwareController;
 import controller.BinaryTreeTabController;
 
@@ -34,15 +33,6 @@ import controller.BinaryTreeTabController;
  * @version 1.00 16/06/08
  */
 public abstract class AbstractViewFactory {
-
-    /**
-     * Creates the factory.
-     * 
-     * @return the factory
-     */
-    public static AbstractViewFactory getFactory() {
-        return new SwingViewFactory();
-    }
 
     /**
      * Creates the software view.

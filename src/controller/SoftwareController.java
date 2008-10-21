@@ -48,18 +48,21 @@ public class SoftwareController implements IController {
 
     private ISoftwareView softwareView;
 
+    private AbstractViewFactory viewFactory;
+
     private List<ITabController> tabControllers;
 
     /**
      * Builds the software controller.
      * 
      * @param m the software model
+     * @param v the view factory
      */
-    public SoftwareController(SoftwareModel m) {
+    public SoftwareController(SoftwareModel m, AbstractViewFactory v) {
         tabControllers = new ArrayList<ITabController>();
 
         softwareModel = m;
-        AbstractViewFactory viewFactory = AbstractViewFactory.getFactory();
+        viewFactory = v;
         softwareView = viewFactory.createSoftwareView(this);
         getView().displayView();
         addListener();
@@ -94,7 +97,8 @@ public class SoftwareController implements IController {
      */
     public void addBinaryTreeTab(BinaryTreeType type, int index, int width,
             int height) {
-        tabControllers.add(new BinaryTreeTabController(type, width, height));
+        tabControllers.add(new BinaryTreeTabController(type, viewFactory,
+                width, height));
         softwareModel.addTabModel(getTabController(index).getTabModel());
     }
 
@@ -109,8 +113,8 @@ public class SoftwareController implements IController {
      */
     public void addRandomBinaryTreeTab(BinaryTreeType type, int nbNode,
             int index, int width, int height) {
-        tabControllers.add(new BinaryTreeTabController(type, nbNode, width,
-                height));
+        tabControllers.add(new BinaryTreeTabController(type, viewFactory,
+                nbNode, width, height));
         softwareModel.addTabModel(getTabController(index).getTabModel());
     }
 
@@ -131,17 +135,17 @@ public class SoftwareController implements IController {
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      */
-    public void openFile(File file, int width,
-            int height) throws FileNotFoundException, ParseException,
-            IOException, UnknownDataStructureException {
+    public void openFile(File file, int width, int height)
+            throws FileNotFoundException, ParseException, IOException,
+            UnknownDataStructureException {
         int index = tabControllers.size();
         String fileName = file.getName();
         int i = fileName.lastIndexOf('.');
         String extension = fileName.substring(i + 1).toLowerCase();
 
         if (extension.equals("bt")) {
-            tabControllers
-                    .add(new BinaryTreeTabController(file, width, height));
+            tabControllers.add(new BinaryTreeTabController(file, viewFactory,
+                    width, height));
             softwareModel.addTabModelFromDataStructureFile(getTabController(
                 index).getTabModel(), fileName);
         }
