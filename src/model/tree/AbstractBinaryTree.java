@@ -46,7 +46,34 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
      * @version 1.00 16/06/08
      */
     public enum BinaryTreeType {
-        AVLTREE, BINARYSEARCHTREE, REDBLACKTREE;
+        AVLTREE(AVLTree.class), BINARYSEARCHTREE(BinarySearchTree.class), REDBLACKTREE(
+                RedBlackTree.class);
+
+        private Class<?> binaryTreeClass;
+
+        private BinaryTreeType(Class<?> treeClass) {
+            binaryTreeClass = treeClass;
+        }
+
+        /**
+         * Builds the binary tree corresponding to the type.
+         * 
+         * @return the binary tree
+         */
+        public IBinaryTree<?> getBinaryTree() {
+            try {
+                return (IBinaryTree<?>) binaryTreeClass.newInstance();
+            } catch (InstantiationException e) {
+                System.out
+                        .println("enum BinaryTreeType : InstantiationException");
+                System.exit(1);
+            } catch (IllegalAccessException e) {
+                System.out
+                        .println("enum BinaryTreeType : IllegalAccessException");
+                System.exit(1);
+            }
+            return null;
+        }
     }
 
     protected BinaryTreeType type;

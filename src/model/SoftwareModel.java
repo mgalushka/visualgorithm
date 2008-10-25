@@ -85,7 +85,7 @@ public class SoftwareModel {
     public void addTabModel(ITabModel tabModel) {
         tabModels.add(tabModel);
         fireModelChanged(SoftwareModelEventType.ADD, "New "
-                + tabModel.getTabModel().getType().toString());
+                + tabModel.getTabModel().getType());
     }
 
     /**

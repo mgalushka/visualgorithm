@@ -28,7 +28,6 @@ import java.text.ParseException;
 import java.util.List;
 import javax.swing.event.EventListenerList;
 import io.TreeFile;
-import model.BinaryTreeFactory;
 import model.IDataStructure;
 import model.ITabModel;
 import model.UnknownDataStructureException;
@@ -56,7 +55,7 @@ public class BinaryTreeTabModel implements ITabModel {
      * @param type the type of the binary tree
      */
     public BinaryTreeTabModel(BinaryTreeType type) {
-        binaryTree = BinaryTreeFactory.createBinaryTree(type);
+        binaryTree = type.getBinaryTree();
         listeners = new EventListenerList();
         isBinaryTreeSaved = false;
     }
@@ -84,7 +83,7 @@ public class BinaryTreeTabModel implements ITabModel {
      * @param nbNode the number of nodes
      */
     public BinaryTreeTabModel(BinaryTreeType type, int nbNode) {
-        binaryTree = BinaryTreeFactory.createBinaryTree(type);
+        binaryTree = type.getBinaryTree();
         for (int i = 0; i < nbNode; i++) {
             int key = (int) Math.round(Math.random() * 100);
             // TODO insertion

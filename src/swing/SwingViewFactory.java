@@ -40,6 +40,9 @@ import view.AbstractViewFactory;
 public class SwingViewFactory extends AbstractViewFactory {
 
     private static AbstractViewFactory instance = null;
+
+    private SwingViewFactory() {
+    }
     
     /**
      * Creates the factory.
@@ -52,7 +55,7 @@ public class SwingViewFactory extends AbstractViewFactory {
         }
         return instance;
     }
-    
+
     @Override
     public ISoftwareView createSoftwareView(
             SoftwareController softwareController) {
@@ -61,7 +64,9 @@ public class SwingViewFactory extends AbstractViewFactory {
 
     @Override
     public IBinaryTreeTabView createBinaryTreeTabView(String type,
-            BinaryTreeTabController binaryTreeTabController, int width, int height) {
-        return new BinaryTreeTabView(type, binaryTreeTabController, width, height);
+            BinaryTreeTabController binaryTreeTabController, int width,
+            int height) {
+        return new BinaryTreeTabView(type, binaryTreeTabController, width,
+                height);
     }
 }
