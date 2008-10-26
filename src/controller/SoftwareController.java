@@ -147,7 +147,7 @@ public class SoftwareController implements IController {
      * @param width the width of the visualization
      * @param height the height of the visualization
      */
-    public void addTabWithRandom(String name, Object type, int nbNode,
+    public void addTabWithRandom(String name, Object type, int random,
             int index, int width, int height) {
         File currentDirectory = new File("src/controller");
         String[] tabControllerFiles = listOfFilesInDirectory(currentDirectory,
@@ -163,7 +163,7 @@ public class SoftwareController implements IController {
                         "initializeTabControllerWithRandom", Object.class,
                         AbstractViewFactory.class, int.class, int.class,
                         int.class).invoke(tabController, type, viewFactory,
-                        nbNode, width, height);
+                        random, width, height);
                     tabControllers.add(tabController);
                     softwareModel.addTabModel(getTabController(index)
                             .getTabModel());
