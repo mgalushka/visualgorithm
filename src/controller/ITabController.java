@@ -22,8 +22,12 @@
 package controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
+import view.AbstractViewFactory;
 import model.ITabModel;
+import model.UnknownDataStructureException;
 
 /**
  * Interface describing the methods of tab controllers.
@@ -35,6 +39,47 @@ import model.ITabModel;
  * @see IController
  */
 public interface ITabController extends IController {
+
+    /**
+     * Initializes the tab controller with an empty data structure.
+     * 
+     * @param type the type of the data structure
+     * @param viewFactory the view factory
+     * @param width the width of the visualization
+     * @param height the height of the visualization
+     */
+    public void initializeTabController(Object type,
+            AbstractViewFactory viewFactory, int width, int height);
+
+    /**
+     * Initializes the tab controller with a data structure created with random
+     * elements.
+     * 
+     * @param type the type of the data structure
+     * @param viewFactory the view factory
+     * @param random the number of elements
+     * @param width the width of the visualization
+     * @param height the height of the visualization
+     */
+    public void initializeTabControllerWithRandom(Object type,
+            AbstractViewFactory viewFactory, int random, int width, int height);
+
+    /**
+     * Initializes the tab controller with a data structure from a file.
+     * 
+     * @param file the file containing the data structure
+     * @param viewFactory the view factory
+     * @param width the width of the visualization
+     * @param height the height of the visualization
+     * @throws UnknownDataStructureException
+     * @throws IOException
+     * @throws ParseException
+     * @throws FileNotFoundException
+     */
+    public void initializeTabControllerWithFile(File file,
+            AbstractViewFactory viewFactory, int width, int height)
+            throws FileNotFoundException, ParseException, IOException,
+            UnknownDataStructureException;
 
     /**
      * Returns the tab model.
@@ -57,4 +102,11 @@ public interface ITabController extends IController {
      * @return true if the data structure has been saved
      */
     public boolean isTabModelSaved();
+
+    /**
+     * Returns the file extension of this kind of tab model.
+     * 
+     * @return the file extension
+     */
+    public String getFileExtension();
 }

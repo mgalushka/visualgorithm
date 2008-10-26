@@ -64,13 +64,9 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
             try {
                 return (IBinaryTree<?>) binaryTreeClass.newInstance();
             } catch (InstantiationException e) {
-                System.out
-                        .println("enum BinaryTreeType : InstantiationException");
-                System.exit(1);
+                e.printStackTrace();
             } catch (IllegalAccessException e) {
-                System.out
-                        .println("enum BinaryTreeType : IllegalAccessException");
-                System.exit(1);
+                e.printStackTrace();
             }
             return null;
         }

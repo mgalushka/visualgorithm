@@ -48,6 +48,8 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  */
 public abstract class TreeFile {
 
+    public final static String fileExtension = "bt";
+    
     /**
      * Position of the key in the file.
      */

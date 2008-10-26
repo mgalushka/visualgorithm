@@ -29,6 +29,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -39,12 +41,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.filechooser.FileFilter;
 import model.SoftwareModelEvent;
 import model.SoftwareModelEvent.SoftwareModelEventType;
-import model.tree.AbstractBinaryTree.BinaryTreeType;
 import swing.SoftwareIO.SaveEventType;
-import swing.tree.RandomTreeCreationDialog;
 import view.ISoftwareView;
 import controller.SoftwareController;
 
@@ -79,10 +78,10 @@ public class SoftwareView extends JFrame implements ISoftwareView {
     public SoftwareView(SoftwareController c) {
         super("Visualgorithm");
         softwareController = c;
-        createMenuBar();
         tabbedPane = new JTabbedPane(SwingConstants.TOP,
                 JTabbedPane.SCROLL_TAB_LAYOUT);
-        ioOperation = new SoftwareIO(tabbedPane, softwareController);
+        ioOperation = new SoftwareIO(this, tabbedPane, softwareController);
+        createMenuBar();
 
         menuBar.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
         setJMenuBar(menuBar);
@@ -105,7 +104,7 @@ public class SoftwareView extends JFrame implements ISoftwareView {
 
         menuBar.add(createFileMenu());
         menuBar.add(createEditMenu());
-        menuBar.add(createTreesMenu());
+        addDataStructureMenus(menuBar);
         menuBar.add(algorithms);
     }
 
@@ -115,6 +114,7 @@ public class SoftwareView extends JFrame implements ISoftwareView {
         JMenuItem save = new JMenuItem("Save");
         JMenuItem exit = new JMenuItem("Exit");
 
+        file.setMnemonic('F');
         open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
             ActionEvent.CTRL_MASK));
         open.addActionListener(new ActionListener() {
@@ -150,10 +150,11 @@ public class SoftwareView extends JFrame implements ISoftwareView {
     }
 
     private JMenu createEditMenu() {
-        JMenu tools = new JMenu("Edit");
+        JMenu edit = new JMenu("Edit");
         JMenu language = new JMenu("Language");
         JMenuItem preferences = new JMenuItem("Preferences");
 
+        edit.setMnemonic('E');
         language.addActionListener(new ActionListener() {
 
             @Override
@@ -168,66 +169,46 @@ public class SoftwareView extends JFrame implements ISoftwareView {
                 // TODO preferences
             }
         });
-        tools.add(language);
-        tools.add(preferences);
-        return tools;
+        edit.add(language);
+        edit.add(preferences);
+        return edit;
     }
 
-    private JMenu createTreesMenu() {
-        JMenu trees = new JMenu("Trees");
-        JMenu newTree = new JMenu("New");
-        JMenu notes = new JMenu("Notes");
-        JMenuItem randomTree = new JMenuItem("Random Tree");
-        JMenuItem avlTree = new JMenuItem("AVL Tree");
-        JMenuItem binarySearchTree = new JMenuItem("Binary Search Tree");
-        JMenuItem redBlackTree = new JMenuItem("Red Black Tree");
-
-        randomTree.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                RandomTreeCreationDialog dialog = new RandomTreeCreationDialog(
-                        SoftwareView.this, tabbedPane, softwareController);
-                dialog.setVisible(true);
+    private void addDataStructureMenus(JMenuBar menuBar) {
+        File currentDirectory = new File("src/swing");
+        String[] directories = SoftwareController
+                .listOfDirectoriesInDirectory(currentDirectory);
+        for (String each : directories) {
+            File directory = new File("src/swing/" + each);
+            String[] menuFile = SoftwareController.listOfFilesInDirectory(
+                directory, "Menu.java");
+            if (menuFile.length > 0) {
+                String className = SoftwareController.wellFormedClassName(
+                    menuFile[0], directory);
+                try {
+                    JMenu newMenu = (JMenu) Class.forName(className)
+                            .getConstructor(this.getClass(),
+                                tabbedPane.getClass(),
+                                softwareController.getClass()).newInstance(
+                                this, tabbedPane, softwareController);
+                    menuBar.add(newMenu);
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-        });
-        avlTree.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                int index = tabbedPane.getTabCount();
-                softwareController.addBinaryTreeTab(BinaryTreeType.AVLTREE,
-                    index, tabbedPane.getWidth(), tabbedPane.getHeight());
-            }
-        });
-        binarySearchTree.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                int index = tabbedPane.getTabCount();
-                softwareController.addBinaryTreeTab(
-                    BinaryTreeType.BINARYSEARCHTREE, index, tabbedPane
-                            .getWidth(), tabbedPane.getHeight());
-            }
-        });
-        redBlackTree.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                int index = tabbedPane.getTabCount();
-                softwareController.addBinaryTreeTab(
-                    BinaryTreeType.REDBLACKTREE, index, tabbedPane.getWidth(),
-                    tabbedPane.getHeight());
-            }
-        });
-        // TODO notes
-        newTree.add(randomTree);
-        newTree.add(binarySearchTree);
-        newTree.add(avlTree);
-        newTree.add(redBlackTree);
-        trees.add(newTree);
-        trees.add(notes);
-        return trees;
+        }
     }
 
     private void createAlgorithmsMenu() {
@@ -235,6 +216,7 @@ public class SoftwareView extends JFrame implements ISoftwareView {
         JMenu apply = new JMenu("Apply");
         JMenu notes = new JMenu("Notes");
 
+        algorithms.setMnemonic('A');
         // TODO apply
         // TODO notes
         algorithms.add(apply);
@@ -244,26 +226,6 @@ public class SoftwareView extends JFrame implements ISoftwareView {
     private JComponent getTabView(int index) {
         return (JComponent) softwareController.getTabController(index)
                 .getView();
-    }
-
-    /**
-     * Adds a file filter to the software IO.
-     * 
-     * @param fileFilter the filter to add
-     */
-    void addFileFilter(FileFilter fileFilter) {
-        ioOperation.addFileFilter(fileFilter);
-    }
-
-    /**
-     * Adds a data structure menu to the menu bar.
-     * 
-     * @param newMenu the data structure menu to add
-     */
-    void addDataStructureMenu(JMenu newMenu) {
-        menuBar.remove(algorithms);
-        menuBar.add(newMenu);
-        menuBar.add(algorithms);
     }
 
     @Override

@@ -92,8 +92,7 @@ class GraphicNode {
         try {
             img = ImageIO.read(new File(imgFileName));
         } catch (Exception e) {
-            System.out.println("Image could not be read");
-            System.exit(1);
+            e.printStackTrace();
         }
         return img;
     }

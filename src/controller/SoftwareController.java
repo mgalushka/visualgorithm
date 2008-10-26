@@ -23,7 +23,9 @@ package controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,6 @@ import view.ISoftwareView;
 import view.AbstractViewFactory;
 import model.SoftwareModel;
 import model.UnknownDataStructureException;
-import model.tree.AbstractBinaryTree.BinaryTreeType;
 
 /**
  * Definition of the software controller.
@@ -88,44 +89,101 @@ public class SoftwareController implements IController {
     }
 
     /**
-     * Adds a binary tree tab.
+     * Adds a data structure tab.
      * 
-     * @param type the type of the binary tree
+     * @param name the name of the data structure
+     * @param type the type of the data structure
      * @param index the index of the tab
-     * @param width the width of the tree visualization
-     * @param height the height of the tree visualization
+     * @param width the width of the visualization
+     * @param height the height of the visualization
      */
-    public void addBinaryTreeTab(BinaryTreeType type, int index, int width,
+    public void addTab(String name, Object type, int index, int width,
             int height) {
-        tabControllers.add(new BinaryTreeTabController(type, viewFactory,
-                width, height));
-        softwareModel.addTabModel(getTabController(index).getTabModel());
+        File currentDirectory = new File("src/controller");
+        String[] tabControllerFiles = listOfFilesInDirectory(currentDirectory,
+            "TabController.java");
+
+        for (String each : tabControllerFiles) {
+            String className = wellFormedClassName(each, currentDirectory);
+            if (className.toLowerCase().contains(name.toLowerCase())) {
+                try {
+                    ITabController tabController = (ITabController) Class
+                            .forName(className).newInstance();
+                    Class.forName(className).getMethod(
+                        "initializeTabController", Object.class,
+                        AbstractViewFactory.class, int.class, int.class)
+                            .invoke(tabController, type, viewFactory, width,
+                                height);
+                    tabControllers.add(tabController);
+                    softwareModel.addTabModel(getTabController(index)
+                            .getTabModel());
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /**
-     * Adds a binary tree tab with a random binary tree.
+     * Adds a data structure tab with a data structure created with random
+     * elements.
      * 
-     * @param type the type of the binary tree
-     * @param nbNode the number of nodes
+     * @param name the name of the data structure
+     * @param type the type of the data structure
+     * @param random the number of elements
      * @param index the index of the tab
-     * @param width the width of the tree visualization
-     * @param height the height of the tree visualization
+     * @param width the width of the visualization
+     * @param height the height of the visualization
      */
-    public void addRandomBinaryTreeTab(BinaryTreeType type, int nbNode,
+    public void addTabWithRandom(String name, Object type, int nbNode,
             int index, int width, int height) {
-        tabControllers.add(new BinaryTreeTabController(type, viewFactory,
-                nbNode, width, height));
-        softwareModel.addTabModel(getTabController(index).getTabModel());
-    }
+        File currentDirectory = new File("src/controller");
+        String[] tabControllerFiles = listOfFilesInDirectory(currentDirectory,
+            "TabController.java");
 
-    /**
-     * Removes the tab indicated with index.
-     * 
-     * @param index the index of the tab
-     */
-    public void closeTab(int index) {
-        softwareModel.removeTabModel(index);
-        tabControllers.remove(index);
+        for (String each : tabControllerFiles) {
+            String className = wellFormedClassName(each, currentDirectory);
+            if (className.toLowerCase().contains(name.toLowerCase())) {
+                try {
+                    ITabController tabController = (ITabController) Class
+                            .forName(className).newInstance();
+                    Class.forName(className).getMethod(
+                        "initializeTabControllerWithRandom", Object.class,
+                        AbstractViewFactory.class, int.class, int.class,
+                        int.class).invoke(tabController, type, viewFactory,
+                        nbNode, width, height);
+                    tabControllers.add(tabController);
+                    softwareModel.addTabModel(getTabController(index)
+                            .getTabModel());
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /**
@@ -142,13 +200,111 @@ public class SoftwareController implements IController {
         String fileName = file.getName();
         int i = fileName.lastIndexOf('.');
         String extension = fileName.substring(i + 1).toLowerCase();
+        File currentDirectory = new File("src/controller");
+        String[] tabControllerFiles = listOfFilesInDirectory(currentDirectory,
+            "TabController.java");
 
-        if (extension.equals("bt")) {
-            tabControllers.add(new BinaryTreeTabController(file, viewFactory,
-                    width, height));
-            softwareModel.addTabModelFromDataStructureFile(getTabController(
-                index).getTabModel(), fileName);
+        for (String each : tabControllerFiles) {
+            String className = wellFormedClassName(each, currentDirectory);
+            try {
+                ITabController tabController = (ITabController) Class.forName(
+                    className).newInstance();
+                if (extension.equals(tabController.getFileExtension())) {
+                    Class.forName(className).getMethod(
+                        "initializeTabControllerWithFile", File.class,
+                        AbstractViewFactory.class, int.class, int.class)
+                            .invoke(tabController, file, viewFactory, width,
+                                height);
+                    tabControllers.add(tabController);
+                    softwareModel.addTabModelFromDataStructureFile(
+                        getTabController(index).getTabModel(), fileName);
+                }
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    /**
+     * Returns the list of files which are in the indicated directory and which
+     * correspond to the string fileType.
+     * 
+     * @param directory the indicated directory
+     * @param fileType the string of selection
+     * @return the list of files
+     */
+    public static String[] listOfFilesInDirectory(File directory,
+            String fileType) {
+        final String selection = fileType;
+        return directory.list(new FilenameFilter() {
+
+            @Override
+            public boolean accept(File dir, String name) {
+                if (name.contains(selection) && !name.startsWith("I")) {
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Returns the list of directories which are in the indicated directory.
+     * 
+     * @param directory the indicated directory
+     * @return the list of directories
+     */
+    public static String[] listOfDirectoriesInDirectory(File directory) {
+        return directory.list(new FilenameFilter() {
+
+            @Override
+            public boolean accept(File dir, String name) {
+                if (!name.contains(".java")) {
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Transforms the name of the class file in order to be use with reflection.
+     * 
+     * @param name the name of the class file
+     * @param directory the directory where the class is
+     * @return the name after modifications
+     */
+    public static String wellFormedClassName(String name, File directory) {
+        String className = name;
+        int i = className.lastIndexOf('.');
+        className = className.substring(0, i);
+        className = directory.getPath().concat("/" + className);
+        className = className.replaceAll("/", ".");
+        int j = className.indexOf('.');
+        className = className.substring(j + 1);
+        return className;
+    }
+
+    /**
+     * Removes the tab indicated with index.
+     * 
+     * @param index the index of the tab
+     */
+    public void closeTab(int index) {
+        softwareModel.removeTabModel(index);
+        tabControllers.remove(index);
     }
 
     /**

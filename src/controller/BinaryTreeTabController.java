@@ -21,6 +21,7 @@
 
 package controller;
 
+import io.TreeFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -48,62 +49,38 @@ public class BinaryTreeTabController implements ITabController {
 
     private IBinaryTreeTabView binaryTreeTabView;
 
-    /**
-     * Builds the binary tree tab controller.
-     * 
-     * @param type the type of the binary tree
-     * @param v the view factory
-     * @param width the width of the tree visualization
-     * @param height the height of the tree visualization
-     */
-    public BinaryTreeTabController(BinaryTreeType type, AbstractViewFactory v,
-            int width, int height) {
-        binaryTreeTabModel = new BinaryTreeTabModel(type);
+    @Override
+    public void initializeTabController(Object type,
+            AbstractViewFactory viewFactory, int width, int height) {
+        binaryTreeTabModel = new BinaryTreeTabModel((BinaryTreeType) type);
 
-        binaryTreeTabView = v.createBinaryTreeTabView("Type of the Tree : "
-                + type.toString(), this, width, height);
+        binaryTreeTabView = viewFactory.createBinaryTreeTabView(
+            "Type of the Tree : " + type.toString(), this, width, height);
         addListener();
     }
 
-    /**
-     * Builds the binary tree tab controller.
-     * 
-     * @param file the file containing the binary tree
-     * @param v the view factory
-     * @param width the width of the tree visualization
-     * @param height the height of the tree visualization
-     * @throws UnknownDataStructureException
-     * @throws IOException
-     * @throws ParseException
-     * @throws FileNotFoundException
-     */
-    public BinaryTreeTabController(File file, AbstractViewFactory v, int width,
-            int height) throws FileNotFoundException, ParseException,
-            IOException, UnknownDataStructureException {
-        binaryTreeTabModel = new BinaryTreeTabModel(file);
+    @Override
+    public void initializeTabControllerWithRandom(Object type,
+            AbstractViewFactory viewFactory, int random, int width, int height) {
+        binaryTreeTabModel = new BinaryTreeTabModel((BinaryTreeType) type,
+                random);
 
-        binaryTreeTabView = v.createBinaryTreeTabView("Type of the Tree : "
-                + binaryTreeTabModel.getTabModel().getType(), this, width,
-            height);
+        binaryTreeTabView = viewFactory.createBinaryTreeTabView(
+            "Type Of The Tree : " + type.toString(), this, width, height);
         addListener();
         binaryTreeTabModel.updateBinaryTreeView();
     }
 
-    /**
-     * Builds the binary tree tab controller.
-     * 
-     * @param type the type of the binary tree
-     * @param v the view factory
-     * @param nbNode the number of nodes
-     * @param width the width of the tree visualization
-     * @param height the height of the tree visualization
-     */
-    public BinaryTreeTabController(BinaryTreeType type, AbstractViewFactory v,
-            int nbNode, int width, int height) {
-        binaryTreeTabModel = new BinaryTreeTabModel(type, nbNode);
+    @Override
+    public void initializeTabControllerWithFile(File file,
+            AbstractViewFactory viewFactory, int width, int height)
+            throws FileNotFoundException, ParseException, IOException,
+            UnknownDataStructureException {
+        binaryTreeTabModel = new BinaryTreeTabModel(file);
 
-        binaryTreeTabView = v.createBinaryTreeTabView("Type Of The Tree : "
-                + type.toString(), this, width, height);
+        binaryTreeTabView = viewFactory.createBinaryTreeTabView(
+            "Type of the Tree : " + binaryTreeTabModel.getTabModel().getType(),
+            this, width, height);
         addListener();
         binaryTreeTabModel.updateBinaryTreeView();
     }
@@ -121,6 +98,11 @@ public class BinaryTreeTabController implements ITabController {
     @Override
     public boolean isTabModelSaved() {
         return binaryTreeTabModel.isTabModelSaved();
+    }
+
+    @Override
+    public String getFileExtension() {
+        return TreeFile.fileExtension;
     }
 
     @Override

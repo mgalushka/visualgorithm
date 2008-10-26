@@ -43,6 +43,8 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  */
 public class BinaryTreeTabModel implements ITabModel {
 
+    public final static String DataStructureName = "TREE";
+    
     private IBinaryTree<?> binaryTree;
 
     private EventListenerList listeners;

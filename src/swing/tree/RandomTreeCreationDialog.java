@@ -39,6 +39,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import swing.SoftwareView;
 import controller.SoftwareController;
+import model.tree.BinaryTreeTabModel;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 
 /**
@@ -146,7 +147,8 @@ public class RandomTreeCreationDialog extends JDialog {
                 }
                 int nbNode = (Integer) numberOfNodes.getModel().getValue();
 
-                softwareController.addRandomBinaryTreeTab(type, nbNode, index,
+                softwareController.addTabWithRandom(
+                    BinaryTreeTabModel.DataStructureName, type, nbNode, index,
                     tabbedPane.getWidth(), tabbedPane.getHeight());
                 setVisible(false);
                 dispose();

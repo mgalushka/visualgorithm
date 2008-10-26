@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.filechooser.FileFilter;
 import model.UnknownDataStructureException;
-import controller.BinaryTreeTabController;
+import controller.ITabController;
 import controller.SoftwareController;
 
 /**
@@ -57,6 +57,8 @@ public class SoftwareIO {
 
     private SoftwareController softwareController;
 
+    private SoftwareView softwareView;
+
     private JTabbedPane tabbedPane;
 
     private JFileChooser fileChooser;
@@ -64,83 +66,69 @@ public class SoftwareIO {
     /**
      * Builds the software IO.
      * 
+     * @param v the software view
      * @param tp the tabbed pane
      * @param c the software controller
      */
-    SoftwareIO(JTabbedPane tp, SoftwareController c) {
+    SoftwareIO(SoftwareView v, JTabbedPane tp, SoftwareController c) {
         softwareController = c;
+        softwareView = v;
         tabbedPane = tp;
         createFileChooser();
     }
 
     private void createFileChooser() {
         fileChooser = new JFileChooser();
-        addFileFilter(new FileFilter() {
-
-            @Override
-            public boolean accept(File file) {
-                if (file.isDirectory()) {
-                    return true;
-                }
-                String name = file.getName();
-                int i = name.lastIndexOf('.');
-                String extension = null;
-                if ((i > 0) && (i < name.length() - 1)) {
-                    extension = name.substring(i + 1).toLowerCase();
-                }
-                if (extension != null) {
-                    if (extension.equals("bt")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-                return false;
-            }
-
-            @Override
-            public String getDescription() {
-                return "Binary Tree  ( .bt )";
-            }
-        });
+        addFileFilters(fileChooser);
         fileChooser.setAcceptAllFileFilterUsed(false);
     }
 
-    /**
-     * Adds a file filter to the file chooser.
-     * 
-     * @param fileFilter the filter to add
-     */
-    void addFileFilter(FileFilter fileFilter) {
-        fileChooser.addChoosableFileFilter(fileFilter);
+    private void addFileFilters(JFileChooser fileChooser) {
+        File currentDirectory = new File("src/swing");
+        String[] directories = SoftwareController
+                .listOfDirectoriesInDirectory(currentDirectory);
+        for (String each : directories) {
+            File directory = new File("src/swing/" + each);
+            String[] filterFile = SoftwareController.listOfFilesInDirectory(
+                directory, "FileFilter.java");
+            if (filterFile.length > 0) {
+                String className = SoftwareController.wellFormedClassName(
+                    filterFile[0], directory);
+                try {
+                    FileFilter fileFilter = (FileFilter) Class.forName(
+                        className).newInstance();
+                    fileChooser.addChoosableFileFilter(fileFilter);
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /**
      * Opens a file.
      */
     void openOperation() {
-        int returnVal = fileChooser
-                .showOpenDialog((SoftwareView) softwareController.getView());
+        int returnVal = fileChooser.showOpenDialog(softwareView);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
-                softwareController.openFile(fileChooser
-                        .getSelectedFile(), tabbedPane.getWidth(),
-                    tabbedPane.getHeight());
+                softwareController.openFile(fileChooser.getSelectedFile(),
+                    tabbedPane.getWidth(), tabbedPane.getHeight());
             } catch (FileNotFoundException e) {
-                JOptionPane.showMessageDialog((SoftwareView) softwareController
-                        .getView(), e.getMessage(), "Open Failed",
-                    JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(softwareView, e.getMessage(),
+                    "Open Failed", JOptionPane.WARNING_MESSAGE);
             } catch (ParseException e) {
-                JOptionPane.showMessageDialog((SoftwareView) softwareController
-                        .getView(), e.getMessage(), "Open Failed",
-                    JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(softwareView, e.getMessage(),
+                    "Open Failed", JOptionPane.WARNING_MESSAGE);
             } catch (IOException e) {
-                System.out.println("File could not be read");
-                System.exit(1);
+                e.printStackTrace();
             } catch (UnknownDataStructureException e) {
-                JOptionPane.showMessageDialog((SoftwareView) softwareController
-                        .getView(), e.getMessage(), "Open Failed",
-                    JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(softwareView, e.getMessage(),
+                    "Open Failed", JOptionPane.WARNING_MESSAGE);
             }
             fileChooser.setSelectedFile(null);
         }
@@ -154,15 +142,13 @@ public class SoftwareIO {
     void saveOperation(SaveEventType type) {
         int count = tabbedPane.getTabCount();
         if (count > 0) {
-            int returnVal = fileChooser
-                    .showSaveDialog((SoftwareView) softwareController.getView());
+            int returnVal = fileChooser.showSaveDialog(softwareView);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 int index = tabbedPane.getSelectedIndex();
                 File file = fileChooser.getSelectedFile();
                 int choice = JOptionPane.NO_OPTION;
                 if (file.exists()) {
-                    choice = JOptionPane.showConfirmDialog(
-                        (SoftwareView) softwareController.getView(),
+                    choice = JOptionPane.showConfirmDialog(softwareView,
                         "This file already exists."
                                 + " Do you want to replace it?",
                         "Save Operation", JOptionPane.YES_NO_OPTION,
@@ -172,8 +158,7 @@ public class SoftwareIO {
                     try {
                         softwareController.saveTabModel(file, index);
                     } catch (IOException e) {
-                        System.out.println("File could not be saved");
-                        System.exit(1);
+                        e.printStackTrace();
                     }
                     if (type == SaveEventType.CLOSE) {
                         softwareController.closeTab(index);
@@ -196,13 +181,12 @@ public class SoftwareIO {
      * @param index the index of the tab
      */
     void closeTabOperation(int index) {
-        if (((BinaryTreeTabController) softwareController
-                .getTabController(index)).isTabModelSaved()) {
+        if (((ITabController) softwareController.getTabController(index))
+                .isTabModelSaved()) {
             softwareController.closeTab(index);
         } else {
             Object[] options = { "Save", "Discard", "Cancel" };
-            int choice = JOptionPane.showOptionDialog(
-                (SoftwareView) softwareController.getView(),
+            int choice = JOptionPane.showOptionDialog(softwareView,
                 "Do you want to save your changes?", "Close Operation",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
                 null, options, options[2]);
@@ -222,13 +206,12 @@ public class SoftwareIO {
         if (count == 0) {
             softwareController.exitSoftware();
         } else if (count == 1) {
-            if (((BinaryTreeTabController) softwareController
-                    .getTabController(0)).isTabModelSaved()) {
+            if (((ITabController) softwareController.getTabController(0))
+                    .isTabModelSaved()) {
                 softwareController.exitSoftware();
             } else {
                 Object[] options = { "Save", "Discard", "Cancel" };
-                int choice = JOptionPane.showOptionDialog(
-                    (SoftwareView) softwareController.getView(),
+                int choice = JOptionPane.showOptionDialog(softwareView,
                     "Do you want to save your changes?", "Exit Operation",
                     JOptionPane.YES_NO_CANCEL_OPTION,
                     JOptionPane.WARNING_MESSAGE, null, options, options[2]);
@@ -239,8 +222,7 @@ public class SoftwareIO {
                 }
             }
         } else {
-            int choice = JOptionPane.showConfirmDialog(
-                (SoftwareView) softwareController.getView(),
+            int choice = JOptionPane.showConfirmDialog(softwareView,
                 "You are about to close " + count + " tabs."
                         + " Do you really want to continue?", "Exit Operation",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
