@@ -23,12 +23,12 @@ package controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import utils.FileUtils;
 import view.ISoftwareView;
 import view.AbstractViewFactory;
 import model.SoftwareModel;
@@ -100,11 +100,12 @@ public class SoftwareController implements IController {
     public void addTab(String name, Object type, int index, int width,
             int height) {
         File currentDirectory = new File("src/controller");
-        String[] tabControllerFiles = listOfFilesInDirectory(currentDirectory,
-            "TabController.java");
+        String[] tabControllerFiles = FileUtils.listOfFilesInDirectory(
+            currentDirectory, "TabController.java");
 
         for (String each : tabControllerFiles) {
-            String className = wellFormedClassName(each, currentDirectory);
+            String className = FileUtils.wellFormedClassName(each,
+                currentDirectory);
             if (className.toLowerCase().contains(name.toLowerCase())) {
                 try {
                     ITabController tabController = (ITabController) Class
@@ -150,11 +151,12 @@ public class SoftwareController implements IController {
     public void addTabWithRandom(String name, Object type, int random,
             int index, int width, int height) {
         File currentDirectory = new File("src/controller");
-        String[] tabControllerFiles = listOfFilesInDirectory(currentDirectory,
-            "TabController.java");
+        String[] tabControllerFiles = FileUtils.listOfFilesInDirectory(
+            currentDirectory, "TabController.java");
 
         for (String each : tabControllerFiles) {
-            String className = wellFormedClassName(each, currentDirectory);
+            String className = FileUtils.wellFormedClassName(each,
+                currentDirectory);
             if (className.toLowerCase().contains(name.toLowerCase())) {
                 try {
                     ITabController tabController = (ITabController) Class
@@ -201,11 +203,12 @@ public class SoftwareController implements IController {
         int i = fileName.lastIndexOf('.');
         String extension = fileName.substring(i + 1).toLowerCase();
         File currentDirectory = new File("src/controller");
-        String[] tabControllerFiles = listOfFilesInDirectory(currentDirectory,
-            "TabController.java");
+        String[] tabControllerFiles = FileUtils.listOfFilesInDirectory(
+            currentDirectory, "TabController.java");
 
         for (String each : tabControllerFiles) {
-            String className = wellFormedClassName(each, currentDirectory);
+            String className = FileUtils.wellFormedClassName(each,
+                currentDirectory);
             try {
                 ITabController tabController = (ITabController) Class.forName(
                     className).newInstance();
@@ -235,66 +238,6 @@ public class SoftwareController implements IController {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * Returns the list of files which are in the indicated directory and which
-     * correspond to the string fileType.
-     * 
-     * @param directory the indicated directory
-     * @param fileType the string of selection
-     * @return the list of files
-     */
-    public static String[] listOfFilesInDirectory(File directory,
-            String fileType) {
-        final String selection = fileType;
-        return directory.list(new FilenameFilter() {
-
-            @Override
-            public boolean accept(File dir, String name) {
-                if (name.contains(selection) && !name.startsWith("I")) {
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
-
-    /**
-     * Returns the list of directories which are in the indicated directory.
-     * 
-     * @param directory the indicated directory
-     * @return the list of directories
-     */
-    public static String[] listOfDirectoriesInDirectory(File directory) {
-        return directory.list(new FilenameFilter() {
-
-            @Override
-            public boolean accept(File dir, String name) {
-                if (!name.contains(".java")) {
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
-
-    /**
-     * Transforms the name of the class file in order to be use with reflection.
-     * 
-     * @param name the name of the class file
-     * @param directory the directory where the class is
-     * @return the name after modifications
-     */
-    public static String wellFormedClassName(String name, File directory) {
-        String className = name;
-        int i = className.lastIndexOf('.');
-        className = className.substring(0, i);
-        className = directory.getPath().concat("/" + className);
-        className = className.replaceAll("/", ".");
-        int j = className.indexOf('.');
-        className = className.substring(j + 1);
-        return className;
     }
 
     /**

@@ -29,6 +29,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.filechooser.FileFilter;
+import utils.FileUtils;
 import model.UnknownDataStructureException;
 import controller.ITabController;
 import controller.SoftwareController;
@@ -85,15 +86,15 @@ public class SoftwareIO {
 
     private void addFileFilters(JFileChooser fileChooser) {
         File currentDirectory = new File("src/swing");
-        String[] directories = SoftwareController
+        String[] directories = FileUtils
                 .listOfDirectoriesInDirectory(currentDirectory);
         for (String each : directories) {
             File directory = new File("src/swing/" + each);
-            String[] filterFile = SoftwareController.listOfFilesInDirectory(
-                directory, "FileFilter.java");
+            String[] filterFile = FileUtils.listOfFilesInDirectory(directory,
+                "FileFilter.java");
             if (filterFile.length > 0) {
-                String className = SoftwareController.wellFormedClassName(
-                    filterFile[0], directory);
+                String className = FileUtils.wellFormedClassName(filterFile[0],
+                    directory);
                 try {
                     FileFilter fileFilter = (FileFilter) Class.forName(
                         className).newInstance();
