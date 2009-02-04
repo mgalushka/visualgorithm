@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabListener.java v1.00 16/06/08
+ * ICompiler.java 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,25 +19,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
-
-import java.util.EventListener;
+package compiler;
 
 /**
- * Methods of the binary tree tab listeners.
+ * Common interface for compilers.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @version 1.00
  */
-public interface BinaryTreeTabListener extends EventListener {
+public interface ICompiler {
 
-    /**
-     * The binary tree has changed.
-     * 
-     * @param event the binary tree tab event
-     */
-    public <N extends IBinaryNode> void binaryTreeChanged(
-            BinaryTreeTabEvent<N> event);
+    void compile(String algoFileName) throws Exception;
+
 }

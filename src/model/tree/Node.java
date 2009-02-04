@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabListener.java v1.00 16/06/08
+ * Node.java 3 Feb 2009
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -21,23 +21,11 @@
 
 package model.tree;
 
-import java.util.EventListener;
 
 /**
- * Methods of the binary tree tab listeners.
- * 
- * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @author Damien R.
+ *
  */
-public interface BinaryTreeTabListener extends EventListener {
+public interface Node {
 
-    /**
-     * The binary tree has changed.
-     * 
-     * @param event the binary tree tab event
-     */
-    public <N extends IBinaryNode> void binaryTreeChanged(
-            BinaryTreeTabEvent<N> event);
 }

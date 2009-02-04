@@ -1,0 +1,102 @@
+A nonterminal starts with a capital letter.
+€ is epsilon.
+Program       -> algorithm Id ( Parameter ) return Type var Variable_opt begin Intrs end
+          
+Parameter     -> Parameter, Id : Type 
+              |  Id : Type
+or
+Parameter     -> Id : Type Parameter_
+Parameter_    -> , Id : Type Parameter_
+              |  €
+
+Variable_opt  -> Id : Type ; Variable_opt
+              |  €
+               
+Instrs         -> Instrs Instr 
+               |  €
+or
+Instrs         -> Instr Instrs 
+               |  €
+                              
+Instr          -> Id <- Bool; 
+               |  if ( Bool ) then Instrs end
+               |  if ( Bool ) then Instrs else Instrs end
+               |  while ( Bool ) do Instrs end
+               |  do Instrs while ( Bool )
+               |  id ( Id );
+               |  break;               
+               /* Maybe add for */
+               
+Bool           -> Bool or Conj 
+               |  Conj
+or
+Bool           -> Conj Bool_
+Bool_          -> or Conj Bool_
+               |  €             
+               
+Conj           -> Conj and Egality 
+               |  Egality
+or
+Conj           -> Egality Conj_
+Conj_          -> and Egality Conj_
+               |  €
+             
+              
+Egality        -> Egality = Rel 
+               |  Egality != Rel 
+               |  Rel
+or
+Egality        -> Rel Egality_
+Egality_       -> = Rel Egality_
+               |  != Rel Egality_
+               |  €
+
+
+Rel            -> Expr < Expr 
+               |  Expr <= Expr
+               |  Expr >= Expr
+               |  Expr > Expr
+	           |  Expr
+
+Expr           -> Expr + Terme 
+               |  Expr - Terme 
+               |  Terme
+or
+Expr           -> Terme Expr_
+Expr_          -> + Terme Expr_
+               |  - Terme Expr_
+               |  €
+
+Terme          -> Terme * Unary
+               |  Terme / Unary
+               |  Unary
+or
+Terme          -> Unary Terme_
+Terme_         -> * Unary Terme_
+               |  / Unary Terme_
+               |  €
+
+Unary          -> ! Unary
+               |  - Unary
+               |  Factor
+
+Factor         -> ( Bool )
+               |  id
+               |  Constant
+               |  Real
+               |  true
+               |  false
+               |  nil
+
+Id             -> [a-z] ([a-zA-Z0-9]|_)*
+
+Type           -> [A-Z] ([a-zA-Z0-9]|_)*
+               |  integer
+               |  char
+               |  float
+               |  boolean
+
+Constant       -> [0-9]+
+
+Real           -> Constant \. [0-9]*
+       

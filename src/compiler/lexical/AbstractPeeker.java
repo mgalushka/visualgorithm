@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabListener.java v1.00 16/06/08
+ * AbstractPeeker.java 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,25 +19,42 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
+package compiler.lexical;
 
-import java.util.EventListener;
+import java.io.IOException;
 
 /**
- * Methods of the binary tree tab listeners.
+ * This class provide some implementation for peekers.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @version 1.00
  */
-public interface BinaryTreeTabListener extends EventListener {
+public abstract class AbstractPeeker implements IPeeker {
 
-    /**
-     * The binary tree has changed.
-     * 
-     * @param event the binary tree tab event
-     */
-    public <N extends IBinaryNode> void binaryTreeChanged(
-            BinaryTreeTabEvent<N> event);
+    protected int rowNumber;
+
+    protected int columnNumber;
+    
+    protected String algoName;
+
+    protected AbstractPeeker(String algoName) {
+        rowNumber = columnNumber = 0;
+        this.algoName = algoName;
+    }
+
+    @Override
+    final public int getColumnNumber() {
+        return columnNumber;
+    }
+
+    @Override
+    final public int getRowNumber() {
+        return rowNumber;
+    }
+
+    @Override
+    public abstract int nextChar() throws IOException;
+
 }

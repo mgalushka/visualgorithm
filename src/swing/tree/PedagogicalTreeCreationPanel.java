@@ -198,7 +198,7 @@ class PedagogicalTreeCreationPanel extends JPanel {
      * 
      * @param data the data
      */
-    <N extends IBinaryNode<N>> void updateTree(List<N> data) {
+    <N extends IBinaryNode> void updateTree(List<N> data) {
         pedagogicalTreeVisualization.calculatePositions(data);
     }
 }

@@ -32,7 +32,7 @@ package model.tree;
  * @see IRedBlackNode
  */
 public final class RedBlackNode extends AbstractBinarySearchNode<RedBlackNode>
-        implements IRedBlackNode<RedBlackNode> {
+        implements IRedBlackNode {
 
     /**
      * Enumeration which defines the color of red black nodes.
@@ -103,8 +103,9 @@ public final class RedBlackNode extends AbstractBinarySearchNode<RedBlackNode>
     @Override
     public int calculateRightBlackHeight() {
         if (getRight() != null) {
-            return getRight().isBlack() ? getRight().calculateRightBlackHeight() + 1
-                    : getRight().calculateRightBlackHeight();
+            return getRight().isBlack() ? getRight()
+                    .calculateRightBlackHeight() + 1 : getRight()
+                    .calculateRightBlackHeight();
         } else {
             return 1;
         }

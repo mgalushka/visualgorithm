@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabListener.java v1.00 16/06/08
+ * IntegerTokenAlgo.java 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,25 +19,30 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
-
-import java.util.EventListener;
+package compiler.lexical;
 
 /**
- * Methods of the binary tree tab listeners.
+ * A token which represents an integer.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @version 1.00@author Damien R.
+ *
  */
-public interface BinaryTreeTabListener extends EventListener {
+public class IntegerTokenAlgo extends TokenAlgo {
+    private final int integer;
+    
+    public IntegerTokenAlgo(String integer) {
+        super(TokenAlgoType.INT, integer);
+        this.integer = Integer.valueOf(integer, 10);
+    }
 
     /**
-     * The binary tree has changed.
-     * 
-     * @param event the binary tree tab event
+     * @return the integer
      */
-    public <N extends IBinaryNode> void binaryTreeChanged(
-            BinaryTreeTabEvent<N> event);
+    public int getInteger() {
+        return integer;
+    }
+
 }

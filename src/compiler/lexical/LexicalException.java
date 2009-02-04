@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabEvent.java v1.00 16/06/08
+ * LexicalException.java 05/09/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,42 +19,49 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
+package compiler.lexical;
 
-import java.util.EventObject;
-import java.util.List;
 
 /**
- * Definition of the binary tree tab event.
+ * Represents a lexical exception.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @version 1.00
+ *
  */
-public class BinaryTreeTabEvent<N extends IBinaryNode> extends EventObject {
-
+public class LexicalException extends Exception {
+    
     private static final long serialVersionUID = 1L;
-
-    private List<N> data;
-
+    
+    private final char aChar;
+    
+    private final int rowNumber;
+    
+    private final int columnNumber;
+    
     /**
-     * Builds a binary tree tab event.
-     * 
-     * @param source the source of the binary tree tab event
-     * @param d the data of the binary tree event
+     * @param peek
+     * @param rowNumber
+     * @param columnNumber
      */
-    public BinaryTreeTabEvent(Object source, List<N> d) {
-        super(source);
-        data = d;
+    public LexicalException(final char aChar, final int rowNumber, final int columnNumber) {
+        super("Encoutered an unknown char: " + aChar + " on row: " + rowNumber + " and column: " + columnNumber + ".");
+        this.aChar = aChar;
+        this.rowNumber = rowNumber;
+        this.columnNumber = columnNumber;
     }
 
-    /**
-     * Returns the data of the binary tree tab event.
-     * 
-     * @return the data of the binary tree tab event
-     */
-    public List<N> getData() {
-        return data;
+    final public int getRowNumber() {
+        return rowNumber;
+    }
+    
+    final public int getColumnNumber() {
+        return columnNumber;
+    }
+    
+    final public char getChar() {
+        return aChar;
     }
 }

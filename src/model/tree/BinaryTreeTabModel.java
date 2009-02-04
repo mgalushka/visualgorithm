@@ -179,9 +179,8 @@ public class BinaryTreeTabModel implements ITabModel {
         isBinaryTreeSaved = true;
     }
 
-    private <N extends IBinaryNode<N>> void fireBinaryTreeChanged(List<N> data) {
-        BinaryTreeTabListener[] listenerTab = (BinaryTreeTabListener[]) listeners
-                .getListeners(BinaryTreeTabListener.class);
+    private <N extends IBinaryNode> void fireBinaryTreeChanged(List<N> data) {
+        BinaryTreeTabListener[] listenerTab = listeners.getListeners(BinaryTreeTabListener.class);
         for (BinaryTreeTabListener listener : listenerTab) {
             listener.binaryTreeChanged(new BinaryTreeTabEvent<N>(this, data));
         }

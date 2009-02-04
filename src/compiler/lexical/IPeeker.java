@@ -1,5 +1,5 @@
 /*
- * IAVLNode.java v1.00 19/05/08
+ * IPeeker.java 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,44 +19,51 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
+package compiler.lexical;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
- * Additional methods of the nodes of AVL trees.
+ * A "peeker" reads an input character by character and provide method to access
+ * to row number and column number.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 19/05/08
- * @see IBinarySearchNode
+ * @version 1.00
+ * 
  */
-public interface IAVLNode extends IBinarySearchNode {
+public interface IPeeker {
 
     /**
-     * Returns the height of the AVL node.
+     * Read the next character and return it.
      * 
-     * @return the height of the AVL node
+     * @return the nextChar in integer or -1 if the end of stream is reached
+     * @throws IOException
      */
-    public int getAVLHeight();
+    public abstract int nextChar() throws Exception;
 
     /**
-     * Replaces the height of the AVL node by the new height.
+     * Return the column number of the current character.
      * 
-     * @param height the new height of the AVL node
+     * @return the columnNumber of the current character
      */
-    public void setAVLHeight(int height);
+    public int getColumnNumber();
 
     /**
-     * Calculates the height of the AVL node.
+     * Return the row number of the current character.
      * 
-     * @return the height of the AVL node
+     * @return the rowNumber of the current character
      */
-    public int calculateAVLHeight();
+    public int getRowNumber();
 
     /**
-     * Calculates the balancing factor of the AVL node.
+     * Set the new algorithm file name.    
      * 
-     * @return the balancing factor of the AVL node
+     * @param algoFileName the name of the algorithm
+     * @throws FileNotFoundException 
      */
-    public int calculateAVLBalance();
+    public void setAlgoFileName(String algoFileName) throws Exception;
+
 }

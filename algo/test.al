@@ -1,6 +1,8 @@
 algorithm insertRedBlackTree(t : RedBlackTree, insertnode:Node)
 return AVLNode
-var y,z:Node
+var
+ y : Node
+ z : Node
 begin
    if (true) then 
      ;

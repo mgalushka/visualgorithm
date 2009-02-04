@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabListener.java v1.00 16/06/08
+ * TokenAlgoException.java 5 sept. 2008
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,25 +19,19 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
+package compiler.lexical;
 
-import java.util.EventListener;
 
 /**
- * Methods of the binary tree tab listeners.
- * 
- * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @author Damien R.
+ *TokenFactory
  */
-public interface BinaryTreeTabListener extends EventListener {
+public class TokenAlgoException extends Exception {
 
     /**
-     * The binary tree has changed.
      * 
-     * @param event the binary tree tab event
      */
-    public <N extends IBinaryNode> void binaryTreeChanged(
-            BinaryTreeTabEvent<N> event);
+    private static final long serialVersionUID =
+            -7117666435674651385L;
+
 }

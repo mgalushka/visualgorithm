@@ -32,8 +32,7 @@ import model.tree.RedBlackNode.RedBlackNodeColor;
  * @version 1.00 19/05/08
  * @see IBinarySearchNode
  */
-public interface IRedBlackNode<N extends IRedBlackNode<N>> extends
-        IBinarySearchNode<N> {
+public interface IRedBlackNode extends IBinarySearchNode {
 
     /**
      * Returns the color of the red black node.

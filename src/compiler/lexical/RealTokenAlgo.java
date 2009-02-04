@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabListener.java v1.00 16/06/08
+ * RealTokenAlgo.java 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,25 +19,35 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
+package compiler.lexical;
 
-import java.util.EventListener;
 
 /**
- * Methods of the binary tree tab listeners.
+ * A token which represents a real.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @version 1.00
+ *
  */
-public interface BinaryTreeTabListener extends EventListener {
+public class RealTokenAlgo extends TokenAlgo {
+   
+    final private double real;
+    
+    /**
+     * @param term
+     */
+    public RealTokenAlgo(String real) {
+        super(TokenAlgoType.REAL, real);
+        this.real = Double.valueOf(real);
+    }
 
     /**
-     * The binary tree has changed.
-     * 
-     * @param event the binary tree tab event
+     * @return the real
      */
-    public <N extends IBinaryNode> void binaryTreeChanged(
-            BinaryTreeTabEvent<N> event);
+    public double getReal() {
+        return real;
+    }
+
 }

@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabListener.java v1.00 16/06/08
+ * ICompilerFactory.java 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,25 +19,22 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
+package compiler;
 
-import java.util.EventListener;
+import compiler.lexical.ILexer;
 
 /**
- * Methods of the binary tree tab listeners.
+ * This factory provide an easy way to get a compiler. 
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @version 1.00
  */
-public interface BinaryTreeTabListener extends EventListener {
+public interface ICompilerFactory {
 
-    /**
-     * The binary tree has changed.
-     * 
-     * @param event the binary tree tab event
-     */
-    public <N extends IBinaryNode> void binaryTreeChanged(
-            BinaryTreeTabEvent<N> event);
+    public ICompiler newCompiler();
+
+    public ILexer newLexer();
+
 }

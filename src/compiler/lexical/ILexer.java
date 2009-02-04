@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabListener.java v1.00 16/06/08
+ * ILexer.java 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,25 +19,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
-
-import java.util.EventListener;
+package compiler.lexical;
 
 /**
- * Methods of the binary tree tab listeners.
+ * A lexer is an lexical analyzer which returns token of an input.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @version 1.00
+ * 
  */
-public interface BinaryTreeTabListener extends EventListener {
+public interface ILexer {
 
     /**
-     * The binary tree has changed.
      * 
-     * @param event the binary tree tab event
+     * @return the next token found in the input
+     * @throws Exception
      */
-    public <N extends IBinaryNode> void binaryTreeChanged(
-            BinaryTreeTabEvent<N> event);
+    public TokenAlgo nextToken() throws Exception;
+
 }

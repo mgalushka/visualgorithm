@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabListener.java v1.00 16/06/08
+ * AlgoCompiler.java 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,25 +19,38 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
+package compiler;
 
-import java.util.EventListener;
+import compiler.syntax.AlgoSyntax;
 
 /**
- * Methods of the binary tree tab listeners.
+ * An implementation of compiler for the visualgorithm programming
+ * language. You should use AlgoCompilerFactory to get an
+ * instance of this class.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @version 1.00
  */
-public interface BinaryTreeTabListener extends EventListener {
+public class AlgoCompiler implements ICompiler {
 
+    private AlgoSyntax syntax;
+
+    // Change to private when we are in java 7 with superpackage.
+    @Deprecated
+    public AlgoCompiler(AlgoSyntax syntax) {
+        this.syntax = syntax;
+    }
+    
     /**
-     * The binary tree has changed.
+     * Compile the  .
      * 
-     * @param event the binary tree tab event
+     * @param algoFileName file name of the file which have to be
+     *            compile.
+     * @throws Exception
      */
-    public <N extends IBinaryNode> void binaryTreeChanged(
-            BinaryTreeTabEvent<N> event);
+    public void compile(String algoFileName) throws Exception {
+        syntax.parse(algoFileName);
+    }
 }

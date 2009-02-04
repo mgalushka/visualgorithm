@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabListener.java v1.00 16/06/08
+ * DefaultNode.java 12/10/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,25 +19,22 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model.tree;
+package compiler.syntax;
 
-import java.util.EventListener;
+import compiler.lexical.TokenAlgo;
+import compiler.lexical.TokenAlgo.TokenAlgoType;
+
 
 /**
- * Methods of the binary tree tab listeners.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
- * @version 1.00 16/06/08
  */
-public interface BinaryTreeTabListener extends EventListener {
-
+public class DefaultNode extends AlgoNode {
+    TokenAlgo token;
     /**
-     * The binary tree has changed.
-     * 
-     * @param event the binary tree tab event
+     * @param algorithm
      */
-    public <N extends IBinaryNode> void binaryTreeChanged(
-            BinaryTreeTabEvent<N> event);
+    public DefaultNode(TokenAlgoType token) {
+        // TODO Auto-generated constructor stub
+    }
+
 }

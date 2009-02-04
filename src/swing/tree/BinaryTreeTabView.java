@@ -119,7 +119,7 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
     }
 
     @Override
-    public <N extends IBinaryNode<N>> void binaryTreeChanged(
+    public <N extends IBinaryNode> void binaryTreeChanged(
             BinaryTreeTabEvent<N> event) {
         if (isFastTreeCreation) {
             fastTreeCreationPanel.updateTree(event.getData());

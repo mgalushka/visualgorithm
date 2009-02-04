@@ -30,6 +30,6 @@ package model.tree;
  * @version 1.00 19/05/08
  * @see IBinaryNode
  */
-public interface IBinarySearchNode<N extends IBinarySearchNode<N>> extends
-        IBinaryNode<N> {
+public interface IBinarySearchNode extends
+        IBinaryNode {
 }

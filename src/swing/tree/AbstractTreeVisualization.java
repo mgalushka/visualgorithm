@@ -448,7 +448,7 @@ abstract class AbstractTreeVisualization extends JPanel {
      * 
      * @param array the array
      */
-    <N extends IBinaryNode<N>> void calculatePositions(List<N> array) {
+    <N extends IBinaryNode> void calculatePositions(List<N> array) {
         justCalculate = true;
         graphicNodes.clear();
         int length = array.size();
@@ -464,7 +464,7 @@ abstract class AbstractTreeVisualization extends JPanel {
 
             for (int i = 0; i <= height; i++) {
                 while (index < indexStop) {
-                    IBinaryNode<?> node = array.get(index);
+                    IBinaryNode node = array.get(index);
                     if (node != null) {
                         key = node.getKey();
                         y = yPositionRootNode + i * heightBetweenNodes;

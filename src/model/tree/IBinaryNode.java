@@ -29,7 +29,7 @@ package model.tree;
  * @author Damien Rigoni
  * @version 1.00 19/05/08
  */
-public interface IBinaryNode<N extends IBinaryNode<N>> {
+public interface IBinaryNode {
 
     /**
      * Returns the key of the node.
@@ -43,21 +43,21 @@ public interface IBinaryNode<N extends IBinaryNode<N>> {
      * 
      * @return the right child of the node
      */
-    public N getRight();
+    public IBinaryNode getRight();
 
     /**
      * Returns the left child of the node.
      * 
      * @return the left child of the node
      */
-    public N getLeft();
+    public IBinaryNode getLeft();
 
     /**
      * Returns the father of the node.
      * 
      * @return the father of the node
      */
-    public N getFather();
+    public IBinaryNode getFather();
 
     /**
      * Replaces the key of the node by the new key.
@@ -71,19 +71,19 @@ public interface IBinaryNode<N extends IBinaryNode<N>> {
      * 
      * @param newNode the new left child of the node
      */
-    public void setLeft(N newNode);
+    public void setLeft(IBinaryNode newNode);
 
     /**
      * Replaces the right child of the node by the new node.
      * 
      * @param newNode the new right child of the node
      */
-    public void setRight(N newNode);
+    public void setRight(IBinaryNode newNode);
 
     /**
      * Replaces the father of the node by the new node.
      * 
      * @param newNode the new father of the node
      */
-    public void setFather(N newNode);
+    public void setFather(IBinaryNode newNode);
 }

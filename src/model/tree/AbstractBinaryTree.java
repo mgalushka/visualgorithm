@@ -34,8 +34,12 @@ import java.util.List;
  * @see IBinaryNode
  * @see IBinaryTree
  */
-public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
+public abstract class AbstractBinaryTree<N extends IBinaryNode> implements
         IBinaryTree<N> {
+
+    protected BinaryTreeType type;
+
+    protected N root;
 
     /**
      * Definition of the type of binary trees.
@@ -46,8 +50,8 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
      * @version 1.00 16/06/08
      */
     public enum BinaryTreeType {
-        AVLTREE(AVLTree.class), BINARYSEARCHTREE(BinarySearchTree.class), REDBLACKTREE(
-                RedBlackTree.class);
+        AVLTREE(AVLTree.class), BINARYSEARCHTREE(BinarySearchTree.class),
+        REDBLACKTREE(RedBlackTree.class);
 
         private Class<?> binaryTreeClass;
 
@@ -72,10 +76,6 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
         }
     }
 
-    protected BinaryTreeType type;
-
-    protected N root;
-
     @Override
     public void setRoot(N newNode) {
         root = newNode;
@@ -95,16 +95,7 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
     public final int calculateHeight() {
         return recursiveHeight(root);
     }
-
-    private int recursiveHeight(N node) {
-        if (node == null) {
-            return -1;
-        } else {
-            return Math.max(recursiveHeight(node.getLeft()),
-                recursiveHeight(node.getRight())) + 1;
-        }
-    }
-
+   
     @Override
     public final List<N> treeToArrayList() {
         int length = (2 * (int) Math.pow(2, calculateHeight())) - 1;
@@ -118,17 +109,28 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode<N>> implements
         return arrayTree;
     }
 
+    @SuppressWarnings("unchecked")
+    private int recursiveHeight(N node) {
+        if (node == null) {
+            return -1;
+        } else {
+            return Math.max(recursiveHeight((N) node.getLeft()),
+                recursiveHeight((N) node.getRight())) + 1;
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
     private void buildArray(List<N> array, int index, N node) {
         if ((node.getLeft() == null) && (node.getRight() == null)) {
             array.set(index, node);
         } else {
             if (node.getLeft() == null) {
-                buildArray(array, 2 * index + 2, node.getRight());
+                buildArray(array, 2 * index + 2, (N) node.getRight());
             } else if (node.getRight() == null) {
-                buildArray(array, 2 * index + 1, node.getLeft());
+                buildArray(array, 2 * index + 1, (N) node.getLeft());
             } else {
-                buildArray(array, 2 * index + 1, node.getLeft());
-                buildArray(array, 2 * index + 2, node.getRight());
+                buildArray(array, 2 * index + 1, (N) node.getLeft());
+                buildArray(array, 2 * index + 2, (N) node.getRight());
             }
             array.set(index, node);
         }

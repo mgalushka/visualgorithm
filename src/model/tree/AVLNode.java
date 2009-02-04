@@ -31,8 +31,7 @@ package model.tree;
  * @see IBinarySearchNode
  * @see IAVLNode
  */
-public final class AVLNode extends AbstractBinarySearchNode<AVLNode> implements
-        IAVLNode<AVLNode> {
+public final class AVLNode extends AbstractBinarySearchNode<AVLNode> implements IAVLNode {
 
     private int height;
 

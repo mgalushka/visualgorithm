@@ -51,7 +51,7 @@ final class AVLTreeFile extends TreeFile {
     }
 
     @Override
-    protected <N extends IBinaryNode<?>> void setLeftNode(N node,
+    protected <N extends IBinaryNode> void setLeftNode(N node,
             int childNodeNumber) {
         assert (node instanceof AVLNode);
         ((AVLNode) node).setLeft(new AVLNode(Integer.parseInt(nodeVector
@@ -60,7 +60,7 @@ final class AVLTreeFile extends TreeFile {
     }
 
     @Override
-    protected <N extends IBinaryNode<?>> void setRightNode(N node,
+    protected <N extends IBinaryNode> void setRightNode(N node,
             int childNodeNumber) {
         assert (node instanceof AVLNode);
         ((AVLNode) node).setRight(new AVLNode(Integer.parseInt(nodeVector
