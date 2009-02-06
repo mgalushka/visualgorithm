@@ -79,7 +79,7 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
     }
 
     private JButton createButtonBetweenViews() {
-        final JButton button = new JButton("Pedagogical" + "Creation Mode");
+        final JButton button = new JButton("Pedagogical Creation Mode");
 
         button.addActionListener(new ActionListener() {
 

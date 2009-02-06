@@ -1,16 +1,17 @@
-A nonterminal starts with a capital letter.
+A non terminal expression starts with a capital letter.
 € is epsilon.
-Program       -> algorithm Id ( Parameter ) return Type var Variable_opt begin Intrs end
-          
-Parameter     -> Parameter, Id : Type 
-              |  Id : Type
-or
-Parameter     -> Id : Type Parameter_
-Parameter_    -> , Id : Type Parameter_
-              |  €
 
-Variable_opt  -> Id : Type ; Variable_opt
-              |  €
+Program        -> algorithm Id ( Parameter ) return Type var Variable_opt begin Instrs end
+          
+Parameter      -> Parameter, Id : Type 
+               |  Id : Type
+or
+Parameter      -> Id : Type Parameter_
+Parameter_     -> , Id : Type Parameter_
+               |  €
+
+Variable_opt   -> Id : Type ; Variable_opt
+               |  €
                
 Instrs         -> Instrs Instr 
                |  €
@@ -34,23 +35,21 @@ Bool           -> Conj Bool_
 Bool_          -> or Conj Bool_
                |  €             
                
-Conj           -> Conj and Egality 
-               |  Egality
+Conj           -> Conj and Equality 
+               |  Equality
 or
-Conj           -> Egality Conj_
-Conj_          -> and Egality Conj_
+Conj           -> Equality Conj_
+Conj_          -> and Equality Conj_
                |  €
              
-              
-Egality        -> Egality = Rel 
-               |  Egality != Rel 
+Equality       -> Equality = Rel 
+               |  Equality != Rel 
                |  Rel
 or
-Egality        -> Rel Egality_
-Egality_       -> = Rel Egality_
-               |  != Rel Egality_
+Equality       -> Rel Equality_
+Equality_      -> = Rel Equality_
+               |  != Rel Equality_
                |  €
-
 
 Rel            -> Expr < Expr 
                |  Expr <= Expr
@@ -88,9 +87,9 @@ Factor         -> ( Bool )
                |  false
                |  nil
 
-Id             -> [a-z] ([a-zA-Z0-9]|_)*
+Id             -> [a-z] ([a-z]|[A-Z]|[0-9]|_)*
 
-Type           -> [A-Z] ([a-zA-Z0-9]|_)*
+Type           -> [A-Z] ([a-z]|[A-Z]|[0-9]|_)*
                |  integer
                |  char
                |  float

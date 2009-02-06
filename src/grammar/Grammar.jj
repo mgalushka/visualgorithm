@@ -1,439 +1,0 @@
-/**
- * JavaCC file
- */options{  JDK_VERSION = "1.6";}PARSER_BEGIN(VisuAlgoGrammar)
-package grammar;
-
-import java.io.FileWriter;
-import java.io.IOException;
-public class VisuAlgoGrammar {
-
-  private static StringBuilder PROG = new StringBuilder();
-  
-  private static boolean ISCLASS = false;
-  
-  private static String ALGONAME;
-  
-  private static final int NBINDENT = 4;
-  
-  private static int CURRENTINDENT = 0;
-
-  private static String INDENT(int nbIndent) {
-  	StringBuilder indent = new StringBuilder(nbIndent);
-  	for (int i = 0; i < nbIndent; ++i) {
-  	  indent.append(" ");	
-  	}
-    return indent.toString();  	
-  }
-	
-  /**
-   * @param param
-   * @return
-   */
-  private static String GENERATE_FIELD(String param) {
-    String[] fields = param.split(", ");
-    StringBuilder field = new StringBuilder();
-     
-    for (String s : fields) {
-        field.append(INDENT(CURRENTINDENT) + "private " + s + ";\n\n");
-    }
-    
-    return field.toString();
-  }	
-
-  /**
-   * @param param
-   * @return
-   */
-  private static String GENERATE_CONSTRUCTOR(String className, String param) {
-    String[] fields = param.split(", ");
-    StringBuilder constructor = new StringBuilder();
-    String f;
-    
-    constructor.append(INDENT(CURRENTINDENT) + className + "(" + param + ")" + " {\n");  
-    CURRENTINDENT += NBINDENT;
-    for (String s : fields) {
-        f = s.split(" ")[1];
-        constructor.append(INDENT(CURRENTINDENT) + "this." + f + " = " + f + ";\n");
-    }
-    CURRENTINDENT -= NBINDENT;
-    constructor.append(INDENT(CURRENTINDENT) + "}\n\n");
-    
-    return constructor.toString();
-  }
-
-  /**
-   * @param param
-   * @return
-   */
-  private static String GENERATE_APPLY(String variable, String statement) {
-    StringBuilder apply = new StringBuilder();
-    apply.append(variable);
-    apply.append(statement);   
-    return apply.toString();
-  }
-	
-	
-	  public static void main(String args[])throws ParseException{    VisuAlgoGrammar parser = null;    if (args.length == 0){      System.out.println("Reading from standard input . . .");      parser = new VisuAlgoGrammar(System.in);    }    else if (args.length == 1){      System.out.println("Reading from file "+args[0]+" . . .");      try {        parser = new VisuAlgoGrammar(new java.io.FileInputStream(args[0]));      }      catch (java.io.FileNotFoundException e){        System.out.println("File "+args[0]+" not found.");        return ;      }    }    else {      System.out.println("Usage is one of:");      System.out.println("java JavaParser < inputfile");      System.out.println("OR");      System.out.println("java JavaParser inputfile");      return ;    }    try {
-      parser.program();
-      try {
-        FileWriter file = new FileWriter("src/algorithm/tree/"+ALGONAME+".java");
-        file.write(PROG.toString());
-        file.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }      System.out.println("Java program parsed successfully.");    }    catch (ParseException e){      System.out.println(e.getMessage());      System.out.println("Encountered errors during parse.");    }  }}PARSER_END(VisuAlgoGrammar)SKIP:{  " "  | "\r"  | "\t"  | "\n"}TOKEN:/* OPERATORS */{  <PLUS:"+">   | <MINUS:"-">  | <MULTIPLY:"*">  | <DIVIDE:"/">  | <LT:"<">  | <GT:">">  | <LE:"<=">  | <GE:">=">  | <EQ:"=">  | <ASSIGN:"<-">  | <NEQ:"!=">  | <NE:"!">}TOKEN:/* RESERVED WORDS */{  <IF:"if">  | <THEN:"then">  | <ELSE:"else">  | <BEGIN:"begin">  | <END:"end">  | <WHILE:"while">  | <DO:"do">  | <UNTIL:"until">  | <BREAK:"break">  | <INTEGER:"integer">  | <BOOLEAN:"boolean">  | <FLOAT:"float">  | <CHAR:"char">  | <FALSE:"false">  | <TRUE:"true">  | <AND:"and">  | <OR:"or">  | <NIL:"nil">  | <ALGORITHM:"algorithm">  | <VAR:"var">
-  | <RETURN:"return">
-  | <VOID:"void">}TOKEN:/* LITERALS */{  <ID:["a"-"z"](["a"-"z", "A"-"Z", "_", "0"-"9"])*>  | <REAL:(["0"-"9"])+"."(["0"-"9"])*>  | <INT:(<DIGIT>)+>  | <#DIGIT:["0"-"9"]>  | <TYPE:["A"-"Z"](["a"-"z", "A"-"Z", "_", "0"-"9"])*
-     ["a" - "z"](["a"-"z", "A"-"Z", "_", "0"-"9"])* >  | <CONSTANT:["A"-"Z"](["A"-"Z"])*>}TOKEN:/* SEPARATORS */{  <LPAREN:"(">  | <RPAREN:")">  | <SEMICOLON:";">  | <COMMA:",">  | <DOT:".">  | <COLON:":">}void program():{
-	Token t;
-	String className;
-	String param = new String();
-	String var;
-	String stat;
-	String returnType;
-	StringBuilder variable = new StringBuilder();
-	StringBuilder statement = new StringBuilder();}{  "algorithm" 
-  {
-  	ISCLASS = true;
-  }
-  
-  className=id()"("
-  {
-  	PROG.append("package algorithm.tree;\n\n");
-  	PROG.append(INDENT(CURRENTINDENT) + "class " +  className + " implements IBinaryTreeAlgorithm {\n\n");
-    CURRENTINDENT += NBINDENT;
-  }
-   
-  
-  (param=parameter())?")"
-  "return" returnType=returnType()
-   
-   {
-   	PROG.append(GENERATE_FIELD(param) +
-                GENERATE_CONSTRUCTOR(className, param));
-    PROG.append(INDENT(CURRENTINDENT) + "public " + returnType + " apply() {\n");
-    CURRENTINDENT += NBINDENT;
-   }
-  
- 
-  
-  "var"
-  (var=variable()
-  {
-     variable.append(var);
-  }
-  )*
-  "begin"(stat=statement() { statement.append(stat);})*"end"<EOF>
-  
-  {
-  	CURRENTINDENT -= NBINDENT;
-  	PROG.append(GENERATE_APPLY(variable.toString(), statement.toString() +
-  	            INDENT(CURRENTINDENT) + "}\n"));  // end apply func
-  	CURRENTINDENT -= NBINDENT; // end class
-    PROG.append(INDENT(CURRENTINDENT) + "}\n");
-  }
-}String id():{
-Token t;
-}
-{	  t=<ID>
-  {
-  	StringBuilder result = new StringBuilder(t.image);
-  	if (ISCLASS == true) {
-      result.replace(0, 1, result.substring(0, 1).toUpperCase());
-      ISCLASS = false;
-      ALGONAME = result.toString();
-  	}
-    return result.toString();
-  } }
-String parameter():{
- String id;
- String type;
- StringBuilder param;
- String p;
-}{  id=id() ":"type=type()
-  {
-  	param = new StringBuilder(type + " " + id);
-  }
-  
-  (p=parameters()
-   {param.append(p);}
-  )*
-  
-  {
-    return param.toString();	
-  }
-  }
-String parameters():{
- StringBuilder param = new StringBuilder();
- String id;
- String type;
-}{  "," id=id()":" type=type()
-  
-  {
-  	param.append("," + " " + type + " " + id);
-    return param.toString();
-  }}
-String type():{
-  Token t;
-}{  (t=<TYPE>  | t="integer"  | t="char"  | t="boolean"  | t="float"
-  )
-  {
-   	return t.image;
-  } }
-
-String returnType():{
-  Token t;
-  String type = new String();
-}{
-  t="void" { return t.image; }
-  | type=type() { return type; } 
-}
-String variable():{
- StringBuilder variable = new StringBuilder();
- StringBuilder vars = new StringBuilder();
- String var = new String();
- String id;
- String type;
-}{  id=id()(var=vars() {vars.append(var);})*":" type=type()
-  
-  {
-  	variable.append(INDENT(CURRENTINDENT) + type + " " + id + vars + variable + ";\n");
-  	return variable.toString();
-  }}
-String vars():{
- String var ;
-}{  "," var=id()
-  
-  {
-  	return ", " + var;
-  }}
-String statement():{
- String t;
-}{  ( t=doStatement()  | t=whileStatement()  | t=ifStatement()  | t=breakStatement()  | t=emptyStatement()
-  | t=assignStatement()
-  | t=returnStatement())
-  {return t;}
-}
-
-String returnStatement():{
-  String id;
- }{
-  "return" id=id() ";"
-  { return INDENT(CURRENTINDENT) + "return " + id + ";\n"; } 	
-}
-String whileStatement():{
-  String bool = new String();
-  String stat = new String();
-  StringBuilder statement = new StringBuilder();
-}{
-  "while""("bool=bool()")""do"
-  { CURRENTINDENT += NBINDENT; }
-  (stat=statement() { statement.append(stat);})*
-  { CURRENTINDENT -= NBINDENT; }                                
-  "end"
-  
-  {
-   return INDENT(CURRENTINDENT) + "while (" + bool + ") { \n" +
-     statement + INDENT(CURRENTINDENT) + "}\n";
-  }}
-String ifStatement():{
-  String bool = new String();
-  String statIf = new String();
-  String statElse = new String();
-  StringBuilder statement = new StringBuilder();
-}{  "if""("bool=bool()")""then"
-   {
-   	 CURRENTINDENT += NBINDENT;
-   }
-  
-  (statIf=statement()
-   {
-   	 statement.append(statIf);
-   }
-  )*
-  {
-   	 CURRENTINDENT -= NBINDENT;
-  }
-  
-  ["else"
-   {
-   	 statement.append(INDENT(CURRENTINDENT) + "} else {\n");
-   	 CURRENTINDENT += NBINDENT;	
-   }
-   (statElse=statement()
-    { statement.append(statElse); }
-   )*]"end"
-  {
-  	CURRENTINDENT -= NBINDENT;
-    return INDENT(CURRENTINDENT) + "if (" + bool + ") { \n" + statement + INDENT(CURRENTINDENT) + "}\n";
-  }}
-String assignStatement():{
-  String id = new String();
-  String bool = new String();
-  String param = new String();
-  StringBuilder assign = new StringBuilder();
-  String var = new String();
-  boolean methCall = false;
-}{  (id=id()
-  (["." var=id() { methCall = true; } ]
-  "<-" bool=bool()";"
-  {
-  	if (methCall == true) {
-  	   StringBuilder methName = new StringBuilder(var);
-  	   methName.replace(0, 1, methName.substring(0, 1).toUpperCase());
-       assign.append(".set" + methName + "("+ bool + ");\n");
-       methCall = false;
-  	} else {
-  	  assign.append( " = " + bool + ";\n");
-  	}	
-  }  | "("(parameter_in())?")" ";" { assign.append("(" + param + ");\n"); }))
-  
-  {
-  	return INDENT(CURRENTINDENT) + id + assign.toString();
-  }}
-String doStatement():{
-  String bool = new String();
-  String stat = new String();
-  StringBuilder statement = new StringBuilder();
-}{  "do"
-  { CURRENTINDENT += NBINDENT; }
-  (stat=statement()
-   { statement.append(stat);}
-  )*"until""("bool()")"";"
-  
-  {
-  	CURRENTINDENT -= NBINDENT; 
-    return INDENT(CURRENTINDENT) + "do {\n" + statement + INDENT(CURRENTINDENT) + "}\n" +
-    INDENT(CURRENTINDENT) + "while(" + bool + ");\n"; 
-  }}String breakStatement():{}{  "break"";"
-  { return INDENT(CURRENTINDENT) + "break;\n";}}
-String emptyStatement():{}{  ";"
-  {
-  	return INDENT(CURRENTINDENT) + ";\n";
-  }}
-
-String bool():{
- String conj, bool_;
-
-}{  conj=conj() bool_=bool_()
-  {
-  	return conj + bool_;
-  }}
-String bool_():{
-  String conj = new String();
-  String bool_ = new String();
-  String op = new String();
-}{  ("or" { op = " || "; } conj=conj() bool_=bool_())?
-  { return op + conj + bool_; }}
-String conj():{
-  String egality, conj_;
-}{  egality=egality() conj_=conj_()
-  { return egality + conj_; }}
-String conj_():{
-  String egality = new String();
-  String conj_ = new String();
-  String op = new String();
-}{  ("and" { op = " && "; } egality=egality() conj_=conj_())?
-  { return op + egality + conj_; }}
-String egality():{
-  String rel, egality_;
-}{  rel=rel() egality_=egality_()
-  { return rel + egality_; }}
-String egality_():{
-  String rel = new String();
-  String egality_ = new String();
-  String op = new String();
-}{  (("=" { op = " == "; }  | "!=" { op = " != "; }) rel=rel() egality_=egality_())?
-  { return op + rel + egality_; }}
-String rel():{
-  String expr;
-  String expr_opt = new String();
-  String op ="";
-}{  (expr=expr()[("<" { op = " < "; }  | "<=" { op = " <= "; }  | ">=" { op = " >= "; }  | ">"  { op = " > "; })expr_opt=expr()])
-  
-  { return expr + op + expr_opt; }}
-
-String expr():{
-  String terme;
-  String expr_;
-}{  terme=terme() expr_=expr_()
-  
-  { return terme + expr_; }}
-String expr_():{
-  String terme = new String();
-  String expr_ = new String();
-  String op ="";
-}{  (("+" { op = " + "; }  | "-" { op = " - "; }) terme=terme() expr_=expr_())?
-  { return  op + terme + expr_; }}String terme():{
-  String unary;
-  String terme;
-}{  unary=unary() terme=terme_()
-  { return unary + terme; }}String terme_():{
-  String unary = new String();
-  String terme_ = new String();
-  String op = new String();
-}{  (("*" { op = " * "; }
-  | "/" { op = " / "; }) unary=unary() terme_=terme_())?
-  { return op + unary + terme_; }}String unary():{
-  String s;
-}{  "!" s=unary() { return "!" + s; }  | "-" s=unary() { return "-" + s; }  | s=factor() { return s; }
-  
-  { return s; }}String factor():{
-  String s;
-  String param = new String();
-  String meth = new String();
-  Token t;
-}{  ("("s=bool()")"
-  { s = "(" + s + ")"; }  | s=integer()  | s=constant()  | s=real()  | t="true" {s = t.image;}  | t="false" {s = t.image;}  | "nil" {s = "null";}  | s=id()[["." meth=id() { meth= "." + meth; }]"("(param=parameter_in()
-  )?")" {meth = meth + "(" + param + ")"; }]
-   { s = s + meth; }
-  )
-  {
-    return s;
-  }}
-
-/**
- * Production for parameters in function.
- *
- * return a string which contain the parameter in function call
- */String parameter_in():{
-  String id = new String();
-  String param = new String();
-  StringBuilder params = new StringBuilder();
-}{  id=id()
-  (param=more_parameter()
-   { params.append(param);}
-  )*
-  {
-  	return id + params.toString();
-  }}
-
-String more_parameter():{
-  String t;
-}{  "," t=id()
-  {
-  	return ", " + t;
-  }}
-/**
- * Return an string wich contains an integer
- */
-String integer():{
-  Token t;
-}{  t=<INT>
-  {
-  	return t.image;
-  }}
-
-String constant():{
-  Token t;
-}{  t=<CONSTANT>
-  {
-  	return t.image;
-  }}
-
-String real():{
-  Token t;
-}{  t=<REAL>
-  {
-  	return t.image;
-  }}
