@@ -31,7 +31,7 @@ package model.tree;
  * @see IRedBlackNode
  * @see IBinarySearchTree
  */
-public class RedBlackTree extends AbstractBinarySearchTree<RedBlackNode> {
+public class RedBlackTree extends AbstractBinarySearchTree {
 
     {
         type = BinaryTreeType.REDBLACKTREE;
@@ -56,7 +56,7 @@ public class RedBlackTree extends AbstractBinarySearchTree<RedBlackNode> {
     @Override
     public boolean isGoodTree() {
         return (getRoot() == null)
-                || (getRoot().isBlack() && isBST(getRoot())
+                || (((IRedBlackNode) getRoot()).isBlack() && isBST(getRoot())
                         && isRedNodeHasBlackChild(getRoot()) && hasGoodHeight(getRoot()));
     }
 
@@ -90,12 +90,12 @@ public class RedBlackTree extends AbstractBinarySearchTree<RedBlackNode> {
             if (isRedHasBlackChild) {
                 if (node.isRed()) {
                     if (node.getLeft() != null) {
-                        if (node.getLeft().isRed() || (node.getRight() == null)) {
+                        if (((IRedBlackNode) node.getLeft()).isRed() || (node.getRight() == null)) {
                             isRedHasBlackChild = false;
                         }
                     }
                     if (node.getRight() != null) {
-                        if (node.getRight().isRed() || (node.getLeft() == null)) {
+                        if (((IRedBlackNode) node.getRight()).isRed() || (node.getLeft() == null)) {
                             isRedHasBlackChild = false;
                         }
                     }
@@ -103,5 +103,10 @@ public class RedBlackTree extends AbstractBinarySearchTree<RedBlackNode> {
             }
         }
         return isRedHasBlackChild;
+    }
+
+    @Override
+    public RedBlackNode getRoot() {
+        return (RedBlackNode) root;
     }
 }

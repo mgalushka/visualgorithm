@@ -43,7 +43,7 @@ public class SoftwareModelEvent extends EventObject {
      */
     public enum SoftwareModelEventType {
         ADD, DELETE, EXIT
-    };
+    }
 
     private static final long serialVersionUID = 1L;
 

@@ -31,8 +31,8 @@ package model.tree;
  * @see IBinarySearchNode
  * @see IRedBlackNode
  */
-public final class RedBlackNode extends AbstractBinarySearchNode<RedBlackNode>
-        implements IRedBlackNode {
+public final class RedBlackNode extends AbstractBinarySearchNode implements
+        IRedBlackNode {
 
     /**
      * Enumeration which defines the color of red black nodes.
@@ -109,5 +109,20 @@ public final class RedBlackNode extends AbstractBinarySearchNode<RedBlackNode>
         } else {
             return 1;
         }
+    }
+
+    @Override
+    public RedBlackNode getFather() {
+        return (RedBlackNode) father;
+    }
+
+    @Override
+    public RedBlackNode getLeft() {
+        return (RedBlackNode) left;
+    }
+
+    @Override
+    public RedBlackNode getRight() {
+        return (RedBlackNode) right;
     }
 }

@@ -45,7 +45,7 @@ public class BinaryTreeTabModel implements ITabModel {
 
     public final static String DataStructureName = "TREE";
     
-    private IBinaryTree<?> binaryTree;
+    private IBinaryTree binaryTree;
 
     private EventListenerList listeners;
 

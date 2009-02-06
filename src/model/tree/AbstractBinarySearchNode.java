@@ -30,8 +30,8 @@ package model.tree;
  * @version 1.00 19/05/08
  * @see IBinarySearchNode
  */
-abstract class AbstractBinarySearchNode<N extends IBinarySearchNode> extends
-        AbstractBinaryNode<N> implements IBinarySearchNode {
+abstract class AbstractBinarySearchNode extends
+        AbstractBinaryNode implements IBinarySearchNode {
 
     /**
      * Build a node with the key given in parameter, the children and father are

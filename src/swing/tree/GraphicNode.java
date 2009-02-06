@@ -48,7 +48,7 @@ class GraphicNode {
      */
     enum GraphicNodeColor {
         BLACK, BLUE, GREEN, RED, YELLOW
-    };
+    }
 
     private Integer key;
 

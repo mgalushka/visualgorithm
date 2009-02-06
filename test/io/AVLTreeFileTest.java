@@ -61,6 +61,7 @@ public class AVLTreeFileTest {
         tree.getRoot().getLeft().getLeft().setLeft(new AVLNode(3));
     }
 
+    @SuppressWarnings("boxing")
     @Test
     public void testLoad() {
         try {

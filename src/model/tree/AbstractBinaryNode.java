@@ -30,15 +30,15 @@ package model.tree;
  * @version 1.00 19/05/08
  * @see IBinaryNode
  */
-abstract class AbstractBinaryNode<N extends IBinaryNode> implements IBinaryNode {
+abstract class AbstractBinaryNode implements IBinaryNode {
 
     private int key;
 
-    private N left;
+    protected IBinaryNode left;
 
-    private N right;
+    protected IBinaryNode right;
 
-    private N father;
+    protected IBinaryNode father;
 
     /**
      * Build a node with the key given in parameter, the children and father are
@@ -50,32 +50,17 @@ abstract class AbstractBinaryNode<N extends IBinaryNode> implements IBinaryNode 
         this.key = key;
         left = right = father = null;
     }
-    
-    @Override
-    public final N getFather() {
-        return father;
-    }
-
+     
     public final void setFather(IBinaryNode fatherNode) {
-        father = (N) fatherNode;
+        father = fatherNode;
     }
-    
-    @Override
-    public final N getLeft() {
-        return left;
-    }
- 
+     
     public final void setLeft(IBinaryNode leftNode) {
-        this.left = (N) leftNode;
+        this.left = leftNode;
     }
-
-    @Override
-    public final N getRight() {
-        return right;
-    }
-
+   
     public final void setRight(IBinaryNode rightNode) {
-        this.right = (N) rightNode;
+        this.right = rightNode;
     }
     
     @Override

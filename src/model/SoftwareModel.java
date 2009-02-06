@@ -41,8 +41,7 @@ public class SoftwareModel {
     private EventListenerList listeners;
 
     /**
-     * Builds the software model. The software model is a list of
-     * tab models.
+     * Builds the software model. The software model is a list of tab models.
      */
     public SoftwareModel() {
         tabModels = new ArrayList<ITabModel>();
@@ -107,8 +106,8 @@ public class SoftwareModel {
     }
 
     /**
-     * Adds a tab model to the software model. The tab model
-     * has a loaded data structure.
+     * Adds a tab model to the software model. The tab model has a loaded data
+     * structure.
      * 
      * @param tabModel a tab model
      * @param fileName the name of the file
@@ -120,7 +119,7 @@ public class SoftwareModel {
     }
 
     private void fireModelChanged(SoftwareModelEventType type, String name) {
-        SoftwareModelListener[] listenerTab = (SoftwareModelListener[]) listeners
+        SoftwareModelListener[] listenerTab = listeners
                 .getListeners(SoftwareModelListener.class);
         for (SoftwareModelListener listener : listenerTab) {
             listener.modelChanged(new SoftwareModelEvent(this, type, name));
@@ -128,7 +127,7 @@ public class SoftwareModel {
     }
 
     private void fireModelChanged(SoftwareModelEventType type, int index) {
-        SoftwareModelListener[] listenerTab = (SoftwareModelListener[]) listeners
+        SoftwareModelListener[] listenerTab = listeners
                 .getListeners(SoftwareModelListener.class);
         for (SoftwareModelListener listener : listenerTab) {
             listener.modelChanged(new SoftwareModelEvent(this, type, index));
@@ -136,7 +135,7 @@ public class SoftwareModel {
     }
 
     private void fireModelChanged(SoftwareModelEventType type) {
-        SoftwareModelListener[] listenerTab = (SoftwareModelListener[]) listeners
+        SoftwareModelListener[] listenerTab = listeners
                 .getListeners(SoftwareModelListener.class);
         for (SoftwareModelListener listener : listenerTab) {
             listener.modelChanged(new SoftwareModelEvent(this, type));

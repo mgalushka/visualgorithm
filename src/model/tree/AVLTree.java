@@ -31,7 +31,7 @@ package model.tree;
  * @see IAVLNode
  * @see IBinarySearchTree
  */
-public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
+public class AVLTree extends AbstractBinarySearchTree {
 
     {
         type = BinaryTreeType.AVLTREE;
@@ -82,5 +82,10 @@ public class AVLTree extends AbstractBinarySearchTree<AVLNode> {
             }
         }
         return isBalance;
+    }
+
+    @Override
+    public AVLNode getRoot() {
+        return (AVLNode) root;
     }
 }

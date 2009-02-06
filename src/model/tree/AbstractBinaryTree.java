@@ -34,12 +34,11 @@ import java.util.List;
  * @see IBinaryNode
  * @see IBinaryTree
  */
-public abstract class AbstractBinaryTree<N extends IBinaryNode> implements
-        IBinaryTree<N> {
+public abstract class AbstractBinaryTree implements IBinaryTree {
 
     protected BinaryTreeType type;
 
-    protected N root;
+    protected IBinaryNode root;
 
     /**
      * Definition of the type of binary trees.
@@ -53,9 +52,9 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode> implements
         AVLTREE(AVLTree.class), BINARYSEARCHTREE(BinarySearchTree.class),
         REDBLACKTREE(RedBlackTree.class);
 
-        private Class<?> binaryTreeClass;
+        private Class<? extends IBinaryTree> binaryTreeClass;
 
-        private BinaryTreeType(Class<?> treeClass) {
+        private BinaryTreeType(Class<? extends IBinaryTree> treeClass) {
             binaryTreeClass = treeClass;
         }
 
@@ -64,9 +63,9 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode> implements
          * 
          * @return the binary tree
          */
-        public IBinaryTree<?> getBinaryTree() {
+        public IBinaryTree getBinaryTree() {
             try {
-                return (IBinaryTree<?>) binaryTreeClass.newInstance();
+                return binaryTreeClass.newInstance();
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -77,13 +76,8 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode> implements
     }
 
     @Override
-    public void setRoot(N newNode) {
+    public void setRoot(IBinaryNode newNode) {
         root = newNode;
-    }
-
-    @Override
-    public final N getRoot() {
-        return root;
     }
 
     @Override
@@ -95,11 +89,11 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode> implements
     public final int calculateHeight() {
         return recursiveHeight(root);
     }
-   
+
     @Override
-    public final List<N> treeToArrayList() {
+    public final List<IBinaryNode> treeToArrayList() {
         int length = (2 * (int) Math.pow(2, calculateHeight())) - 1;
-        List<N> arrayTree = new ArrayList<N>();
+        List<IBinaryNode> arrayTree = new ArrayList<IBinaryNode>();
         for (int i = 0; i < length; i++) {
             arrayTree.add(null);
         }
@@ -109,28 +103,26 @@ public abstract class AbstractBinaryTree<N extends IBinaryNode> implements
         return arrayTree;
     }
 
-    @SuppressWarnings("unchecked")
-    private int recursiveHeight(N node) {
+    private int recursiveHeight(IBinaryNode node) {
         if (node == null) {
             return -1;
         } else {
-            return Math.max(recursiveHeight((N) node.getLeft()),
-                recursiveHeight((N) node.getRight())) + 1;
+            return Math.max(recursiveHeight(node.getLeft()),
+                recursiveHeight(node.getRight())) + 1;
         }
     }
-    
-    @SuppressWarnings("unchecked")
-    private void buildArray(List<N> array, int index, N node) {
+
+    private void buildArray(List<IBinaryNode> array, int index, IBinaryNode node) {
         if ((node.getLeft() == null) && (node.getRight() == null)) {
             array.set(index, node);
         } else {
             if (node.getLeft() == null) {
-                buildArray(array, 2 * index + 2, (N) node.getRight());
+                buildArray(array, 2 * index + 2, node.getRight());
             } else if (node.getRight() == null) {
-                buildArray(array, 2 * index + 1, (N) node.getLeft());
+                buildArray(array, 2 * index + 1, node.getLeft());
             } else {
-                buildArray(array, 2 * index + 1, (N) node.getLeft());
-                buildArray(array, 2 * index + 2, (N) node.getRight());
+                buildArray(array, 2 * index + 1, node.getLeft());
+                buildArray(array, 2 * index + 2, node.getRight());
             }
             array.set(index, node);
         }

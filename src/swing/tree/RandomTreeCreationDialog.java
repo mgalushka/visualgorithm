@@ -145,7 +145,7 @@ public class RandomTreeCreationDialog extends JDialog {
                 } else {
                     type = BinaryTreeType.REDBLACKTREE;
                 }
-                int nbNode = (Integer) numberOfNodes.getModel().getValue();
+                int nbNode = ((SpinnerNumberModel) numberOfNodes.getModel()).getNumber().intValue();
 
                 softwareController.addTabWithRandom(
                     BinaryTreeTabModel.DataStructureName, type, nbNode, index,

@@ -22,17 +22,14 @@
 package controller;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import utils.FileUtils;
-import view.ISoftwareView;
-import view.AbstractViewFactory;
 import model.SoftwareModel;
-import model.UnknownDataStructureException;
+import utils.FileUtils;
+import view.AbstractViewFactory;
+import view.ISoftwareView;
 
 /**
  * Definition of the software controller.
@@ -195,9 +192,7 @@ public class SoftwareController implements IController {
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      */
-    public void openFile(File file, int width, int height)
-            throws FileNotFoundException, ParseException, IOException,
-            UnknownDataStructureException {
+    public void openFile(File file, int width, int height) {
         int index = tabControllers.size();
         String fileName = file.getName();
         int i = fileName.lastIndexOf('.');

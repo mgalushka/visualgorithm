@@ -33,21 +33,7 @@ import model.IDataStructure;
  * @version 1.00 19/05/08
  * @see IBinaryNode
  */
-public interface IBinaryTree<N extends IBinaryNode> extends IDataStructure {
-
-    /**
-     * Returns the root of the tree.
-     * 
-     * @return the root of the tree
-     */
-    public N getRoot();
-
-    /**
-     * Replaces the root of the tree by the new node.
-     * 
-     * @param newNode the new root node
-     */
-    public void setRoot(N newNode);
+public interface IBinaryTree extends IDataStructure {
 
     /**
      * Calculates the height of the tree.
@@ -62,7 +48,7 @@ public interface IBinaryTree<N extends IBinaryNode> extends IDataStructure {
      * 
      * @return the array list corresponding to the tree
      */
-    public List<N> treeToArrayList();
+    public List<IBinaryNode> treeToArrayList();
 
     /**
      * Returns true if the tree is well formed.
@@ -70,4 +56,19 @@ public interface IBinaryTree<N extends IBinaryNode> extends IDataStructure {
      * @return true if the tree is well formed
      */
     public boolean isGoodTree();
+
+    /**
+     * Returns the root of the tree.
+     * 
+     * @return the root of the tree
+     */
+    public IBinaryNode getRoot();
+    
+
+    /**
+     * Replaces the root of the tree by the new node.
+     * 
+     * @param newNode the new root node
+     */
+    public void setRoot(IBinaryNode newNode);
 }

@@ -30,8 +30,7 @@ package model.tree;
  * @version 1.00 19/05/08
  * @see IBinarySearchNode
  */
-public final class BinarySearchNode extends
-        AbstractBinarySearchNode<BinarySearchNode> {
+public final class BinarySearchNode extends AbstractBinarySearchNode {
 
     /**
      * Builds a binary search node with the key given in parameter.
@@ -41,4 +40,19 @@ public final class BinarySearchNode extends
     public BinarySearchNode(int key) {
         super(key);
     }
- }
+
+    @Override
+    public BinarySearchNode getFather() {
+        return (BinarySearchNode) father;
+    }
+
+    @Override
+    public BinarySearchNode getLeft() {
+        return (BinarySearchNode) left;
+    }
+
+    @Override
+    public BinarySearchNode getRight() {
+        return (BinarySearchNode) right;
+    }
+}

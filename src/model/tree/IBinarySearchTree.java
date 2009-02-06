@@ -21,6 +21,7 @@
 
 package model.tree;
 
+
 /**
  * Methods of binary search trees.
  * 
@@ -31,6 +32,5 @@ package model.tree;
  * @see IBinarySearchNode
  * @see IBinaryTree
  */
-public interface IBinarySearchTree<N extends IBinarySearchNode> extends
-        IBinaryTree<N> {
+public interface IBinarySearchTree extends IBinaryTree {
 }

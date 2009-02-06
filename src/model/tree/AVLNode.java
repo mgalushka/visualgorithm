@@ -31,7 +31,7 @@ package model.tree;
  * @see IBinarySearchNode
  * @see IAVLNode
  */
-public final class AVLNode extends AbstractBinarySearchNode<AVLNode> implements IAVLNode {
+public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode {
 
     private int height;
 
@@ -82,5 +82,20 @@ public final class AVLNode extends AbstractBinarySearchNode<AVLNode> implements 
             r = getRight().getAVLHeight() + 1;
         }
         return r - l;
+    }
+
+    @Override
+    public AVLNode getFather() {
+        return (AVLNode) father;
+    }
+
+    @Override
+    public AVLNode getLeft() {
+        return (AVLNode) left;
+    }
+
+    @Override
+    public AVLNode getRight() {
+        return (AVLNode) right;
     }
 }

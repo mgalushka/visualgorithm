@@ -32,7 +32,7 @@ package model.tree;
  * @see IBinarySearchTree
  */
 public class BinarySearchTree extends
-        AbstractBinarySearchTree<BinarySearchNode> {
+        AbstractBinarySearchTree {
 
     {
         type = BinaryTreeType.BINARYSEARCHTREE;
@@ -58,5 +58,10 @@ public class BinarySearchTree extends
     @Override
     public boolean isGoodTree() {
         return isBST(getRoot());
+    }
+
+    @Override
+    public BinarySearchNode getRoot() {
+        return (BinarySearchNode) root;
     }
 }

@@ -22,16 +22,12 @@
 package swing;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.ParseException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.filechooser.FileFilter;
 import utils.FileUtils;
-import model.UnknownDataStructureException;
-import controller.ITabController;
 import controller.SoftwareController;
 
 /**
@@ -54,7 +50,7 @@ public class SoftwareIO {
      */
     public enum SaveEventType {
         CLOSE, EXIT, SAVE
-    };
+    }
 
     private SoftwareController softwareController;
 
@@ -116,21 +112,8 @@ public class SoftwareIO {
     void openOperation() {
         int returnVal = fileChooser.showOpenDialog(softwareView);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            try {
-                softwareController.openFile(fileChooser.getSelectedFile(),
-                    tabbedPane.getWidth(), tabbedPane.getHeight());
-            } catch (FileNotFoundException e) {
-                JOptionPane.showMessageDialog(softwareView, e.getMessage(),
-                    "Open Failed", JOptionPane.WARNING_MESSAGE);
-            } catch (ParseException e) {
-                JOptionPane.showMessageDialog(softwareView, e.getMessage(),
-                    "Open Failed", JOptionPane.WARNING_MESSAGE);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (UnknownDataStructureException e) {
-                JOptionPane.showMessageDialog(softwareView, e.getMessage(),
-                    "Open Failed", JOptionPane.WARNING_MESSAGE);
-            }
+            softwareController.openFile(fileChooser.getSelectedFile(),
+                tabbedPane.getWidth(), tabbedPane.getHeight());
             fileChooser.setSelectedFile(null);
         }
     }
@@ -182,7 +165,7 @@ public class SoftwareIO {
      * @param index the index of the tab
      */
     void closeTabOperation(int index) {
-        if (((ITabController) softwareController.getTabController(index))
+        if (softwareController.getTabController(index)
                 .isTabModelSaved()) {
             softwareController.closeTab(index);
         } else {
@@ -207,7 +190,7 @@ public class SoftwareIO {
         if (count == 0) {
             softwareController.exitSoftware();
         } else if (count == 1) {
-            if (((ITabController) softwareController.getTabController(0))
+            if (softwareController.getTabController(0)
                     .isTabModelSaved()) {
                 softwareController.exitSoftware();
             } else {
