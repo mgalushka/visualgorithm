@@ -75,4 +75,14 @@ public interface IRedBlackNode extends IBinarySearchNode {
      * @return the right black height of the node
      */
     public int calculateRightBlackHeight();
+    
+    @Override
+    public IRedBlackNode getFather();
+
+    @Override
+    public IRedBlackNode getLeft();
+    
+    @Override
+    public IRedBlackNode getRight();
+    
 }

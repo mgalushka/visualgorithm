@@ -47,15 +47,15 @@ public abstract class AbstractBinarySearchTree extends AbstractBinaryTree
             } else {
                 if (node.getLeft() == null) {
                     return (node.getRight().getKey() > node.getKey())
-                            && isBST((IBinarySearchNode) node.getRight());
+                            && isBST(node.getRight());
                 } else if (node.getRight() == null) {
                     return (node.getLeft().getKey() < node.getKey())
-                            && isBST((IBinarySearchNode) node.getLeft());
+                            && isBST(node.getLeft());
                 } else {
                     return (node.getLeft().getKey() < node.getKey())
-                            && isBST((IBinarySearchNode) node.getLeft())
+                            && isBST(node.getLeft())
                             && (node.getRight().getKey() > node.getKey())
-                            && isBST((IBinarySearchNode) node.getRight());
+                            && isBST(node.getRight());
                 }
             }
         }

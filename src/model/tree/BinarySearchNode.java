@@ -55,4 +55,28 @@ public final class BinarySearchNode extends AbstractBinarySearchNode {
     public BinarySearchNode getRight() {
         return (BinarySearchNode) right;
     }
+    
+    @Override
+    public final void setFather(IBinaryNode fatherNode) {
+        if (!(fatherNode instanceof BinarySearchNode)) {
+            throw new IllegalArgumentException("You have to pass a BinarySearchNode");
+        }
+        father = fatherNode;
+    }
+
+    @Override
+    public final void setLeft(IBinaryNode leftNode) {
+        if (!(leftNode instanceof BinarySearchNode)) {
+            throw new IllegalArgumentException("You have to pass a BinarySearchNode");
+        }
+        this.left = leftNode;
+    }
+
+    @Override
+    public final void setRight(IBinaryNode rightNode) {
+        if (!(rightNode instanceof BinarySearchNode)) {
+            throw new IllegalArgumentException("You have to pass a BinarySearchNode");
+        }
+        this.right = rightNode;
+    }
 }

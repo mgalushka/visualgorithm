@@ -59,4 +59,13 @@ public interface IAVLNode extends IBinarySearchNode {
      * @return the balancing factor of the AVL node
      */
     public int calculateAVLBalance();
+    
+    @Override
+    public IAVLNode getFather();
+    
+    @Override
+    public IAVLNode getLeft();
+
+    @Override
+    public IAVLNode getRight();
 }

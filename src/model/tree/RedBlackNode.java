@@ -21,6 +21,9 @@
 
 package model.tree;
 
+import java.util.EmptyStackException;
+import javax.management.RuntimeErrorException;
+
 /**
  * Definition of the nodes of red black trees.
  * 
@@ -124,5 +127,29 @@ public final class RedBlackNode extends AbstractBinarySearchNode implements
     @Override
     public RedBlackNode getRight() {
         return (RedBlackNode) right;
+    }
+
+    @Override
+    public final void setFather(IBinaryNode fatherNode) {
+        if (!(fatherNode instanceof RedBlackNode)) {
+            throw new IllegalArgumentException("You have to pass a RedBlackNode");
+        }
+        father = fatherNode;
+    }
+
+    @Override
+    public final void setLeft(IBinaryNode leftNode) {
+        if (!(leftNode instanceof RedBlackNode)) {
+            throw new IllegalArgumentException("You have to pass a RedBlackNode");
+        }
+        this.left = leftNode;
+    }
+
+    @Override
+    public final void setRight(IBinaryNode rightNode) {
+        if (!(rightNode instanceof RedBlackNode)) {
+            throw new IllegalArgumentException("You have to pass a RedBlackNode");
+        }
+        this.right = rightNode;
     }
 }

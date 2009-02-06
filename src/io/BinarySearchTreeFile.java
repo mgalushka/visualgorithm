@@ -51,7 +51,7 @@ class BinarySearchTreeFile extends TreeFile {
     }
 
     @Override
-    protected <N extends IBinaryNode> void setLeftNode(N node,
+    protected void setLeftNode(IBinaryNode node,
             int childNodeNumber) {
         assert (node instanceof BinarySearchNode);
         ((BinarySearchNode) node).setLeft(new BinarySearchNode(Integer
@@ -59,7 +59,7 @@ class BinarySearchTreeFile extends TreeFile {
     }
 
     @Override
-    protected <N extends IBinaryNode> void setRightNode(N node,
+    protected void setRightNode(IBinaryNode node,
             int childNodeNumber) {
         assert (node instanceof BinarySearchNode);
         ((BinarySearchNode) node).setRight(new BinarySearchNode(Integer

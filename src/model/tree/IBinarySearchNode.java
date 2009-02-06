@@ -32,4 +32,12 @@ package model.tree;
  */
 public interface IBinarySearchNode extends
         IBinaryNode {
+    @Override
+    public IBinarySearchNode getFather();
+
+    @Override
+    public IBinarySearchNode getLeft();
+    
+    @Override
+    public IBinarySearchNode getRight();
 }

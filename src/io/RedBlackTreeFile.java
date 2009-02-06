@@ -66,7 +66,7 @@ final class RedBlackTreeFile extends TreeFile {
     }
 
     @Override
-    protected <N extends IBinaryNode> void setLeftNode(N node,
+    protected void setLeftNode(IBinaryNode node,
             int childNodeNumber) {
         assert (node instanceof RedBlackNode);
         RedBlackNodeColor color = (nodeVector.get(childNodeNumber)[COLOR]
@@ -77,7 +77,7 @@ final class RedBlackTreeFile extends TreeFile {
     }
 
     @Override
-    protected <N extends IBinaryNode> void setRightNode(N node,
+    protected void setRightNode(IBinaryNode node,
             int childNodeNumber) {
         assert (node instanceof RedBlackNode);
         RedBlackNodeColor color = (nodeVector.get(childNodeNumber)[COLOR]
@@ -88,7 +88,7 @@ final class RedBlackTreeFile extends TreeFile {
     }
 
     @Override
-    protected <N extends IBinaryNode> String getNode(N node,
+    protected String getNode(IBinaryNode node,
             int currentNodeNumber, String leftNodeNumber, String rightNodeNumber) {
         assert (node instanceof RedBlackNode);
         return super.getNode(node, currentNodeNumber, leftNodeNumber,

@@ -223,7 +223,7 @@ public abstract class TreeFile {
         }
     }
 
-    private <N extends IBinaryNode> void generateNode(N node,
+    private void generateNode(IBinaryNode node,
             int currentNodeNumber) {
         if (currentNodeNumber >= nodeVector.size()) {
         } else {
@@ -317,7 +317,7 @@ public abstract class TreeFile {
      * @param rightNodeNumber the number of the right child
      * @return the string corresponding to the node
      */
-    protected <N extends IBinaryNode> String getNode(N node,
+    protected String getNode(IBinaryNode node,
             int currentNodeNumber, String leftNodeNumber, String rightNodeNumber) {
         return currentNodeNumber + SPACE + node.getKey() + SPACE
                 + leftNodeNumber + SPACE + rightNodeNumber;
@@ -360,7 +360,7 @@ public abstract class TreeFile {
      * @param node the node which the left child has to be assigned
      * @param childNodeNumber the index of the key
      */
-    protected abstract <N extends IBinaryNode> void setLeftNode(N node,
+    protected abstract void setLeftNode(IBinaryNode node,
             int childNodeNumber);
 
     /**
@@ -369,7 +369,7 @@ public abstract class TreeFile {
      * @param node the node which the right child has to be assigned
      * @param childNodeNumber the index of the key
      */
-    protected abstract <N extends IBinaryNode> void setRightNode(N node,
+    protected abstract void setRightNode(IBinaryNode node,
             int childNodeNumber);
 
     /**
@@ -396,15 +396,15 @@ public abstract class TreeFile {
      * @throws IOException
      * @throws UnknownDataStructureException
      */
-    public final static <N extends IBinaryNode> void save(
+    public final static void save(
             IBinaryTree tree, String fileName) throws IOException {
         FileWriter file = new FileWriter(fileName);
-        N node;
+        IBinaryNode node;
         int currentNodeNumber = 0;
         int maxNodeNumber = 0;
         String leftNodeNumber;
         String rightNodeNumber;
-        List<N> array = (List<N>) tree.treeToArrayList();
+        List<IBinaryNode> array = tree.treeToArrayList();
 
         file.write(tree.getType() + "\n");
         for (int i = 0; i < array.size(); i++) {

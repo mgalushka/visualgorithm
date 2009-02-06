@@ -98,4 +98,28 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
     public AVLNode getRight() {
         return (AVLNode) right;
     }
+
+    @Override
+    public final void setFather(IBinaryNode fatherNode) {
+        if (!(fatherNode instanceof AVLNode)) {
+            throw new IllegalArgumentException("You have to pass a AVLNode");
+        }
+        father = fatherNode;
+    }
+
+    @Override
+    public final void setLeft(IBinaryNode leftNode) {
+        if (!(leftNode instanceof AVLNode)) {
+            throw new IllegalArgumentException("You have to pass a AVLNode");
+        }
+        this.left = leftNode;
+    }
+
+    @Override
+    public final void setRight(IBinaryNode rightNode) {
+        if (!(rightNode instanceof AVLNode)) {
+            throw new IllegalArgumentException("You have to pass a AVLNode");
+        }
+        this.right = rightNode;
+    }
 }

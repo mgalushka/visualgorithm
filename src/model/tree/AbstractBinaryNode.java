@@ -50,19 +50,7 @@ abstract class AbstractBinaryNode implements IBinaryNode {
         this.key = key;
         left = right = father = null;
     }
-     
-    public final void setFather(IBinaryNode fatherNode) {
-        father = fatherNode;
-    }
-     
-    public final void setLeft(IBinaryNode leftNode) {
-        this.left = leftNode;
-    }
-   
-    public final void setRight(IBinaryNode rightNode) {
-        this.right = rightNode;
-    }
-    
+      
     @Override
     public final int getKey() {
         return key;
