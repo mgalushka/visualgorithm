@@ -1,5 +1,5 @@
 /*
- * RealTokenAlgo.java 28/08/08
+ * package-info.java v1.00 10/02/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,35 +19,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package compiler.lexical;
-
-
 /**
- * A token which represents a real.
+ * This package contains one part of the model of the software : trees.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
- * @version 1.00
- *
+ * @version 1.00 10/02/09
  */
-public class RealTokenAlgo extends TokenAlgo {
-   
-    final private double real;
-    
-    /**
-     * @param real
-     */
-    public RealTokenAlgo(String real) {
-        super(TokenAlgoType.REAL, real);
-        this.real = Double.valueOf(real);
-    }
 
-    /**
-     * @return the real
-     */
-    public double getReal() {
-        return real;
-    }
+package model.tree;
 
-}

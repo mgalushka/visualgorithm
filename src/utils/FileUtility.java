@@ -32,9 +32,9 @@ import java.io.FilenameFilter;
  * @author Damien Rigoni
  * @version 1.00 08/12/08
  */
-public class FileUtils {
+public class FileUtility {
 
-    private FileUtils() {
+    private FileUtility() {
     }
 
     /**

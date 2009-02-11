@@ -22,15 +22,23 @@
 package model.tree;
 
 /**
- * Additional methods of the nodes of AVL trees.
+ * This interface contains all the methods in order to use AVL nodes. It must be
+ * implemented by classes defining AVL nodes.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
  * @see IBinarySearchNode
  */
 public interface IAVLNode extends IBinarySearchNode {
+
+    @Override
+    public IAVLNode getRight();
+
+    @Override
+    public IAVLNode getLeft();
+
+    @Override
+    public IAVLNode getFather();
 
     /**
      * Returns the height of the AVL node.
@@ -40,18 +48,9 @@ public interface IAVLNode extends IBinarySearchNode {
     public int getAVLHeight();
 
     /**
-     * Replaces the height of the AVL node by the new height.
-     * 
-     * @param height the new height of the AVL node
+     * Calculates and sets the height of the AVL node.
      */
-    public void setAVLHeight(int height);
-
-    /**
-     * Calculates the height of the AVL node.
-     * 
-     * @return the height of the AVL node
-     */
-    public int calculateAVLHeight();
+    public void calculateAndSetAVLHeight();
 
     /**
      * Calculates the balancing factor of the AVL node.
@@ -59,13 +58,4 @@ public interface IAVLNode extends IBinarySearchNode {
      * @return the balancing factor of the AVL node
      */
     public int calculateAVLBalance();
-    
-    @Override
-    public IAVLNode getFather();
-    
-    @Override
-    public IAVLNode getLeft();
-
-    @Override
-    public IAVLNode getRight();
 }

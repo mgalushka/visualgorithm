@@ -21,29 +21,23 @@
 
 package model.tree;
 
-import java.util.EmptyStackException;
-import javax.management.RuntimeErrorException;
-
 /**
- * Definition of the nodes of red black trees.
+ * This class defines the nodes of red black trees. It is not designed to
+ * inheritance. These nodes contain a specific attribute which is the color of
+ * the node.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IBinarySearchNode
  * @see IRedBlackNode
  */
 public final class RedBlackNode extends AbstractBinarySearchNode implements
         IRedBlackNode {
 
     /**
-     * Enumeration which defines the color of red black nodes.
+     * This enumeration defines the two different colors of red black nodes.
      * 
-     * @author Julien Hannier
-     * @author Pierre Pironin
      * @author Damien Rigoni
-     * @version 1.00 24/03/08
+     * @version 1.00 19/05/08
      */
     public static enum RedBlackNodeColor {
         RED, BLACK;
@@ -52,35 +46,74 @@ public final class RedBlackNode extends AbstractBinarySearchNode implements
     private RedBlackNodeColor color;
 
     /**
-     * Builds a red black node with the key given in parameter. The color is
-     * initialized to red by default.
+     * Builds a red black node with the key given in parameter. The children and
+     * the father are initialized to null and the color is initialized to red by
+     * default.
      * 
      * @param key the key of the new red black node
      */
     public RedBlackNode(int key) {
         super(key);
-        this.color = RedBlackNodeColor.RED;
+        color = RedBlackNodeColor.RED;
     }
 
     /**
      * Builds a red black node with the key and the color given in parameters.
+     * The children and the father are initialized to null.
      * 
      * @param key the key of the new red black node
-     * @param color the color of the new red black node
+     * @param c the color of the new red black node
      */
-    public RedBlackNode(int key, RedBlackNodeColor color) {
+    public RedBlackNode(int key, RedBlackNodeColor c) {
         super(key);
-        this.color = color;
+        color = c;
     }
 
     @Override
-    public void setColor(RedBlackNodeColor color) {
-        this.color = color;
+    public RedBlackNode getRight() {
+        return (RedBlackNode) right;
+    }
+
+    @Override
+    public RedBlackNode getLeft() {
+        return (RedBlackNode) left;
+    }
+
+    @Override
+    public RedBlackNode getFather() {
+        return (RedBlackNode) father;
     }
 
     @Override
     public RedBlackNodeColor getColor() {
         return color;
+    }
+
+    @Override
+    public void setRight(IBinaryNode newNode) {
+        if (!(newNode instanceof RedBlackNode)) {
+            throw new IllegalArgumentException(
+                    "You have to pass a RedBlackNode");
+        }
+        right = newNode;
+    }
+
+    @Override
+    public void setLeft(IBinaryNode newNode) {
+        if (!(newNode instanceof RedBlackNode)) {
+            throw new IllegalArgumentException(
+                    "You have to pass a RedBlackNode");
+        }
+        left = newNode;
+    }
+
+    @Override
+    public void setFather(IBinaryNode newNode) {
+        if (!(newNode instanceof RedBlackNode)) {
+            throw new IllegalArgumentException(
+                    "You have to pass a RedBlackNode");
+        }
+        father = newNode;
     }
 
     @Override
@@ -112,44 +145,5 @@ public final class RedBlackNode extends AbstractBinarySearchNode implements
         } else {
             return 1;
         }
-    }
-
-    @Override
-    public RedBlackNode getFather() {
-        return (RedBlackNode) father;
-    }
-
-    @Override
-    public RedBlackNode getLeft() {
-        return (RedBlackNode) left;
-    }
-
-    @Override
-    public RedBlackNode getRight() {
-        return (RedBlackNode) right;
-    }
-
-    @Override
-    public final void setFather(IBinaryNode fatherNode) {
-        if (!(fatherNode instanceof RedBlackNode)) {
-            throw new IllegalArgumentException("You have to pass a RedBlackNode");
-        }
-        father = fatherNode;
-    }
-
-    @Override
-    public final void setLeft(IBinaryNode leftNode) {
-        if (!(leftNode instanceof RedBlackNode)) {
-            throw new IllegalArgumentException("You have to pass a RedBlackNode");
-        }
-        this.left = leftNode;
-    }
-
-    @Override
-    public final void setRight(IBinaryNode rightNode) {
-        if (!(rightNode instanceof RedBlackNode)) {
-            throw new IllegalArgumentException("You have to pass a RedBlackNode");
-        }
-        this.right = rightNode;
     }
 }

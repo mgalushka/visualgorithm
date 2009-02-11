@@ -24,15 +24,23 @@ package model.tree;
 import model.tree.RedBlackNode.RedBlackNodeColor;
 
 /**
- * Additional methods of the nodes of red black trees.
+ * This interface contains all the methods in order to use red black nodes. It
+ * must be implemented by classes defining red black nodes.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
  * @see IBinarySearchNode
  */
 public interface IRedBlackNode extends IBinarySearchNode {
+
+    @Override
+    public IRedBlackNode getRight();
+
+    @Override
+    public IRedBlackNode getLeft();
+
+    @Override
+    public IRedBlackNode getFather();
 
     /**
      * Returns the color of the red black node.
@@ -40,13 +48,6 @@ public interface IRedBlackNode extends IBinarySearchNode {
      * @return the color of the red black node
      */
     public RedBlackNodeColor getColor();
-
-    /**
-     * Replaces the color of the red black node by the new color.
-     * 
-     * @param color the new color of the red black node
-     */
-    public void setColor(RedBlackNodeColor color);
 
     /**
      * Returns true if the node is red or else false.
@@ -63,26 +64,16 @@ public interface IRedBlackNode extends IBinarySearchNode {
     public boolean isBlack();
 
     /**
-     * Calculates the left black height of the node.
+     * Calculates the left black height of the node. This method is recursive.
      * 
      * @return the left black height of the node
      */
     public int calculateLeftBlackHeight();
-    
+
     /**
-     * Calculates the right black height of the node.
+     * Calculates the right black height of the node. This method is recursive.
      * 
      * @return the right black height of the node
      */
     public int calculateRightBlackHeight();
-    
-    @Override
-    public IRedBlackNode getFather();
-
-    @Override
-    public IRedBlackNode getLeft();
-    
-    @Override
-    public IRedBlackNode getRight();
-    
 }

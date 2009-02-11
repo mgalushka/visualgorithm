@@ -22,13 +22,11 @@
 package model.tree;
 
 /**
- * Definition of the nodes of AVL trees.
+ * This class defines the nodes of AVL trees. It is not designed to inheritance.
+ * These nodes contain a specific attribute which is the height of the node.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IBinarySearchNode
  * @see IAVLNode
  */
 public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode {
@@ -36,8 +34,8 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
     private int height;
 
     /**
-     * Builds an AVL node with the key given in parameter. The height is
-     * initialized to 0.
+     * Builds an AVL node with the key given in parameter. The children and the
+     * father are initialized to null and the height is initialized to 0.
      * 
      * @param key the key of the new AVL node
      */
@@ -47,17 +45,51 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
     }
 
     @Override
+    public AVLNode getRight() {
+        return (AVLNode) right;
+    }
+
+    @Override
+    public AVLNode getLeft() {
+        return (AVLNode) left;
+    }
+
+    @Override
+    public AVLNode getFather() {
+        return (AVLNode) father;
+    }
+
+    @Override
     public int getAVLHeight() {
         return height;
     }
 
     @Override
-    public void setAVLHeight(int height) {
-        this.height = height;
+    public void setRight(IBinaryNode newNode) {
+        if (!(newNode instanceof AVLNode)) {
+            throw new IllegalArgumentException("You have to pass an AVLNode");
+        }
+        right = newNode;
     }
 
     @Override
-    public int calculateAVLHeight() {
+    public void setLeft(IBinaryNode newNode) {
+        if (!(newNode instanceof AVLNode)) {
+            throw new IllegalArgumentException("You have to pass an AVLNode");
+        }
+        left = newNode;
+    }
+
+    @Override
+    public void setFather(IBinaryNode newNode) {
+        if (!(newNode instanceof AVLNode)) {
+            throw new IllegalArgumentException("You have to pass an AVLNode");
+        }
+        father = newNode;
+    }
+
+    @Override
+    public void calculateAndSetAVLHeight() {
         int leftHeight = 0;
         int rightHeight = 0;
 
@@ -67,59 +99,20 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
         if (getRight() != null) {
             rightHeight = getRight().getAVLHeight() + 1;
         }
-        return Math.max(leftHeight, rightHeight);
+        height = Math.max(leftHeight, rightHeight);
     }
 
     @Override
     public int calculateAVLBalance() {
-        int l = 0;
-        int r = 0;
+        int leftBalance = 0;
+        int rightBalance = 0;
 
         if (getLeft() != null) {
-            l = getLeft().getAVLHeight() + 1;
+            leftBalance = getLeft().getAVLHeight() + 1;
         }
         if (getRight() != null) {
-            r = getRight().getAVLHeight() + 1;
+            rightBalance = getRight().getAVLHeight() + 1;
         }
-        return r - l;
-    }
-
-    @Override
-    public AVLNode getFather() {
-        return (AVLNode) father;
-    }
-
-    @Override
-    public AVLNode getLeft() {
-        return (AVLNode) left;
-    }
-
-    @Override
-    public AVLNode getRight() {
-        return (AVLNode) right;
-    }
-
-    @Override
-    public final void setFather(IBinaryNode fatherNode) {
-        if (!(fatherNode instanceof AVLNode)) {
-            throw new IllegalArgumentException("You have to pass a AVLNode");
-        }
-        father = fatherNode;
-    }
-
-    @Override
-    public final void setLeft(IBinaryNode leftNode) {
-        if (!(leftNode instanceof AVLNode)) {
-            throw new IllegalArgumentException("You have to pass a AVLNode");
-        }
-        this.left = leftNode;
-    }
-
-    @Override
-    public final void setRight(IBinaryNode rightNode) {
-        if (!(rightNode instanceof AVLNode)) {
-            throw new IllegalArgumentException("You have to pass a AVLNode");
-        }
-        this.right = rightNode;
+        return rightBalance - leftBalance;
     }
 }

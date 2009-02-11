@@ -44,7 +44,7 @@ import javax.swing.WindowConstants;
 import model.SoftwareModelEvent;
 import model.SoftwareModelEvent.SoftwareModelEventType;
 import swing.SoftwareIO.SaveEventType;
-import utils.FileUtils;
+import utils.FileUtility;
 import view.ISoftwareView;
 import controller.SoftwareController;
 
@@ -177,14 +177,14 @@ public class SoftwareView extends JFrame implements ISoftwareView {
 
     private void addDataStructureMenus(JMenuBar menuBar) {
         File currentDirectory = new File("src/swing");
-        String[] directories = FileUtils
+        String[] directories = FileUtility
                 .listOfDirectoriesInDirectory(currentDirectory);
         for (String each : directories) {
             File directory = new File("src/swing/" + each);
-            String[] menuFile = FileUtils.listOfFilesInDirectory(
+            String[] menuFile = FileUtility.listOfFilesInDirectory(
                 directory, "Menu.java");
             if (menuFile.length > 0) {
-                String className = FileUtils.wellFormedClassName(
+                String className = FileUtility.wellFormedClassName(
                     menuFile[0], directory);
                 try {
                     JMenu newMenu = (JMenu) Class.forName(className)

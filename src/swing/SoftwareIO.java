@@ -27,7 +27,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.filechooser.FileFilter;
-import utils.FileUtils;
+import utils.FileUtility;
 import controller.SoftwareController;
 
 /**
@@ -82,14 +82,14 @@ public class SoftwareIO {
 
     private void addFileFilters(JFileChooser fileChooser) {
         File currentDirectory = new File("src/swing");
-        String[] directories = FileUtils
+        String[] directories = FileUtility
                 .listOfDirectoriesInDirectory(currentDirectory);
         for (String each : directories) {
             File directory = new File("src/swing/" + each);
-            String[] filterFile = FileUtils.listOfFilesInDirectory(directory,
+            String[] filterFile = FileUtility.listOfFilesInDirectory(directory,
                 "FileFilter.java");
             if (filterFile.length > 0) {
-                String className = FileUtils.wellFormedClassName(filterFile[0],
+                String className = FileUtility.wellFormedClassName(filterFile[0],
                     directory);
                 try {
                     FileFilter fileFilter = (FileFilter) Class.forName(

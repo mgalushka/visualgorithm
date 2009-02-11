@@ -42,7 +42,7 @@ public class LexicalException extends Exception {
     private final int columnNumber;
     
     /**
-     * @param peek
+     * @param aChar
      * @param rowNumber
      * @param columnNumber
      */

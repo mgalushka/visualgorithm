@@ -56,7 +56,7 @@ public class RedBlackTree extends AbstractBinarySearchTree {
     @Override
     public boolean isGoodTree() {
         return (getRoot() == null)
-                || (((IRedBlackNode) getRoot()).isBlack() && isBST(getRoot())
+                || ((getRoot()).isBlack() && isBST(getRoot())
                         && isRedNodeHasBlackChild(getRoot()) && hasGoodHeight(getRoot()));
     }
 
@@ -90,12 +90,14 @@ public class RedBlackTree extends AbstractBinarySearchTree {
             if (isRedHasBlackChild) {
                 if (node.isRed()) {
                     if (node.getLeft() != null) {
-                        if (((IRedBlackNode) node.getLeft()).isRed() || (node.getRight() == null)) {
+                        if (((IRedBlackNode) node.getLeft()).isRed()
+                                || (node.getRight() == null)) {
                             isRedHasBlackChild = false;
                         }
                     }
                     if (node.getRight() != null) {
-                        if (((IRedBlackNode) node.getRight()).isRed() || (node.getLeft() == null)) {
+                        if (((IRedBlackNode) node.getRight()).isRed()
+                                || (node.getLeft() == null)) {
                             isRedHasBlackChild = false;
                         }
                     }

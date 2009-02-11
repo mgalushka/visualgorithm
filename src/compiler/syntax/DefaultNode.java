@@ -31,7 +31,7 @@ import compiler.lexical.TokenAlgo.TokenAlgoType;
 public class DefaultNode extends AlgoNode {
     TokenAlgo token;
     /**
-     * @param algorithm
+     * @param token
      */
     public DefaultNode(TokenAlgoType token) {
         // TODO Auto-generated constructor stub

@@ -22,35 +22,47 @@
 package model.tree;
 
 /**
- * Abstract class containing the common methods of all binary nodes.
+ * This abstract class defines all the common attributes and methods of all
+ * binary nodes. It has been implemented to be inherited by all binary node
+ * classes like BinaryNode.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
  * @see IBinaryNode
  */
 abstract class AbstractBinaryNode implements IBinaryNode {
 
-    private int key;
+    /**
+     * The key of the node.
+     */
+    protected int key;
 
+    /**
+     * The left child of the node.
+     */
     protected IBinaryNode left;
 
+    /**
+     * The right child of the node
+     */
     protected IBinaryNode right;
 
+    /**
+     * The father of the node.
+     */
     protected IBinaryNode father;
 
     /**
-     * Build a node with the key given in parameter, the children and father are
-     * initialized to null.
+     * Builds a node with the key given in parameter, the children and the
+     * father are initialized to null.
      * 
-     * @param key the key of the new node
+     * @param k the key of the new node
      */
-    AbstractBinaryNode(int key) {
-        this.key = key;
+    protected AbstractBinaryNode(int k) {
+        key = k;
         left = right = father = null;
     }
-      
+
     @Override
     public final int getKey() {
         return key;
@@ -58,6 +70,6 @@ abstract class AbstractBinaryNode implements IBinaryNode {
 
     @Override
     public final void setKey(int newKey) {
-        this.key = newKey;
+        key = newKey;
     }
 }

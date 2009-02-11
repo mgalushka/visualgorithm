@@ -22,24 +22,24 @@
 package model.tree;
 
 /**
- * Abstract class containing common methods of all binary search nodes.
+ * This abstract class defines all the common attributes and methods of all
+ * binary search nodes. It has been implemented to be inherited by all binary
+ * search node classes like AVLNode, etc.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
  * @see IBinarySearchNode
  */
-abstract class AbstractBinarySearchNode extends
-        AbstractBinaryNode implements IBinarySearchNode {
+abstract class AbstractBinarySearchNode extends AbstractBinaryNode implements
+        IBinarySearchNode {
 
     /**
-     * Build a node with the key given in parameter, the children and father are
-     * initialized to null.
+     * Builds a node with the key given in parameter, the children and the
+     * father are initialized to null.
      * 
      * @param key the key of the new node
      */
-    AbstractBinarySearchNode(int key) {
+    protected AbstractBinarySearchNode(int key) {
         super(key);
     }
 }

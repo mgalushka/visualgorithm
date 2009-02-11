@@ -22,10 +22,14 @@
 package model.tree;
 
 /**
- * Methods of the nodes of binary trees. Keys are only integers.
+ * This interface contains all the methods in order to use binary nodes. It must
+ * be implemented by all types of binary nodes directly or through one defined
+ * abstract class. All the getters must be defined with the concrete type of the
+ * node. For instance, the method {@code IBinaryNode getRight()} will look like
+ * {@code AVLNode getRight()} for the class AVLNode. All the setters must be
+ * used with the same type of binary node that the object on which they are
+ * used. If not, an IllegalArgumentException is thrown. Keys are only integers.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
  */
@@ -67,21 +71,27 @@ public interface IBinaryNode {
     public void setKey(int newKey);
 
     /**
-     * Replaces the left child of the node by the new node.
-     * 
-     * @param newNode the new left child of the node
-     */
-    public void setLeft(IBinaryNode newNode);
-
-    /**
-     * Replaces the right child of the node by the new node.
+     * Replaces the right child of the node by the new node. If the new node
+     * does not have the same type that the node on which the method is applied
+     * then an IllegalArgumentException is thrown.
      * 
      * @param newNode the new right child of the node
      */
     public void setRight(IBinaryNode newNode);
 
     /**
-     * Replaces the father of the node by the new node.
+     * Replaces the left child of the node by the new node. If the new node does
+     * not have the same type that the node on which the method is applied then
+     * an IllegalArgumentException is thrown.
+     * 
+     * @param newNode the new left child of the node
+     */
+    public void setLeft(IBinaryNode newNode);
+
+    /**
+     * Replaces the father of the node by the new node. If the new node does not
+     * have the same type that the node on which the method is applied then an
+     * IllegalArgumentException is thrown.
      * 
      * @param newNode the new father of the node
      */

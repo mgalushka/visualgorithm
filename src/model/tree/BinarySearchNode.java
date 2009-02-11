@@ -22,10 +22,9 @@
 package model.tree;
 
 /**
- * Definition of the nodes of binary search trees.
+ * This class defines the nodes of binary search trees. It is not designed to
+ * inheritance. These nodes do not contain any additional attributes.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
  * @see IBinarySearchNode
@@ -33,7 +32,8 @@ package model.tree;
 public final class BinarySearchNode extends AbstractBinarySearchNode {
 
     /**
-     * Builds a binary search node with the key given in parameter.
+     * Builds a binary search node with the key given in parameter. The children
+     * and the father are initialized to null.
      * 
      * @param key the key of the new binary search node.
      */
@@ -42,8 +42,8 @@ public final class BinarySearchNode extends AbstractBinarySearchNode {
     }
 
     @Override
-    public BinarySearchNode getFather() {
-        return (BinarySearchNode) father;
+    public BinarySearchNode getRight() {
+        return (BinarySearchNode) right;
     }
 
     @Override
@@ -52,31 +52,34 @@ public final class BinarySearchNode extends AbstractBinarySearchNode {
     }
 
     @Override
-    public BinarySearchNode getRight() {
-        return (BinarySearchNode) right;
-    }
-    
-    @Override
-    public final void setFather(IBinaryNode fatherNode) {
-        if (!(fatherNode instanceof BinarySearchNode)) {
-            throw new IllegalArgumentException("You have to pass a BinarySearchNode");
-        }
-        father = fatherNode;
+    public BinarySearchNode getFather() {
+        return (BinarySearchNode) father;
     }
 
     @Override
-    public final void setLeft(IBinaryNode leftNode) {
-        if (!(leftNode instanceof BinarySearchNode)) {
-            throw new IllegalArgumentException("You have to pass a BinarySearchNode");
+    public void setRight(IBinaryNode newNode) {
+        if (!(newNode instanceof BinarySearchNode)) {
+            throw new IllegalArgumentException(
+                    "You have to pass a BinarySearchNode");
         }
-        this.left = leftNode;
+        right = newNode;
     }
 
     @Override
-    public final void setRight(IBinaryNode rightNode) {
-        if (!(rightNode instanceof BinarySearchNode)) {
-            throw new IllegalArgumentException("You have to pass a BinarySearchNode");
+    public void setLeft(IBinaryNode newNode) {
+        if (!(newNode instanceof BinarySearchNode)) {
+            throw new IllegalArgumentException(
+                    "You have to pass a BinarySearchNode");
         }
-        this.right = rightNode;
+        left = newNode;
+    }
+
+    @Override
+    public void setFather(IBinaryNode newNode) {
+        if (!(newNode instanceof BinarySearchNode)) {
+            throw new IllegalArgumentException(
+                    "You have to pass a BinarySearchNode");
+        }
+        father = newNode;
     }
 }

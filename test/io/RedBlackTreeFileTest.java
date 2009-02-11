@@ -54,12 +54,12 @@ public class RedBlackTreeFileTest {
         saveFileName = "./test/io/saveRedBlackTreeTest.bt";
         tree = new RedBlackTree(6);
 
-        tree.getRoot().setLeft(new RedBlackNode(4));
-        tree.getRoot().getLeft().setColor(RedBlackNodeColor.BLACK);
-        tree.getRoot().setRight(new RedBlackNode(8));
-        tree.getRoot().getRight().setColor(RedBlackNodeColor.BLACK);
-        tree.getRoot().getLeft().setLeft(new RedBlackNode(3));
-        tree.getRoot().getLeft().setRight(new RedBlackNode(5));
+        tree.getRoot().setLeft(new RedBlackNode(4, RedBlackNodeColor.BLACK));
+        tree.getRoot().setRight(new RedBlackNode(8, RedBlackNodeColor.BLACK));
+        tree.getRoot().getLeft().setLeft(
+            new RedBlackNode(3, RedBlackNodeColor.RED));
+        tree.getRoot().getLeft().setRight(
+            new RedBlackNode(5, RedBlackNodeColor.RED));
     }
 
     @Test

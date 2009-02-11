@@ -22,22 +22,22 @@
 package model.tree;
 
 /**
- * Methods of the nodes of binary search trees.
+ * This interface contains all the methods in order to use binary search nodes.
+ * It must be implemented by classes or interfaces defining binary search nodes
+ * or any other type of binary search node like AVLNode, etc.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
  * @see IBinaryNode
  */
-public interface IBinarySearchNode extends
-        IBinaryNode {
+public interface IBinarySearchNode extends IBinaryNode {
+
     @Override
-    public IBinarySearchNode getFather();
+    public IBinarySearchNode getRight();
 
     @Override
     public IBinarySearchNode getLeft();
-    
+
     @Override
-    public IBinarySearchNode getRight();
+    public IBinarySearchNode getFather();
 }

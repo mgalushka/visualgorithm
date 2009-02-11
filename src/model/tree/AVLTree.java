@@ -63,7 +63,7 @@ public class AVLTree extends AbstractBinarySearchTree {
         if (node != null) {
             calculateNodesHeight(node.getLeft());
             calculateNodesHeight(node.getRight());
-            node.setAVLHeight(node.calculateAVLHeight());
+            node.calculateAndSetAVLHeight();
         }
     }
 

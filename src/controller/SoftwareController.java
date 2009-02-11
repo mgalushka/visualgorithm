@@ -27,7 +27,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import model.SoftwareModel;
-import utils.FileUtils;
+import utils.FileUtility;
 import view.AbstractViewFactory;
 import view.ISoftwareView;
 
@@ -97,11 +97,11 @@ public class SoftwareController implements IController {
     public void addTab(String name, Object type, int index, int width,
             int height) {
         File currentDirectory = new File("src/controller");
-        String[] tabControllerFiles = FileUtils.listOfFilesInDirectory(
+        String[] tabControllerFiles = FileUtility.listOfFilesInDirectory(
             currentDirectory, "TabController.java");
 
         for (String each : tabControllerFiles) {
-            String className = FileUtils.wellFormedClassName(each,
+            String className = FileUtility.wellFormedClassName(each,
                 currentDirectory);
             if (className.toLowerCase().contains(name.toLowerCase())) {
                 try {
@@ -148,11 +148,11 @@ public class SoftwareController implements IController {
     public void addTabWithRandom(String name, Object type, int random,
             int index, int width, int height) {
         File currentDirectory = new File("src/controller");
-        String[] tabControllerFiles = FileUtils.listOfFilesInDirectory(
+        String[] tabControllerFiles = FileUtility.listOfFilesInDirectory(
             currentDirectory, "TabController.java");
 
         for (String each : tabControllerFiles) {
-            String className = FileUtils.wellFormedClassName(each,
+            String className = FileUtility.wellFormedClassName(each,
                 currentDirectory);
             if (className.toLowerCase().contains(name.toLowerCase())) {
                 try {
@@ -198,11 +198,11 @@ public class SoftwareController implements IController {
         int i = fileName.lastIndexOf('.');
         String extension = fileName.substring(i + 1).toLowerCase();
         File currentDirectory = new File("src/controller");
-        String[] tabControllerFiles = FileUtils.listOfFilesInDirectory(
+        String[] tabControllerFiles = FileUtility.listOfFilesInDirectory(
             currentDirectory, "TabController.java");
 
         for (String each : tabControllerFiles) {
-            String className = FileUtils.wellFormedClassName(each,
+            String className = FileUtility.wellFormedClassName(each,
                 currentDirectory);
             try {
                 ITabController tabController = (ITabController) Class.forName(
