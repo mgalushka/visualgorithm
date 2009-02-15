@@ -22,7 +22,7 @@
 package model.tree;
 
 /**
- * This class defines the nodes of red black trees. It is not designed to
+ * This class defines the nodes of red black trees. It is not designed for
  * inheritance. These nodes contain a specific attribute which is the color of
  * the node.
  * 
@@ -132,7 +132,7 @@ public final class RedBlackNode extends AbstractBinarySearchNode implements
             return getLeft().isBlack() ? getLeft().calculateLeftBlackHeight() + 1
                     : getLeft().calculateLeftBlackHeight();
         } else {
-            return 1;
+            return 0;
         }
     }
 
@@ -143,7 +143,7 @@ public final class RedBlackNode extends AbstractBinarySearchNode implements
                     .calculateRightBlackHeight() + 1 : getRight()
                     .calculateRightBlackHeight();
         } else {
-            return 1;
+            return 0;
         }
     }
 }

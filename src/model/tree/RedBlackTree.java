@@ -62,8 +62,6 @@ public class RedBlackTree extends AbstractBinarySearchTree {
 
     private boolean hasGoodHeight(RedBlackNode node) {
         boolean hasGoodHeight = true;
-        int leftHeight = 0;
-        int rightHeight = 0;
 
         if (node != null) {
             hasGoodHeight = hasGoodHeight(node.getLeft());
@@ -71,8 +69,8 @@ public class RedBlackTree extends AbstractBinarySearchTree {
                 hasGoodHeight = hasGoodHeight(node.getRight());
             }
             if (hasGoodHeight) {
-                leftHeight = node.calculateLeftBlackHeight();
-                rightHeight = node.calculateRightBlackHeight();
+                int leftHeight = node.calculateLeftBlackHeight();
+                int rightHeight = node.calculateRightBlackHeight();
                 hasGoodHeight = (leftHeight == rightHeight);
             }
         }

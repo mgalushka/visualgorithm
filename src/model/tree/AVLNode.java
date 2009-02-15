@@ -22,7 +22,7 @@
 package model.tree;
 
 /**
- * This class defines the nodes of AVL trees. It is not designed to inheritance.
+ * This class defines the nodes of AVL trees. It is not designed for inheritance.
  * These nodes contain a specific attribute which is the height of the node.
  * 
  * @author Damien Rigoni

@@ -20,11 +20,16 @@
  */
 
 /**
- * This package contains one part of the model of the software : trees.
+ * This package contains one part of the data structure model of the software :
+ * trees. Currently, only binary trees have been implemented but the creation of
+ * other trees is possible. The current implementation of binary trees is
+ * quite simple and it is designed for inheritance in order to create other
+ * types of binary trees. This package contains binary search trees, AVL trees
+ * and red black trees. If you would like to create other trees, do not forget
+ * to implement the interface IDataStructure from the parent package.
  * 
  * @author Julien Hannier
  * @version 1.00 10/02/09
  */
-
 package model.tree;
 

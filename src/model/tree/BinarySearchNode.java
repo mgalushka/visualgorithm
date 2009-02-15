@@ -22,7 +22,7 @@
 package model.tree;
 
 /**
- * This class defines the nodes of binary search trees. It is not designed to
+ * This class defines the nodes of binary search trees. It is not designed for
  * inheritance. These nodes do not contain any additional attributes.
  * 
  * @author Damien Rigoni
