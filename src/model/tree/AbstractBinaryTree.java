@@ -25,26 +25,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Abstract class containing common methods of all binary trees.
+ * This abstract class defines all the common attributes and methods of all
+ * binary trees. It has been implemented to be inherited by all binary tree
+ * classes like BinaryTree.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IBinaryNode
  * @see IBinaryTree
  */
 public abstract class AbstractBinaryTree implements IBinaryTree {
 
+    /**
+     * The type of the binary tree.
+     */
     protected BinaryTreeType type;
 
+    /**
+     * The root node of the binary tree.
+     */
     protected IBinaryNode root;
 
     /**
-     * Definition of the type of binary trees.
+     * Enumeration that defines the types of binary trees. This enumeration is
+     * also a binary tree factory. In fact, it is possible to create the binary
+     * tree corresponding to each type with the method {@code IBinaryTree
+     * createBinaryTree()}.
      * 
-     * @author Julien Hannier
-     * @author Pierre Pironin
      * @author Damien Rigoni
      * @version 1.00 16/06/08
      */
@@ -52,32 +58,26 @@ public abstract class AbstractBinaryTree implements IBinaryTree {
         AVLTREE(AVLTree.class), BINARYSEARCHTREE(BinarySearchTree.class),
         REDBLACKTREE(RedBlackTree.class);
 
-        private Class<? extends IBinaryTree> binaryTreeClass;
+        private Class<? extends IBinaryTree> classOfTheBinaryTree;
 
-        private BinaryTreeType(Class<? extends IBinaryTree> treeClass) {
-            binaryTreeClass = treeClass;
+        private BinaryTreeType(Class<? extends IBinaryTree> c) {
+            classOfTheBinaryTree = c;
         }
 
         /**
-         * Builds the binary tree corresponding to the type.
+         * Creates the binary tree corresponding to the type on which the method
+         * is applied. If the new instance of the binary tree can not be created
+         * then null is returned.
          * 
-         * @return the binary tree
+         * @return the new instance of binary tree
          */
-        public IBinaryTree getBinaryTree() {
+        IBinaryTree createBinaryTree() {
             try {
-                return binaryTreeClass.newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                return classOfTheBinaryTree.newInstance();
+            } catch (Exception e) {
             }
             return null;
         }
-    }
-
-    @Override
-    public void setRoot(IBinaryNode newNode) {
-        root = newNode;
     }
 
     @Override
@@ -86,43 +86,47 @@ public abstract class AbstractBinaryTree implements IBinaryTree {
     }
 
     @Override
-    public final int calculateHeight() {
-        return recursiveHeight(root);
+    public final int computeHeight() {
+        return recursiveComputeHeight(root);
     }
 
     @Override
-    public final List<IBinaryNode> treeToArrayList() {
-        int length = (2 * (int) Math.pow(2, calculateHeight())) - 1;
-        List<IBinaryNode> arrayTree = new ArrayList<IBinaryNode>();
-        for (int i = 0; i < length; i++) {
-            arrayTree.add(null);
+    public final List<IBinaryNode> buildHeapFromBinaryTree() {
+        int heapLength = (2 * (int) Math.pow(2, computeHeight())) - 1;
+        List<IBinaryNode> heap = new ArrayList<IBinaryNode>();
+        
+        for (int i = 0; i < heapLength; i++) {
+            heap.add(null);
         }
-        if (length > 0) {
-            buildArray(arrayTree, 0, root);
+        if (heapLength > 0) {
+            recursiveBuildHeap(heap, 0, root);
         }
-        return arrayTree;
+        return heap;
     }
 
-    private int recursiveHeight(IBinaryNode node) {
+    private int recursiveComputeHeight(IBinaryNode node) {
         if (node == null) {
             return -1;
         } else {
-            return Math.max(recursiveHeight(node.getLeft()),
-                recursiveHeight(node.getRight())) + 1;
+            return Math.max(recursiveComputeHeight(node.getLeft()),
+                recursiveComputeHeight(node.getRight())) + 1;
         }
     }
 
-    private void buildArray(List<IBinaryNode> array, int index, IBinaryNode node) {
+    private void recursiveBuildHeap(List<IBinaryNode> array, int index,
+            IBinaryNode node) {
+        assert(index >= 0);
+        
         if ((node.getLeft() == null) && (node.getRight() == null)) {
             array.set(index, node);
         } else {
             if (node.getLeft() == null) {
-                buildArray(array, 2 * index + 2, node.getRight());
+                recursiveBuildHeap(array, 2 * index + 2, node.getRight());
             } else if (node.getRight() == null) {
-                buildArray(array, 2 * index + 1, node.getLeft());
+                recursiveBuildHeap(array, 2 * index + 1, node.getLeft());
             } else {
-                buildArray(array, 2 * index + 1, node.getLeft());
-                buildArray(array, 2 * index + 2, node.getRight());
+                recursiveBuildHeap(array, 2 * index + 1, node.getLeft());
+                recursiveBuildHeap(array, 2 * index + 2, node.getRight());
             }
             array.set(index, node);
         }

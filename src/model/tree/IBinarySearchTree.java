@@ -21,16 +21,17 @@
 
 package model.tree;
 
-
 /**
- * Methods of binary search trees.
+ * This interface contains all the methods in order to use binary search trees.
+ * It must be implemented by classes or interfaces defining binary search trees
+ * or any other type of binary search tree like AVLTree, etc.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IBinarySearchNode
  * @see IBinaryTree
  */
 public interface IBinarySearchTree extends IBinaryTree {
+
+    @Override
+    public IBinarySearchNode getRoot();
 }

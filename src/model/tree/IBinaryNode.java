@@ -64,36 +64,42 @@ public interface IBinaryNode {
     public IBinaryNode getFather();
 
     /**
-     * Replaces the key of the node by the new key.
+     * Replaces the key of the node by {@code newKey}. If {@code newKey} is
+     * greater than 99 or less than 0 then an IllegalArgumentException is
+     * thrown.
      * 
      * @param newKey the new key of the node
+     * @throws IllegalArgumentException
      */
-    public void setKey(int newKey);
+    public void setKey(int newKey) throws IllegalArgumentException;
 
     /**
-     * Replaces the right child of the node by the new node. If the new node
+     * Replaces the right child of the node by {@code newNode}. If 
+     * {@code newNode} does not have the same type that the node on which the
+     * method is applied then an IllegalArgumentException is thrown.
+     * 
+     * @param newNode the new right child of the node
+     * @throws IllegalArgumentException
+     */
+    public void setRight(IBinaryNode newNode) throws IllegalArgumentException;
+
+    /**
+     * Replaces the left child of the node by {@code newNode}. If
+     * {@code newNode} does not have the same type that the node on which the
+     * method is applied then an IllegalArgumentException is thrown.
+     * 
+     * @param newNode the new left child of the node
+     * @throws IllegalArgumentException
+     */
+    public void setLeft(IBinaryNode newNode) throws IllegalArgumentException;
+
+    /**
+     * Replaces the father of the node by {@code newNode}. If {@code newNode}
      * does not have the same type that the node on which the method is applied
      * then an IllegalArgumentException is thrown.
      * 
-     * @param newNode the new right child of the node
-     */
-    public void setRight(IBinaryNode newNode);
-
-    /**
-     * Replaces the left child of the node by the new node. If the new node does
-     * not have the same type that the node on which the method is applied then
-     * an IllegalArgumentException is thrown.
-     * 
-     * @param newNode the new left child of the node
-     */
-    public void setLeft(IBinaryNode newNode);
-
-    /**
-     * Replaces the father of the node by the new node. If the new node does not
-     * have the same type that the node on which the method is applied then an
-     * IllegalArgumentException is thrown.
-     * 
      * @param newNode the new father of the node
+     * @throws IllegalArgumentException
      */
-    public void setFather(IBinaryNode newNode);
+    public void setFather(IBinaryNode newNode) throws IllegalArgumentException;
 }

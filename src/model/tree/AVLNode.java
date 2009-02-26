@@ -35,11 +35,14 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
 
     /**
      * Builds an AVL node with the key given in parameter. The children and the
-     * father are initialized to null and the height is initialized to 0.
+     * father are initialized to null and the height is initialized to 0. If
+     * {@code key} is greater than 99 or less than 0 then an
+     * IllegalArgumentException is thrown.
      * 
      * @param key the key of the new AVL node
+     * @throws IllegalArgumentException
      */
-    public AVLNode(int key) {
+    public AVLNode(int key) throws IllegalArgumentException {
         super(key);
         height = 0;
     }
@@ -65,7 +68,7 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
     }
 
     @Override
-    public void setRight(IBinaryNode newNode) {
+    public void setRight(IBinaryNode newNode) throws IllegalArgumentException {
         if (!(newNode instanceof AVLNode)) {
             throw new IllegalArgumentException("You have to pass an AVLNode");
         }
@@ -73,7 +76,7 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
     }
 
     @Override
-    public void setLeft(IBinaryNode newNode) {
+    public void setLeft(IBinaryNode newNode) throws IllegalArgumentException {
         if (!(newNode instanceof AVLNode)) {
             throw new IllegalArgumentException("You have to pass an AVLNode");
         }
@@ -81,7 +84,7 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
     }
 
     @Override
-    public void setFather(IBinaryNode newNode) {
+    public void setFather(IBinaryNode newNode) throws IllegalArgumentException {
         if (!(newNode instanceof AVLNode)) {
             throw new IllegalArgumentException("You have to pass an AVLNode");
         }
@@ -89,7 +92,7 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
     }
 
     @Override
-    public void calculateAndSetAVLHeight() {
+    public void computeAndSetHeight() {
         int leftHeight = 0;
         int rightHeight = 0;
 
@@ -103,7 +106,7 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
     }
 
     @Override
-    public int calculateAVLBalance() {
+    public int computeBalanceFactor() {
         int leftBalance = 0;
         int rightBalance = 0;
 

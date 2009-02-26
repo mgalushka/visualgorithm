@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabModel.java v1.00 16/06/08
+ * BinaryTreeModel.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -41,7 +41,7 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class BinaryTreeTabModel implements ITabModel {
+public class BinaryTreeModel implements ITabModel {
 
     public final static String DataStructureName = "TREE";
     
@@ -56,8 +56,8 @@ public class BinaryTreeTabModel implements ITabModel {
      * 
      * @param type the type of the binary tree
      */
-    public BinaryTreeTabModel(BinaryTreeType type) {
-        binaryTree = type.getBinaryTree();
+    public BinaryTreeModel(BinaryTreeType type) {
+        binaryTree = type.createBinaryTree();
         listeners = new EventListenerList();
         isBinaryTreeSaved = false;
     }
@@ -71,7 +71,7 @@ public class BinaryTreeTabModel implements ITabModel {
      * @throws ParseException
      * @throws FileNotFoundException
      */
-    public BinaryTreeTabModel(File file) throws FileNotFoundException,
+    public BinaryTreeModel(File file) throws FileNotFoundException,
             ParseException, IOException, UnknownDataStructureException {
         binaryTree = TreeFile.load(file.getAbsolutePath());
         listeners = new EventListenerList();
@@ -84,8 +84,8 @@ public class BinaryTreeTabModel implements ITabModel {
      * @param type the type of the binary tree
      * @param nbNode the number of nodes
      */
-    public BinaryTreeTabModel(BinaryTreeType type, int nbNode) {
-        binaryTree = type.getBinaryTree();
+    public BinaryTreeModel(BinaryTreeType type, int nbNode) {
+        binaryTree = type.createBinaryTree();
         for (int i = 0; i < nbNode; i++) {
             int key = (int) Math.round(Math.random() * 100);
             // TODO insertion
@@ -110,8 +110,8 @@ public class BinaryTreeTabModel implements ITabModel {
      * 
      * @param listener the listener to add
      */
-    public void addBinaryTreeListener(BinaryTreeTabListener listener) {
-        listeners.add(BinaryTreeTabListener.class, listener);
+    public void addBinaryTreeListener(BinaryTreeModelListener listener) {
+        listeners.add(BinaryTreeModelListener.class, listener);
     }
 
     /**
@@ -119,8 +119,8 @@ public class BinaryTreeTabModel implements ITabModel {
      * 
      * @param listener the listener to remove
      */
-    public void removeBinaryTreeListener(BinaryTreeTabListener listener) {
-        listeners.remove(BinaryTreeTabListener.class, listener);
+    public void removeBinaryTreeListener(BinaryTreeModelListener listener) {
+        listeners.remove(BinaryTreeModelListener.class, listener);
     }
 
     /**
@@ -131,7 +131,7 @@ public class BinaryTreeTabModel implements ITabModel {
     public void addNode(int key) {
         // TODO insertion
         System.out.println(key);
-        fireBinaryTreeChanged(binaryTree.treeToArrayList());
+        fireBinaryTreeChanged(binaryTree.buildHeapFromBinaryTree());
         isBinaryTreeSaved = false;
     }
 
@@ -143,7 +143,7 @@ public class BinaryTreeTabModel implements ITabModel {
     public void deleteNode(int key) {
         // TODO deletion
         System.out.println(key);
-        fireBinaryTreeChanged(binaryTree.treeToArrayList());
+        fireBinaryTreeChanged(binaryTree.buildHeapFromBinaryTree());
         isBinaryTreeSaved = false;
     }
 
@@ -156,7 +156,7 @@ public class BinaryTreeTabModel implements ITabModel {
     public void pedagogicalDeleteNode(int key) {
         // TODO deletion with BST delete algorithm
         System.out.println(key);
-        fireBinaryTreeChanged(binaryTree.treeToArrayList());
+        fireBinaryTreeChanged(binaryTree.buildHeapFromBinaryTree());
         isBinaryTreeSaved = false;
     }
 
@@ -164,7 +164,7 @@ public class BinaryTreeTabModel implements ITabModel {
      * Updates the view.
      */
     public void updateBinaryTreeView() {
-        fireBinaryTreeChanged(binaryTree.treeToArrayList());
+        fireBinaryTreeChanged(binaryTree.buildHeapFromBinaryTree());
     }
 
     @Override
@@ -180,9 +180,9 @@ public class BinaryTreeTabModel implements ITabModel {
     }
 
     private <N extends IBinaryNode> void fireBinaryTreeChanged(List<N> data) {
-        BinaryTreeTabListener[] listenerTab = listeners.getListeners(BinaryTreeTabListener.class);
-        for (BinaryTreeTabListener listener : listenerTab) {
-            listener.binaryTreeChanged(new BinaryTreeTabEvent<N>(this, data));
+        BinaryTreeModelListener[] listenerTab = listeners.getListeners(BinaryTreeModelListener.class);
+        for (BinaryTreeModelListener listener : listenerTab) {
+            listener.binaryTreeChanged(new BinaryTreeModelEvent<N>(this, data));
         }
     }
 }

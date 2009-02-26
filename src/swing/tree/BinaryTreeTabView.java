@@ -30,7 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import controller.BinaryTreeTabController;
 import view.IBinaryTreeTabView;
-import model.tree.BinaryTreeTabEvent;
+import model.tree.BinaryTreeModelEvent;
 import model.tree.IBinaryNode;
 
 /**
@@ -120,7 +120,7 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
 
     @Override
     public <N extends IBinaryNode> void binaryTreeChanged(
-            BinaryTreeTabEvent<N> event) {
+            BinaryTreeModelEvent<N> event) {
         if (isFastTreeCreation) {
             fastTreeCreationPanel.updateTree(event.getData());
         } else {

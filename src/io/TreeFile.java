@@ -213,7 +213,7 @@ public abstract class TreeFile {
         } else {
             tree = createEmptyBinaryTree();
         }
-        if (tree.isGoodTree())
+        if (tree.isWellFormedTree())
             return tree;
         else {
             String article = treeType.charAt(0) == 'A' ? "an " : "a ";
@@ -404,7 +404,7 @@ public abstract class TreeFile {
         int maxNodeNumber = 0;
         String leftNodeNumber;
         String rightNodeNumber;
-        List<IBinaryNode> array = tree.treeToArrayList();
+        List<IBinaryNode> array = tree.buildHeapFromBinaryTree();
 
         file.write(tree.getType() + "\n");
         for (int i = 0; i < array.size(); i++) {

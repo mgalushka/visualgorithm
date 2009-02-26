@@ -22,16 +22,14 @@
 package model.tree;
 
 /**
- * Definition of binary search trees, with as node <tt>BinarySearchNode</tt>.
- * 
- * @author Julien Hannier
- * @author Pierre Pironin
+ * This class defines binary search trees with as node
+ * <tt>BinarySearchNode</tt>. It is not designed for inheritance.
+ *
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IBinaryNode
  * @see IBinarySearchTree
  */
-public class BinarySearchTree extends
+public final class BinarySearchTree extends
         AbstractBinarySearchTree {
 
     {
@@ -39,29 +37,39 @@ public class BinarySearchTree extends
     }
 
     /**
-     * Builds an empty binary search tree.
+     * Builds an empty binary search tree. The root node is initialized to null.
      */
     public BinarySearchTree() {
         root = null;
     }
 
     /**
-     * Builds a binary search tree whose root is initialized with the specified
-     * key.
+     * Builds a binary search tree with the key given in parameter. The children
+     * and the father are initialized to null. If {@code key} is greater than 99
+     * or less than 0 then an IllegalArgumentException is thrown.
      * 
-     * @param key the key of the root
+     * @param key the key of the root node
      */
-    public BinarySearchTree(int key) {
+    public BinarySearchTree(int key) throws IllegalArgumentException {
         root = new BinarySearchNode(key);
-    }
-
-    @Override
-    public boolean isGoodTree() {
-        return isBST(getRoot());
     }
 
     @Override
     public BinarySearchNode getRoot() {
         return (BinarySearchNode) root;
+    }
+
+    @Override
+    public void setRoot(IBinaryNode newNode) throws IllegalArgumentException {
+        if (!(newNode instanceof BinarySearchNode)) {
+            throw new IllegalArgumentException(
+                    "You have to pass a BinarySearchNode");
+        }
+        root = newNode;
+    }
+
+    @Override
+    public boolean isWellFormedTree() {
+        return isWellFormedBST(getRoot());
     }
 }

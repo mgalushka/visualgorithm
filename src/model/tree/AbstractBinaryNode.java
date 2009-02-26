@@ -33,32 +33,38 @@ package model.tree;
 abstract class AbstractBinaryNode implements IBinaryNode {
 
     /**
-     * The key of the node.
+     * The key of the binary node.
      */
     protected int key;
 
     /**
-     * The left child of the node.
+     * The left child of the binary node.
      */
     protected IBinaryNode left;
 
     /**
-     * The right child of the node
+     * The right child of the binary node
      */
     protected IBinaryNode right;
 
     /**
-     * The father of the node.
+     * The father of the binary node.
      */
     protected IBinaryNode father;
 
     /**
      * Builds a node with the key given in parameter, the children and the
-     * father are initialized to null.
+     * father are initialized to null. If {@code k} is greater than 99 or less
+     * than 0 then an IllegalArgumentException is thrown.
      * 
      * @param k the key of the new node
+     * @throws IllegalArgumentException
      */
-    protected AbstractBinaryNode(int k) {
+    protected AbstractBinaryNode(int k) throws IllegalArgumentException {
+        if((k < 0) || (k > 99)) {
+            throw new IllegalArgumentException(
+                    "You have to pass a key between 0 and 99");
+        }
         key = k;
         left = right = father = null;
     }
@@ -69,7 +75,11 @@ abstract class AbstractBinaryNode implements IBinaryNode {
     }
 
     @Override
-    public final void setKey(int newKey) {
+    public final void setKey(int newKey) throws IllegalArgumentException {
+        if((newKey < 0) || (newKey > 99)) {
+            throw new IllegalArgumentException(
+                    "You have to pass a key between 0 and 99");
+        }
         key = newKey;
     }
 }

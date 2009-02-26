@@ -33,11 +33,13 @@ public final class BinarySearchNode extends AbstractBinarySearchNode {
 
     /**
      * Builds a binary search node with the key given in parameter. The children
-     * and the father are initialized to null.
+     * and the father are initialized to null. If {@code key} is greater than 99
+     * or less than 0 then an IllegalArgumentException is thrown.
      * 
      * @param key the key of the new binary search node.
+     * @throws IllegalArgumentException
      */
-    public BinarySearchNode(int key) {
+    public BinarySearchNode(int key) throws IllegalArgumentException {
         super(key);
     }
 
@@ -57,7 +59,7 @@ public final class BinarySearchNode extends AbstractBinarySearchNode {
     }
 
     @Override
-    public void setRight(IBinaryNode newNode) {
+    public void setRight(IBinaryNode newNode) throws IllegalArgumentException {
         if (!(newNode instanceof BinarySearchNode)) {
             throw new IllegalArgumentException(
                     "You have to pass a BinarySearchNode");
@@ -66,7 +68,7 @@ public final class BinarySearchNode extends AbstractBinarySearchNode {
     }
 
     @Override
-    public void setLeft(IBinaryNode newNode) {
+    public void setLeft(IBinaryNode newNode) throws IllegalArgumentException {
         if (!(newNode instanceof BinarySearchNode)) {
             throw new IllegalArgumentException(
                     "You have to pass a BinarySearchNode");
@@ -75,7 +77,7 @@ public final class BinarySearchNode extends AbstractBinarySearchNode {
     }
 
     @Override
-    public void setFather(IBinaryNode newNode) {
+    public void setFather(IBinaryNode newNode) throws IllegalArgumentException {
         if (!(newNode instanceof BinarySearchNode)) {
             throw new IllegalArgumentException(
                     "You have to pass a BinarySearchNode");

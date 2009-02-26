@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import model.ITabModel;
 import model.UnknownDataStructureException;
-import model.tree.BinaryTreeTabModel;
+import model.tree.BinaryTreeModel;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 import view.AbstractViewFactory;
 import view.IBinaryTreeTabView;
@@ -45,14 +45,14 @@ import view.IView;
  */
 public class BinaryTreeTabController implements ITabController {
 
-    private BinaryTreeTabModel binaryTreeTabModel;
+    private BinaryTreeModel binaryTreeTabModel;
 
     private IBinaryTreeTabView binaryTreeTabView;
 
     @Override
     public void initializeTabController(Object type,
             AbstractViewFactory viewFactory, int width, int height) {
-        binaryTreeTabModel = new BinaryTreeTabModel((BinaryTreeType) type);
+        binaryTreeTabModel = new BinaryTreeModel((BinaryTreeType) type);
 
         binaryTreeTabView = viewFactory.createBinaryTreeTabView(
             "Type of the Tree : " + type.toString(), this, width, height);
@@ -62,7 +62,7 @@ public class BinaryTreeTabController implements ITabController {
     @Override
     public void initializeTabControllerWithRandom(Object type,
             AbstractViewFactory viewFactory, int random, int width, int height) {
-        binaryTreeTabModel = new BinaryTreeTabModel((BinaryTreeType) type,
+        binaryTreeTabModel = new BinaryTreeModel((BinaryTreeType) type,
                 random);
 
         binaryTreeTabView = viewFactory.createBinaryTreeTabView(
@@ -76,7 +76,7 @@ public class BinaryTreeTabController implements ITabController {
             AbstractViewFactory viewFactory, int width, int height)
             throws FileNotFoundException, ParseException, IOException,
             UnknownDataStructureException {
-        binaryTreeTabModel = new BinaryTreeTabModel(file);
+        binaryTreeTabModel = new BinaryTreeModel(file);
 
         binaryTreeTabView = viewFactory.createBinaryTreeTabView(
             "Type of the Tree : " + binaryTreeTabModel.getTabModel().getType(),

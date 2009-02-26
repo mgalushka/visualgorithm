@@ -50,6 +50,13 @@ public interface IRedBlackNode extends IBinarySearchNode {
     public RedBlackNodeColor getColor();
 
     /**
+     * Replaces the color of the node by {@code c}.
+     * 
+     * @param c the new color of the node
+     */
+    public void setColor(RedBlackNodeColor c);
+
+    /**
      * Returns true if the node is red or else false.
      * 
      * @return true if the node is red or else false

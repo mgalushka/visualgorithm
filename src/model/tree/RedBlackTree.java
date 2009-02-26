@@ -22,42 +22,57 @@
 package model.tree;
 
 /**
- * Definition of red black trees, with as node <tt>RedBlackNode</tt>.
+ * This class defines red black trees with as node <tt>RedBlackNode</tt>. It is
+ * not designed for inheritance.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IRedBlackNode
  * @see IBinarySearchTree
  */
-public class RedBlackTree extends AbstractBinarySearchTree {
+public final class RedBlackTree extends AbstractBinarySearchTree {
 
     {
         type = BinaryTreeType.REDBLACKTREE;
     }
 
     /**
-     * Build an empty red black tree.
+     * Builds an empty red black tree. The root node is initialized to null.
      */
     public RedBlackTree() {
         root = null;
     }
 
     /**
-     * Build a red black tree whose root is initialized with the specified key.
-     * 
-     * @param key the key of the root
+     * Builds a red black tree with the key given in parameter. The children and
+     * the father are initialized to null. If {@code key} is greater than 99 or
+     * less than 0 then an IllegalArgumentException is thrown.
+     *
+     * @param key the key of the root node
      */
-    public RedBlackTree(int key) {
+    public RedBlackTree(int key) throws IllegalArgumentException {
         root = new RedBlackNode(key, RedBlackNode.RedBlackNodeColor.BLACK);
     }
 
     @Override
-    public boolean isGoodTree() {
+    public RedBlackNode getRoot() {
+        return (RedBlackNode) root;
+    }
+
+    @Override
+    public void setRoot(IBinaryNode newNode) throws IllegalArgumentException {
+        if (!(newNode instanceof RedBlackNode)) {
+            throw new IllegalArgumentException(
+                    "You have to pass a RedBlackNode");
+        }
+        root = newNode;
+    }
+
+    @Override
+    public boolean isWellFormedTree() {
         return (getRoot() == null)
-                || ((getRoot()).isBlack() && isBST(getRoot())
-                        && isRedNodeHasBlackChild(getRoot()) && hasGoodHeight(getRoot()));
+                || ((getRoot()).isBlack() && isWellFormedBST(getRoot())
+                        && hasRedNodeWithBlackChild(getRoot())
+                        && hasGoodHeight(getRoot()));
     }
 
     private boolean hasGoodHeight(RedBlackNode node) {
@@ -77,36 +92,32 @@ public class RedBlackTree extends AbstractBinarySearchTree {
         return hasGoodHeight;
     }
 
-    private boolean isRedNodeHasBlackChild(RedBlackNode node) {
-        boolean isRedHasBlackChild = true;
+    private boolean hasRedNodeWithBlackChild(RedBlackNode node) {
+        boolean hasRedNodeWithBlackChild = true;
 
         if (node != null) {
-            isRedHasBlackChild = isRedNodeHasBlackChild(node.getLeft());
-            if (isRedHasBlackChild) {
-                isRedHasBlackChild = isRedNodeHasBlackChild(node.getRight());
+            hasRedNodeWithBlackChild = hasRedNodeWithBlackChild(node.getLeft());
+            if (hasRedNodeWithBlackChild) {
+                hasRedNodeWithBlackChild =
+                        hasRedNodeWithBlackChild(node.getRight());
             }
-            if (isRedHasBlackChild) {
+            if (hasRedNodeWithBlackChild) {
                 if (node.isRed()) {
                     if (node.getLeft() != null) {
-                        if (((IRedBlackNode) node.getLeft()).isRed()
+                        if (node.getLeft().isRed()
                                 || (node.getRight() == null)) {
-                            isRedHasBlackChild = false;
+                            hasRedNodeWithBlackChild = false;
                         }
                     }
                     if (node.getRight() != null) {
-                        if (((IRedBlackNode) node.getRight()).isRed()
+                        if (node.getRight().isRed()
                                 || (node.getLeft() == null)) {
-                            isRedHasBlackChild = false;
+                            hasRedNodeWithBlackChild = false;
                         }
                     }
                 }
             }
         }
-        return isRedHasBlackChild;
-    }
-
-    @Override
-    public RedBlackNode getRoot() {
-        return (RedBlackNode) root;
+        return hasRedNodeWithBlackChild;
     }
 }

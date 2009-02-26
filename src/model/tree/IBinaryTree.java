@@ -25,10 +25,15 @@ import java.util.List;
 import model.IDataStructure;
 
 /**
- * Interface describing the methods of binary trees.
- * 
- * @author Julien Hannier
- * @author Pierre Pironin
+ * This interface contains all the methods in order to use binary trees. It must
+ * be implemented by all types of binary trees directly or through one defined
+ * abstract class. The method {@code IBinaryNode getRoot()} must be defined with
+ * the concrete type of node corresponding to the tree. For instance, it will
+ * look like {@code AVLNode getRoot()} for the class AVLTree. The method
+ * {@code void setRoot(IBinaryNode newNode)} must be used with the same type of
+ * node that the type corresponding to the tree on which it is used. If not, an
+ * IllegalArgumentException is thrown. Keys are only integers.
+ *
  * @author Damien Rigoni
  * @version 1.00 19/05/08
  * @see IBinaryNode
@@ -36,39 +41,43 @@ import model.IDataStructure;
 public interface IBinaryTree extends IDataStructure {
 
     /**
-     * Calculates the height of the tree.
-     * 
-     * @return the height of the tree
-     */
-    public int calculateHeight();
-
-    /**
-     * Builds an array list corresponding to the tree. The array list will
-     * contain null values for the absent nodes.
-     * 
-     * @return the array list corresponding to the tree
-     */
-    public List<IBinaryNode> treeToArrayList();
-
-    /**
-     * Returns true if the tree is well formed.
-     * 
-     * @return true if the tree is well formed
-     */
-    public boolean isGoodTree();
-
-    /**
      * Returns the root of the tree.
-     * 
+     *
      * @return the root of the tree
      */
     public IBinaryNode getRoot();
-    
 
     /**
-     * Replaces the root of the tree by the new node.
-     * 
+     * Replaces the root of the tree by {@code newNode}. If {@code newNode} does
+     * not have the same type that the type of node corresponding to the tree on
+     * which the method is applied then an IllegalArgumentException is thrown.
+     *
      * @param newNode the new root node
+     * @throws IllegalArgumentException
      */
-    public void setRoot(IBinaryNode newNode);
+    public void setRoot(IBinaryNode newNode) throws IllegalArgumentException;
+
+    /**
+     * Returns true if the tree is well formed, or else false. A well formed
+     * tree is a tree that corresponds to its properties.
+     *
+     * @return true if the tree is well formed, or else false
+     */
+    public boolean isWellFormedTree();
+
+    /**
+     * Computes the height of the tree.
+     * 
+     * @return the height of the tree
+     */
+    public int computeHeight();
+
+    /**
+     * Builds a heap corresponding to the binary tree. The heap is contained in
+     * an array list. The array list will contain null values for the absent
+     * nodes.
+     * 
+     * @return the array list containing the heap
+     */
+    public List<IBinaryNode> buildHeapFromBinaryTree();
 }

@@ -22,40 +22,41 @@
 package model.tree;
 
 /**
- * Abstract class containing common methods of all binary search trees.
+ * This abstract class defines all the common attributes and methods of all
+ * binary search trees. It has been implemented to be inherited by all binary
+ * search tree classes like AVLTree, etc.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IBinarySearchNode
  * @see IBinarySearchTree
  */
 public abstract class AbstractBinarySearchTree extends AbstractBinaryTree
         implements IBinarySearchTree {
 
     /**
-     * Returns true if the tree is a well formed binary search tree.
+     * Returns true if the tree is a well formed binary search tree, or else
+     * false. A well formed binary search tree is a tree for which each node has
+     * a left child with a lesser key and a right child with a greater key.
      * 
-     * @param node a node of the tree
-     * @return true if node is a well formed binary search tree
+     * @param root the root node of the binary search tree
+     * @return true if node is a well formed binary search tree, or else false
      */
-    protected boolean isBST(IBinarySearchNode node) {
-        if (node != null) {
-            if ((node.getLeft() == null) && (node.getRight() == null)) {
+    protected boolean isWellFormedBST(IBinarySearchNode root) {
+        if (root != null) {
+            if ((root.getLeft() == null) && (root.getRight() == null)) {
                 return true;
             } else {
-                if (node.getLeft() == null) {
-                    return (node.getRight().getKey() > node.getKey())
-                            && isBST(node.getRight());
-                } else if (node.getRight() == null) {
-                    return (node.getLeft().getKey() < node.getKey())
-                            && isBST(node.getLeft());
+                if (root.getLeft() == null) {
+                    return (root.getRight().getKey() > root.getKey())
+                            && isWellFormedBST(root.getRight());
+                } else if (root.getRight() == null) {
+                    return (root.getLeft().getKey() < root.getKey())
+                            && isWellFormedBST(root.getLeft());
                 } else {
-                    return (node.getLeft().getKey() < node.getKey())
-                            && isBST(node.getLeft())
-                            && (node.getRight().getKey() > node.getKey())
-                            && isBST(node.getRight());
+                    return (root.getLeft().getKey() < root.getKey())
+                            && isWellFormedBST(root.getLeft())
+                            && (root.getRight().getKey() > root.getKey())
+                            && isWellFormedBST(root.getRight());
                 }
             }
         }

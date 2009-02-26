@@ -35,11 +35,13 @@ abstract class AbstractBinarySearchNode extends AbstractBinaryNode implements
 
     /**
      * Builds a node with the key given in parameter, the children and the
-     * father are initialized to null.
+     * father are initialized to null. If {@code key} is greater than 99 or less
+     * than 0 then an IllegalArgumentException is thrown.
      * 
      * @param key the key of the new node
+     * @throws IllegalArgumentException
      */
-    protected AbstractBinarySearchNode(int key) {
+    protected AbstractBinarySearchNode(int key) throws IllegalArgumentException {
         super(key);
     }
 }

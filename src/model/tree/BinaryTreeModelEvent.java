@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabEvent.java v1.00 16/06/08
+ * BinaryTreeModelEvent.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -32,7 +32,7 @@ import java.util.List;
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class BinaryTreeTabEvent<N extends IBinaryNode> extends EventObject {
+public class BinaryTreeModelEvent<N extends IBinaryNode> extends EventObject {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,7 +44,7 @@ public class BinaryTreeTabEvent<N extends IBinaryNode> extends EventObject {
      * @param source the source of the binary tree tab event
      * @param d the data of the binary tree event
      */
-    public BinaryTreeTabEvent(Object source, List<N> d) {
+    public BinaryTreeModelEvent(Object source, List<N> d) {
         super(source);
         data = d;
     }

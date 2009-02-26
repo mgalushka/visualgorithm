@@ -22,70 +22,80 @@
 package model.tree;
 
 /**
- * Definition of AVL trees, with as node <tt>AVLNode</tt>.
- * 
- * @author Julien Hannier
- * @author Pierre Pironin
+ * This class defines AVL trees with as node <tt>AVLNode</tt>. It is not
+ * designed for inheritance.
+ *
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IAVLNode
  * @see IBinarySearchTree
  */
-public class AVLTree extends AbstractBinarySearchTree {
+public final class AVLTree extends AbstractBinarySearchTree {
 
     {
         type = BinaryTreeType.AVLTREE;
     }
 
     /**
-     * Builds an empty AVL tree.
+     * Builds an empty AVL tree. The root node is initialized to null.
      */
     public AVLTree() {
         root = null;
     }
 
     /**
-     * Builds an AVL tree whose root is initialized with the specified key.
+     * Builds an AVL tree with the key given in parameter. The children and the
+     * father are initialized to null. If {@code key} is greater than 99 or less
+     * than 0 then an IllegalArgumentException is thrown.
      * 
-     * @param key the key of the root
+     * @param key the key of the root node
      */
-    public AVLTree(int key) {
+    public AVLTree(int key) throws IllegalArgumentException {
         root = new AVLNode(key);
     }
 
     @Override
-    public boolean isGoodTree() {
-        calculateNodesHeight(getRoot());
-        return isBalance(getRoot()) && isBST(getRoot());
+    public AVLNode getRoot() {
+        return (AVLNode) root;
     }
 
-    private void calculateNodesHeight(AVLNode node) {
+    @Override
+    public void setRoot(IBinaryNode newNode) throws IllegalArgumentException {
+        if (!(newNode instanceof AVLNode)) {
+            throw new IllegalArgumentException(
+                    "You have to pass an AVLNode");
+        }
+        root = newNode;
+    }
+
+    @Override
+    public boolean isWellFormedTree() {
+        computeHeightOfEachNode(getRoot());
+        return isBalance(getRoot()) && isWellFormedBST(getRoot());
+    }
+
+    private void computeHeightOfEachNode(AVLNode node) {
         if (node != null) {
-            calculateNodesHeight(node.getLeft());
-            calculateNodesHeight(node.getRight());
-            node.calculateAndSetAVLHeight();
+            computeHeightOfEachNode(node.getLeft());
+            computeHeightOfEachNode(node.getRight());
+            node.computeAndSetHeight();
         }
     }
 
     private boolean isBalance(AVLNode node) {
         boolean isBalance = true;
+        
         if (node != null) {
             isBalance = isBalance(node.getLeft());
             if (isBalance) {
                 isBalance = isBalance(node.getRight());
             }
             if (isBalance) {
-                int balance = node.calculateAVLBalance();
-                if (balance < -1 || balance > 1) {
+                int balance = node.computeBalanceFactor();
+                if ((balance < -1) || (balance > 1)) {
                     isBalance = false;
                 }
             }
         }
         return isBalance;
-    }
-
-    @Override
-    public AVLNode getRoot() {
-        return (AVLNode) root;
     }
 }

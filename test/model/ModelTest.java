@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import org.junit.Before;
 import org.junit.Test;
-import model.tree.BinaryTreeTabModel;
+import model.tree.BinaryTreeModel;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 
 /**
@@ -40,18 +40,18 @@ public class ModelTest {
 
     private SoftwareModel softwareModel;
 
-    private BinaryTreeTabModel tabModel1;
+    private BinaryTreeModel tabModel1;
 
-    private BinaryTreeTabModel tabModel2;
+    private BinaryTreeModel tabModel2;
 
-    private BinaryTreeTabModel tabModel3;
+    private BinaryTreeModel tabModel3;
 
     @Before
     public void setUp() {
         softwareModel = new SoftwareModel();
-        tabModel1 = new BinaryTreeTabModel(BinaryTreeType.AVLTREE);
-        tabModel2 = new BinaryTreeTabModel(BinaryTreeType.BINARYSEARCHTREE);
-        tabModel3 = new BinaryTreeTabModel(BinaryTreeType.REDBLACKTREE);
+        tabModel1 = new BinaryTreeModel(BinaryTreeType.AVLTREE);
+        tabModel2 = new BinaryTreeModel(BinaryTreeType.BINARYSEARCHTREE);
+        tabModel3 = new BinaryTreeModel(BinaryTreeType.REDBLACKTREE);
     }
 
     @Test

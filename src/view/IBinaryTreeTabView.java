@@ -21,7 +21,7 @@
 
 package view;
 
-import model.tree.BinaryTreeTabListener;
+import model.tree.BinaryTreeModelListener;
 
 /**
  * Interface describing the methods of binary tree tab views.
@@ -33,5 +33,5 @@ import model.tree.BinaryTreeTabListener;
  * @see IView
  * @see BinaryTreeTabListener
  */
-public interface IBinaryTreeTabView extends IView, BinaryTreeTabListener {
+public interface IBinaryTreeTabView extends IView, BinaryTreeModelListener {
 }
