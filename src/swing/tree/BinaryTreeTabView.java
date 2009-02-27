@@ -119,12 +119,11 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
     }
 
     @Override
-    public <N extends IBinaryNode> void binaryTreeChanged(
-            BinaryTreeModelEvent<N> event) {
+    public void binaryTreeHasChanged(BinaryTreeModelEvent event) {
         if (isFastTreeCreation) {
-            fastTreeCreationPanel.updateTree(event.getData());
+            fastTreeCreationPanel.updateTree(event.getHeapCorrespondingToBinaryTree());
         } else {
-            pedagogicalTreeCreationPanel.updateTree(event.getData());
+            pedagogicalTreeCreationPanel.updateTree(event.getHeapCorrespondingToBinaryTree());
         }
     }
 }

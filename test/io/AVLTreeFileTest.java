@@ -49,8 +49,8 @@ public class AVLTreeFileTest {
 
     @Before
     public void setUp() {
-        loadFileName = "./test/io/loadAVLTreeTest.bt";
-        saveFileName = "./test/io/saveAVLTreeTest.bt";
+        loadFileName = "./test/io/loadAVLT.bt";
+        saveFileName = "./test/io/saveAVLT.bt";
         tree = new AVLTree(8);
 
         tree.getRoot().setLeft(new AVLNode(5));

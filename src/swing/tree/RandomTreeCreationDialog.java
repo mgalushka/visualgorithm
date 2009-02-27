@@ -148,7 +148,7 @@ public class RandomTreeCreationDialog extends JDialog {
                 int nbNode = ((SpinnerNumberModel) numberOfNodes.getModel()).getNumber().intValue();
 
                 softwareController.addTabWithRandom(
-                    BinaryTreeModel.DataStructureName, type, nbNode, index,
+                    BinaryTreeModel.DATA_STRUCTURE_NAME, type, nbNode, index,
                     tabbedPane.getWidth(), tabbedPane.getHeight());
                 setVisible(false);
                 dispose();

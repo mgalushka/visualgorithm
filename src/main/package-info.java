@@ -1,5 +1,5 @@
 /*
- * ITabModel.java v1.00 07/07/08
+ * package-info.java v1.00 27/02/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,40 +19,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package model;
-
-import java.io.File;
-import java.io.IOException;
-
 /**
- * Interface describing the methods of tab models.
+ * This package contains the main class of the software. This is the class to
+ * use to launch the software.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
- * @version 1.00 07/07/08
+ * @version 1.00 27/02/09
  */
-public interface ITabModel {
-
-    /**
-     * Returns the tab model.
-     * 
-     * @return the tab model
-     */
-    public IDataStructure getTabModel();
-
-    /**
-     * Returns true if the tab model has been saved.
-     * 
-     * @return true if the tab model has been saved
-     */
-    public boolean isTabModelSaved();
-
-    /**
-     * Saves the tab model into the selected file.
-     * 
-     * @param file the file
-     * @throws IOException
-     */
-    public void saveTabModel(File file) throws IOException;
-}
+package main;

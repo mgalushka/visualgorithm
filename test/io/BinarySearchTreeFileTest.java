@@ -49,8 +49,8 @@ public class BinarySearchTreeFileTest {
 
     @Before
     public void setUp() {
-        loadFileName = "./test/io/loadBinarySearchTreeTest.bt";
-        saveFileName = "./test/io/saveBinarySearchTreeTest.bt";
+        loadFileName = "./test/io/loadBST.bt";
+        saveFileName = "./test/io/saveBST.bt";
         tree = new BinarySearchTree(8);
 
         tree.getRoot().setLeft(new BinarySearchNode(5));

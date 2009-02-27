@@ -26,7 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import view.AbstractViewFactory;
-import model.ITabModel;
+import model.IDataStructureModel;
 import model.UnknownDataStructureException;
 
 /**
@@ -86,7 +86,7 @@ public interface ITabController extends IController {
      * 
      * @return the tab model
      */
-    public ITabModel getTabModel();
+    public IDataStructureModel getTabModel();
 
     /**
      * Saves the tab model into the selected file.

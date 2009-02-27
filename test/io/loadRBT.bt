@@ -1,8 +1,7 @@
 # The format is :
-# REDBLACKTREE
 # 0 key leftChild rightChild color
 
-    REDBLACKTREE
+REDBLACKTREE
 0	6	1	2	black
 1	4	3	4	black
 2	8	nil	nil	black

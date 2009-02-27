@@ -28,17 +28,19 @@ import controller.SoftwareController;
 import model.SoftwareModel;
 
 /**
- * Main class of the software.
+ * This class is the main class of the software. It only contains the main
+ * method that initializes and launches the software. It is not designed for
+ * inheritance.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class Visualgorithm {
+public final class Visualgorithm {
 
     /**
-     * Launches the software.
+     * This is the main method of the software that creates the model and the
+     * controller with the wanted view factory. The string array {@code args} is
+     * not used.
      * 
      * @param args possible arguments
      */
@@ -48,6 +50,7 @@ public class Visualgorithm {
 
         SwingUtilities.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
                 new SoftwareController(model, viewFactory);
             }

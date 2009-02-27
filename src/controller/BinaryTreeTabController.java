@@ -26,7 +26,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-import model.ITabModel;
+import model.IDataStructureModel;
 import model.UnknownDataStructureException;
 import model.tree.BinaryTreeModel;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
@@ -62,13 +62,13 @@ public class BinaryTreeTabController implements ITabController {
     @Override
     public void initializeTabControllerWithRandom(Object type,
             AbstractViewFactory viewFactory, int random, int width, int height) {
-        binaryTreeTabModel = new BinaryTreeModel((BinaryTreeType) type,
-                random);
+        binaryTreeTabModel = new BinaryTreeModel((BinaryTreeType) type);
+        binaryTreeTabModel.insertRandomNodes(random);
 
         binaryTreeTabView = viewFactory.createBinaryTreeTabView(
             "Type Of The Tree : " + type.toString(), this, width, height);
         addListener();
-        binaryTreeTabModel.updateBinaryTreeView();
+        binaryTreeTabModel.updateListeners();
     }
 
     @Override
@@ -79,25 +79,25 @@ public class BinaryTreeTabController implements ITabController {
         binaryTreeTabModel = new BinaryTreeModel(file);
 
         binaryTreeTabView = viewFactory.createBinaryTreeTabView(
-            "Type of the Tree : " + binaryTreeTabModel.getTabModel().getType(),
+            "Type of the Tree : " + binaryTreeTabModel.getDataStructure().getType(),
             this, width, height);
         addListener();
-        binaryTreeTabModel.updateBinaryTreeView();
+        binaryTreeTabModel.updateListeners();
     }
 
     @Override
-    public ITabModel getTabModel() {
+    public IDataStructureModel getTabModel() {
         return binaryTreeTabModel;
     }
 
     @Override
     public void saveTabModel(File file) throws IOException {
-        binaryTreeTabModel.saveTabModel(file);
+        binaryTreeTabModel.saveDataStructure(file);
     }
 
     @Override
     public boolean isTabModelSaved() {
-        return binaryTreeTabModel.isTabModelSaved();
+        return binaryTreeTabModel.isDataStructureSaved();
     }
 
     @Override
@@ -111,7 +111,7 @@ public class BinaryTreeTabController implements ITabController {
     }
 
     private void addListener() {
-        binaryTreeTabModel.addBinaryTreeListener(binaryTreeTabView);
+        binaryTreeTabModel.addBinaryTreeModelListener(binaryTreeTabView);
     }
 
     /**
@@ -120,7 +120,7 @@ public class BinaryTreeTabController implements ITabController {
      * @param key the key of the node
      */
     public void addNode(int key) {
-        binaryTreeTabModel.addNode(key);
+        binaryTreeTabModel.insertNode(key);
     }
 
     /**
@@ -139,6 +139,6 @@ public class BinaryTreeTabController implements ITabController {
      * @param key the key of the node
      */
     public void pedagogicalDeleteNode(int key) {
-        binaryTreeTabModel.pedagogicalDeleteNode(key);
+        binaryTreeTabModel.deleteNodeWithoutCorrection(key);
     }
 }

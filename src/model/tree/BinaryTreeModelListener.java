@@ -24,20 +24,21 @@ package model.tree;
 import java.util.EventListener;
 
 /**
- * Methods of the binary tree tab listeners.
+ * This interface contains all the methods for the binary tree model listener.
+ * It must be implemented by all the classes that want to listen to the binary
+ * tree model in order to be notified of a modification of the binary tree model.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
+ * @see BinaryTreeModelEvent
  */
 public interface BinaryTreeModelListener extends EventListener {
 
     /**
-     * The binary tree has changed.
+     * This method is called when the binary tree of the model has changed. The
+     * binary tree model event will contain the last version of the binary tree.
      * 
-     * @param event the binary tree tab event
+     * @param event the binary tree model event
      */
-    public <N extends IBinaryNode> void binaryTreeChanged(
-            BinaryTreeModelEvent<N> event);
+    public void binaryTreeHasChanged(BinaryTreeModelEvent event);
 }

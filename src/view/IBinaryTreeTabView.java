@@ -31,7 +31,7 @@ import model.tree.BinaryTreeModelListener;
  * @author Damien Rigoni
  * @version 1.00 16/06/08
  * @see IView
- * @see BinaryTreeTabListener
+ * @see BinaryTreeModelListener
  */
 public interface IBinaryTreeTabView extends IView, BinaryTreeModelListener {
 }

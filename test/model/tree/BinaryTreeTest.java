@@ -22,6 +22,7 @@
 package model.tree;
 
 import static org.junit.Assert.assertEquals;
+import model.tree.AbstractBinaryTree.BinaryTreeType;
 import model.tree.RedBlackNode.RedBlackNodeColor;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,19 +38,29 @@ public class BinaryTreeTest {
 
     private BinarySearchTree bsTree;
 
+    private BinaryTreeType bsTreeType;
+
     private AVLTree avlTree;
 
+    private BinaryTreeType avlTreeType;
+
     private RedBlackTree rbTree;
+
+    private BinaryTreeType rbTreeType;
 
     @Before
     public void setUp() {
         bsTree = new BinarySearchTree();
+        bsTreeType = BinaryTreeType.BINARYSEARCHTREE;
         avlTree = new AVLTree(11);
+        avlTreeType = BinaryTreeType.AVLTREE;
         rbTree = new RedBlackTree();
+        rbTreeType = BinaryTreeType.REDBLACKTREE;
     }
 
     @Test
     public void testBST() {
+        assertEquals(bsTreeType.createBinaryTree().getType(), "BINARYSEARCHTREE");
         assertEquals(new BinarySearchTree().getRoot(), null);
         try {
             assertEquals(new BinarySearchTree(-1).getRoot().getKey(), -1);
@@ -85,6 +96,7 @@ public class BinaryTreeTest {
 
     @Test
     public void testAVLT() {
+        assertEquals(avlTreeType.createBinaryTree().getType(), "AVLTREE");
         assertEquals(new AVLTree().getRoot(), null);
         try {
             assertEquals(new AVLTree(-1).getRoot().getKey(), -1);
@@ -124,6 +136,7 @@ public class BinaryTreeTest {
 
     @Test
     public void testRBT() {
+        assertEquals(rbTreeType.createBinaryTree().getType(), "REDBLACKTREE");
         assertEquals(new RedBlackTree().getRoot(), null);
         try {
             assertEquals(new RedBlackTree(-1).getRoot().getKey(), -1);

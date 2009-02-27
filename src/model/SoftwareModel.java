@@ -36,7 +36,7 @@ import model.SoftwareModelEvent.SoftwareModelEventType;
  */
 public class SoftwareModel {
 
-    private List<ITabModel> tabModels;
+    private List<IDataStructureModel> tabModels;
 
     private EventListenerList listeners;
 
@@ -44,7 +44,7 @@ public class SoftwareModel {
      * Builds the software model. The software model is a list of tab models.
      */
     public SoftwareModel() {
-        tabModels = new ArrayList<ITabModel>();
+        tabModels = new ArrayList<IDataStructureModel>();
         listeners = new EventListenerList();
     }
 
@@ -54,7 +54,7 @@ public class SoftwareModel {
      * @param index the index of the tab model
      * @return the tab model
      */
-    public ITabModel getTabModel(int index) {
+    public IDataStructureModel getTabModel(int index) {
         return tabModels.get(index);
     }
 
@@ -81,10 +81,10 @@ public class SoftwareModel {
      * 
      * @param tabModel a tab model
      */
-    public void addTabModel(ITabModel tabModel) {
+    public void addTabModel(IDataStructureModel tabModel) {
         tabModels.add(tabModel);
         fireModelChanged(SoftwareModelEventType.ADD, "New "
-                + tabModel.getTabModel().getType());
+                + tabModel.getDataStructure().getType());
     }
 
     /**
@@ -112,7 +112,7 @@ public class SoftwareModel {
      * @param tabModel a tab model
      * @param fileName the name of the file
      */
-    public void addTabModelFromDataStructureFile(ITabModel tabModel,
+    public void addTabModelFromDataStructureFile(IDataStructureModel tabModel,
             String fileName) {
         tabModels.add(tabModel);
         fireModelChanged(SoftwareModelEventType.ADD, fileName);

@@ -88,7 +88,7 @@ public class TreeMenu extends JMenu {
             @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
-                softwareController.addTab(BinaryTreeModel.DataStructureName,
+                softwareController.addTab(BinaryTreeModel.DATA_STRUCTURE_NAME,
                     BinaryTreeType.AVLTREE, index, tabbedPane.getWidth(),
                     tabbedPane.getHeight());
             }
@@ -98,7 +98,7 @@ public class TreeMenu extends JMenu {
             @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
-                softwareController.addTab(BinaryTreeModel.DataStructureName,
+                softwareController.addTab(BinaryTreeModel.DATA_STRUCTURE_NAME,
                     BinaryTreeType.BINARYSEARCHTREE, index, tabbedPane
                             .getWidth(), tabbedPane.getHeight());
             }
@@ -108,7 +108,7 @@ public class TreeMenu extends JMenu {
             @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
-                softwareController.addTab(BinaryTreeModel.DataStructureName,
+                softwareController.addTab(BinaryTreeModel.DATA_STRUCTURE_NAME,
                     BinaryTreeType.REDBLACKTREE, index, tabbedPane.getWidth(),
                     tabbedPane.getHeight());
             }

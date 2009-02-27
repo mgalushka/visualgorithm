@@ -25,36 +25,38 @@ import java.util.EventObject;
 import java.util.List;
 
 /**
- * Definition of the binary tree tab event.
+ * This class defines the binary tree model event. This event is used to
+ * transmit the binary tree of the model to binary tree model listeners. In
+ * order to do so, the binary tree of the model is transmit as a heap. It is not
+ * designed for inheritance.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-public class BinaryTreeModelEvent<N extends IBinaryNode> extends EventObject {
+public final class BinaryTreeModelEvent extends EventObject {
 
     private static final long serialVersionUID = 1L;
 
-    private List<N> data;
+    private List<IBinaryNode> heapCorrespondingToBinaryTree;
 
     /**
-     * Builds a binary tree tab event.
+     * Builds a binary tree model event. This event has a parameter {@code heap}
+     * that is the heap corresponding to the binary tree of the model.
      * 
-     * @param source the source of the binary tree tab event
-     * @param d the data of the binary tree event
+     * @param source the source of the binary tree model event
+     * @param heap the heap corresponding to the binary tree
      */
-    public BinaryTreeModelEvent(Object source, List<N> d) {
+    public BinaryTreeModelEvent(Object source, List<IBinaryNode> heap) {
         super(source);
-        data = d;
+        heapCorrespondingToBinaryTree = heap;
     }
 
     /**
-     * Returns the data of the binary tree tab event.
+     * Returns the heap corresponding to the binary tree of the model.
      * 
-     * @return the data of the binary tree tab event
+     * @return the heap corresponding to the binary tree
      */
-    public List<N> getData() {
-        return data;
+    public List<IBinaryNode> getHeapCorrespondingToBinaryTree() {
+        return heapCorrespondingToBinaryTree;
     }
 }

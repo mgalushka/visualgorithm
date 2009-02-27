@@ -1,5 +1,5 @@
 /*
- * IBinaryTreeAlgorithm.java v1.00 09/07/08
+ * IDataStructureModel.java v1.00 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,24 +19,40 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package algorithm.tree;
+package model;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
- * This is the common interface to apply an algorithm to a binary tree. If you
- * need parameters to apply an algorithm, you must implement this interface and
- * create a constructor with the desired parameters.
+ * Interface describing the methods of tab models.
  * 
+ * @author Julien Hannier
+ * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00 09/07/08
+ * @version 1.00 07/07/08
  */
-interface IBinaryTreeAlgorithm {
+public interface IDataStructureModel {
 
     /**
-     * This method is used to apply an algorithm to a binary tree. An object is
-     * returned when the algorithm need to return something. In the other case,
-     * nothing is returned.
-     *
-     * @return the result of the algorithm, if needed
+     * Returns the tab model.
+     * 
+     * @return the tab model
      */
-    public Object applyAlgorithm();
+    public IDataStructure getDataStructure();
+
+    /**
+     * Returns true if the tab model has been saved.
+     * 
+     * @return true if the tab model has been saved
+     */
+    public boolean isDataStructureSaved();
+
+    /**
+     * Saves the tab model into the selected file.
+     * 
+     * @param file the file
+     * @throws IOException
+     */
+    public void saveDataStructure(File file) throws IOException;
 }

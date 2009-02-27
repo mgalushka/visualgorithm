@@ -1,8 +1,8 @@
-#
 #       8
 #     5
 #   3   6
 #    4
+
 BINARYSEARCHTREE
 0   8   1     nil
 1   5   2     3
