@@ -28,8 +28,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import controller.BinaryTreeTabController;
-import view.IBinaryTreeTabView;
+import controller.BinaryTreeController;
+import view.IBinaryTreeView;
 import model.tree.BinaryTreeModelEvent;
 import model.tree.IBinaryNode;
 
@@ -40,13 +40,13 @@ import model.tree.IBinaryNode;
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
- * @see IBinaryTreeTabView
+ * @see IBinaryTreeView
  */
-public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
+public class BinaryTreeTabView extends JPanel implements IBinaryTreeView {
 
     private static final long serialVersionUID = 1L;
 
-    private BinaryTreeTabController binaryTreeTabController;
+    private BinaryTreeController binaryTreeTabController;
 
     private FastTreeCreationPanel fastTreeCreationPanel = null;
 
@@ -62,7 +62,7 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeTabView {
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      */
-    public BinaryTreeTabView(String type, BinaryTreeTabController c, int width,
+    public BinaryTreeTabView(String type, BinaryTreeController c, int width,
             int height) {
         fastTreeCreationPanel = new FastTreeCreationPanel(c, width, height);
         JPanel titlePane = new JPanel();

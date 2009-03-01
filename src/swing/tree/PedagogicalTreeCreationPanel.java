@@ -37,7 +37,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import model.tree.IBinaryNode;
-import controller.BinaryTreeTabController;
+import controller.BinaryTreeController;
 
 /**
  * Definition of the pedagogical tree creation panel.
@@ -51,7 +51,7 @@ class PedagogicalTreeCreationPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private BinaryTreeTabController binaryTreeTabController;
+    private BinaryTreeController binaryTreeTabController;
 
     private PedagogicalTreeVisualization pedagogicalTreeVisualization;
 
@@ -62,7 +62,7 @@ class PedagogicalTreeCreationPanel extends JPanel {
      * 
      * @param c the controller
      */
-    PedagogicalTreeCreationPanel(BinaryTreeTabController c) {
+    PedagogicalTreeCreationPanel(BinaryTreeController c) {
         pedagogicalTreeVisualization = new PedagogicalTreeVisualization(c, 0, 0);
         informations = new JTextArea("  Informations", 2, 1);
         JPanel components = new JPanel();

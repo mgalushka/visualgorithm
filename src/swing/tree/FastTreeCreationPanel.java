@@ -31,7 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import model.tree.IBinaryNode;
-import controller.BinaryTreeTabController;
+import controller.BinaryTreeController;
 
 /**
  * Definition of the fast tree creation panel.
@@ -45,7 +45,7 @@ class FastTreeCreationPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private BinaryTreeTabController binaryTreeTabController;
+    private BinaryTreeController binaryTreeTabController;
 
     private FastTreeVisualization fastTreeVisualization;
 
@@ -56,7 +56,7 @@ class FastTreeCreationPanel extends JPanel {
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      */
-    FastTreeCreationPanel(BinaryTreeTabController c, int width, int height) {
+    FastTreeCreationPanel(BinaryTreeController c, int width, int height) {
         fastTreeVisualization = new FastTreeVisualization(c, width - 23,
                 height - 148);
         binaryTreeTabController = c;

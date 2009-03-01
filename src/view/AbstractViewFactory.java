@@ -22,14 +22,16 @@
 package view;
 
 import controller.SoftwareController;
-import controller.BinaryTreeTabController;
+import controller.BinaryTreeController;
 
 /**
- * Abstract factory of swing views.
+ * This abstract class defines an abstract factory of the different views of the
+ * software. It is used to implement all the views with a specific technology
+ * that could be changed. In order to do so, all the controllers of the software
+ * must use only this abstract factory to create the views. Thus, there are no
+ * dependencies between the controllers and the technology of the views.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
 public abstract class AbstractViewFactory {
@@ -37,21 +39,25 @@ public abstract class AbstractViewFactory {
     /**
      * Creates the software view.
      * 
-     * @param softwareController the software controller
+     * @param controller the software controller
      * @return the software view
      */
     public abstract ISoftwareView createSoftwareView(
-            SoftwareController softwareController);
+            SoftwareController controller);
 
     /**
-     * Creates the binary tree tab view.
+     * Creates the binary tree view. The parameter {@code type} is used to
+     * indicate the type of the binary tree in the view. In the same way,
+     * {@code width} and {@code height} are necessary to know the size that the
+     * tree visualization can take and so place the binary tree in the center of
+     * the view.
      * 
-     * @param type the type of the tree
-     * @param binaryTreeTabController the tab controller
+     * @param type the type of the binary tree
+     * @param controller the binary tree controller
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
-     * @return the binary tree tab view
+     * @return the binary tree view
      */
-    public abstract IBinaryTreeTabView createBinaryTreeTabView(String type,
-            BinaryTreeTabController binaryTreeTabController, int width, int height);
+    public abstract IBinaryTreeView createBinaryTreeView(String type,
+            BinaryTreeController controller, int width, int height);
 }

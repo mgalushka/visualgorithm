@@ -24,7 +24,7 @@ package swing.tree;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import controller.BinaryTreeTabController;
+import controller.BinaryTreeController;
 
 /**
  * Fast visualization of all types of binary trees.
@@ -48,7 +48,7 @@ public class FastTreeVisualization extends AbstractTreeVisualization {
      * @param width the width of the panel
      * @param height the height of the panel
      */
-    FastTreeVisualization(BinaryTreeTabController c, int width, int height) {
+    FastTreeVisualization(BinaryTreeController c, int width, int height) {
         super(c, width, height);
         deleteMode = false;
 

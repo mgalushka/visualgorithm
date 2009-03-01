@@ -22,9 +22,9 @@
 package swing;
 
 import controller.SoftwareController;
-import controller.BinaryTreeTabController;
+import controller.BinaryTreeController;
 import swing.tree.BinaryTreeTabView;
-import view.IBinaryTreeTabView;
+import view.IBinaryTreeView;
 import view.ISoftwareView;
 import view.AbstractViewFactory;
 
@@ -57,16 +57,13 @@ public class SwingViewFactory extends AbstractViewFactory {
     }
 
     @Override
-    public ISoftwareView createSoftwareView(
-            SoftwareController softwareController) {
-        return new SoftwareView(softwareController);
+    public ISoftwareView createSoftwareView(SoftwareController controller) {
+        return new SoftwareView(controller);
     }
 
     @Override
-    public IBinaryTreeTabView createBinaryTreeTabView(String type,
-            BinaryTreeTabController binaryTreeTabController, int width,
-            int height) {
-        return new BinaryTreeTabView(type, binaryTreeTabController, width,
-                height);
+    public IBinaryTreeView createBinaryTreeView(String type,
+            BinaryTreeController controller, int width, int height) {
+        return new BinaryTreeTabView(type, controller, width, height);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * IBinaryTreeTabView.java v1.00 16/06/08
+ * IBinaryTreeView.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -24,14 +24,14 @@ package view;
 import model.tree.BinaryTreeModelListener;
 
 /**
- * Interface describing the methods of binary tree tab views.
+ * This interface defines binary tree view. A binary tree view is a listener on
+ * the corresponding binary tree model in order to be updated on every change.
+ * This interface is used in the abstract view factory.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  * @see IView
  * @see BinaryTreeModelListener
  */
-public interface IBinaryTreeTabView extends IView, BinaryTreeModelListener {
+public interface IBinaryTreeView extends IView, BinaryTreeModelListener {
 }

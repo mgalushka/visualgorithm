@@ -233,12 +233,12 @@ public class SoftwareView extends JFrame implements ISoftwareView {
     }
 
     @Override
-    public void displayView() {
+    public void showView() {
         setVisible(true);
     }
 
     @Override
-    public void closeView() {
+    public void hideView() {
         setVisible(false);
         dispose();
     }

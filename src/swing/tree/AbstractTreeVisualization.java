@@ -31,7 +31,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
-import controller.BinaryTreeTabController;
+import controller.BinaryTreeController;
 import model.tree.IBinaryNode;
 import model.tree.RedBlackNode;
 import swing.tree.GraphicNode.GraphicNodeColor;
@@ -58,7 +58,7 @@ abstract class AbstractTreeVisualization extends JPanel {
 
     private static final int INITIAL_WIDTH_BETWEEN_NODES = 15;
 
-    protected BinaryTreeTabController binaryTreeTabController;
+    protected BinaryTreeController binaryTreeTabController;
 
     protected List<GraphicNode> graphicNodes;
 
@@ -89,7 +89,7 @@ abstract class AbstractTreeVisualization extends JPanel {
      * @param width the width of the panel
      * @param height the height of the panel
      */
-    AbstractTreeVisualization(BinaryTreeTabController c, int width, int height) {
+    AbstractTreeVisualization(BinaryTreeController c, int width, int height) {
         binaryTreeTabController = c;
         graphicNodes = new ArrayList<GraphicNode>();
         sizeOfNodes = SMALLEST_NODE_SIZE;

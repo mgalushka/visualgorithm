@@ -22,11 +22,11 @@
 package view;
 
 /**
- * Interface describing the methods of views.
+ * This interface is the common interface of all views. It is used by the
+ * controllers of the software. This interface must be implemented by all views
+ * of the software directly or through a more specific interface.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
 public interface IView {

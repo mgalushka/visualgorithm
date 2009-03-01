@@ -1,5 +1,5 @@
 /*
- * ISoftwareView.java v1.00 16/06/08
+ * package-info.java v1.00 01/03/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,31 +19,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package view;
-
-import model.SoftwareModelListener;
-
 /**
- * This interface defines the software view. The software view is a listener on
- * the software model in order to be updated on every change. This interface is
- * used in the abstract view factory.
+ * This package contains all the definitions of the views of the software. A
+ * view must implement the interface <tt>IView</tt> directly or through a more
+ * specific interface. It is strictly forbidden for a controller to know the
+ * technology used to create views so a view must take part of the abstract view
+ * factory that is used by controllers.
  * 
  * @author Julien Hannier
- * @version 1.00 16/06/08
- * @see IView
- * @see SoftwareModelListener
+ * @version 1.00 01/03/09
  */
-public interface ISoftwareView extends IView, SoftwareModelListener {
-
-    /**
-     * Shows the view of the software. This method must be used to show the
-     * software view at the first time.
-     */
-    public void showView();
-
-    /**
-     * Hides the view of the software. This method must be used to hide the
-     * software view when the software view is closed.
-     */
-    public void hideView();
-}
+package view;

@@ -26,7 +26,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import swing.tree.GraphicNode.GraphicNodeColor;
-import controller.BinaryTreeTabController;
+import controller.BinaryTreeController;
 
 /**
  * Pedagogical visualization of all types of binary trees.
@@ -52,7 +52,7 @@ public class PedagogicalTreeVisualization extends AbstractTreeVisualization {
      * @param width the width of the panel
      * @param height the height of the panel
      */
-    PedagogicalTreeVisualization(BinaryTreeTabController c, int width,
+    PedagogicalTreeVisualization(BinaryTreeController c, int width,
             int height) {
         super(c, width, height);
         newNode = null;

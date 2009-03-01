@@ -1,5 +1,5 @@
 /*
- * ITabController.java v1.00 07/07/08
+ * IDataStructureController.java v1.00 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -38,7 +38,7 @@ import model.UnknownDataStructureException;
  * @version 1.00 07/07/08
  * @see IController
  */
-public interface ITabController extends IController {
+public interface IDataStructureController extends IController {
 
     /**
      * Initializes the tab controller with an empty data structure.

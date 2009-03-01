@@ -48,7 +48,7 @@ public class SoftwareController implements IController {
 
     private AbstractViewFactory viewFactory;
 
-    private List<ITabController> tabControllers;
+    private List<IDataStructureController> tabControllers;
 
     /**
      * Builds the software controller.
@@ -57,12 +57,12 @@ public class SoftwareController implements IController {
      * @param v the view factory
      */
     public SoftwareController(SoftwareModel m, AbstractViewFactory v) {
-        tabControllers = new ArrayList<ITabController>();
+        tabControllers = new ArrayList<IDataStructureController>();
 
         softwareModel = m;
         viewFactory = v;
         softwareView = viewFactory.createSoftwareView(this);
-        getView().displayView();
+        getView().showView();
         addListener();
     }
 
@@ -72,7 +72,7 @@ public class SoftwareController implements IController {
      * @param index the index of the tab
      * @return the tab controller
      */
-    public ITabController getTabController(int index) {
+    public IDataStructureController getTabController(int index) {
         return tabControllers.get(index);
     }
 
@@ -105,7 +105,7 @@ public class SoftwareController implements IController {
                 currentDirectory);
             if (className.toLowerCase().contains(name.toLowerCase())) {
                 try {
-                    ITabController tabController = (ITabController) Class
+                    IDataStructureController tabController = (IDataStructureController) Class
                             .forName(className).newInstance();
                     Class.forName(className).getMethod(
                         "initializeTabController", Object.class,
@@ -156,7 +156,7 @@ public class SoftwareController implements IController {
                 currentDirectory);
             if (className.toLowerCase().contains(name.toLowerCase())) {
                 try {
-                    ITabController tabController = (ITabController) Class
+                    IDataStructureController tabController = (IDataStructureController) Class
                             .forName(className).newInstance();
                     Class.forName(className).getMethod(
                         "initializeTabControllerWithRandom", Object.class,
@@ -205,7 +205,7 @@ public class SoftwareController implements IController {
             String className = FileUtility.classNameWithPackagePath(each,
                 currentDirectory);
             try {
-                ITabController tabController = (ITabController) Class.forName(
+                IDataStructureController tabController = (IDataStructureController) Class.forName(
                     className).newInstance();
                 if (extension.equals(tabController.getFileExtension())) {
                     Class.forName(className).getMethod(
@@ -260,7 +260,7 @@ public class SoftwareController implements IController {
      * Removes all the tabs.
      */
     public void exitSoftware() {
-        softwareView.closeView();
+        softwareView.hideView();
         softwareModel.removeAllTabModels();
         tabControllers.clear();
     }

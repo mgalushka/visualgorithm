@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabController.java v1.00 16/06/08
+ * BinaryTreeController.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -31,8 +31,7 @@ import model.UnknownDataStructureException;
 import model.tree.BinaryTreeModel;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 import view.AbstractViewFactory;
-import view.IBinaryTreeTabView;
-import view.IView;
+import view.IBinaryTreeView;
 
 /**
  * Definition of the binary tree tab controller.
@@ -41,20 +40,20 @@ import view.IView;
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 16/06/08
- * @see ITabController
+ * @see IDataStructureController
  */
-public class BinaryTreeTabController implements ITabController {
+public class BinaryTreeController implements IDataStructureController {
 
     private BinaryTreeModel binaryTreeTabModel;
 
-    private IBinaryTreeTabView binaryTreeTabView;
+    private IBinaryTreeView binaryTreeTabView;
 
     @Override
     public void initializeTabController(Object type,
             AbstractViewFactory viewFactory, int width, int height) {
         binaryTreeTabModel = new BinaryTreeModel((BinaryTreeType) type);
 
-        binaryTreeTabView = viewFactory.createBinaryTreeTabView(
+        binaryTreeTabView = viewFactory.createBinaryTreeView(
             "Type of the Tree : " + type.toString(), this, width, height);
         addListener();
     }
@@ -65,7 +64,7 @@ public class BinaryTreeTabController implements ITabController {
         binaryTreeTabModel = new BinaryTreeModel((BinaryTreeType) type);
         binaryTreeTabModel.insertRandomNodes(random);
 
-        binaryTreeTabView = viewFactory.createBinaryTreeTabView(
+        binaryTreeTabView = viewFactory.createBinaryTreeView(
             "Type Of The Tree : " + type.toString(), this, width, height);
         addListener();
         binaryTreeTabModel.updateListeners();
@@ -78,7 +77,7 @@ public class BinaryTreeTabController implements ITabController {
             UnknownDataStructureException {
         binaryTreeTabModel = new BinaryTreeModel(file);
 
-        binaryTreeTabView = viewFactory.createBinaryTreeTabView(
+        binaryTreeTabView = viewFactory.createBinaryTreeView(
             "Type of the Tree : " + binaryTreeTabModel.getDataStructure().getType(),
             this, width, height);
         addListener();
@@ -106,7 +105,7 @@ public class BinaryTreeTabController implements ITabController {
     }
 
     @Override
-    public IView getView() {
+    public IBinaryTreeView getView() {
         return binaryTreeTabView;
     }
 
