@@ -86,8 +86,8 @@ class GraphicNode {
         }
     }
 
-    private BufferedImage loadImage(String name, int size) {
-        String imgFileName = "img/node_" + name + "_" + size + ".png";
+    private BufferedImage loadImage(String color, int size) {
+        String imgFileName = "img/node_" + color + "_" + size + ".png";
         BufferedImage img = null;
         try {
             img = ImageIO.read(new File(imgFileName));

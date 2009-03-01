@@ -176,15 +176,16 @@ public class SoftwareView extends JFrame implements ISoftwareView {
     }
 
     private void addDataStructureMenus(JMenuBar menuBar) {
-        File currentDirectory = new File("src/swing");
+        File currentDirectory = new File("src" + File.separator + "swing");
         String[] directories = FileUtility
                 .listOfDirectoriesInDirectory(currentDirectory);
         for (String each : directories) {
-            File directory = new File("src/swing/" + each);
-            String[] menuFile = FileUtility.listOfFilesInDirectory(
+            File directory = new File("src" + File.separator + "swing" +
+                File.separator + each);
+            String[] menuFile = FileUtility.listOfClassesInDirectory(
                 directory, "Menu.java");
-            if (menuFile.length > 0) {
-                String className = FileUtility.wellFormedClassName(
+            if (menuFile.length == 1) {
+                String className = FileUtility.classNameWithPackagePath(
                     menuFile[0], directory);
                 try {
                     JMenu newMenu = (JMenu) Class.forName(className)
@@ -208,6 +209,8 @@ public class SoftwareView extends JFrame implements ISoftwareView {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
+            } else {
+                //TODO throw exception
             }
         }
     }

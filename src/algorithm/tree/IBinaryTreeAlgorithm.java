@@ -29,7 +29,7 @@ package algorithm.tree;
  * @author Damien Rigoni
  * @version 1.00 09/07/08
  */
-interface IBinaryTreeAlgorithm {
+public interface IBinaryTreeAlgorithm {
 
     /**
      * This method is used to apply an algorithm to a binary tree. An object is

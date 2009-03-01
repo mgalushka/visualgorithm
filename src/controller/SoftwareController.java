@@ -96,12 +96,12 @@ public class SoftwareController implements IController {
      */
     public void addTab(String name, Object type, int index, int width,
             int height) {
-        File currentDirectory = new File("src/controller");
-        String[] tabControllerFiles = FileUtility.listOfFilesInDirectory(
+        File currentDirectory = new File("src" + File.separator + "controller");
+        String[] tabControllerFiles = FileUtility.listOfClassesInDirectory(
             currentDirectory, "TabController.java");
 
         for (String each : tabControllerFiles) {
-            String className = FileUtility.wellFormedClassName(each,
+            String className = FileUtility.classNameWithPackagePath(each,
                 currentDirectory);
             if (className.toLowerCase().contains(name.toLowerCase())) {
                 try {
@@ -147,12 +147,12 @@ public class SoftwareController implements IController {
      */
     public void addTabWithRandom(String name, Object type, int random,
             int index, int width, int height) {
-        File currentDirectory = new File("src/controller");
-        String[] tabControllerFiles = FileUtility.listOfFilesInDirectory(
+        File currentDirectory = new File("src" + File.separator + "controller");
+        String[] tabControllerFiles = FileUtility.listOfClassesInDirectory(
             currentDirectory, "TabController.java");
 
         for (String each : tabControllerFiles) {
-            String className = FileUtility.wellFormedClassName(each,
+            String className = FileUtility.classNameWithPackagePath(each,
                 currentDirectory);
             if (className.toLowerCase().contains(name.toLowerCase())) {
                 try {
@@ -197,12 +197,12 @@ public class SoftwareController implements IController {
         String fileName = file.getName();
         int i = fileName.lastIndexOf('.');
         String extension = fileName.substring(i + 1).toLowerCase();
-        File currentDirectory = new File("src/controller");
-        String[] tabControllerFiles = FileUtility.listOfFilesInDirectory(
+        File currentDirectory = new File("src" + File.separator + "controller");
+        String[] tabControllerFiles = FileUtility.listOfClassesInDirectory(
             currentDirectory, "TabController.java");
 
         for (String each : tabControllerFiles) {
-            String className = FileUtility.wellFormedClassName(each,
+            String className = FileUtility.classNameWithPackagePath(each,
                 currentDirectory);
             try {
                 ITabController tabController = (ITabController) Class.forName(

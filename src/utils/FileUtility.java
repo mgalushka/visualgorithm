@@ -1,5 +1,5 @@
 /*
- * FileUtils.java v1.00 08/12/08
+ * FileUtility.java v1.00 08/12/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -23,13 +23,14 @@ package utils;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.regex.Matcher;
 
 /**
- * Definition of some utilities for files.
+ * This utility class contains functions to work with directories and files.
+ * There are functions to list directories or classes but also to modify the
+ * name of a class file in order to use it with Java reflection.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 08/12/08
  */
 public class FileUtility {
@@ -38,40 +39,17 @@ public class FileUtility {
     }
 
     /**
-     * Returns the list of files which are in the indicated directory and which
-     * correspond to the string fileType.
-     * 
-     * @param directory the indicated directory
-     * @param fileType the string of selection
-     * @return the list of files
-     */
-    public static String[] listOfFilesInDirectory(File directory,
-            String fileType) {
-        final String selection = fileType;
-        return directory.list(new FilenameFilter() {
-
-            @Override
-            public boolean accept(File dir, String name) {
-                if (name.contains(selection) && !name.startsWith("I")) {
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
-
-    /**
-     * Returns the list of directories which are in the indicated directory.
-     * 
-     * @param directory the indicated directory
-     * @return the list of directories
+     * Returns the list of directories that are in {@code directory}.
+     *
+     * @param directory the directory where to list directories
+     * @return the list of directories in the directory
      */
     public static String[] listOfDirectoriesInDirectory(File directory) {
         return directory.list(new FilenameFilter() {
 
             @Override
-            public boolean accept(File dir, String name) {
-                if (!name.contains(".java")) {
+            public boolean accept(File file, String name) {
+                if (isDirectory(name)) {
                     return true;
                 }
                 return false;
@@ -80,20 +58,70 @@ public class FileUtility {
     }
 
     /**
-     * Transforms the name of the class file in order to be use with reflection.
+     * Returns the list of classes that are in {@code directory} and which the
+     * name corresponds to {@code select}. The selection eliminates interfaces
+     * and abstract classes.
      * 
-     * @param name the name of the class file
-     * @param directory the directory where the class is
-     * @return the name after modifications
+     * @param directory the directory where to list classes
+     * @param select the string of selection
+     * @return the list of classes in the directory
      */
-    public static String wellFormedClassName(String name, File directory) {
-        String className = name;
-        int i = className.lastIndexOf('.');
-        className = className.substring(0, i);
-        className = directory.getPath().concat("/" + className);
-        className = className.replaceAll("/", ".");
-        int j = className.indexOf('.');
-        className = className.substring(j + 1);
-        return className;
+    public static String[] listOfClassesInDirectory(File directory,
+            final String select) {
+        return directory.list(new FilenameFilter() {
+
+            @Override
+            public boolean accept(File file, String name) {
+                if (isFile(name) && !isInterface(name) &&
+                        !isAbstractClass(name) && name.contains(select)) {
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Transforms the name of the class file in order to use it with Java
+     * reflection. This method deletes the file extension of the class file in
+     * order to have the class name. Then, it concats the package path to the
+     * class name. After, it replaces each file separator ('/' for Unix systems
+     * and '\\' for Windows) by a point. Finally, it deletes the src folder from
+     * the name.
+     * 
+     * @param fileName the name of the class with file extension
+     * @param directory the directory where the class is
+     * @return the class name with package path
+     */
+    public static String classNameWithPackagePath(String fileName, File directory) {
+        String classNameWithPackagePath = fileName;
+        int lastPointIndex = classNameWithPackagePath.lastIndexOf('.');
+        classNameWithPackagePath = classNameWithPackagePath.substring(0,
+                lastPointIndex);
+        classNameWithPackagePath = directory.getPath().concat(File.separator +
+                classNameWithPackagePath);
+        classNameWithPackagePath = classNameWithPackagePath.replaceAll(
+                Matcher.quoteReplacement(File.separator), ".");
+        int firstPointIndex = classNameWithPackagePath.indexOf('.');
+        classNameWithPackagePath = classNameWithPackagePath.substring(
+                firstPointIndex + 1);
+        return classNameWithPackagePath;
+    }
+
+    private static boolean isDirectory(String fileName) {
+        return !fileName.contains(".");
+    }
+
+    private static boolean isFile(String fileName) {
+        return fileName.contains(".");
+    }
+
+    private static boolean isInterface(String fileName) {
+        return fileName.startsWith("I") &&
+                Character.isUpperCase(fileName.charAt(1));
+    }
+
+    private static boolean isAbstractClass(String fileName) {
+        return fileName.startsWith("Abstract");
     }
 }

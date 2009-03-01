@@ -109,7 +109,7 @@ public abstract class AbstractBinaryTree implements IBinaryTree {
             return -1;
         } else {
             return Math.max(recursiveComputeHeight(node.getLeft()),
-                recursiveComputeHeight(node.getRight())) + 1;
+                    recursiveComputeHeight(node.getRight())) + 1;
         }
     }
 

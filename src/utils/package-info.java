@@ -20,12 +20,10 @@
  */
 
 /**
- * This package contains the binary tree algorithms of the software. There is
- * principally insertion, deletion, searching and traversal. All the algorithms
- * must implement the interface <tt>IBinaryTreeAlgorithm</tt> in order to be
- * applied to binary trees.
+ * This package contains all the utility classes of the software. A utility
+ * class is a class that can not be instantiated and has only static methods.
  * 
  * @author Julien Hannier
  * @version 1.00 27/02/09
  */
-package algorithm.tree;
+package utils;

@@ -71,12 +71,12 @@ public class ModelTest {
 
     @Test
     public void testBinaryTreeTabModel() {
-        assertFalse(tabModel1.isTabModelSaved());
-        assertEquals(tabModel1.getTabModel().getType(), BinaryTreeType.AVLTREE
+        assertFalse(tabModel1.isDataStructureSaved());
+        assertEquals(tabModel1.getDataStructure().getType(), BinaryTreeType.AVLTREE
                 .toString());
-        assertEquals(tabModel2.getTabModel().getType(),
+        assertEquals(tabModel2.getDataStructure().getType(),
             BinaryTreeType.BINARYSEARCHTREE.toString());
-        assertEquals(tabModel3.getTabModel().getType(),
+        assertEquals(tabModel3.getDataStructure().getType(),
             BinaryTreeType.REDBLACKTREE.toString());
     }
 }

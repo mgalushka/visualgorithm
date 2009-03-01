@@ -81,15 +81,16 @@ public class SoftwareIO {
     }
 
     private void addFileFilters(JFileChooser fileChooser) {
-        File currentDirectory = new File("src/swing");
+        File currentDirectory = new File("src" + File.separator + "swing");
         String[] directories = FileUtility
                 .listOfDirectoriesInDirectory(currentDirectory);
         for (String each : directories) {
-            File directory = new File("src/swing/" + each);
-            String[] filterFile = FileUtility.listOfFilesInDirectory(directory,
+            File directory = new File("src" + File.separator + "swing" +
+                    File.separator + each);
+            String[] filterFile = FileUtility.listOfClassesInDirectory(directory,
                 "FileFilter.java");
             if (filterFile.length > 0) {
-                String className = FileUtility.wellFormedClassName(filterFile[0],
+                String className = FileUtility.classNameWithPackagePath(filterFile[0],
                     directory);
                 try {
                     FileFilter fileFilter = (FileFilter) Class.forName(

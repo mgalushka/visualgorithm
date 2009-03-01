@@ -46,7 +46,8 @@ public class BinaryTreeModelTest {
         btModel1 = new BinaryTreeModel(BinaryTreeType.AVLTREE);
         try {
             btModel2 = new BinaryTreeModel(
-                new File("./test/model/tree/loadBST.bt"));
+                    new File("test" + File.separator + "model" +
+                    File.separator + "tree" + File.separator + "loadBST.bt"));
         } catch (Exception e) {
             assertEquals((btModel2 != null), true);
         }
@@ -57,11 +58,11 @@ public class BinaryTreeModelTest {
     public void testBinaryTreeModel() {
         assertEquals(BinaryTreeModel.DATA_STRUCTURE_NAME, "BINARYTREE");
         assertEquals(btModel1.getDataStructure().getType(),
-            BinaryTreeType.AVLTREE.toString());
+                BinaryTreeType.AVLTREE.toString());
         assertEquals(btModel2.getDataStructure().getType(),
-            BinaryTreeType.BINARYSEARCHTREE.toString());
+                BinaryTreeType.BINARYSEARCHTREE.toString());
         assertEquals(btModel3.getDataStructure().getType(),
-            BinaryTreeType.REDBLACKTREE.toString());
+                BinaryTreeType.REDBLACKTREE.toString());
         assertEquals(btModel1.isDataStructureSaved(), false);
         assertEquals(btModel2.isDataStructureSaved(), true);
         assertEquals(btModel3.isDataStructureSaved(), false);
