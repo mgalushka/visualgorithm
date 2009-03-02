@@ -34,8 +34,8 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
 /**
  * This class contains all the methods in order to modify the binary tree of the
  * model like {@code void insertNode(int key)}. This is a data structure model
- * that is used for each tab that contains a binary tree. It is possible to add
- * a binary tree model listener to the model in order to listen the
+ * that is used to represent each binary tree in the software. It is possible to
+ * add a binary tree model listener to the model in order to listen the
  * modifications of the binary tree. This class is not designed for inheritance.
  * 
  * @author Julien Hannier

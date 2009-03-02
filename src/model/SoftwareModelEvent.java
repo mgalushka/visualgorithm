@@ -56,34 +56,14 @@ public class SoftwareModelEvent extends EventObject {
 
     private int dataStructureModelIndex;
 
-    /**
-     * Builds a software model event principally for the event type CLEAR. In
-     * this case, there is no need for a data structure model name or a data
-     * structure model index because the event type CLEAR is for the exit of the
-     * software and so for the deletion of the content of the software model
-     * event.
-     *
-     * @param source the source of the software model event
-     * @param type the type of the software model event
-     */
-    public SoftwareModelEvent(Object source, SoftwareModelEventType type) {
+    private SoftwareModelEvent(Object source, SoftwareModelEventType type) {
         super(source);
         eventType = type;
         dataStructureModelName = "";
         dataStructureModelIndex = -1;
     }
 
-    /**
-     * Builds a software model event principally for the event type DELETE. In
-     * this case, there is no need for a data structure model name because the
-     * event type DELETE is for the deletion of a data structure model and so
-     * just the index is needed.
-     * 
-     * @param source the source of the software model event
-     * @param type the type of the software model event
-     * @param index the index of the data structure model
-     */
-    public SoftwareModelEvent(Object source, SoftwareModelEventType type,
+    private SoftwareModelEvent(Object source, SoftwareModelEventType type,
             int index) {
         super(source);
         eventType = type;
@@ -91,22 +71,56 @@ public class SoftwareModelEvent extends EventObject {
         dataStructureModelIndex = index;
     }
 
-    /**
-     * Builds a software model event principally for the event type INSERT. In
-     * this case, there is no need for a data structure model index because the
-     * event type INSERT is for the insertion of a data structure model and so
-     * just the name is needed.
-     *
-     * @param source the source of the software model event
-     * @param type the type of the software model event
-     * @param name the name of the data structure model
-     */
-    public SoftwareModelEvent(Object source, SoftwareModelEventType type,
+    private SoftwareModelEvent(Object source, SoftwareModelEventType type,
             String name) {
         super(source);
         eventType = type;
         dataStructureModelName = name;
         dataStructureModelIndex = -1;
+    }
+
+    /**
+     * Builds a software model event for the event type CLEAR. In this case,
+     * there is no need for a data structure model name or a data structure
+     * model index because the event type CLEAR is for the exit of the software
+     * and so for the deletion of the content of the software model event.
+     *
+     * @param source the source of the software model event
+     * @param type the type of the software model event
+     */
+    public static SoftwareModelEvent buildClearEvent(Object source,
+            SoftwareModelEventType type) {
+        return new SoftwareModelEvent(source, type);
+    }
+
+    /**
+     * Builds a software model event for the event type DELETE. In this case,
+     * there is no need for a data structure model name because the event type
+     * DELETE is for the deletion of a data structure model and so just the
+     * index is needed.
+     * 
+     * @param source the source of the software model event
+     * @param type the type of the software model event
+     * @param index the index of the data structure model
+     */
+    public static SoftwareModelEvent buildDeleteEvent(Object source,
+            SoftwareModelEventType type, int index) {
+        return new SoftwareModelEvent(source, type, index);
+    }
+
+    /**
+     * Builds a software model event for the event type INSERT. In this case,
+     * there is no need for a data structure model index because the event type
+     * INSERT is for the insertion of a data structure model and so just the
+     * name is needed.
+     *
+     * @param source the source of the software model event
+     * @param type the type of the software model event
+     * @param name the name of the data structure model
+     */
+    public static SoftwareModelEvent buildInsertEvent(Object source,
+            SoftwareModelEventType type, String name) {
+        return new SoftwareModelEvent(source, type, name);
     }
 
     /**

@@ -241,7 +241,7 @@ public class SoftwareController implements IController {
      * @param index the index of the tab
      */
     public void closeTab(int index) {
-        softwareModel.removeDataStructureModel(index);
+        softwareModel.deleteDataStructureModel(index);
         tabControllers.remove(index);
     }
 

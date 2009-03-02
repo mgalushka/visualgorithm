@@ -27,19 +27,25 @@ import javax.swing.event.EventListenerList;
 import model.SoftwareModelEvent.SoftwareModelEventType;
 
 /**
- * Definition of the software model.
+ * This class defines all the methods in order to modify the software model. The
+ * software model is composed by data structure models. It is possible to add a
+ * software model listener to the model in order to listen the modifications of
+ * the software model. This class is not designed for inheritance.
+ *
+ * This class is not designed for inheritance.
  * 
  * @author Julien Hannier
  * @version 1.00 16/06/08
  */
-public class SoftwareModel {
+public final class SoftwareModel {
 
     private List<IDataStructureModel> dataStructureModels;
 
     private EventListenerList listeners;
 
     /**
-     * Builds the software model. The software model is a list of tab models.
+     * Builds the software model. The software model is a list of data structure
+     * models.
      */
     public SoftwareModel() {
         dataStructureModels = new ArrayList<IDataStructureModel>();
@@ -47,10 +53,11 @@ public class SoftwareModel {
     }
 
     /**
-     * Returns the tab model indicated with index.
-     * 
-     * @param index the index of the tab model
-     * @return the tab model
+     * Returns the wanted data structure model. The parameter {@code index}
+     * indicates the place of the data structure model among the others.
+     *
+     * @param index the index of the data structure model
+     * @return the wanted data structure model
      */
     public IDataStructureModel getDataStructureModel(int index) {
         return dataStructureModels.get(index);
@@ -67,7 +74,7 @@ public class SoftwareModel {
 
     /**
      * Removes a software model listener from the software model.
-     * 
+     *
      * @param listener the listener to remove
      */
     public void removeSoftwareModelListener(SoftwareModelListener listener) {
@@ -75,68 +82,76 @@ public class SoftwareModel {
     }
 
     /**
-     * Adds a tab model to the software model.
+     * Adds a data structure model to the software model. The data structure is
+     * already created into the data structure model {@code dataStructureModel}.
      * 
-     * @param tabModel a tab model
+     * @param dataStructureModel the data structure model to add
      */
-    public void addDataStructureModel(IDataStructureModel tabModel) {
-        dataStructureModels.add(tabModel);
-        fireModelHasChanged(SoftwareModelEventType.INSERT, "New "
-                + tabModel.getDataStructure().getType());
+    public void addDataStructureModel(IDataStructureModel dataStructureModel) {
+        dataStructureModels.add(dataStructureModel);
+        fireModelHasChangedWithInsertEvent("New " +
+                dataStructureModel.getDataStructure().getType());
     }
 
     /**
-     * Adds a tab model to the software model. The tab model has a loaded data
-     * structure.
-     *
-     * @param tabModel a tab model
-     * @param fileName the name of the file
+     * Adds a data structure model to the software model. The data structure is
+     * already loaded from the file into the data structure model
+     * {@code dataStructureModel}. The parameter {@code fileName} represents the
+     * name of the data structure model.
+     * 
+     * @param dataStructureModel the data structure model to add
+     * @param fileName the name of the file where the data structure model is
      */
-    public void addDataStructureModelFromFile(IDataStructureModel tabModel,
-            String fileName) {
-        dataStructureModels.add(tabModel);
-        fireModelHasChanged(SoftwareModelEventType.INSERT, fileName);
+    public void addDataStructureModelFromFile(
+            IDataStructureModel dataStructureModel, String fileName) {
+        dataStructureModels.add(dataStructureModel);
+        fireModelHasChangedWithInsertEvent(fileName);
     }
 
     /**
-     * Removes the tab model indicated with index.
+     * Deletes the data structure model from the software model. The parameter
+     * {@code index} indicates the place of the data structure model among the
+     * others.
      * 
-     * @param index the index of the tab model
+     * @param index the index of the data structure model to delete
      */
-    public void removeDataStructureModel(int index) {
+    public void deleteDataStructureModel(int index) {
         dataStructureModels.remove(index);
-        fireModelHasChanged(SoftwareModelEventType.DELETE, index);
+        fireModelHasChangedWithDeleteEvent(index);
     }
 
     /**
-     * Removes all tab models in the software model.
+     * Removes all the data structure models from the software model.
      */
     public void removeAllDataStructureModels() {
         dataStructureModels.clear();
-        fireModelHasChanged(SoftwareModelEventType.CLEAR);
+        fireModelHasChangedWithClearEvent();
     }
 
-    private void fireModelHasChanged(SoftwareModelEventType type, String name) {
+    private void fireModelHasChangedWithInsertEvent(String name) {
         SoftwareModelListener[] listenerTab = listeners.getListeners(
                 SoftwareModelListener.class);
         for (SoftwareModelListener listener : listenerTab) {
-            listener.modelHasChanged(new SoftwareModelEvent(this, type, name));
+            listener.modelHasChanged(SoftwareModelEvent.buildInsertEvent(this,
+                    SoftwareModelEventType.INSERT, name));
         }
     }
 
-    private void fireModelHasChanged(SoftwareModelEventType type, int index) {
+    private void fireModelHasChangedWithDeleteEvent(int index) {
         SoftwareModelListener[] listenerTab = listeners.getListeners(
                 SoftwareModelListener.class);
         for (SoftwareModelListener listener : listenerTab) {
-            listener.modelHasChanged(new SoftwareModelEvent(this, type, index));
+            listener.modelHasChanged(SoftwareModelEvent.buildDeleteEvent(this,
+                    SoftwareModelEventType.DELETE, index));
         }
     }
 
-    private void fireModelHasChanged(SoftwareModelEventType type) {
+    private void fireModelHasChangedWithClearEvent() {
         SoftwareModelListener[] listenerTab = listeners.getListeners(
                 SoftwareModelListener.class);
         for (SoftwareModelListener listener : listenerTab) {
-            listener.modelHasChanged(new SoftwareModelEvent(this, type));
+            listener.modelHasChanged(SoftwareModelEvent.buildClearEvent(this,
+                    SoftwareModelEventType.CLEAR));
         }
     }
 }
