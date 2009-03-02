@@ -21,7 +21,7 @@
 
 package swing.tree;
 
-import io.TreeFile;
+import io.tree.TreeFile;
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
 

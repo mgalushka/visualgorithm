@@ -25,33 +25,34 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Interface describing the methods of tab models.
+ * This interface is the common interface of all data structure models. It must
+ * be implemented by each model containing a particular data structure. It is
+ * principally used in the software model.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 07/07/08
  */
 public interface IDataStructureModel {
 
     /**
-     * Returns the tab model.
+     * Returns the data structure of the model.
      * 
-     * @return the tab model
+     * @return the data structure of the model
      */
     public IDataStructure getDataStructure();
 
     /**
-     * Returns true if the tab model has been saved.
+     * Returns true if the data structure of the model has been saved, or else
+     * false.
      * 
-     * @return true if the tab model has been saved
+     * @return true if the data structure of the model has been saved, or else false
      */
     public boolean isDataStructureSaved();
 
     /**
-     * Saves the tab model into the selected file.
+     * Saves the data structure of the model into {@code file}.
      * 
-     * @param file the file
+     * @param file the file where to save the data structure
      * @throws IOException
      */
     public void saveDataStructure(File file) throws IOException;

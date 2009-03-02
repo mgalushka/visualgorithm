@@ -24,19 +24,23 @@ package model;
 import java.util.EventListener;
 
 /**
- * Methods of the software model listeners.
+ * This interface contains all the methods for the software model listener. It
+ * must be implemented by all the classes that want to listen to the software
+ * model in order to be notified of a modification of the software model.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
+ * @see SoftwareModelEvent
  */
 public interface SoftwareModelListener extends EventListener {
 
     /**
-     * The software model has changed.
+     * This method is called when the software model has changed. The software
+     * model changes when a data structure is added or deleted or when the
+     * software is closed. The software model event will contain the type of
+     * change and informations needed for the type of change.
      * 
      * @param event the software model event
      */
-    public void modelChanged(SoftwareModelEvent event);
+    public void modelHasChanged(SoftwareModelEvent event);
 }

@@ -22,11 +22,11 @@
 package model;
 
 /**
- * Interface describing the methods of data structures.
+ * This interface is the common interface of all data structures. It must be
+ * implemented by each data structure. It is principally used in the data
+ * structure models.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
 public interface IDataStructure {

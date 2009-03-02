@@ -68,7 +68,9 @@ public class BinaryTreeModelTest {
         assertEquals(btModel3.isDataStructureSaved(), false);
 
         try {
-            btModel1.saveDataStructure(new File("./test/model/tree/saveAVLT.bt"));
+            btModel1.saveDataStructure(new File("test" + File.separator +
+                    "model" + File.separator + "tree" + File.separator +
+                    "saveAVLT.bt"));
         } catch (Exception e) {
         }
         assertEquals(btModel1.isDataStructureSaved(), true);

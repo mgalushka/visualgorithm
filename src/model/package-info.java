@@ -1,5 +1,5 @@
 /*
- * package-info.java v1.00 10/02/09
+ * package-info.java v1.00 01/03/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -20,15 +20,14 @@
  */
 
 /**
- * This package contains one part of the data structure model of the software :
- * trees. Currently, only binary trees have been implemented but the creation of
- * other trees is possible. The current implementation of binary trees is
- * quite simple and it is designed for inheritance in order to create other
- * types of binary trees. This package contains binary search trees, AVL trees
- * and red black trees. If you would like to create other trees, do not forget
- * to implement the interface <tt>IDataStructure</tt> from the parent package.
+ * This package contains the model of the software. It is composed by different
+ * data structures that are open in the software. Each of these data structures
+ * takes part of a data structure model. Thus, a new data structure must
+ * implement <tt>IDataStructure</tt> to define a type. It must also take part of
+ * a data structure model at the name of the data structure that implement
+ * <tt>IDataStructureModel</tt>.
  * 
  * @author Julien Hannier
- * @version 1.00 10/02/09
+ * @version 1.00 01/03/09
  */
-package model.tree;
+package model;

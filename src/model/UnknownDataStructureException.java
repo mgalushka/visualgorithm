@@ -22,10 +22,10 @@
 package model;
 
 /**
- * Definition of the unknown data structure exception.
+ * Definition of the unknown data structure exception. This exception is
+ * principally used in the io package and more precisely in the classes of the
+ * loading of a data structure from a file.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 02/07/08
  */
@@ -36,12 +36,13 @@ public class UnknownDataStructureException extends Exception {
     private String description;
 
     /**
-     * Builds the unknown data structure exception.
+     * Builds the unknown data structure exception with the message passed in
+     * parameter.
      * 
-     * @param d the message corresponding to the exception
+     * @param desc the message corresponding to the exception
      */
-    public UnknownDataStructureException(String d) {
-        description = d;
+    public UnknownDataStructureException(String desc) {
+        description = desc;
     }
 
     @Override

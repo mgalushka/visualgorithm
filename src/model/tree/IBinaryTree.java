@@ -36,7 +36,7 @@ import model.IDataStructure;
  *
  * @author Damien Rigoni
  * @version 1.00 19/05/08
- * @see IBinaryNode
+ * @see IDataStructure
  */
 public interface IBinaryTree extends IDataStructure {
 

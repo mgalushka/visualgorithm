@@ -1,5 +1,5 @@
 /*
- * AVLTreeFileTest.java v1.00 07/07/08
+ * BinarySearchTreeFileTest.java v1.00 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,8 +19,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package io;
+package io.tree;
 
+import io.tree.TreeFile;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,51 +29,46 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import model.UnknownDataStructureException;
-import model.tree.AVLNode;
-import model.tree.AVLTree;
+import model.tree.BinarySearchNode;
+import model.tree.BinarySearchTree;
 
 /**
- * Test of the loading and saving of an AVL tree.
+ * Test of the loading and saving of a binary search tree.
  * 
  * @author Julien Hannier
  * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 07/07/08
  */
-public class AVLTreeFileTest {
+public class BinarySearchTreeFileTest {
 
     private String loadFileName;
 
     private String saveFileName;
 
-    private AVLTree tree;
+    private BinarySearchTree tree;
 
     @Before
     public void setUp() {
-        loadFileName = "./test/io/loadAVLT.bt";
-        saveFileName = "./test/io/saveAVLT.bt";
-        tree = new AVLTree(8);
+        loadFileName = "./test/io/loadBST.bt";
+        saveFileName = "./test/io/saveBST.bt";
+        tree = new BinarySearchTree(8);
 
-        tree.getRoot().setLeft(new AVLNode(5));
-        tree.getRoot().setRight(new AVLNode(10));
-        tree.getRoot().getLeft().setLeft(new AVLNode(4));
-        tree.getRoot().getLeft().setRight(new AVLNode(6));
-        tree.getRoot().getRight().setLeft(new AVLNode(9));
-        tree.getRoot().getLeft().getLeft().setLeft(new AVLNode(3));
+        tree.getRoot().setLeft(new BinarySearchNode(5));
+        tree.getRoot().getLeft().setRight(new BinarySearchNode(6));
+        tree.getRoot().getLeft().setLeft(new BinarySearchNode(3));
+        tree.getRoot().getLeft().getLeft().setRight(new BinarySearchNode(4));
     }
 
     @Test
     public void testLoad() {
         try {
-            AVLTree t = (AVLTree) TreeFile.load(loadFileName);
-            assertEquals(t.getRoot().getAVLHeight(), 3);
-            assertEquals(t.getRoot().getLeft().getAVLHeight(), 2);
-            assertEquals(t.getRoot().getRight().getAVLHeight(), 1);
-            assertEquals(t.getRoot().getLeft().getLeft().getAVLHeight(), 1);
-            assertEquals(t.getRoot().getLeft().getRight().getAVLHeight(), 0);
-            assertEquals(t.getRoot().getRight().getLeft().getAVLHeight(), 0);
-            assertEquals(t.getRoot().getLeft().getLeft().getLeft()
-                    .getAVLHeight(), 0);
+            BinarySearchTree t = (BinarySearchTree) TreeFile.load(loadFileName);
+            assertEquals(t.getRoot().getKey(), 8);
+            assertEquals(t.getRoot().getLeft().getKey(), 5);
+            assertEquals(t.getRoot().getLeft().getLeft().getKey(), 3);
+            assertEquals(t.getRoot().getLeft().getRight().getKey(), 6);
+            assertEquals(t.getRoot().getLeft().getLeft().getRight().getKey(), 4);
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {

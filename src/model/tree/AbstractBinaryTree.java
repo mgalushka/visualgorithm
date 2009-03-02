@@ -36,21 +36,11 @@ import java.util.List;
 public abstract class AbstractBinaryTree implements IBinaryTree {
 
     /**
-     * The type of the binary tree.
-     */
-    protected BinaryTreeType type;
-
-    /**
-     * The root node of the binary tree.
-     */
-    protected IBinaryNode root;
-
-    /**
      * Enumeration that defines the types of binary trees. This enumeration is
      * also a binary tree factory. In fact, it is possible to create the binary
      * tree corresponding to each type with the method {@code IBinaryTree
      * createBinaryTree()}.
-     * 
+     *
      * @author Damien Rigoni
      * @version 1.00 16/06/08
      */
@@ -68,7 +58,7 @@ public abstract class AbstractBinaryTree implements IBinaryTree {
          * Creates the binary tree corresponding to the type on which the method
          * is applied. If the new instance of the binary tree can not be created
          * then null is returned.
-         * 
+         *
          * @return the new instance of binary tree
          */
         IBinaryTree createBinaryTree() {
@@ -79,6 +69,16 @@ public abstract class AbstractBinaryTree implements IBinaryTree {
             return null;
         }
     }
+
+    /**
+     * The type of the binary tree.
+     */
+    protected BinaryTreeType type;
+
+    /**
+     * The root node of the binary tree.
+     */
+    protected IBinaryNode root;
 
     @Override
     public final String getType() {

@@ -30,13 +30,11 @@ import model.SoftwareModelEvent.SoftwareModelEventType;
  * Definition of the software model.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
 public class SoftwareModel {
 
-    private List<IDataStructureModel> tabModels;
+    private List<IDataStructureModel> dataStructureModels;
 
     private EventListenerList listeners;
 
@@ -44,7 +42,7 @@ public class SoftwareModel {
      * Builds the software model. The software model is a list of tab models.
      */
     public SoftwareModel() {
-        tabModels = new ArrayList<IDataStructureModel>();
+        dataStructureModels = new ArrayList<IDataStructureModel>();
         listeners = new EventListenerList();
     }
 
@@ -54,8 +52,8 @@ public class SoftwareModel {
      * @param index the index of the tab model
      * @return the tab model
      */
-    public IDataStructureModel getTabModel(int index) {
-        return tabModels.get(index);
+    public IDataStructureModel getDataStructureModel(int index) {
+        return dataStructureModels.get(index);
     }
 
     /**
@@ -63,7 +61,7 @@ public class SoftwareModel {
      * 
      * @param listener the listener to add
      */
-    public void addModelListener(SoftwareModelListener listener) {
+    public void addSoftwareModelListener(SoftwareModelListener listener) {
         listeners.add(SoftwareModelListener.class, listener);
     }
 
@@ -72,7 +70,7 @@ public class SoftwareModel {
      * 
      * @param listener the listener to remove
      */
-    public void removeModelListener(SoftwareModelListener listener) {
+    public void removeSoftwareModelListener(SoftwareModelListener listener) {
         listeners.remove(SoftwareModelListener.class, listener);
     }
 
@@ -81,10 +79,23 @@ public class SoftwareModel {
      * 
      * @param tabModel a tab model
      */
-    public void addTabModel(IDataStructureModel tabModel) {
-        tabModels.add(tabModel);
-        fireModelChanged(SoftwareModelEventType.ADD, "New "
+    public void addDataStructureModel(IDataStructureModel tabModel) {
+        dataStructureModels.add(tabModel);
+        fireModelHasChanged(SoftwareModelEventType.INSERT, "New "
                 + tabModel.getDataStructure().getType());
+    }
+
+    /**
+     * Adds a tab model to the software model. The tab model has a loaded data
+     * structure.
+     *
+     * @param tabModel a tab model
+     * @param fileName the name of the file
+     */
+    public void addDataStructureModelFromFile(IDataStructureModel tabModel,
+            String fileName) {
+        dataStructureModels.add(tabModel);
+        fireModelHasChanged(SoftwareModelEventType.INSERT, fileName);
     }
 
     /**
@@ -92,53 +103,40 @@ public class SoftwareModel {
      * 
      * @param index the index of the tab model
      */
-    public void removeTabModel(int index) {
-        tabModels.remove(index);
-        fireModelChanged(SoftwareModelEventType.DELETE, index);
+    public void removeDataStructureModel(int index) {
+        dataStructureModels.remove(index);
+        fireModelHasChanged(SoftwareModelEventType.DELETE, index);
     }
 
     /**
      * Removes all tab models in the software model.
      */
-    public void removeAllTabModels() {
-        tabModels.clear();
-        fireModelChanged(SoftwareModelEventType.EXIT);
+    public void removeAllDataStructureModels() {
+        dataStructureModels.clear();
+        fireModelHasChanged(SoftwareModelEventType.CLEAR);
     }
 
-    /**
-     * Adds a tab model to the software model. The tab model has a loaded data
-     * structure.
-     * 
-     * @param tabModel a tab model
-     * @param fileName the name of the file
-     */
-    public void addTabModelFromDataStructureFile(IDataStructureModel tabModel,
-            String fileName) {
-        tabModels.add(tabModel);
-        fireModelChanged(SoftwareModelEventType.ADD, fileName);
-    }
-
-    private void fireModelChanged(SoftwareModelEventType type, String name) {
-        SoftwareModelListener[] listenerTab = listeners
-                .getListeners(SoftwareModelListener.class);
+    private void fireModelHasChanged(SoftwareModelEventType type, String name) {
+        SoftwareModelListener[] listenerTab = listeners.getListeners(
+                SoftwareModelListener.class);
         for (SoftwareModelListener listener : listenerTab) {
-            listener.modelChanged(new SoftwareModelEvent(this, type, name));
+            listener.modelHasChanged(new SoftwareModelEvent(this, type, name));
         }
     }
 
-    private void fireModelChanged(SoftwareModelEventType type, int index) {
-        SoftwareModelListener[] listenerTab = listeners
-                .getListeners(SoftwareModelListener.class);
+    private void fireModelHasChanged(SoftwareModelEventType type, int index) {
+        SoftwareModelListener[] listenerTab = listeners.getListeners(
+                SoftwareModelListener.class);
         for (SoftwareModelListener listener : listenerTab) {
-            listener.modelChanged(new SoftwareModelEvent(this, type, index));
+            listener.modelHasChanged(new SoftwareModelEvent(this, type, index));
         }
     }
 
-    private void fireModelChanged(SoftwareModelEventType type) {
-        SoftwareModelListener[] listenerTab = listeners
-                .getListeners(SoftwareModelListener.class);
+    private void fireModelHasChanged(SoftwareModelEventType type) {
+        SoftwareModelListener[] listenerTab = listeners.getListeners(
+                SoftwareModelListener.class);
         for (SoftwareModelListener listener : listenerTab) {
-            listener.modelChanged(new SoftwareModelEvent(this, type));
+            listener.modelHasChanged(new SoftwareModelEvent(this, type));
         }
     }
 }

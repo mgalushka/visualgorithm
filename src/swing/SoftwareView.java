@@ -244,17 +244,17 @@ public class SoftwareView extends JFrame implements ISoftwareView {
     }
 
     @Override
-    public void modelChanged(SoftwareModelEvent event) {
-        if (event.getType() == SoftwareModelEventType.ADD) {
+    public void modelHasChanged(SoftwareModelEvent event) {
+        if (event.getEventType() == SoftwareModelEventType.INSERT) {
             int numTab = tabbedPane.getTabCount();
-            tabbedPane.addTab(event.getName(), getTabView(numTab));
+            tabbedPane.addTab(event.getDataStructureModelName(), getTabView(numTab));
             tabbedPane.setTabComponentAt(numTab, new TabCloseButton(tabbedPane,
                     ioOperation));
             tabbedPane.setSelectedIndex(numTab);
-        } else if (event.getType() == SoftwareModelEventType.EXIT) {
+        } else if (event.getEventType() == SoftwareModelEventType.CLEAR) {
             System.exit(0);
-        } else if (event.getType() == SoftwareModelEventType.DELETE) {
-            int i = event.getIndex();
+        } else if (event.getEventType() == SoftwareModelEventType.DELETE) {
+            int i = event.getDataStructureModelIndex();
             if (i != -1) {
                 tabbedPane.remove(i);
             }

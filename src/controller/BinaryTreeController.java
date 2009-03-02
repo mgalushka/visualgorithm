@@ -21,7 +21,7 @@
 
 package controller;
 
-import io.TreeFile;
+import io.tree.TreeFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

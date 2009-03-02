@@ -82,7 +82,7 @@ public class SoftwareController implements IController {
     }
 
     private void addListener() {
-        softwareModel.addModelListener(softwareView);
+        softwareModel.addSoftwareModelListener(softwareView);
     }
 
     /**
@@ -98,7 +98,7 @@ public class SoftwareController implements IController {
             int height) {
         File currentDirectory = new File("src" + File.separator + "controller");
         String[] tabControllerFiles = FileUtility.listOfClassesInDirectory(
-            currentDirectory, "TabController.java");
+            currentDirectory, "TreeController.java");
 
         for (String each : tabControllerFiles) {
             String className = FileUtility.classNameWithPackagePath(each,
@@ -113,7 +113,7 @@ public class SoftwareController implements IController {
                             .invoke(tabController, type, viewFactory, width,
                                 height);
                     tabControllers.add(tabController);
-                    softwareModel.addTabModel(getTabController(index)
+                    softwareModel.addDataStructureModel(getTabController(index)
                             .getTabModel());
                 } catch (IllegalArgumentException e) {
                     e.printStackTrace();
@@ -149,7 +149,7 @@ public class SoftwareController implements IController {
             int index, int width, int height) {
         File currentDirectory = new File("src" + File.separator + "controller");
         String[] tabControllerFiles = FileUtility.listOfClassesInDirectory(
-            currentDirectory, "TabController.java");
+            currentDirectory, "TreeController.java");
 
         for (String each : tabControllerFiles) {
             String className = FileUtility.classNameWithPackagePath(each,
@@ -164,7 +164,7 @@ public class SoftwareController implements IController {
                         int.class).invoke(tabController, type, viewFactory,
                         random, width, height);
                     tabControllers.add(tabController);
-                    softwareModel.addTabModel(getTabController(index)
+                    softwareModel.addDataStructureModel(getTabController(index)
                             .getTabModel());
                 } catch (IllegalArgumentException e) {
                     e.printStackTrace();
@@ -199,7 +199,7 @@ public class SoftwareController implements IController {
         String extension = fileName.substring(i + 1).toLowerCase();
         File currentDirectory = new File("src" + File.separator + "controller");
         String[] tabControllerFiles = FileUtility.listOfClassesInDirectory(
-            currentDirectory, "TabController.java");
+            currentDirectory, "TreeController.java");
 
         for (String each : tabControllerFiles) {
             String className = FileUtility.classNameWithPackagePath(each,
@@ -214,7 +214,7 @@ public class SoftwareController implements IController {
                             .invoke(tabController, file, viewFactory, width,
                                 height);
                     tabControllers.add(tabController);
-                    softwareModel.addTabModelFromDataStructureFile(
+                    softwareModel.addDataStructureModelFromFile(
                         getTabController(index).getTabModel(), fileName);
                 }
             } catch (IllegalArgumentException e) {
@@ -241,7 +241,7 @@ public class SoftwareController implements IController {
      * @param index the index of the tab
      */
     public void closeTab(int index) {
-        softwareModel.removeTabModel(index);
+        softwareModel.removeDataStructureModel(index);
         tabControllers.remove(index);
     }
 
@@ -261,7 +261,7 @@ public class SoftwareController implements IController {
      */
     public void exitSoftware() {
         softwareView.hideView();
-        softwareModel.removeAllTabModels();
+        softwareModel.removeAllDataStructureModels();
         tabControllers.clear();
     }
 }

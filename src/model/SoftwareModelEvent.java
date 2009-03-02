@@ -24,104 +24,120 @@ package model;
 import java.util.EventObject;
 
 /**
- * Definition of the software model event.
- * 
+ * This class defines the software model event. It is used to indicate the
+ * changes of the software model to the software model listeners. In order to do
+ * so, there is three different types of software model event : CLEAR, DELETE
+ * and INSERT. It is not designed for inheritance.
+ *
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
 public class SoftwareModelEvent extends EventObject {
 
     /**
-     * Enumeration of the software model event type.
+     * Enumeration that defines the software model event type. There is CLEAR
+     * that is for the exit of the software and so for the deletion of the
+     * content of the software model, DELETE that is for the deletion of a data
+     * structure model, and finally INSERT that is for the insertion of a data
+     * structure model.
      * 
      * @author Julien Hannier
-     * @author Pierre Pironin
-     * @author Damien Rigoni
      * @version 1.00 16/06/08
      */
     public enum SoftwareModelEventType {
-        ADD, DELETE, EXIT
+        CLEAR, DELETE, INSERT
     }
 
     private static final long serialVersionUID = 1L;
 
-    private SoftwareModelEventType type;
+    private SoftwareModelEventType eventType;
 
-    private String name;
+    private String dataStructureModelName;
 
-    private int index;
+    private int dataStructureModelIndex;
 
     /**
-     * Builds a software model event for the type ADD. If the data structure is
-     * saved into a file, name is the file name or else name is the type of the
-     * data structure.
-     * 
+     * Builds a software model event principally for the event type CLEAR. In
+     * this case, there is no need for a data structure model name or a data
+     * structure model index because the event type CLEAR is for the exit of the
+     * software and so for the deletion of the content of the software model
+     * event.
+     *
      * @param source the source of the software model event
-     * @param t the type of the software model event
-     * @param n the name
+     * @param type the type of the software model event
      */
-    public SoftwareModelEvent(Object source, SoftwareModelEventType t, String n) {
+    public SoftwareModelEvent(Object source, SoftwareModelEventType type) {
         super(source);
-        type = t;
-        name = n;
-        index = -1;
+        eventType = type;
+        dataStructureModelName = "";
+        dataStructureModelIndex = -1;
     }
 
     /**
-     * Builds a software model event for the type DELETE.
+     * Builds a software model event principally for the event type DELETE. In
+     * this case, there is no need for a data structure model name because the
+     * event type DELETE is for the deletion of a data structure model and so
+     * just the index is needed.
      * 
      * @param source the source of the software model event
-     * @param t the type of the software model event
-     * @param i the index of the data structure
+     * @param type the type of the software model event
+     * @param index the index of the data structure model
      */
-    public SoftwareModelEvent(Object source, SoftwareModelEventType t, int i) {
+    public SoftwareModelEvent(Object source, SoftwareModelEventType type,
+            int index) {
         super(source);
-        type = t;
-        name = null;
-        index = i;
+        eventType = type;
+        dataStructureModelName = "";
+        dataStructureModelIndex = index;
     }
 
     /**
-     * Builds a software model event for the type EXIT.
-     * 
+     * Builds a software model event principally for the event type INSERT. In
+     * this case, there is no need for a data structure model index because the
+     * event type INSERT is for the insertion of a data structure model and so
+     * just the name is needed.
+     *
      * @param source the source of the software model event
-     * @param t the type of the model event
+     * @param type the type of the software model event
+     * @param name the name of the data structure model
      */
-    public SoftwareModelEvent(Object source, SoftwareModelEventType t) {
+    public SoftwareModelEvent(Object source, SoftwareModelEventType type,
+            String name) {
         super(source);
-        type = t;
-        name = null;
-        index = -1;
+        eventType = type;
+        dataStructureModelName = name;
+        dataStructureModelIndex = -1;
     }
 
     /**
-     * Returns the type of the software model event.
+     * Returns the type of the software model event that is to say CLEAR,
+     * DELETE or INSERT.
      * 
      * @return the type of the software model event
+     * @see SoftwareModelEventType
      */
-    public SoftwareModelEventType getType() {
-        return type;
+    public SoftwareModelEventType getEventType() {
+        return eventType;
     }
 
     /**
-     * Returns the name of the data structure. If the data structure is saved
-     * into a file, returns the name of the file or else returns the type of the
-     * data structure.
+     * Returns the name of the data structure model. If the data structure model
+     * is saved into a file, it is the name of the file or else it is the type
+     * of the data structure model.
      * 
-     * @return the name
+     * @return the name of the data structure model
      */
-    public String getName() {
-        return name;
+    public String getDataStructureModelName() {
+        return dataStructureModelName;
     }
 
     /**
-     * Returns the index of the data structure.
+     * Returns the index of the data structure model. This index indicates where
+     * is the data structure model among the others.
      * 
-     * @return the index of the data structure
+     * @return the index of the data structure model
      */
-    public int getIndex() {
-        return index;
+    public int getDataStructureModelIndex() {
+        return dataStructureModelIndex;
     }
 }

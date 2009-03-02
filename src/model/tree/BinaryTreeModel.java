@@ -26,7 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import javax.swing.event.EventListenerList;
-import io.TreeFile;
+import io.tree.TreeFile;
 import model.IDataStructureModel;
 import model.UnknownDataStructureException;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
