@@ -21,22 +21,16 @@
 
 package io.tree;
 
-import io.tree.TreeFile;
+import java.io.File;
+import model.tree.BinarySearchNode;
+import model.tree.BinarySearchTree;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.ParseException;
-import model.UnknownDataStructureException;
-import model.tree.BinarySearchNode;
-import model.tree.BinarySearchTree;
 
 /**
  * Test of the loading and saving of a binary search tree.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 07/07/08
  */
@@ -50,8 +44,10 @@ public class BinarySearchTreeFileTest {
 
     @Before
     public void setUp() {
-        loadFileName = "./test/io/loadBST.bt";
-        saveFileName = "./test/io/saveBST.bt";
+        loadFileName = "test" + File.separator + "io" + File.separator +
+                "tree" + File.separator + "loadBST.bt";
+        saveFileName = "test" + File.separator + "io" + File.separator +
+                "tree" + File.separator + "saveBST.bt";
         tree = new BinarySearchTree(8);
 
         tree.getRoot().setLeft(new BinarySearchNode(5));
@@ -69,14 +65,7 @@ public class BinarySearchTreeFileTest {
             assertEquals(t.getRoot().getLeft().getLeft().getKey(), 3);
             assertEquals(t.getRoot().getLeft().getRight().getKey(), 6);
             assertEquals(t.getRoot().getLeft().getLeft().getRight().getKey(), 4);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (UnknownDataStructureException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
         }
     }
 
@@ -84,8 +73,7 @@ public class BinarySearchTreeFileTest {
     public void testSave() {
         try {
             TreeFile.save(tree, saveFileName);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
         }
     }
 }

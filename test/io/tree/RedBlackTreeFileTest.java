@@ -21,23 +21,17 @@
 
 package io.tree;
 
-import io.tree.TreeFile;
-import static org.junit.Assert.assertEquals;
-import org.junit.Before;
-import org.junit.Test;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.ParseException;
-import model.UnknownDataStructureException;
+import java.io.File;
 import model.tree.RedBlackNode;
 import model.tree.RedBlackTree;
 import model.tree.RedBlackNode.RedBlackNodeColor;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test of the loading and saving of a red black tree.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 07/07/08
  */
@@ -51,16 +45,18 @@ public class RedBlackTreeFileTest {
 
     @Before
     public void setUp() {
-        loadFileName = "./test/io/loadRBT.bt";
-        saveFileName = "./test/io/saveRBT.bt";
+        loadFileName = "test" + File.separator + "io" + File.separator +
+                "tree" + File.separator + "loadRBT.bt";
+        saveFileName = "test" + File.separator + "io" + File.separator +
+                "tree" + File.separator + "saveRBT.bt";
         tree = new RedBlackTree(6);
 
         tree.getRoot().setLeft(new RedBlackNode(4, RedBlackNodeColor.BLACK));
         tree.getRoot().setRight(new RedBlackNode(8, RedBlackNodeColor.BLACK));
-        tree.getRoot().getLeft().setLeft(
-            new RedBlackNode(3, RedBlackNodeColor.RED));
-        tree.getRoot().getLeft().setRight(
-            new RedBlackNode(5, RedBlackNodeColor.RED));
+        tree.getRoot().getLeft().setLeft(new RedBlackNode(3,
+                RedBlackNodeColor.RED));
+        tree.getRoot().getLeft().setRight(new RedBlackNode(5,
+                RedBlackNodeColor.RED));
     }
 
     @Test
@@ -71,28 +67,17 @@ public class RedBlackTreeFileTest {
             assertEquals(t.getRoot().getColor(), RedBlackNodeColor.BLACK);
             assertEquals(t.getRoot().getLeft().getKey(), 4);
             assertEquals(t.getRoot().getLeft().getColor(),
-                RedBlackNodeColor.BLACK);
+                    RedBlackNodeColor.BLACK);
             assertEquals(t.getRoot().getRight().getKey(), 8);
             assertEquals(t.getRoot().getRight().getColor(),
-                RedBlackNodeColor.BLACK);
+                    RedBlackNodeColor.BLACK);
             assertEquals(t.getRoot().getLeft().getLeft().getKey(), 3);
             assertEquals(t.getRoot().getLeft().getLeft().getColor(),
-                RedBlackNodeColor.RED);
+                    RedBlackNodeColor.RED);
             assertEquals(t.getRoot().getLeft().getRight().getKey(), 5);
             assertEquals(t.getRoot().getLeft().getRight().getColor(),
-                RedBlackNodeColor.RED);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        } catch (UnknownDataStructureException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+                    RedBlackNodeColor.RED);
+        } catch (Exception e) {
         }
     }
 
@@ -100,8 +85,7 @@ public class RedBlackTreeFileTest {
     public void testSave() {
         try {
             TreeFile.save(tree, saveFileName);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
         }
     }
 }

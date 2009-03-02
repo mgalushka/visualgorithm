@@ -28,8 +28,6 @@ import model.tree.IBinaryNode;
 /**
  * Loading and saving binary search tree file.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 02/07/08
  * @see TreeFile
@@ -51,18 +49,20 @@ class BinarySearchTreeFile extends TreeFile {
     }
 
     @Override
-    protected void setLeftNode(IBinaryNode node,
-            int childNodeNumber) {
-        assert (node instanceof BinarySearchNode);
-        ((BinarySearchNode) node).setLeft(new BinarySearchNode(Integer
-                .parseInt(nodeVector.get(childNodeNumber)[KEY])));
+    protected void setLeftNode(IBinaryNode node, int childNodeNumber) {
+        assert(node instanceof BinarySearchNode);
+
+        ((BinarySearchNode) node).setLeft(
+                new BinarySearchNode(Integer.parseInt(
+                nodeVector.get(childNodeNumber)[KEY])));
     }
 
     @Override
-    protected void setRightNode(IBinaryNode node,
-            int childNodeNumber) {
-        assert (node instanceof BinarySearchNode);
-        ((BinarySearchNode) node).setRight(new BinarySearchNode(Integer
-                .parseInt(nodeVector.get(childNodeNumber)[KEY])));
+    protected void setRightNode(IBinaryNode node, int childNodeNumber) {
+        assert(node instanceof BinarySearchNode);
+
+        ((BinarySearchNode) node).setRight(
+                new BinarySearchNode(Integer.parseInt(
+                nodeVector.get(childNodeNumber)[KEY])));
     }
 }

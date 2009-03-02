@@ -29,8 +29,6 @@ import model.tree.RedBlackNode.RedBlackNodeColor;
 /**
  * Loading and saving red black tree file.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 02/07/08
  * @see TreeFile
@@ -66,34 +64,36 @@ final class RedBlackTreeFile extends TreeFile {
     }
 
     @Override
-    protected void setLeftNode(IBinaryNode node,
-            int childNodeNumber) {
-        assert (node instanceof RedBlackNode);
-        RedBlackNodeColor color = (nodeVector.get(childNodeNumber)[COLOR]
-                .equals("black")) ? RedBlackNodeColor.BLACK
-                : RedBlackNodeColor.RED;
-        ((RedBlackNode) node).setLeft(new RedBlackNode(Integer
-                .parseInt(nodeVector.get(childNodeNumber)[KEY]), color));
+    protected void setLeftNode(IBinaryNode node, int childNodeNumber) {
+        assert(node instanceof RedBlackNode);
+
+        RedBlackNodeColor color =
+                nodeVector.get(childNodeNumber)[COLOR].equals("black") ?
+                    RedBlackNodeColor.BLACK : RedBlackNodeColor.RED;
+        ((RedBlackNode) node).setLeft(
+                new RedBlackNode(Integer.parseInt(
+                nodeVector.get(childNodeNumber)[KEY]), color));
     }
 
     @Override
-    protected void setRightNode(IBinaryNode node,
-            int childNodeNumber) {
-        assert (node instanceof RedBlackNode);
-        RedBlackNodeColor color = (nodeVector.get(childNodeNumber)[COLOR]
-                .equals("black")) ? RedBlackNodeColor.BLACK
-                : RedBlackNodeColor.RED;
-        ((RedBlackNode) node).setRight(new RedBlackNode(Integer
-                .parseInt(nodeVector.get(childNodeNumber)[KEY]), color));
+    protected void setRightNode(IBinaryNode node, int childNodeNumber) {
+        assert(node instanceof RedBlackNode);
+
+        RedBlackNodeColor color =
+                nodeVector.get(childNodeNumber)[COLOR].equals("black") ?
+                    RedBlackNodeColor.BLACK : RedBlackNodeColor.RED;
+        ((RedBlackNode) node).setRight(
+                new RedBlackNode(Integer.parseInt(
+                nodeVector.get(childNodeNumber)[KEY]), color));
     }
 
     @Override
-    protected String getNode(IBinaryNode node,
-            int currentNodeNumber, String leftNodeNumber, String rightNodeNumber) {
-        assert (node instanceof RedBlackNode);
+    protected String getNode(IBinaryNode node, int currentNodeNumber,
+            String leftNodeNumber, String rightNodeNumber) {
+        assert(node instanceof RedBlackNode);
+
         return super.getNode(node, currentNodeNumber, leftNodeNumber,
-            rightNodeNumber)
-                + SPACE
-                + ((RedBlackNode) node).getColor().toString().toLowerCase();
+            rightNodeNumber) + SPACE +
+            ((RedBlackNode) node).getColor().toString().toLowerCase();
     }
 }

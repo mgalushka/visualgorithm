@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import model.UnknownDataStructureException;
 import model.tree.IBinaryNode;
 import model.tree.IBinaryTree;
@@ -41,8 +40,6 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
 /**
  * Loading and saving tree file.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 02/07/08
  */

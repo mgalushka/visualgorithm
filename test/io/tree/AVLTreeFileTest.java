@@ -21,22 +21,16 @@
 
 package io.tree;
 
-import io.tree.TreeFile;
+import java.io.File;
+import model.tree.AVLNode;
+import model.tree.AVLTree;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.ParseException;
-import model.UnknownDataStructureException;
-import model.tree.AVLNode;
-import model.tree.AVLTree;
 
 /**
  * Test of the loading and saving of an AVL tree.
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
  * @version 1.00 07/07/08
  */
@@ -50,8 +44,10 @@ public class AVLTreeFileTest {
 
     @Before
     public void setUp() {
-        loadFileName = "./test/io/loadAVLT.bt";
-        saveFileName = "./test/io/saveAVLT.bt";
+        loadFileName = "test" + File.separator + "io" + File.separator +
+                "tree" + File.separator + "loadAVLT.bt";
+        saveFileName = "test" + File.separator + "io" + File.separator +
+                "tree" + File.separator + "saveAVLT.bt";
         tree = new AVLTree(8);
 
         tree.getRoot().setLeft(new AVLNode(5));
@@ -72,16 +68,9 @@ public class AVLTreeFileTest {
             assertEquals(t.getRoot().getLeft().getLeft().getAVLHeight(), 1);
             assertEquals(t.getRoot().getLeft().getRight().getAVLHeight(), 0);
             assertEquals(t.getRoot().getRight().getLeft().getAVLHeight(), 0);
-            assertEquals(t.getRoot().getLeft().getLeft().getLeft()
-                    .getAVLHeight(), 0);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (UnknownDataStructureException e) {
-            e.printStackTrace();
+            assertEquals(
+                    t.getRoot().getLeft().getLeft().getLeft().getAVLHeight(), 0);
+        } catch (Exception e) {
         }
     }
 
@@ -89,8 +78,7 @@ public class AVLTreeFileTest {
     public void testSave() {
         try {
             TreeFile.save(tree, saveFileName);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
         }
     }
 }
