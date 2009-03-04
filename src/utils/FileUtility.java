@@ -28,7 +28,8 @@ import java.util.regex.Matcher;
 /**
  * This utility class contains functions to work with directories and files.
  * There are functions to list directories or classes but also to modify the
- * name of a class file in order to use it with Java reflection.
+ * name of a class file in order to use it with Java reflection. All the class
+ * names must be defined according to Java conventions.
  * 
  * @author Julien Hannier
  * @version 1.00 08/12/08
@@ -72,8 +73,7 @@ public class FileUtility {
 
             @Override
             public boolean accept(File file, String name) {
-                if (isFile(name) && !isInterface(name) &&
-                        !isAbstractClass(name) && name.contains(select)) {
+                if (isFile(name) && isClass(name) && name.contains(select)) {
                     return true;
                 }
                 return false;
@@ -123,5 +123,10 @@ public class FileUtility {
 
     private static boolean isAbstractClass(String fileName) {
         return fileName.startsWith("Abstract");
+    }
+
+    private static boolean isClass(String fileName) {
+        return !isInterface(fileName) && !isAbstractClass(fileName) &&
+                Character.isUpperCase(fileName.charAt(0));
     }
 }

@@ -101,10 +101,10 @@ public final class BinaryTreeModel implements IDataStructureModel {
     public void saveDataStructure(File file) throws IOException {
         String path = file.getAbsolutePath();
 
-        if (path.endsWith(".bt")) {
+        if (path.endsWith("." + TreeFile.fileExtension)) {
             TreeFile.save(binaryTree, path);
         } else {
-            TreeFile.save(binaryTree, path.concat(".bt"));
+            TreeFile.save(binaryTree, path.concat("." + TreeFile.fileExtension));
         }
         isBinaryTreeSaved = true;
     }

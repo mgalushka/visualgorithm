@@ -26,7 +26,9 @@ import model.tree.AVLTree;
 import model.tree.IBinaryNode;
 
 /**
- * Loading and saving AVL tree file.
+ * This class defines the file input and output operations for AVL trees. It is
+ * not designed for inheritance. The format of the file is defined in
+ * <tt>TreeFile</tt>.
  * 
  * @author Damien Rigoni
  * @version 1.00 02/07/08

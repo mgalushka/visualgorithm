@@ -27,7 +27,10 @@ import model.tree.RedBlackTree;
 import model.tree.RedBlackNode.RedBlackNodeColor;
 
 /**
- * Loading and saving red black tree file.
+ * This class defines the file input and output operations for red black trees.
+ * It is not designed for inheritance. The format of the file is a little bit
+ * different from the format defined in <tt>TreeFile</tt>. Here it is :
+ * {@literal [index] [key] [index of left child] [index of right child] [color]}
  * 
  * @author Damien Rigoni
  * @version 1.00 02/07/08
@@ -41,6 +44,16 @@ final class RedBlackTreeFile extends TreeFile {
 
     RedBlackTreeFile() {
         super();
+    }
+
+    @Override
+    protected String transformNodeToString(IBinaryNode node, int currentNodeNumber,
+            String leftNodeNumber, String rightNodeNumber) {
+        assert(node instanceof RedBlackNode);
+
+        return super.transformNodeToString(node, currentNodeNumber,
+                leftNodeNumber, rightNodeNumber) + SPACE +
+            ((RedBlackNode) node).getColor().toString().toLowerCase();
     }
 
     @Override
@@ -85,15 +98,5 @@ final class RedBlackTreeFile extends TreeFile {
         ((RedBlackNode) node).setRight(
                 new RedBlackNode(Integer.parseInt(
                 nodeVector.get(childNodeNumber)[KEY]), color));
-    }
-
-    @Override
-    protected String getNode(IBinaryNode node, int currentNodeNumber,
-            String leftNodeNumber, String rightNodeNumber) {
-        assert(node instanceof RedBlackNode);
-
-        return super.getNode(node, currentNodeNumber, leftNodeNumber,
-            rightNodeNumber) + SPACE +
-            ((RedBlackNode) node).getColor().toString().toLowerCase();
     }
 }

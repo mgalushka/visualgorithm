@@ -236,7 +236,7 @@ public class SoftwareController implements IController {
     }
 
     /**
-     * Removes the tab indicated with index.
+     * Removes the tab indicated by index.
      * 
      * @param index the index of the tab
      */

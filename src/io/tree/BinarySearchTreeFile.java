@@ -26,13 +26,15 @@ import model.tree.BinarySearchTree;
 import model.tree.IBinaryNode;
 
 /**
- * Loading and saving binary search tree file.
+ * This class defines the file input and output operations for binary search
+ * trees. It is not designed for inheritance. The format of the file is defined
+ * in <tt>TreeFile</tt>.
  * 
  * @author Damien Rigoni
  * @version 1.00 02/07/08
  * @see TreeFile
  */
-class BinarySearchTreeFile extends TreeFile {
+final class BinarySearchTreeFile extends TreeFile {
 
     BinarySearchTreeFile() {
         super();

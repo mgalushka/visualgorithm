@@ -38,27 +38,42 @@ import model.tree.IBinaryTree;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 
 /**
- * Loading and saving tree file.
- * 
+ * This abstract class defines the file input and output operations for binary
+ * trees. It also defines a readable file format for binary trees that is :
+ * {@literal [index] [key] [index of left child] [index of right child]}. This
+ * class is designed for inheritance in order to obtain the concrete type of
+ * binary trees or to add new node attributes in the file format. The class
+ * <tt>TreeFile</tt> does everything. In fact, it uses the design pattern
+ * template method to perform the creation of the different types of binary
+ * trees. Thus, these are the static methods from <tt>TreeFile</tt> that are
+ * used to save and load binary trees. If you would like to add other tree
+ * files, do not forget to register your tree file class in the data structure
+ * {@code fileParser} in the class <tt>TreeFile</tt>.
+ *
  * @author Damien Rigoni
  * @version 1.00 02/07/08
  */
 public abstract class TreeFile {
 
+    /**
+     * Definition of the extension of the binary tree files.
+     */
     public final static String fileExtension = "bt";
     
     /**
-     * Position of the key in the file.
+     * Definition of the position of the key in the string tab of the node list.
      */
     protected final static int KEY = 1;
 
     /**
-     * Position of the left child in the file.
+     * Definition of the position of the left child in the string tab of the
+     * node list.
      */
     protected final static int LEFT_CHILD = 2;
 
     /**
-     * Position of the right child in the file.
+     * Definition of the position of the right child in the string tab of the
+     * node list.
      */
     protected final static int RIGHT_CHILD = 3;
 
@@ -68,20 +83,22 @@ public abstract class TreeFile {
     protected static final String SPACE = "\t";
 
     /**
-     * Definition of nil nodes.
+     * Definition of null nodes. It is defined by {@literal nil}.
      */
     protected static final String NIL_NODE = "nil";
 
     /**
-     * Definition of the comment regular expression.
+     * Definition of the comment regular expression. A comment is defined by
+     * {@literal #} followed by text.
      */
     protected final static String REGEX_COMMENT = "\\p{Blank}*#.*";
 
     /**
-     * Definition of the line comment regular expression : text # comment.
+     * Definition of the line comment regular expression. A comment is defined
+     * by {@literal #} followed by text.
      */
-    protected final static String REGEX_COMMENT_LINE = "("
-            + "\\p{Blank}*|\\p{Blank}+#.*)?";
+    protected final static String REGEX_COMMENT_LINE = "(\\p{Blank}*|" +
+            "\\p{Blank}+#.*)?";
 
     /**
      * Definition of the blank regular expression.
@@ -89,14 +106,10 @@ public abstract class TreeFile {
     protected final static String REGEX_BLANK = "\\p{Blank}+";
 
     /**
-     * Definition of the key regular expression.
+     * Definition of the key regular expression. The key is composed by one or
+     * two digits.
      */
     protected final static String REGEX_KEY = "\\d{1,2}";
-
-    /**
-     * Definition of the tree type regular expression.
-     */
-    protected final static String REGEX_WORD = "\\w+";
 
     /**
      * Definition of the empty line regular expression.
@@ -104,54 +117,58 @@ public abstract class TreeFile {
     protected final static String REGEX_EMPTY_LINE = "\\p{Blank}*";
 
     /**
-     * Definition of the regular expression for the nodes which have two child.
+     * Definition of the regular expression for nodes that have two children.
      */
     protected static String REGEX_2_CHILD;
 
     /**
-     * Definition of the regular expression for the nodes which have only a left
+     * Definition of the regular expression for nodes that have only a left
      * child.
      */
     protected static String REGEX_LEFT_CHILD;
 
     /**
-     * Definition of the regular expression for the nodes which have only a
-     * right child.
+     * Definition of the regular expression for nodes that have only a right
+     * child.
      */
     protected static String REGEX_RIGHT_CHILD;
 
     /**
-     * Definition of the regular expression for the nodes which have no child.
+     * Definition of the regular expression for nodes that have no children.
      */
     protected static String REGEX_NO_CHILD;
 
     /**
-     * The file parser.
+     * The file parser associates each type of binary tree with the good type of
+     * tree file.
      */
-    protected static HashMap<String, TreeFile> fileParser = new HashMap<String, TreeFile>();
+    protected static HashMap<String, TreeFile> fileParser =
+            new HashMap<String, TreeFile>();
 
     private int lineNumber;
 
     /**
-     * The list of the nodes.
+     * The list of the nodes represented as string tab. The string tab contains
+     * one string for each attribute of a node. There are the key and the number
+     * of the children nodes.
      */
     protected Vector<String[]> nodeVector;
 
     /**
-     * The type of the tree.
+     * The type of the binary tree.
      */
     protected String treeType;
 
     static {
         fileParser.put(BinaryTreeType.BINARYSEARCHTREE.toString(),
-            new BinarySearchTreeFile());
+                new BinarySearchTreeFile());
         fileParser.put(BinaryTreeType.AVLTREE.toString(), new AVLTreeFile());
         fileParser.put(BinaryTreeType.REDBLACKTREE.toString(),
-            new RedBlackTreeFile());
+                new RedBlackTreeFile());
     }
 
     /**
-     * Builds the tree file parser.
+     * Builds the tree file with an empty node vector and an empty tree type.
      */
     protected TreeFile() {
         nodeVector = new Vector<String[]>();
@@ -161,15 +178,15 @@ public abstract class TreeFile {
     private static TreeFile parse(String fileName) throws ParseException,
             IOException, FileNotFoundException {
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        int line = 0;
         String lineToParse = reader.readLine();
-        Pattern pattern;
-        Matcher matcher;
+        int line = 0;
+        Pattern pattern = null;
+        Matcher matcher = null;
         TreeFile parser = null;
 
-        while (lineToParse != null && parser == null) {
+        while ((lineToParse != null) && (parser == null)) {
             if (lineToParse.matches(REGEX_COMMENT)
-                    | lineToParse.matches(REGEX_EMPTY_LINE)) {
+                    || lineToParse.matches(REGEX_EMPTY_LINE)) {
                 lineToParse = reader.readLine();
                 ++line;
             } else if (lineToParse.matches(REGEX_EMPTY_LINE + "\\w+"
@@ -185,13 +202,12 @@ public abstract class TreeFile {
                     parser.parse(reader);
                     parser.lineNumber = ++line;
                 } else {
-                    throw new ParseException("The tree type " + matcher.group()
-                            + " is unknown", line);
+                    throw new ParseException("The tree type " + matcher.group() +
+                            " is unknown", line);
                 }
             } else {
-                throw new ParseException(
-                        "The type of the tree is not specified,"
-                                + " or specified after the nodes", line);
+                throw new ParseException("The type of the tree is not" +
+                        " specified, or specified after the nodes", line);
             }
         }
         if (parser != null) {
@@ -202,40 +218,33 @@ public abstract class TreeFile {
     }
 
     private IBinaryTree createBinaryTree() throws UnknownDataStructureException {
-        IBinaryTree tree;
+        IBinaryTree tree = null;
         if (nodeVector.size() != 0) {
             tree = createBinaryTree(Integer.parseInt(nodeVector.get(0)[KEY]));
             generateNode(tree.getRoot(), 0);
-
         } else {
             tree = createEmptyBinaryTree();
         }
-        if (tree.isWellFormedTree())
+        if (tree.isWellFormedTree()) {
             return tree;
-        else {
-            String article = treeType.charAt(0) == 'A' ? "an " : "a ";
-            throw new UnknownDataStructureException(
-                    "The tree does not satisfy the properties " + "of "
-                            + article + treeType);
+        } else {
+            throw new UnknownDataStructureException("The tree does not satisfy" +
+                    " the properties of " + treeType);
         }
     }
 
-    private void generateNode(IBinaryNode node,
-            int currentNodeNumber) {
-        if (currentNodeNumber >= nodeVector.size()) {
-        } else {
-            if (nodeVector.get(currentNodeNumber)[LEFT_CHILD].equals(NIL_NODE)) {
-            } else {
-                int childNodeNumber = Integer.parseInt(nodeVector
-                        .get(currentNodeNumber)[LEFT_CHILD]);
+    private void generateNode(IBinaryNode node, int currentNodeNumber) {
+        if (currentNodeNumber < nodeVector.size()) {
+            if (!nodeVector.get(currentNodeNumber)[LEFT_CHILD].equals(NIL_NODE)) {
+                int childNodeNumber = Integer.parseInt(
+                        nodeVector.get(currentNodeNumber)[LEFT_CHILD]);
                 setLeftNode(node, childNodeNumber);
                 node.getLeft().setFather(node);
                 generateNode(node.getLeft(), childNodeNumber);
             }
-            if (nodeVector.get(currentNodeNumber)[RIGHT_CHILD].equals(NIL_NODE)) {
-            } else {
-                int childNodeNumber = Integer.parseInt(nodeVector
-                        .get(currentNodeNumber)[RIGHT_CHILD]);
+            if (!nodeVector.get(currentNodeNumber)[RIGHT_CHILD].equals(NIL_NODE)) {
+                int childNodeNumber = Integer.parseInt(
+                        nodeVector.get(currentNodeNumber)[RIGHT_CHILD]);
                 setRightNode(node, childNodeNumber);
                 node.getRight().setFather(node);
                 generateNode(node.getRight(), childNodeNumber);
@@ -243,38 +252,33 @@ public abstract class TreeFile {
         }
     }
 
-    private void parse(BufferedReader reader) throws IOException,
-            ParseException {
+    private void parse(BufferedReader reader) throws IOException, ParseException {
+        String lineToParse = reader.readLine();
         int currentNodeNumber = 0;
         int nextNodeNumber = 1;
-        String lineToParse = reader.readLine();
-        Pattern pattern;
-        Matcher matcher;
+        Pattern pattern = null;
+        Matcher matcher = null;
 
         if (lineToParse == null) {
             ++currentNodeNumber;
         }
         while (lineToParse != null) {
             initREGEX(currentNodeNumber, nextNodeNumber);
-            if (lineToParse.matches(REGEX_COMMENT)
-                    | lineToParse.matches(REGEX_EMPTY_LINE)) {
-            } else if (lineToParse.matches(REGEX_2_CHILD + REGEX_COMMENT_LINE)) {
+            if (lineToParse.matches(REGEX_2_CHILD + REGEX_COMMENT_LINE)) {
                 pattern = Pattern.compile(REGEX_2_CHILD);
                 matcher = pattern.matcher(lineToParse);
                 matcher.find();
                 nodeVector.add(matcher.group().split(REGEX_BLANK));
                 ++currentNodeNumber;
                 nextNodeNumber += 2;
-            } else if (lineToParse.matches(REGEX_LEFT_CHILD
-                    + REGEX_COMMENT_LINE)) {
+            } else if (lineToParse.matches(REGEX_LEFT_CHILD + REGEX_COMMENT_LINE)) {
                 pattern = Pattern.compile(REGEX_LEFT_CHILD);
                 matcher = pattern.matcher(lineToParse);
                 matcher.find();
                 nodeVector.add(matcher.group().split(REGEX_BLANK));
                 ++currentNodeNumber;
                 ++nextNodeNumber;
-            } else if (lineToParse.matches(REGEX_RIGHT_CHILD
-                    + REGEX_COMMENT_LINE)) {
+            } else if (lineToParse.matches(REGEX_RIGHT_CHILD + REGEX_COMMENT_LINE)) {
                 pattern = Pattern.compile(REGEX_RIGHT_CHILD);
                 matcher = pattern.matcher(lineToParse);
                 matcher.find();
@@ -283,8 +287,8 @@ public abstract class TreeFile {
                 ++nextNodeNumber;
             } else if (lineToParse.matches(REGEX_NO_CHILD + REGEX_COMMENT_LINE)) {
                 if (currentNodeNumber >= nextNodeNumber) {
-                    throw new ParseException(
-                            "Too many nodes have been specified", lineNumber);
+                    throw new ParseException("Too many nodes have been specified",
+                            lineNumber);
                 } else {
                     pattern = Pattern.compile(REGEX_NO_CHILD);
                     matcher = pattern.matcher(lineToParse);
@@ -293,9 +297,11 @@ public abstract class TreeFile {
                     ++currentNodeNumber;
                 }
             } else {
-                throw new ParseException(
-                        "There is a syntax error on the line : "
-                                + lineToParse.replace(SPACE, " "), lineNumber);
+                if (!lineToParse.matches(REGEX_COMMENT)
+                        && !lineToParse.matches(REGEX_EMPTY_LINE)) {
+                    throw new ParseException("There is a syntax error on the " +
+                            "line : " + lineToParse.replace(SPACE, " "), lineNumber);
+                }
             }
             lineToParse = reader.readLine();
             ++lineNumber;
@@ -306,29 +312,37 @@ public abstract class TreeFile {
     }
 
     /**
-     * Creates the string corresponding to the node.
+     * Creates a string corresponding to the binary node. The format is defined
+     * by <tt>TreeFile</tt>. There are the number of the node, the key and the
+     * number of the children nodes. This method must be redefined in a subclass
+     * if there is another new attribute concerning binary nodes to add in the
+     * string representation.
      * 
-     * @param node the node of the line
+     * @param node the node to transform into a string
      * @param currentNodeNumber the number of the current node
      * @param leftNodeNumber the number of the left child
      * @param rightNodeNumber the number of the right child
-     * @return the string corresponding to the node
+     * @return the string representation of the binary node
      */
-    protected String getNode(IBinaryNode node,
-            int currentNodeNumber, String leftNodeNumber, String rightNodeNumber) {
+    protected String transformNodeToString(IBinaryNode node, int currentNodeNumber,
+            String leftNodeNumber, String rightNodeNumber) {
         return currentNodeNumber + SPACE + node.getKey() + SPACE
                 + leftNodeNumber + SPACE + rightNodeNumber;
     }
 
     /**
-     * Initializes the regular expressions.
+     * Initializes the regular expressions for the current line of the file. The
+     * current line is indicated by {@code currentNodeNumber}. This method must
+     * be redefined in a subclass if there is another new regular expression
+     * concerning binary nodes to initialize.
      * 
-     * @param currentNodeNumber the index of the current node
-     * @param nextNodeNumber the index of the next node
+     * @param currentNodeNumber the number of the current node
+     * @param nextNodeNumber the number of the next node
      */
     protected void initREGEX(int currentNodeNumber, int nextNodeNumber) {
         String lineBegin = currentNodeNumber + REGEX_BLANK + REGEX_KEY
                 + REGEX_BLANK;
+        
         REGEX_2_CHILD = lineBegin + nextNodeNumber + REGEX_BLANK
                 + (nextNodeNumber + 1);
         REGEX_LEFT_CHILD = lineBegin + nextNodeNumber + REGEX_BLANK + "nil";
@@ -337,75 +351,75 @@ public abstract class TreeFile {
     }
 
     /**
-     * Creates an empty tree with for root null.
+     * Creates an empty binary tree that is to say a binary tree with a null
+     * root node.
      * 
-     * @return the created tree
+     * @return the created binary tree
      */
     protected abstract IBinaryTree createEmptyBinaryTree();
 
     /**
-     * Creates a tree with for root the key given in parameter.
+     * Creates a binary tree with the key given in parameter.
      * 
-     * @param key the key of the node
-     * @return the created tree
+     * @param key the key of the root node
+     * @return the created binary tree
      */
     protected abstract IBinaryTree createBinaryTree(int key);
 
     /**
-     * Creates the left child of the node given in parameter.
-     * 
-     * @param node the node which the left child has to be assigned
-     * @param childNodeNumber the index of the key
+     * Creates the left child of the binary node passed as parameter with the
+     * node indicated by {@code childNodeNumber}.
+     *
+     * @param node the node from which the left child has to be assigned
+     * @param childNodeNumber the number of the left child of the node
      */
-    protected abstract void setLeftNode(IBinaryNode node,
-            int childNodeNumber);
+    protected abstract void setLeftNode(IBinaryNode node, int childNodeNumber);
 
     /**
-     * Creates the right child of the node given in parameter.
+     * Creates the right child of the binary node passed as parameter with the
+     * node indicated by {@code childNodeNumber}.
      * 
-     * @param node the node which the right child has to be assigned
-     * @param childNodeNumber the index of the key
+     * @param node the node from which the right child has to be assigned
+     * @param childNodeNumber the number of the right child of the node
      */
-    protected abstract void setRightNode(IBinaryNode node,
-            int childNodeNumber);
+    protected abstract void setRightNode(IBinaryNode node, int childNodeNumber);
 
     /**
-     * Creates a tree from a load file.
+     * Creates a binary tree from the loading of a file which name is
+     * {@code fileName}.
      * 
-     * @param fileName the file to load
+     * @param fileName the name of the file where to load the binary tree
+     * @return the loaded binary tree
      * @throws FileNotFoundException
-     * @throws ParseException
      * @throws IOException
+     * @throws ParseException
      * @throws UnknownDataStructureException
      */
-    public static IBinaryTree load(String fileName)
-            throws FileNotFoundException, ParseException, IOException,
-            UnknownDataStructureException {
+    public static IBinaryTree load(String fileName) throws FileNotFoundException,
+            IOException, ParseException, UnknownDataStructureException {
         TreeFile parser = TreeFile.parse(fileName);
         return parser.createBinaryTree();
     }
 
     /**
-     * Saves the tree into a file.
+     * Saves the binary tree represented by {@code tree} into a file which name
+     * is {@code fileName}.
      * 
-     * @param tree the tree to save
-     * @param fileName the name of the file
+     * @param tree the binary tree to save
+     * @param fileName the name of the file where to save the binary tree
      * @throws IOException
-     * @throws UnknownDataStructureException
      */
-    public final static void save(
-            IBinaryTree tree, String fileName) throws IOException {
+    public final static void save(IBinaryTree tree,
+            String fileName) throws IOException {
         FileWriter file = new FileWriter(fileName);
-        IBinaryNode node;
         int currentNodeNumber = 0;
         int maxNodeNumber = 0;
-        String leftNodeNumber;
-        String rightNodeNumber;
-        List<IBinaryNode> array = tree.buildHeapFromBinaryTree();
+        String leftNodeNumber = null;
+        String rightNodeNumber = null;
+        List<IBinaryNode> heap = tree.buildHeapFromBinaryTree();
 
         file.write(tree.getType() + "\n");
-        for (int i = 0; i < array.size(); i++) {
-            node = array.get(i);
+        for (IBinaryNode node : heap) {
             if (node != null) {
                 if (node.getLeft() == null) {
                     leftNodeNumber = NIL_NODE;
@@ -419,9 +433,9 @@ public abstract class TreeFile {
                     ++maxNodeNumber;
                     rightNodeNumber = Integer.toString(maxNodeNumber);
                 }
-                file.write(fileParser.get(tree.getType().toString()).getNode(
-                    node, currentNodeNumber, leftNodeNumber, rightNodeNumber)
-                        + "\n");
+                file.write(fileParser.get(
+                        tree.getType().toString()).transformNodeToString(node,
+                        currentNodeNumber, leftNodeNumber, rightNodeNumber) + "\n");
                 ++currentNodeNumber;
             }
         }

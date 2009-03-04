@@ -28,7 +28,8 @@ package model.tree;
  * node. For instance, the method {@code IBinaryNode getRight()} will look like
  * {@code AVLNode getRight()} for the class AVLNode. All the setters must be
  * used with the same type of binary node that the object on which they are
- * used. If not, an IllegalArgumentException is thrown. Keys are only integers.
+ * used. If not, an IllegalArgumentException is thrown. Keys are only integers
+ * greater equal than 0 and less than 100.
  * 
  * @author Damien Rigoni
  * @version 1.00 19/05/08
