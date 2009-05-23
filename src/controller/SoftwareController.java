@@ -21,13 +21,18 @@
 
 package controller;
 
+import io.tree.TreeFile;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.SoftwareModel;
-import utils.FileUtility;
+import model.UnknownDataStructureException;
 import view.AbstractViewFactory;
 import view.ISoftwareView;
 
@@ -96,42 +101,10 @@ public class SoftwareController implements IController {
      */
     public void addTab(String name, Object type, int index, int width,
             int height) {
-        File currentDirectory = new File("src" + File.separator + "controller");
-        String[] tabControllerFiles = FileUtility.listOfClassesInDirectory(
-            currentDirectory, "TreeController.java");
-
-        for (String each : tabControllerFiles) {
-            String className = FileUtility.classNameWithPackagePath(each,
-                currentDirectory);
-            if (className.toLowerCase().contains(name.toLowerCase())) {
-                try {
-                    IDataStructureController tabController = (IDataStructureController) Class
-                            .forName(className).newInstance();
-                    Class.forName(className).getMethod(
-                        "initializeTabController", Object.class,
-                        AbstractViewFactory.class, int.class, int.class)
-                            .invoke(tabController, type, viewFactory, width,
-                                height);
-                    tabControllers.add(tabController);
-                    softwareModel.addDataStructureModel(getTabController(index)
-                            .getTabModel());
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                } catch (SecurityException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        IDataStructureController tabController = new BinaryTreeController();
+        tabController.initializeTabController(type, viewFactory, width, height);
+        tabControllers.add(tabController);
+        softwareModel.addDataStructureModel(getTabController(index).getTabModel());
     }
 
     /**
@@ -147,42 +120,11 @@ public class SoftwareController implements IController {
      */
     public void addTabWithRandom(String name, Object type, int random,
             int index, int width, int height) {
-        File currentDirectory = new File("src" + File.separator + "controller");
-        String[] tabControllerFiles = FileUtility.listOfClassesInDirectory(
-            currentDirectory, "TreeController.java");
-
-        for (String each : tabControllerFiles) {
-            String className = FileUtility.classNameWithPackagePath(each,
-                currentDirectory);
-            if (className.toLowerCase().contains(name.toLowerCase())) {
-                try {
-                    IDataStructureController tabController = (IDataStructureController) Class
-                            .forName(className).newInstance();
-                    Class.forName(className).getMethod(
-                        "initializeTabControllerWithRandom", Object.class,
-                        AbstractViewFactory.class, int.class, int.class,
-                        int.class).invoke(tabController, type, viewFactory,
-                        random, width, height);
-                    tabControllers.add(tabController);
-                    softwareModel.addDataStructureModel(getTabController(index)
-                            .getTabModel());
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                } catch (SecurityException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        IDataStructureController tabController = new BinaryTreeController();
+        tabController.initializeTabControllerWithRandom(type, viewFactory, random,
+            width, height);
+        tabControllers.add(tabController);
+        softwareModel.addDataStructureModel(getTabController(index).getTabModel());
     }
 
     /**
@@ -197,41 +139,28 @@ public class SoftwareController implements IController {
         String fileName = file.getName();
         int i = fileName.lastIndexOf('.');
         String extension = fileName.substring(i + 1).toLowerCase();
-        File currentDirectory = new File("src" + File.separator + "controller");
-        String[] tabControllerFiles = FileUtility.listOfClassesInDirectory(
-            currentDirectory, "TreeController.java");
 
-        for (String each : tabControllerFiles) {
-            String className = FileUtility.classNameWithPackagePath(each,
-                currentDirectory);
+        if (extension.equals(TreeFile.fileExtension)) {
+            IDataStructureController tabController = new BinaryTreeController();
             try {
-                IDataStructureController tabController = (IDataStructureController) Class.forName(
-                    className).newInstance();
-                if (extension.equals(tabController.getFileExtension())) {
-                    Class.forName(className).getMethod(
-                        "initializeTabControllerWithFile", File.class,
-                        AbstractViewFactory.class, int.class, int.class)
-                            .invoke(tabController, file, viewFactory, width,
-                                height);
-                    tabControllers.add(tabController);
-                    softwareModel.addDataStructureModelFromFile(
-                        getTabController(index).getTabModel(), fileName);
-                }
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
+              tabController.initializeTabControllerWithFile(file, viewFactory, width,
+                  height);
+            } catch (FileNotFoundException ex) {
+              Logger.getLogger(SoftwareController.class.getName()).log(Level.SEVERE,
+                  null, ex);
+            } catch (ParseException ex) {
+              Logger.getLogger(SoftwareController.class.getName()).log(Level.SEVERE,
+                  null, ex);
+            } catch (IOException ex) {
+              Logger.getLogger(SoftwareController.class.getName()).log(Level.SEVERE,
+                  null, ex);
+            } catch (UnknownDataStructureException ex) {
+              Logger.getLogger(SoftwareController.class.getName()).log(Level.SEVERE,
+                  null, ex);
             }
+            tabControllers.add(tabController);
+            softwareModel.addDataStructureModelFromFile(
+                getTabController(index).getTabModel(), fileName);
         }
     }
 

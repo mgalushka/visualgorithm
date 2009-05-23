@@ -1,5 +1,5 @@
 /*
- * package-info.java v1.00 27/02/09
+ * package-info.java v1.00 02/03/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -20,10 +20,12 @@
  */
 
 /**
- * This package contains all the utility classes of the software. A utility
- * class is a class that can not be instantiated and has only static methods.
+ * This package contains file input and output operations for binary trees.
+ * These operations are implemented by static methods in the abstract class
+ * <tt>TreeFile</tt>. <tt>TreeFile</tt> also defines a readable file format for
+ * binary trees.
  * 
  * @author Julien Hannier
- * @version 1.00 27/02/09
+ * @version 1.00 02/03/09
  */
-package utils;
+package controller;

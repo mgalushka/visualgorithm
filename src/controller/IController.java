@@ -27,16 +27,14 @@ import view.IView;
  * Interface describing the methods of controllers.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
 public interface IController {
 
-    /**
-     * Returns the view of the controller.
-     * 
-     * @return the view of the controller
-     */
-    public IView getView();
+  /**
+   * Returns the view of the controller.
+   *
+   * @return the view of the controller
+   */
+  public IView getView();
 }

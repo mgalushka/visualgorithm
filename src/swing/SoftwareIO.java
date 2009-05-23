@@ -27,8 +27,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.filechooser.FileFilter;
-import utils.FileUtility;
 import controller.SoftwareController;
+import swing.tree.TreeFileFilter;
 
 /**
  * Definition of the software IO.
@@ -80,31 +80,9 @@ public class SoftwareIO {
         fileChooser.setAcceptAllFileFilterUsed(false);
     }
 
-    private void addFileFilters(JFileChooser fileChooser) {
-        File currentDirectory = new File("src" + File.separator + "swing");
-        String[] directories = FileUtility
-                .listOfDirectoriesInDirectory(currentDirectory);
-        for (String each : directories) {
-            File directory = new File("src" + File.separator + "swing" +
-                    File.separator + each);
-            String[] filterFile = FileUtility.listOfClassesInDirectory(directory,
-                "FileFilter.java");
-            if (filterFile.length > 0) {
-                String className = FileUtility.classNameWithPackagePath(filterFile[0],
-                    directory);
-                try {
-                    FileFilter fileFilter = (FileFilter) Class.forName(
-                        className).newInstance();
-                    fileChooser.addChoosableFileFilter(fileFilter);
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+    protected void addFileFilters(JFileChooser fileChooser) {
+        FileFilter fileFilter = new TreeFileFilter();
+        fileChooser.addChoosableFileFilter(fileFilter);
     }
 
     /**

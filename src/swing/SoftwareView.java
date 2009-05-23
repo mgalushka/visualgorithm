@@ -44,9 +44,9 @@ import javax.swing.WindowConstants;
 import model.SoftwareModelEvent;
 import model.SoftwareModelEvent.SoftwareModelEventType;
 import swing.SoftwareIO.SaveEventType;
-import utils.FileUtility;
 import view.ISoftwareView;
 import controller.SoftwareController;
+import swing.tree.TreeMenu;
 
 /**
  * Definition of the software view.
@@ -175,44 +175,9 @@ public class SoftwareView extends JFrame implements ISoftwareView {
         return edit;
     }
 
-    private void addDataStructureMenus(JMenuBar menuBar) {
-        File currentDirectory = new File("src" + File.separator + "swing");
-        String[] directories = FileUtility
-                .listOfDirectoriesInDirectory(currentDirectory);
-        for (String each : directories) {
-            File directory = new File("src" + File.separator + "swing" +
-                File.separator + each);
-            String[] menuFile = FileUtility.listOfClassesInDirectory(
-                directory, "Menu.java");
-            if (menuFile.length == 1) {
-                String className = FileUtility.classNameWithPackagePath(
-                    menuFile[0], directory);
-                try {
-                    JMenu newMenu = (JMenu) Class.forName(className)
-                            .getConstructor(this.getClass(),
-                                tabbedPane.getClass(),
-                                softwareController.getClass()).newInstance(
-                                this, tabbedPane, softwareController);
-                    menuBar.add(newMenu);
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                } catch (SecurityException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                //TODO throw exception
-            }
-        }
+    protected void addDataStructureMenus(JMenuBar menuBar) {
+        JMenu newMenu = new TreeMenu(this, tabbedPane, softwareController);
+        menuBar.add(newMenu);
     }
 
     private void createAlgorithmsMenu() {
