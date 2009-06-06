@@ -39,11 +39,17 @@ public interface ISoftwareView extends IView, SoftwareModelListener {
      * Shows the view of the software. This method must be used to show the
      * software view at the first time.
      */
-    public void showView();
+    public void displayView();
 
     /**
-     * Hides the view of the software. This method must be used to hide the
-     * software view when the software view is closed.
+     * Shows an error message indicating that a serious problem occurs and
+     * exits the software.
      */
-    public void hideView();
+    public void displayErrorMessageAndExit();
+
+    /**
+     * Closes the view of the software. This method must be used to hide and
+     * close the software view.
+     */
+    public void closeView();
 }

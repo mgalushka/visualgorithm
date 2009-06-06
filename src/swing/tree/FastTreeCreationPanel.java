@@ -88,20 +88,20 @@ class FastTreeCreationPanel extends JPanel {
                                 && (value.charAt(0) <= '9')) {
                             if ((value.charAt(1) >= '0')
                                     && (value.charAt(1) <= '9')) {
-                                binaryTreeTabController.addNode(Integer
+                                binaryTreeTabController.addNodeToBinaryTreeModel(Integer
                                         .parseInt(value));
                             }
                         }
                     } else if (value.length() == 1) {
                         if ((value.charAt(0) >= '0')
                                 && (value.charAt(0) <= '9')) {
-                            binaryTreeTabController.addNode(Integer
+                            binaryTreeTabController.addNodeToBinaryTreeModel(Integer
                                     .parseInt(value));
                         }
                     }
                     insertValue.setText(null);
                 } else {
-                    binaryTreeTabController.addNode((int) Math.round(Math
+                    binaryTreeTabController.addNodeToBinaryTreeModel((int) Math.round(Math
                             .random() * 99));
                 }
             }
@@ -118,14 +118,14 @@ class FastTreeCreationPanel extends JPanel {
                                 && (value.charAt(0) <= '9')) {
                             if ((value.charAt(1) >= '0')
                                     && (value.charAt(1) <= '9')) {
-                                binaryTreeTabController.deleteNode(Integer
+                                binaryTreeTabController.deleteNodeFromBinaryTreeModel(Integer
                                         .parseInt(value));
                             }
                         }
                     } else if (value.length() == 1) {
                         if ((value.charAt(0) >= '0')
                                 && (value.charAt(0) <= '9')) {
-                            binaryTreeTabController.deleteNode(Integer
+                            binaryTreeTabController.deleteNodeFromBinaryTreeModel(Integer
                                     .parseInt(value));
                         }
                     }

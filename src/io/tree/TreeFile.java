@@ -45,10 +45,10 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  * binary trees or to add new node attributes in the file format. The class
  * <tt>TreeFile</tt> does everything. In fact, it uses the design pattern
  * template method to perform the creation of the different types of binary
- * trees. Thus, these are the static methods from <tt>TreeFile</tt> that are
- * used to save and load binary trees. If you would like to add other tree
- * files, do not forget to register your tree file class in the data structure
- * {@code fileParser} in the class <tt>TreeFile</tt>.
+ * trees. Thus, these are static methods from <tt>TreeFile</tt> that are used to
+ * save and load binary trees. If you would like to add other tree files, do not
+ * forget to register your tree file classes in the data structure
+ * {@code fileParser} in this class.
  *
  * @author Damien Rigoni
  * @version 1.00 02/07/08
@@ -142,7 +142,7 @@ public abstract class TreeFile {
      * The file parser associates each type of binary tree with the good type of
      * tree file.
      */
-    protected static HashMap<String, TreeFile> fileParser =
+    private static HashMap<String, TreeFile> fileParsers =
             new HashMap<String, TreeFile>();
 
     private int lineNumber;
@@ -159,11 +159,15 @@ public abstract class TreeFile {
      */
     protected String treeType;
 
+    /**
+     * Registration of the tree files according to the types of binary trees.
+     * You have to register new tree files here.
+     */
     static {
-        fileParser.put(BinaryTreeType.BINARYSEARCHTREE.toString(),
+        fileParsers.put(BinaryTreeType.BINARYSEARCHTREE.toString(),
                 new BinarySearchTreeFile());
-        fileParser.put(BinaryTreeType.AVLTREE.toString(), new AVLTreeFile());
-        fileParser.put(BinaryTreeType.REDBLACKTREE.toString(),
+        fileParsers.put(BinaryTreeType.AVLTREE.toString(), new AVLTreeFile());
+        fileParsers.put(BinaryTreeType.REDBLACKTREE.toString(),
                 new RedBlackTreeFile());
     }
 
@@ -195,8 +199,8 @@ public abstract class TreeFile {
                 matcher = pattern.matcher(lineToParse);
                 matcher.find();
                 String treeType = matcher.group();
-                if (fileParser.containsKey(treeType)) {
-                    parser = fileParser.get(treeType);
+                if (fileParsers.containsKey(treeType)) {
+                    parser = fileParsers.get(treeType);
                     parser.nodeVector.clear();
                     parser.treeType = matcher.group();
                     parser.parse(reader);
@@ -433,7 +437,7 @@ public abstract class TreeFile {
                     ++maxNodeNumber;
                     rightNodeNumber = Integer.toString(maxNodeNumber);
                 }
-                file.write(fileParser.get(
+                file.write(fileParsers.get(
                         tree.getType().toString()).transformNodeToString(node,
                         currentNodeNumber, leftNodeNumber, rightNodeNumber) + "\n");
                 ++currentNodeNumber;

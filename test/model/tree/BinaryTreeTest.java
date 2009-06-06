@@ -22,6 +22,7 @@
 package model.tree;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 import model.tree.RedBlackNode.RedBlackNodeColor;
 import org.junit.Before;
@@ -61,7 +62,7 @@ public class BinaryTreeTest {
     @Test
     public void testBST() {
         assertEquals(bsTreeType.createBinaryTree().getType(), "BINARYSEARCHTREE");
-        assertEquals(new BinarySearchTree().getRoot(), null);
+        assertNull(new BinarySearchTree().getRoot());
         try {
             assertEquals(new BinarySearchTree(-1).getRoot().getKey(), -1);
         } catch(IllegalArgumentException e) {
@@ -97,7 +98,7 @@ public class BinaryTreeTest {
     @Test
     public void testAVLT() {
         assertEquals(avlTreeType.createBinaryTree().getType(), "AVLTREE");
-        assertEquals(new AVLTree().getRoot(), null);
+        assertNull(new AVLTree().getRoot());
         try {
             assertEquals(new AVLTree(-1).getRoot().getKey(), -1);
         } catch(IllegalArgumentException e) {
@@ -131,13 +132,13 @@ public class BinaryTreeTest {
         assertEquals(avlTree.buildHeapFromBinaryTree().get(2).getKey(), 23);
         assertEquals(avlTree.buildHeapFromBinaryTree().get(5).getKey(), 17);
         assertEquals(avlTree.buildHeapFromBinaryTree().get(6).getKey(), 44);
-        assertEquals(avlTree.buildHeapFromBinaryTree().get(13), null);
+        assertNull(avlTree.buildHeapFromBinaryTree().get(13));
     }
 
     @Test
     public void testRBT() {
         assertEquals(rbTreeType.createBinaryTree().getType(), "REDBLACKTREE");
-        assertEquals(new RedBlackTree().getRoot(), null);
+        assertNull(new RedBlackTree().getRoot());
         try {
             assertEquals(new RedBlackTree(-1).getRoot().getKey(), -1);
         } catch(IllegalArgumentException e) {
@@ -180,6 +181,6 @@ public class BinaryTreeTest {
         assertEquals(rbTree.buildHeapFromBinaryTree().get(2).getKey(), 23);
         assertEquals(rbTree.buildHeapFromBinaryTree().get(5).getKey(), 17);
         assertEquals(rbTree.buildHeapFromBinaryTree().get(6).getKey(), 43);
-        assertEquals(rbTree.buildHeapFromBinaryTree().get(13), null);
+        assertNull(rbTree.buildHeapFromBinaryTree().get(13));
     }
 }

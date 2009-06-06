@@ -20,10 +20,13 @@
  */
 
 /**
- * This package contains file input and output operations for binary trees.
- * These operations are implemented by static methods in the abstract class
- * <tt>TreeFile</tt>. <tt>TreeFile</tt> also defines a readable file format for
- * binary trees.
+ * This package contains the controllers of the software. A controller is,
+ * according to the model Model-View-Controller, the intermediary for the view
+ * to communicate with the model. It also manages the model and the view. This
+ * package is composed by different data structure controllers that take part
+ * of a software controller. There is a data structure controller for each data
+ * structure in the software. All new data structure controllers must implement
+ * <tt>IDataStructureController</tt>.
  * 
  * @author Julien Hannier
  * @version 1.00 02/03/09

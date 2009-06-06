@@ -44,13 +44,6 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  */
 public final class BinaryTreeModel implements IDataStructureModel {
 
-    /**
-     * Defines the name of the data structure of this model. It is used to find
-     * the corresponding components of the software like the corresponding
-     * controller.
-     */
-    public final static String DATA_STRUCTURE_NAME = "BINARYTREE";
-    
     private IBinaryTree binaryTree;
 
     private EventListenerList listeners;

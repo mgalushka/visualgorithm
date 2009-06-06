@@ -119,7 +119,7 @@ class PedagogicalTreeCreationPanel extends JPanel {
                             if ((value.charAt(1) >= '0')
                                     && (value.charAt(1) <= '9')) {
                                 if (pedagogicalTreeVisualization.isEmpty()) {
-                                    binaryTreeTabController.addNode(Integer
+                                    binaryTreeTabController.addNodeToBinaryTreeModel(Integer
                                             .parseInt(value));
                                 } else {
                                     pedagogicalTreeVisualization
@@ -131,7 +131,7 @@ class PedagogicalTreeCreationPanel extends JPanel {
                         if ((value.charAt(0) >= '0')
                                 && (value.charAt(0) <= '9')) {
                             if (pedagogicalTreeVisualization.isEmpty()) {
-                                binaryTreeTabController.addNode(Integer
+                                binaryTreeTabController.addNodeToBinaryTreeModel(Integer
                                         .parseInt(value));
                             } else {
                                 pedagogicalTreeVisualization.createNode(Integer
@@ -156,7 +156,7 @@ class PedagogicalTreeCreationPanel extends JPanel {
                             if ((value.charAt(1) >= '0')
                                     && (value.charAt(1) <= '9')) {
                                 binaryTreeTabController
-                                        .pedagogicalDeleteNode(Integer
+                                        .deleteNodeFromBinaryTreeModelWithoutCorrection(Integer
                                                 .parseInt(value));
                             }
                         }
@@ -164,7 +164,7 @@ class PedagogicalTreeCreationPanel extends JPanel {
                         if ((value.charAt(0) >= '0')
                                 && (value.charAt(0) <= '9')) {
                             binaryTreeTabController
-                                    .pedagogicalDeleteNode(Integer
+                                    .deleteNodeFromBinaryTreeModelWithoutCorrection(Integer
                                             .parseInt(value));
                         }
                     }

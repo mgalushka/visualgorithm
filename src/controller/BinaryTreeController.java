@@ -34,110 +34,132 @@ import view.AbstractViewFactory;
 import view.IBinaryTreeView;
 
 /**
- * Definition of the binary tree tab controller.
- * 
+ * This class is the link between the binary tree view and the binary tree
+ * model. Thus, the view does not know directly the model. It is the principle
+ * of the model Model-View-Controller. So, this is a data structure controller
+ * that is used for every binary tree in the software. This class is not
+ * designed for inheritance.
+ *
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  * @see IDataStructureController
  */
-public class BinaryTreeController implements IDataStructureController {
+public final class BinaryTreeController implements IDataStructureController {
 
-    private BinaryTreeModel binaryTreeTabModel;
+    /**
+     * Definition of the extension of the binary tree files.
+     */
+    public final static String binaryTreeFileExtension = TreeFile.fileExtension;
+    
+    private BinaryTreeModel binaryTreeModel;
 
-    private IBinaryTreeView binaryTreeTabView;
+    private IBinaryTreeView binaryTreeView;
 
     @Override
-    public void initializeTabController(Object type,
-            AbstractViewFactory viewFactory, int width, int height) {
-        binaryTreeTabModel = new BinaryTreeModel((BinaryTreeType) type);
+    public void initializeDataStructureController(Object type,
+            AbstractViewFactory viewFactory, int width, int height)
+            throws IllegalArgumentException {
+        if (!(type instanceof BinaryTreeType)) {
+            throw new IllegalArgumentException("You have to pass a" +
+                    " BinaryTreeType for the parameter type");
+        }
+        binaryTreeModel = new BinaryTreeModel((BinaryTreeType) type);
 
-        binaryTreeTabView = viewFactory.createBinaryTreeView(
-            "Type of the Tree : " + type.toString(), this, width, height);
+        binaryTreeView = viewFactory.createBinaryTreeView(
+                "Type of the Tree : " + type.toString(), this, width, height);
         addListener();
     }
 
     @Override
-    public void initializeTabControllerWithRandom(Object type,
-            AbstractViewFactory viewFactory, int random, int width, int height) {
-        binaryTreeTabModel = new BinaryTreeModel((BinaryTreeType) type);
-        binaryTreeTabModel.insertRandomNodes(random);
+    public void initializeDataStructureController(Object type,
+            AbstractViewFactory viewFactory, int nb, int width, int height)
+            throws IllegalArgumentException {
+        if (!(type instanceof BinaryTreeType)) {
+            throw new IllegalArgumentException("You have to pass a" +
+                    " BinaryTreeType for the parameter type");
+        }
+        binaryTreeModel = new BinaryTreeModel((BinaryTreeType) type);
+        binaryTreeModel.insertRandomNodes(nb);
 
-        binaryTreeTabView = viewFactory.createBinaryTreeView(
-            "Type Of The Tree : " + type.toString(), this, width, height);
+        binaryTreeView = viewFactory.createBinaryTreeView(
+                "Type Of The Tree : " + type.toString(), this, width, height);
         addListener();
-        binaryTreeTabModel.updateListeners();
+        binaryTreeModel.updateListeners();
     }
 
     @Override
-    public void initializeTabControllerWithFile(File file,
+    public void initializeDataStructureController(File file,
             AbstractViewFactory viewFactory, int width, int height)
             throws FileNotFoundException, ParseException, IOException,
             UnknownDataStructureException {
-        binaryTreeTabModel = new BinaryTreeModel(file);
+        binaryTreeModel = new BinaryTreeModel(file);
 
-        binaryTreeTabView = viewFactory.createBinaryTreeView(
-            "Type of the Tree : " + binaryTreeTabModel.getDataStructure().getType(),
-            this, width, height);
+        binaryTreeView = viewFactory.createBinaryTreeView(
+                "Type of the Tree : " + binaryTreeModel.getDataStructure().getType(),
+                this, width, height);
         addListener();
-        binaryTreeTabModel.updateListeners();
-    }
-
-    @Override
-    public IDataStructureModel getTabModel() {
-        return binaryTreeTabModel;
-    }
-
-    @Override
-    public void saveTabModel(File file) throws IOException {
-        binaryTreeTabModel.saveDataStructure(file);
-    }
-
-    @Override
-    public boolean isTabModelSaved() {
-        return binaryTreeTabModel.isDataStructureSaved();
-    }
-
-    @Override
-    public String getFileExtension() {
-        return TreeFile.fileExtension;
+        binaryTreeModel.updateListeners();
     }
 
     @Override
     public IBinaryTreeView getView() {
-        return binaryTreeTabView;
+        return binaryTreeView;
+    }
+
+    @Override
+    public IDataStructureModel getDataStructureModel() {
+        return binaryTreeModel;
+    }
+
+    @Override
+    public void saveDataStructureModel(File file) throws IOException {
+        binaryTreeModel.saveDataStructure(file);
+    }
+
+    @Override
+    public boolean isDataStructureModelSaved() {
+        return binaryTreeModel.isDataStructureSaved();
     }
 
     private void addListener() {
-        binaryTreeTabModel.addBinaryTreeModelListener(binaryTreeTabView);
+        binaryTreeModel.addBinaryTreeModelListener(binaryTreeView);
     }
 
     /**
-     * Adds a node to the binary tree.
+     * Adds a node into the binary tree. This method uses the insert
+     * algorithm corresponding to the type of the binary tree. If it is
+     * necessary, the binary tree is corrected. For instance, the balance of an
+     * AVL tree is corrected after the insertion. If {@code key} is greater than
+     * 99 or less than 0 then an IllegalArgumentException is thrown.
      * 
-     * @param key the key of the node
+     * @param key the key of the node to add
+     * @throws IllegalArgumentException
      */
-    public void addNode(int key) {
-        binaryTreeTabModel.insertNode(key);
+    public void addNodeToBinaryTreeModel(int key) throws IllegalArgumentException {
+        binaryTreeModel.insertNode(key);
     }
 
     /**
-     * Deletes a node from the binary tree.
-     * 
-     * @param key the key of the node
+     * Deletes a node from the binary tree. This method uses the delete
+     * algorithm corresponding to the type of the binary tree. If it is
+     * necessary, the binary tree is corrected. For instance, the balance of an
+     * AVL tree is corrected after the deletion.
+     *
+     * @param key the key of the node to delete
      */
-    public void deleteNode(int key) {
-        binaryTreeTabModel.deleteNode(key);
+    public void deleteNodeFromBinaryTreeModel(int key) {
+        binaryTreeModel.deleteNode(key);
     }
 
     /**
-     * Deletes a node from the binary tree. It is a delete from the pedagogical
-     * creation mode.
+     * Deletes a node from the binary tree. This method uses the delete
+     * algorithm from the binary search tree that is to say that the node is
+     * deleted without any correction of the binary tree. For instance, the
+     * balance of an AVL tree is not corrected after the deletion.
      * 
-     * @param key the key of the node
+     * @param key the key of the node to delete
      */
-    public void pedagogicalDeleteNode(int key) {
-        binaryTreeTabModel.deleteNodeWithoutCorrection(key);
+    public void deleteNodeFromBinaryTreeModelWithoutCorrection(int key) {
+        binaryTreeModel.deleteNodeWithoutCorrection(key);
     }
 }

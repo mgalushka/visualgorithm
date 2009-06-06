@@ -24,7 +24,9 @@ package controller;
 import view.IView;
 
 /**
- * Interface describing the methods of controllers.
+ * This interface is the common interface of all controllers. It must be
+ * implemented by all controllers of the software directly or through a more
+ * specific interface.
  * 
  * @author Julien Hannier
  * @version 1.00 16/06/08
@@ -32,9 +34,9 @@ import view.IView;
 public interface IController {
 
   /**
-   * Returns the view of the controller.
+   * Returns the view managed by the controller.
    *
-   * @return the view of the controller
+   * @return the view managed by controller
    */
   public IView getView();
 }

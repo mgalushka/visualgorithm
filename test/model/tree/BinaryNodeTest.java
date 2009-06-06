@@ -22,6 +22,7 @@
 package model.tree;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import model.tree.RedBlackNode.RedBlackNodeColor;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,9 +55,9 @@ public class BinaryNodeTest {
     @Test
     public void testBSN() {
         assertEquals(bsNode.getKey(), 13);
-        assertEquals(bsNode.getFather(), null);
-        assertEquals(bsNode.getRight(), null);
-        assertEquals(bsNode.getLeft(), null);
+        assertNull(bsNode.getFather());
+        assertNull(bsNode.getRight());
+        assertNull(bsNode.getLeft());
 
         try {
             assertEquals(new BinarySearchNode(-2).getKey(), -2);
@@ -94,9 +95,9 @@ public class BinaryNodeTest {
     @Test
     public void testAVLN() {
         assertEquals(avlNode.getKey(), 3);
-        assertEquals(avlNode.getFather(), null);
-        assertEquals(avlNode.getRight(), null);
-        assertEquals(avlNode.getLeft(), null);
+        assertNull(avlNode.getFather());
+        assertNull(avlNode.getRight());
+        assertNull(avlNode.getLeft());
         assertEquals(avlNode.getAVLHeight(), 0);
 
         try {
@@ -155,9 +156,9 @@ public class BinaryNodeTest {
     @Test
     public void testRBN() {
         assertEquals(rbNode1.getKey(), 23);
-        assertEquals(rbNode1.getFather(), null);
-        assertEquals(rbNode1.getRight(), null);
-        assertEquals(rbNode1.getLeft(), null);
+        assertNull(rbNode1.getFather());
+        assertNull(rbNode1.getRight());
+        assertNull(rbNode1.getLeft());
         assertEquals(rbNode1.getColor(), RedBlackNodeColor.RED);
         assertEquals(rbNode1.isRed(), true);
         assertEquals(rbNode1.isBlack(), false);
@@ -196,9 +197,9 @@ public class BinaryNodeTest {
         } catch (IllegalArgumentException e) {
         }
         assertEquals(rbNode2.getKey(), 33);
-        assertEquals(rbNode2.getFather(), null);
-        assertEquals(rbNode2.getRight(), null);
-        assertEquals(rbNode2.getLeft(), null);
+        assertNull(rbNode2.getFather());
+        assertNull(rbNode2.getRight());
+        assertNull(rbNode2.getLeft());
         assertEquals(rbNode2.getColor(), RedBlackNodeColor.BLACK);
         assertEquals(rbNode2.calculateLeftBlackHeight(), 0);
         assertEquals(rbNode2.calculateRightBlackHeight(), 0);

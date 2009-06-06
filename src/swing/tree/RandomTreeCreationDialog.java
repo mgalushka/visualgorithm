@@ -21,6 +21,7 @@
 
 package swing.tree;
 
+import controller.BinaryTreeController;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -39,7 +40,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import swing.SoftwareView;
 import controller.SoftwareController;
-import model.tree.BinaryTreeModel;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 
 /**
@@ -147,8 +147,8 @@ public class RandomTreeCreationDialog extends JDialog {
                 }
                 int nbNode = ((SpinnerNumberModel) numberOfNodes.getModel()).getNumber().intValue();
 
-                softwareController.addTabWithRandom(
-                    BinaryTreeModel.DATA_STRUCTURE_NAME, type, nbNode, index,
+                softwareController.addDataStructure(BinaryTreeController.binaryTreeFileExtension,
+                    type, nbNode,
                     tabbedPane.getWidth(), tabbedPane.getHeight());
                 setVisible(false);
                 dispose();

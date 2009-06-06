@@ -1,5 +1,5 @@
 /*
- * SwingViewFactory.java v1.00 16/06/08
+ * ViewFactoryMock.java v1.00 04/06/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,51 +19,41 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package swing;
+package controller;
 
-import controller.SoftwareController;
-import controller.BinaryTreeController;
-import swing.tree.BinaryTreeView;
 import view.IBinaryTreeView;
 import view.ISoftwareView;
 import view.AbstractViewFactory;
 
 /**
- * Concrete factory of swing views.
+ * Mock of the view Factory for the tests of controllers.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
- * @version 1.00 16/06/08
+ * @version 1.00 04/06/09
  * @see AbstractViewFactory
  */
-public class SwingViewFactory extends AbstractViewFactory {
+public class ViewFactoryMock extends AbstractViewFactory {
 
     private static AbstractViewFactory instance = null;
 
-    private SwingViewFactory() {
+    private ViewFactoryMock() {
     }
     
-    /**
-     * Creates the factory.
-     * 
-     * @return the factory
-     */
     public static AbstractViewFactory getFactory() {
         if (instance == null) {
-            instance = new SwingViewFactory();
+            instance = new ViewFactoryMock();
         }
         return instance;
     }
 
     @Override
     public ISoftwareView createSoftwareView(SoftwareController controller) {
-        return new SoftwareView(controller);
+        return new SoftwareViewMock(controller);
     }
 
     @Override
     public IBinaryTreeView createBinaryTreeView(String type,
             BinaryTreeController controller, int width, int height) {
-        return new BinaryTreeView(type, controller, width, height);
+        return new BinaryTreeViewMock(type, controller, width, height);
     }
 }

@@ -21,13 +21,13 @@
 
 package swing.tree;
 
+import controller.BinaryTreeController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
 import controller.SoftwareController;
-import model.tree.BinaryTreeModel;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 import swing.SoftwareView;
 
@@ -57,14 +57,13 @@ public class TreeMenu extends JMenu {
      * @param c the software controller
      */
     public TreeMenu(SoftwareView v, JTabbedPane tp, SoftwareController c) {
-        super("Trees");
+        super("Tree");
         softwareController = c;
         softwareView = v;
         tabbedPane = tp;
 
         setMnemonic('T');
         add(createNewTreeMenu());
-        add(createNotesMenu());
     }
 
     private JMenu createNewTreeMenu() {
@@ -88,8 +87,8 @@ public class TreeMenu extends JMenu {
             @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
-                softwareController.addTab(BinaryTreeModel.DATA_STRUCTURE_NAME,
-                    BinaryTreeType.AVLTREE, index, tabbedPane.getWidth(),
+                softwareController.addDataStructure(BinaryTreeController.binaryTreeFileExtension,
+                    BinaryTreeType.AVLTREE, tabbedPane.getWidth(),
                     tabbedPane.getHeight());
             }
         });
@@ -98,8 +97,8 @@ public class TreeMenu extends JMenu {
             @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
-                softwareController.addTab(BinaryTreeModel.DATA_STRUCTURE_NAME,
-                    BinaryTreeType.BINARYSEARCHTREE, index, tabbedPane
+                softwareController.addDataStructure(BinaryTreeController.binaryTreeFileExtension,
+                    BinaryTreeType.BINARYSEARCHTREE, tabbedPane
                             .getWidth(), tabbedPane.getHeight());
             }
         });
@@ -108,8 +107,8 @@ public class TreeMenu extends JMenu {
             @Override
             public void actionPerformed(ActionEvent event) {
                 int index = tabbedPane.getTabCount();
-                softwareController.addTab(BinaryTreeModel.DATA_STRUCTURE_NAME,
-                    BinaryTreeType.REDBLACKTREE, index, tabbedPane.getWidth(),
+                softwareController.addDataStructure(BinaryTreeController.binaryTreeFileExtension,
+                    BinaryTreeType.REDBLACKTREE, tabbedPane.getWidth(),
                     tabbedPane.getHeight());
             }
         });
@@ -118,12 +117,5 @@ public class TreeMenu extends JMenu {
         newTree.add(avlTree);
         newTree.add(redBlackTree);
         return newTree;
-    }
-
-    private JMenu createNotesMenu() {
-        JMenu notes = new JMenu("Notes");
-
-        // TODO notes
-        return notes;
     }
 }

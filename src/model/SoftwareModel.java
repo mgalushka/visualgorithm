@@ -28,11 +28,11 @@ import model.SoftwareModelEvent.SoftwareModelEventType;
 
 /**
  * This class defines all the methods in order to modify the software model. The
- * software model is composed by data structure models. It is possible to add a
- * software model listener to the model in order to listen the modifications of
- * the software model. This class is not designed for inheritance.
- *
- * This class is not designed for inheritance.
+ * software model is composed by data structure models. There is a data
+ * structure model for each data structure in the software. It is possible to
+ * add a software model listener to the model in order to listen the
+ * modifications of the software model. This class is not designed for
+ * inheritance.
  * 
  * @author Julien Hannier
  * @version 1.00 16/06/08

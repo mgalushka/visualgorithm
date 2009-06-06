@@ -36,6 +36,9 @@ import org.junit.Test;
  */
 public class AVLTreeFileTest {
 
+    private static String filePath = "test" + File.separator + "io" +
+            File.separator + "tree" + File.separator;
+
     private String loadFileName;
 
     private String saveFileName;
@@ -44,10 +47,8 @@ public class AVLTreeFileTest {
 
     @Before
     public void setUp() {
-        loadFileName = "test" + File.separator + "io" + File.separator +
-                "tree" + File.separator + "loadAVLT.bt";
-        saveFileName = "test" + File.separator + "io" + File.separator +
-                "tree" + File.separator + "saveAVLT.bt";
+        loadFileName = filePath + "loadAVLT.bt";
+        saveFileName = filePath + "saveAVLT.bt";
         tree = new AVLTree(8);
 
         tree.getRoot().setLeft(new AVLNode(5));

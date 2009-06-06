@@ -29,8 +29,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -46,6 +44,7 @@ import model.SoftwareModelEvent.SoftwareModelEventType;
 import swing.SoftwareIO.SaveEventType;
 import view.ISoftwareView;
 import controller.SoftwareController;
+import javax.swing.JOptionPane;
 import swing.tree.TreeMenu;
 
 /**
@@ -104,7 +103,6 @@ public class SoftwareView extends JFrame implements ISoftwareView {
         createAlgorithmsMenu();
 
         menuBar.add(createFileMenu());
-        menuBar.add(createEditMenu());
         addDataStructureMenus(menuBar);
         menuBar.add(algorithms);
     }
@@ -150,60 +148,40 @@ public class SoftwareView extends JFrame implements ISoftwareView {
         return file;
     }
 
-    private JMenu createEditMenu() {
-        JMenu edit = new JMenu("Edit");
-        JMenu language = new JMenu("Language");
-        JMenuItem preferences = new JMenuItem("Preferences");
-
-        edit.setMnemonic('E');
-        language.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                // TODO language
-            }
-        });
-        preferences.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                // TODO preferences
-            }
-        });
-        edit.add(language);
-        edit.add(preferences);
-        return edit;
-    }
-
     protected void addDataStructureMenus(JMenuBar menuBar) {
         JMenu newMenu = new TreeMenu(this, tabbedPane, softwareController);
         menuBar.add(newMenu);
     }
 
     private void createAlgorithmsMenu() {
-        algorithms = new JMenu("Algorithms");
+        algorithms = new JMenu("Algorithm");
         JMenu apply = new JMenu("Apply");
-        JMenu notes = new JMenu("Notes");
 
         algorithms.setMnemonic('A');
         // TODO apply
-        // TODO notes
         algorithms.add(apply);
-        algorithms.add(notes);
     }
 
     private JComponent getTabView(int index) {
-        return (JComponent) softwareController.getTabController(index)
+        return (JComponent) softwareController.getDataStructureController(index)
                 .getView();
     }
 
     @Override
-    public void showView() {
+    public void displayView() {
         setVisible(true);
     }
 
     @Override
-    public void hideView() {
+    public void displayErrorMessageAndExit() {
+        JOptionPane.showMessageDialog(this, "An irrecoverable error occurs" +
+                " and the software is about\nto shut down. Sorry for the" +
+                " inconvenience.", "Software Error", JOptionPane.ERROR_MESSAGE);
+        System.exit(1);
+    }
+
+    @Override
+    public void closeView() {
         setVisible(false);
         dispose();
     }

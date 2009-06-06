@@ -64,7 +64,7 @@ public class FastTreeVisualization extends AbstractTreeVisualization {
                     int indexOfNode = indexOfSelectedNode(e.getX(), e.getY());
                     if (indexOfNode > -1) {
                         GraphicNode node = getGraphicNode(indexOfNode);
-                        binaryTreeTabController.deleteNode(node.getNodeKey());
+                        binaryTreeTabController.deleteNodeFromBinaryTreeModel(node.getNodeKey());
                     }
                 }
             }

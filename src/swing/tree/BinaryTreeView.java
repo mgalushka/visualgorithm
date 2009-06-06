@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTabView.java v1.00 16/06/08
+ * BinaryTreeView.java v1.00 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -31,7 +31,6 @@ import javax.swing.JPanel;
 import controller.BinaryTreeController;
 import view.IBinaryTreeView;
 import model.tree.BinaryTreeModelEvent;
-import model.tree.IBinaryNode;
 
 /**
  * Definition of the binary tree tab view.
@@ -42,11 +41,11 @@ import model.tree.IBinaryNode;
  * @version 1.00 16/06/08
  * @see IBinaryTreeView
  */
-public class BinaryTreeTabView extends JPanel implements IBinaryTreeView {
+public class BinaryTreeView extends JPanel implements IBinaryTreeView {
 
     private static final long serialVersionUID = 1L;
 
-    private BinaryTreeController binaryTreeTabController;
+    private BinaryTreeController binaryTreeController;
 
     private FastTreeCreationPanel fastTreeCreationPanel = null;
 
@@ -62,13 +61,13 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeView {
      * @param width the width of the tree visualization
      * @param height the height of the tree visualization
      */
-    public BinaryTreeTabView(String type, BinaryTreeController c, int width,
+    public BinaryTreeView(String type, BinaryTreeController c, int width,
             int height) {
         fastTreeCreationPanel = new FastTreeCreationPanel(c, width, height);
         JPanel titlePane = new JPanel();
         JLabel title = new JLabel(type);
 
-        binaryTreeTabController = c;
+        binaryTreeController = c;
         titlePane.setLayout(new FlowLayout(FlowLayout.CENTER, 4, 4));
         titlePane.add(title);
 
@@ -88,7 +87,7 @@ public class BinaryTreeTabView extends JPanel implements IBinaryTreeView {
                 if (isFastTreeCreation) {
                     if (pedagogicalTreeCreationPanel == null) {
                         pedagogicalTreeCreationPanel = new PedagogicalTreeCreationPanel(
-                                binaryTreeTabController);
+                                binaryTreeController);
                     }
                     pedagogicalTreeCreationPanel
                             .getPedagogicalTreeVisualization()

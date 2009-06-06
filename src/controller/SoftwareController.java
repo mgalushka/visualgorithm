@@ -21,64 +21,78 @@
 
 package controller;
 
-import io.tree.TreeFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.SoftwareModel;
 import model.UnknownDataStructureException;
 import view.AbstractViewFactory;
 import view.ISoftwareView;
 
 /**
- * Definition of the software controller.
+ * This class defines the controller of the software that is to say all the
+ * methods for the software view to communicate with the software model. The
+ * software controller is composed by the software model and data structure
+ * controllers. This class is not designed for inheritance. The class
+ * <tt>SoftwareController</tt> is implemented to manage all types of data
+ * structure controllers. In fact, all the data structure controllers are added
+ * thanks to reflection. If you would like to add other data structure
+ * controllers, do not forget to register your data structure controller classes
+ * in the data structure {@code dataStructureControllerClasses} in this class.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  * @see IController
  */
-public class SoftwareController implements IController {
+public final class SoftwareController implements IController {
 
     private SoftwareModel softwareModel;
 
+    private AbstractViewFactory softwareViewFactory;
+
     private ISoftwareView softwareView;
 
-    private AbstractViewFactory viewFactory;
+    /**
+     * The data structure controller classes associates each type of data
+     * structure with the good type of data structure controller.
+     */
+    private static HashMap<String, Class<?>> dataStructureControllerClasses =
+            new HashMap<String, Class<?>>();
 
-    private List<IDataStructureController> tabControllers;
+    private List<IDataStructureController> dataStructureControllers;
 
     /**
-     * Builds the software controller.
-     * 
-     * @param m the software model
-     * @param v the view factory
+     * Registration of the data structure controller classes according to the
+     * types of data structures. You have to register new data structure
+     * controllers here.
      */
-    public SoftwareController(SoftwareModel m, AbstractViewFactory v) {
-        tabControllers = new ArrayList<IDataStructureController>();
-
-        softwareModel = m;
-        viewFactory = v;
-        softwareView = viewFactory.createSoftwareView(this);
-        getView().showView();
-        addListener();
+    static {
+        dataStructureControllerClasses.put(
+                BinaryTreeController.binaryTreeFileExtension,
+                BinaryTreeController.class);
     }
 
     /**
-     * Returns the wanted tab controller thanks to index.
+     * Builds the software controller. The software controller is composed by a
+     * software model and data structure controllers. It also contains the
+     * software view.
      * 
-     * @param index the index of the tab
-     * @return the tab controller
+     * @param model the software model
+     * @param viewFactory the view factory
      */
-    public IDataStructureController getTabController(int index) {
-        return tabControllers.get(index);
+    public SoftwareController(SoftwareModel model, AbstractViewFactory viewFactory) {
+        dataStructureControllers = new ArrayList<IDataStructureController>();
+        softwareModel = model;
+        softwareViewFactory = viewFactory;
+        softwareView = softwareViewFactory.createSoftwareView(this);
+        
+        softwareView.displayView();
+        addListener();
     }
 
     @Override
@@ -86,111 +100,261 @@ public class SoftwareController implements IController {
         return softwareView;
     }
 
+    /**
+     * Returns the data structure controller indicated by {@code index}. If the
+     * index is out of bounds, then an IndexOutOfBoundsException is thrown.
+     *
+     * @param index the index of the wanted data structure controller
+     * @return the wanted data structure controller
+     * @throws IndexOutOfBoundsException
+     */
+    public IDataStructureController getDataStructureController(int index)
+            throws IndexOutOfBoundsException {
+        if (index >= dataStructureControllers.size()) {
+            throw new IndexOutOfBoundsException("You have given an index out" +
+                " of bounds");
+        }
+        return dataStructureControllers.get(index);
+    }
+
     private void addListener() {
         softwareModel.addSoftwareModelListener(softwareView);
     }
 
     /**
-     * Adds a data structure tab.
-     * 
-     * @param name the name of the data structure
+     * Adds a data structure model and controller with an empty data structure.
+     * If the identifiant of the data structure controller does not correspond
+     * to a type of data structure controller, then an IllegalArgumentException
+     * is thrown.
+     *
+     * @param id the identifiant of a type of data structure controller
      * @param type the type of the data structure
-     * @param index the index of the tab
-     * @param width the width of the visualization
-     * @param height the height of the visualization
+     * @param width the width of the data structure visualization
+     * @param height the height of the data structure visualization
+     * @throws IllegalArgumentException
      */
-    public void addTab(String name, Object type, int index, int width,
-            int height) {
-        IDataStructureController tabController = new BinaryTreeController();
-        tabController.initializeTabController(type, viewFactory, width, height);
-        tabControllers.add(tabController);
-        softwareModel.addDataStructureModel(getTabController(index).getTabModel());
-    }
-
-    /**
-     * Adds a data structure tab with a data structure created with random
-     * elements.
-     * 
-     * @param name the name of the data structure
-     * @param type the type of the data structure
-     * @param random the number of elements
-     * @param index the index of the tab
-     * @param width the width of the visualization
-     * @param height the height of the visualization
-     */
-    public void addTabWithRandom(String name, Object type, int random,
-            int index, int width, int height) {
-        IDataStructureController tabController = new BinaryTreeController();
-        tabController.initializeTabControllerWithRandom(type, viewFactory, random,
-            width, height);
-        tabControllers.add(tabController);
-        softwareModel.addDataStructureModel(getTabController(index).getTabModel());
-    }
-
-    /**
-     * Opens a file.
-     * 
-     * @param file the file
-     * @param width the width of the tree visualization
-     * @param height the height of the tree visualization
-     */
-    public void openFile(File file, int width, int height) {
-        int index = tabControllers.size();
-        String fileName = file.getName();
-        int i = fileName.lastIndexOf('.');
-        String extension = fileName.substring(i + 1).toLowerCase();
-
-        if (extension.equals(TreeFile.fileExtension)) {
-            IDataStructureController tabController = new BinaryTreeController();
-            try {
-              tabController.initializeTabControllerWithFile(file, viewFactory, width,
-                  height);
-            } catch (FileNotFoundException ex) {
-              Logger.getLogger(SoftwareController.class.getName()).log(Level.SEVERE,
-                  null, ex);
-            } catch (ParseException ex) {
-              Logger.getLogger(SoftwareController.class.getName()).log(Level.SEVERE,
-                  null, ex);
-            } catch (IOException ex) {
-              Logger.getLogger(SoftwareController.class.getName()).log(Level.SEVERE,
-                  null, ex);
-            } catch (UnknownDataStructureException ex) {
-              Logger.getLogger(SoftwareController.class.getName()).log(Level.SEVERE,
-                  null, ex);
-            }
-            tabControllers.add(tabController);
-            softwareModel.addDataStructureModelFromFile(
-                getTabController(index).getTabModel(), fileName);
+    public void addDataStructure(String id, Object type, int width, int height)
+            throws IllegalArgumentException {
+        if (!dataStructureControllerClasses.containsKey(id)) {
+            throw new IllegalArgumentException("The identifiant (id) does not" +
+                    "correspond to a data structure controller");
+        }
+        int index = dataStructureControllers.size();
+        Class<?> dataStructureControllerClass =
+                dataStructureControllerClasses.get(id);
+        try {
+            IDataStructureController dataStructureController =
+                    (IDataStructureController) dataStructureControllerClass.newInstance();
+            dataStructureControllerClass.getMethod(
+                    "initializeDataStructureController",
+                    Object.class, AbstractViewFactory.class, int.class,
+                    int.class).invoke(dataStructureController, type,
+                    softwareViewFactory, width, height);
+            dataStructureControllers.add(dataStructureController);
+            softwareModel.addDataStructureModel(
+                    getDataStructureController(index).getDataStructureModel());
+        } catch (InstantiationException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        } catch (IllegalAccessException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        } catch (NoSuchMethodException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        } catch (SecurityException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        } catch (InvocationTargetException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
         }
     }
 
     /**
-     * Removes the tab indicated by index.
-     * 
-     * @param index the index of the tab
+     * Adds a data structure model and controller with a data structure created
+     * with random elements. If the identifiant of the data structure controller
+     * does not correspond to a type of data structure controller, then an
+     * IllegalArgumentException is thrown.
+     *
+     * @param id the identifiant of a type of data structure controller
+     * @param type the type of the data structure
+     * @param nb the number of random elements
+     * @param width the width of the data structure visualization
+     * @param height the height of the data structure visualization
+     * @throws IllegalArgumentException
      */
-    public void closeTab(int index) {
-        softwareModel.deleteDataStructureModel(index);
-        tabControllers.remove(index);
+    public void addDataStructure(String id, Object type, int nb, int width,
+            int height)
+            throws IllegalArgumentException {
+        if (!dataStructureControllerClasses.containsKey(id)) {
+            throw new IllegalArgumentException("The identifiant (id) does not" +
+                    "correspond to a data structure controller");
+        }
+        int index = dataStructureControllers.size();
+        Class<?> dataStructureControllerClass =
+                dataStructureControllerClasses.get(id);
+        try {
+            IDataStructureController dataStructureController =
+                    (IDataStructureController) dataStructureControllerClass.newInstance();
+            dataStructureControllerClass.getMethod(
+                    "initializeDataStructureController",
+                    Object.class, AbstractViewFactory.class, int.class,
+                    int.class, int.class).invoke(dataStructureController, type,
+                    softwareViewFactory, nb, width, height);
+            dataStructureControllers.add(dataStructureController);
+            softwareModel.addDataStructureModel(
+                    getDataStructureController(index).getDataStructureModel());
+        } catch (InstantiationException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        } catch (IllegalAccessException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        } catch (NoSuchMethodException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        } catch (SecurityException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        } catch (InvocationTargetException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        }
     }
 
     /**
-     * Saves the data structure from the tab into the selected file.
+     * Adds a data structure model and controller from a file containing the
+     * data structure. If the extension of the file does not correspond to a
+     * type of data structure controller, then an IllegalArgumentException is
+     * thrown.
      * 
-     * @param file the file
-     * @param index the index of the tab
+     * @param file the file containing the data structure
+     * @param width the width of the data structure visualization
+     * @param height the height of the data structure visualization
+     * @throws IllegalArgumentException
+     * @throws IOException
+     * @throws FileNotFoundException
+     * @throws ParseException
+     * @throws UnknownDataStructureException
+     */
+    public void addDataStructure(File file, int width, int height)
+            throws IllegalArgumentException, IOException, FileNotFoundException,
+            ParseException, UnknownDataStructureException {
+        int index = dataStructureControllers.size();
+        String fileName = file.getName();
+        String extension = fileName.substring(
+                fileName.lastIndexOf('.') + 1).toLowerCase();
+
+        if (!dataStructureControllerClasses.containsKey(extension)) {
+            throw new IllegalArgumentException("The file extension does not" +
+                    "correspond to a data structure controller");
+        }
+        Class<?> dataStructureControllerClass =
+                dataStructureControllerClasses.get(extension);
+        try {
+            IDataStructureController dataStructureController = 
+                    (IDataStructureController) dataStructureControllerClass.newInstance();
+            dataStructureControllerClass.getMethod(
+                    "initializeDataStructureController",
+                    File.class, AbstractViewFactory.class, int.class,
+                    int.class).invoke(dataStructureController, file,
+                    softwareViewFactory, width, height);
+            dataStructureControllers.add(dataStructureController);
+            softwareModel.addDataStructureModelFromFile(
+                    getDataStructureController(index).getDataStructureModel(), fileName);
+        } catch (InstantiationException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        } catch (IllegalAccessException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        } catch (NoSuchMethodException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        } catch (SecurityException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        } catch (InvocationTargetException ex) {
+            System.err.println("Error of introspection during the creation of" +
+                    " a data structure controller");
+            ex.printStackTrace();
+            softwareView.displayErrorMessageAndExit();
+        }
+    }
+
+    /**
+     * Removes the data structure model and controller indicated by
+     * {@code index}. If the index is out of bounds, then an
+     * IndexOutOfBoundsException is thrown.
+     * 
+     * @param index the index of the data structure controller to delete
+     * @throws IndexOutOfBoundsException
+     */
+    public void deleteDataStructure(int index) throws IndexOutOfBoundsException {
+        if (index >= dataStructureControllers.size()) {
+            throw new IndexOutOfBoundsException("You have given an index out" +
+                " of bounds");
+        }
+        softwareModel.deleteDataStructureModel(index);
+        dataStructureControllers.remove(index);
+    }
+
+    /**
+     * Saves the data structure model from the data structure controller
+     * indicated by {@code index} into the selected file. If the index of the
+     * data structure controller is out of bounds, then an
+     * IndexOutOfBoundsException is thrown.
+     * 
+     * @param file the file where to save
+     * @param index the index of the data structure controller to save
+     * @throws IndexOutOfBoundsException
      * @throws IOException
      */
-    public void saveTabModel(File file, int index) throws IOException {
-        getTabController(index).saveTabModel(file);
+    public void saveDataStructure(File file, int index)
+            throws IndexOutOfBoundsException, IOException {
+        if (index >= dataStructureControllers.size()) {
+            throw new IndexOutOfBoundsException("You have given an index out" +
+                " of bounds");
+        }
+        getDataStructureController(index).saveDataStructureModel(file);
     }
 
     /**
-     * Removes all the tabs.
+     * Closes the software view and removes all data structure models and
+     * controllers.
      */
-    public void exitSoftware() {
-        softwareView.hideView();
+    public void closeViewAndDeleteAllDataStructures() {
+        softwareView.closeView();
         softwareModel.removeAllDataStructureModels();
-        tabControllers.clear();
+        dataStructureControllers.clear();
     }
 }

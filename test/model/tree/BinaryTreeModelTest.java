@@ -23,6 +23,7 @@ package model.tree;
 
 import java.io.File;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
@@ -35,6 +36,9 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  */
 public class BinaryTreeModelTest {
 
+    private static String filePath = "test" + File.separator + "model" +
+            File.separator + "tree" + File.separator;
+
     private BinaryTreeModel btModel1;
 
     private BinaryTreeModel btModel2;
@@ -46,17 +50,15 @@ public class BinaryTreeModelTest {
         btModel1 = new BinaryTreeModel(BinaryTreeType.AVLTREE);
         try {
             btModel2 = new BinaryTreeModel(
-                    new File("test" + File.separator + "model" +
-                    File.separator + "tree" + File.separator + "loadBST.bt"));
+                    new File(filePath + "loadBST.bt"));
         } catch (Exception e) {
-            assertEquals((btModel2 != null), true);
+            assertNotNull(btModel2);
         }
         btModel3 = new BinaryTreeModel(BinaryTreeType.REDBLACKTREE);
     }
 
     @Test
     public void testBinaryTreeModel() {
-        assertEquals(BinaryTreeModel.DATA_STRUCTURE_NAME, "BINARYTREE");
         assertEquals(btModel1.getDataStructure().getType(),
                 BinaryTreeType.AVLTREE.toString());
         assertEquals(btModel2.getDataStructure().getType(),
@@ -68,9 +70,7 @@ public class BinaryTreeModelTest {
         assertEquals(btModel3.isDataStructureSaved(), false);
 
         try {
-            btModel1.saveDataStructure(new File("test" + File.separator +
-                    "model" + File.separator + "tree" + File.separator +
-                    "saveAVLT.bt"));
+            btModel1.saveDataStructure(new File(filePath + "saveAVLT.bt"));
         } catch (Exception e) {
         }
         assertEquals(btModel1.isDataStructureSaved(), true);

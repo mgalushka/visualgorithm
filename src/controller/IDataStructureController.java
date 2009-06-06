@@ -30,83 +30,89 @@ import model.IDataStructureModel;
 import model.UnknownDataStructureException;
 
 /**
- * Interface describing the methods of tab controllers.
+ * This interface defines data structure controllers. It must be implemented by
+ * controllers of each kind of data structure. These controllers will be
+ * instanciated thanks to reflection so they must have a public constructor
+ * without parameters. The {@code void initializeDataStructureController()}
+ * methods will take care of the initialization of the object. It is principally
+ * used in the software controller.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 07/07/08
  * @see IController
  */
 public interface IDataStructureController extends IController {
 
     /**
-     * Initializes the tab controller with an empty data structure.
+     * Initializes the data structure controller with an empty data structure.
+     * If {@code type} is not the type corresponding to the concrete data
+     * structure controller then an IllegalArgumentException is thrown.
      * 
      * @param type the type of the data structure
      * @param viewFactory the view factory
      * @param width the width of the visualization
      * @param height the height of the visualization
+     * @throws IllegalArgumentException
      */
-    public void initializeTabController(Object type,
-            AbstractViewFactory viewFactory, int width, int height);
+    public void initializeDataStructureController(Object type,
+            AbstractViewFactory viewFactory, int width, int height)
+            throws IllegalArgumentException;
 
     /**
-     * Initializes the tab controller with a data structure created with random
-     * elements.
+     * Initializes the data structure controller with a data structure created
+     * with random elements. If {@code type} is not the type corresponding to
+     * the concrete data structure controller then an IllegalArgumentException
+     * is thrown.
      * 
      * @param type the type of the data structure
      * @param viewFactory the view factory
-     * @param random the number of elements
+     * @param nb the number of random elements
      * @param width the width of the visualization
      * @param height the height of the visualization
+     * @throws IllegalArgumentException
      */
-    public void initializeTabControllerWithRandom(Object type,
-            AbstractViewFactory viewFactory, int random, int width, int height);
+    public void initializeDataStructureController(Object type,
+            AbstractViewFactory viewFactory, int nb, int width, int height)
+            throws IllegalArgumentException;
 
     /**
-     * Initializes the tab controller with a data structure from a file.
+     * Initializes the data structure controller with a data structure from a
+     * file.
      * 
      * @param file the file containing the data structure
      * @param viewFactory the view factory
-     * @param width the width of the visualization
-     * @param height the height of the visualization
+     * @param width the width of the visualization of the data structure
+     * @param height the height of the visualization of the data structure
      * @throws UnknownDataStructureException
      * @throws IOException
      * @throws ParseException
      * @throws FileNotFoundException
      */
-    public void initializeTabControllerWithFile(File file,
+    public void initializeDataStructureController(File file,
             AbstractViewFactory viewFactory, int width, int height)
             throws FileNotFoundException, ParseException, IOException,
             UnknownDataStructureException;
 
     /**
-     * Returns the tab model.
+     * Returns the data structure model.
      * 
-     * @return the tab model
+     * @return the data structure model
      */
-    public IDataStructureModel getTabModel();
+    public IDataStructureModel getDataStructureModel();
 
     /**
-     * Saves the tab model into the selected file.
+     * Saves the data structure model into the selected file.
      * 
-     * @param file the file
+     * @param file the file where to save
      * @throws IOException
      */
-    public void saveTabModel(File file) throws IOException;
+    public void saveDataStructureModel(File file) throws IOException;
 
     /**
-     * Returns true if the data structure of the tab controller has been saved.
+     * Returns true if the data structure model corresponding to the controller
+     * has been saved.
      * 
-     * @return true if the data structure has been saved
+     * @return true if the data structure model has been saved
      */
-    public boolean isTabModelSaved();
-
-    /**
-     * Returns the file extension of this kind of tab model.
-     * 
-     * @return the file extension
-     */
-    public String getFileExtension();
+    public boolean isDataStructureModelSaved();
 }

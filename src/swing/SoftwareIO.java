@@ -22,12 +22,17 @@
 package swing;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.filechooser.FileFilter;
 import controller.SoftwareController;
+import model.UnknownDataStructureException;
 import swing.tree.TreeFileFilter;
 
 /**
@@ -91,9 +96,23 @@ public class SoftwareIO {
     void openOperation() {
         int returnVal = fileChooser.showOpenDialog(softwareView);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            softwareController.openFile(fileChooser.getSelectedFile(),
-                tabbedPane.getWidth(), tabbedPane.getHeight());
-            fileChooser.setSelectedFile(null);
+            try {
+                softwareController.addDataStructure(fileChooser.getSelectedFile(),
+                    tabbedPane.getWidth(), tabbedPane.getHeight());
+                fileChooser.setSelectedFile(null);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(SoftwareIO.class.getName()).log(Level.SEVERE,
+                    null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(SoftwareIO.class.getName()).log(Level.SEVERE,
+                    null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(SoftwareIO.class.getName()).log(Level.SEVERE,
+                    null, ex);
+            } catch (UnknownDataStructureException ex) {
+                Logger.getLogger(SoftwareIO.class.getName()).log(Level.SEVERE,
+                    null, ex);
+            }
         }
     }
 
@@ -119,14 +138,14 @@ public class SoftwareIO {
                 }
                 if ((!file.exists()) || (choice == JOptionPane.YES_OPTION)) {
                     try {
-                        softwareController.saveTabModel(file, index);
+                        softwareController.saveDataStructure(file, index);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     if (type == SaveEventType.CLOSE) {
-                        softwareController.closeTab(index);
+                        softwareController.deleteDataStructure(index);
                     } else if (type == SaveEventType.EXIT) {
-                        softwareController.exitSoftware();
+                        softwareController.closeViewAndDeleteAllDataStructures();
                     } else if (type == SaveEventType.SAVE) {
                         tabbedPane.setTitleAt(index, file.getName());
                         ((TabCloseButton) tabbedPane.getTabComponentAt(index))
@@ -144,9 +163,9 @@ public class SoftwareIO {
      * @param index the index of the tab
      */
     void closeTabOperation(int index) {
-        if (softwareController.getTabController(index)
-                .isTabModelSaved()) {
-            softwareController.closeTab(index);
+        if (softwareController.getDataStructureController(index)
+                .isDataStructureModelSaved()) {
+            softwareController.deleteDataStructure(index);
         } else {
             Object[] options = { "Save", "Discard", "Cancel" };
             int choice = JOptionPane.showOptionDialog(softwareView,
@@ -156,7 +175,7 @@ public class SoftwareIO {
             if (choice == JOptionPane.YES_OPTION) {
                 saveOperation(SaveEventType.CLOSE);
             } else if (choice == JOptionPane.NO_OPTION) {
-                softwareController.closeTab(index);
+                softwareController.deleteDataStructure(index);
             }
         }
     }
@@ -167,11 +186,11 @@ public class SoftwareIO {
     void exitSoftwareOperation() {
         int count = tabbedPane.getTabCount();
         if (count == 0) {
-            softwareController.exitSoftware();
+            softwareController.closeViewAndDeleteAllDataStructures();
         } else if (count == 1) {
-            if (softwareController.getTabController(0)
-                    .isTabModelSaved()) {
-                softwareController.exitSoftware();
+            if (softwareController.getDataStructureController(0)
+                    .isDataStructureModelSaved()) {
+                softwareController.closeViewAndDeleteAllDataStructures();
             } else {
                 Object[] options = { "Save", "Discard", "Cancel" };
                 int choice = JOptionPane.showOptionDialog(softwareView,
@@ -181,7 +200,7 @@ public class SoftwareIO {
                 if (choice == JOptionPane.YES_OPTION) {
                     saveOperation(SaveEventType.EXIT);
                 } else if (choice == JOptionPane.NO_OPTION) {
-                    softwareController.exitSoftware();
+                    softwareController.closeViewAndDeleteAllDataStructures();
                 }
             }
         } else {
@@ -190,7 +209,7 @@ public class SoftwareIO {
                         + " Do you really want to continue?", "Exit Operation",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (choice == JOptionPane.YES_OPTION) {
-                softwareController.exitSoftware();
+                softwareController.closeViewAndDeleteAllDataStructures();
             }
         }
     }

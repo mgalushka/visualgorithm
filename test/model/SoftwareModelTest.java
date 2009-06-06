@@ -22,6 +22,7 @@
 package model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.Test;
 import model.tree.BinaryTreeModel;
@@ -66,7 +67,7 @@ public class SoftwareModelTest {
 
         softwareModel.removeAllDataStructureModels();
         try {
-            assertEquals(softwareModel.getDataStructureModel(0), null);
+            assertNull(softwareModel.getDataStructureModel(0));
         } catch (Exception e) {
         }
     }

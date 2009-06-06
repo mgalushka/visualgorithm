@@ -1,5 +1,5 @@
 /*
- * IBinaryTreeView.java v1.00 16/06/08
+ * SoftwareViewMock.java v1.00 04/06/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,19 +19,36 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package view;
+package controller;
 
-import model.tree.BinaryTreeModelListener;
+import model.SoftwareModelEvent;
+import view.ISoftwareView;
 
 /**
- * This interface defines binary tree views. A binary tree view is a listener on
- * the corresponding binary tree model in order to be updated on every change.
- * This interface is used in the abstract view factory.
+ * Mock of the software view for the tests of controllers.
  * 
  * @author Julien Hannier
- * @version 1.00 16/06/08
- * @see IView
- * @see BinaryTreeModelListener
+ * @version 1.00 04/06/09
+ * @see ISoftwareView
  */
-public interface IBinaryTreeView extends IView, BinaryTreeModelListener {
+public class SoftwareViewMock implements ISoftwareView {
+
+    public SoftwareViewMock(SoftwareController c) {
+    }
+
+    @Override
+    public void displayView() {
+    }
+
+    @Override
+    public void displayErrorMessageAndExit() {
+    }
+
+    @Override
+    public void closeView() {
+    }
+
+    @Override
+    public void modelHasChanged(SoftwareModelEvent event) {
+    }
 }
