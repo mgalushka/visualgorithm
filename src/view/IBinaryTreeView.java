@@ -30,8 +30,8 @@ import model.tree.BinaryTreeModelListener;
  * 
  * @author Julien Hannier
  * @version 1.00 16/06/08
- * @see IView
+ * @see IDataStructureView
  * @see BinaryTreeModelListener
  */
-public interface IBinaryTreeView extends IView, BinaryTreeModelListener {
+public interface IBinaryTreeView extends IDataStructureView, BinaryTreeModelListener {
 }

@@ -22,6 +22,8 @@
 package controller;
 
 import java.io.File;
+import model.ISoftwareModel;
+import model.SoftwareModel;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
@@ -37,54 +39,61 @@ import view.AbstractViewFactory;
  */
 public class BinaryTreeControllerTest {
 
-    private static String filePath = "test" + File.separator + "controller" +
+    private static final String FILE_PATH = "test" + File.separator + "controller" +
             File.separator;
+
+    private ISoftwareModel softwareModel;
 
     private AbstractViewFactory viewFactory;
 
-    private BinaryTreeController btController1;
+    private IBinaryTreeController btController1;
 
-    private BinaryTreeController btController2;
+    private IBinaryTreeController btController2;
 
-    private BinaryTreeController btController3;
+    private IBinaryTreeController btController3;
 
     @Before
     public void setUp() {
+        softwareModel = new SoftwareModel();
         viewFactory = ViewFactoryMock.getFactory();
 
         btController1 = new BinaryTreeController();
         btController1.initializeDataStructureController(BinaryTreeType.AVLTREE,
-                viewFactory, 200, 100);
+                viewFactory);
         btController2 = new BinaryTreeController();
         try {
             btController2.initializeDataStructureController(
-                    new File(filePath + "loadBST.bt"), viewFactory, 200, 100);
+                    new File(FILE_PATH + "loadBST.bt"), viewFactory);
         } catch (Exception e) {
             assertNotNull(btController2);
         }
         btController3 = new BinaryTreeController();
         btController3.initializeDataStructureController(
-            BinaryTreeType.REDBLACKTREE, viewFactory, 9, 200, 100);
+            BinaryTreeType.REDBLACKTREE, viewFactory, 9);
     }
 
     @Test
     public void testBinaryTreeController() {
         assertEquals(btController1.getView().getClass(), BinaryTreeViewMock.class);
-        assertEquals(
-                btController1.getDataStructureModel().getDataStructure().getType(),
+
+        btController1.addDataStructureModelToSoftwareModel(softwareModel);
+        btController2.addDataStructureModelToSoftwareModelFromFile(softwareModel,
+                "loadBST.bt");
+        btController3.addDataStructureModelToSoftwareModel(softwareModel);
+
+        assertEquals(softwareModel.getDataStructureModel(0).getDataStructureType(),
                 BinaryTreeType.AVLTREE.toString());
-        assertEquals(
-                btController2.getDataStructureModel().getDataStructure().getType(),
+        assertEquals(softwareModel.getDataStructureModel(1).getDataStructureType(),
                 BinaryTreeType.BINARYSEARCHTREE.toString());
-        assertEquals(
-                btController3.getDataStructureModel().getDataStructure().getType(),
+        assertEquals(softwareModel.getDataStructureModel(2).getDataStructureType(),
                 BinaryTreeType.REDBLACKTREE.toString());
+
         assertEquals(btController1.isDataStructureModelSaved(), false);
         assertEquals(btController2.isDataStructureModelSaved(), true);
         assertEquals(btController3.isDataStructureModelSaved(), false);
 
         try {
-            btController1.saveDataStructureModel(new File(filePath + "saveAVLT.bt"));
+            btController1.saveDataStructureModel(new File(FILE_PATH + "saveAVLT.bt"));
         } catch (Exception e) {
         }
         assertEquals(btController1.isDataStructureModelSaved(), true);

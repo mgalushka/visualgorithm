@@ -22,6 +22,7 @@
 package controller;
 
 import java.io.File;
+import model.ISoftwareModel;
 import model.SoftwareModel;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -39,14 +40,14 @@ import view.AbstractViewFactory;
  */
 public class SoftwareControllerTest {
 
-    private static String filePath = "test" + File.separator + "controller" +
+    private static final String FILE_PATH = "test" + File.separator + "controller" +
             File.separator;
 
-    private SoftwareModel softwareModel;
+    private ISoftwareModel softwareModel;
 
     private AbstractViewFactory viewFactory;
 
-    private SoftwareController softwareController;
+    private ISoftwareController softwareController;
 
     @Before
     public void setUp() {
@@ -61,18 +62,15 @@ public class SoftwareControllerTest {
         assertEquals(softwareController.getView().getClass(), SoftwareViewMock.class);
 
         try {
-            softwareController.addDataStructure("avlt", BinaryTreeType.AVLTREE,
-                    200, 100);
+            softwareController.addDataStructure("avlt", BinaryTreeType.AVLTREE);
         } catch (Exception e) {
         }
         try {
-            softwareController.addDataStructure("rbt",
-                    BinaryTreeType.REDBLACKTREE, 9, 200, 100);
+            softwareController.addDataStructure("rbt", BinaryTreeType.REDBLACKTREE, 9);
         } catch (Exception e) {
         }
         try {
-            softwareController.addDataStructure(
-                    new File(filePath + "loadBST.bst"), 200, 100);
+            softwareController.addDataStructure(new File(FILE_PATH + "loadBST.bst"));
         } catch (Exception e) {
         }
         try {
@@ -80,15 +78,12 @@ public class SoftwareControllerTest {
         } catch (Exception e) {
         }
 
-        softwareController.addDataStructure("bt", BinaryTreeType.AVLTREE, 200,
-                100);
+        softwareController.addDataStructure("bt", BinaryTreeType.AVLTREE);
         assertNotNull(softwareController.getDataStructureController(0));
-        softwareController.addDataStructure("bt", BinaryTreeType.REDBLACKTREE,
-                9, 200, 100);
+        softwareController.addDataStructure("bt", BinaryTreeType.REDBLACKTREE, 9);
         assertNotNull(softwareController.getDataStructureController(1));
         try {
-            softwareController.addDataStructure(
-                    new File(filePath + "loadBST.bt"), 200, 100);
+            softwareController.addDataStructure(new File(FILE_PATH + "loadBST.bt"));
         } catch (Exception e) {
         }
         assertNotNull(softwareController.getDataStructureController(2));
@@ -106,13 +101,13 @@ public class SoftwareControllerTest {
 
         try {
             softwareController.saveDataStructure(
-                    new File(filePath + "saveAVLT.bt"), 0);
+                    new File(FILE_PATH + "saveAVLT.bt"), 0);
         } catch (Exception e) {
         }
         assertEquals(softwareController.getDataStructureController(0).
                 isDataStructureModelSaved(), true);
 
-        softwareController.closeViewAndDeleteAllDataStructures();
+        softwareController.removeAllDataStructureModelsAndControllers();
         try {
             assertNull(softwareController.getDataStructureController(0));
         } catch (Exception e) {

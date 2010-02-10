@@ -58,24 +58,24 @@ public abstract class TreeFile {
     /**
      * Definition of the extension of the binary tree files.
      */
-    public final static String fileExtension = "bt";
+    public static final String FILE_EXTENSION = "bt";
     
     /**
      * Definition of the position of the key in the string tab of the node list.
      */
-    protected final static int KEY = 1;
+    protected static final int KEY_INDEX = 1;
 
     /**
      * Definition of the position of the left child in the string tab of the
      * node list.
      */
-    protected final static int LEFT_CHILD = 2;
+    protected static final int LEFT_CHILD_INDEX = 2;
 
     /**
      * Definition of the position of the right child in the string tab of the
      * node list.
      */
-    protected final static int RIGHT_CHILD = 3;
+    protected static final int RIGHT_CHILD_INDEX = 3;
 
     /**
      * Definition of spaces.
@@ -91,52 +91,52 @@ public abstract class TreeFile {
      * Definition of the comment regular expression. A comment is defined by
      * {@literal #} followed by text.
      */
-    protected final static String REGEX_COMMENT = "\\p{Blank}*#.*";
+    protected static final String REGEX_COMMENT = "\\p{Blank}*#.*";
 
     /**
      * Definition of the line comment regular expression. A comment is defined
      * by {@literal #} followed by text.
      */
-    protected final static String REGEX_COMMENT_LINE = "(\\p{Blank}*|" +
+    protected static final String REGEX_COMMENT_LINE = "(\\p{Blank}*|" +
             "\\p{Blank}+#.*)?";
 
     /**
      * Definition of the blank regular expression.
      */
-    protected final static String REGEX_BLANK = "\\p{Blank}+";
+    protected static final String REGEX_BLANK = "\\p{Blank}+";
 
     /**
      * Definition of the key regular expression. The key is composed by one or
      * two digits.
      */
-    protected final static String REGEX_KEY = "\\d{1,2}";
+    protected static final String REGEX_KEY = "\\d{1,2}";
 
     /**
      * Definition of the empty line regular expression.
      */
-    protected final static String REGEX_EMPTY_LINE = "\\p{Blank}*";
+    protected static final String REGEX_EMPTY_LINE = "\\p{Blank}*";
 
     /**
      * Definition of the regular expression for nodes that have two children.
      */
-    protected static String REGEX_2_CHILD;
+    protected static String regex2Child;
 
     /**
      * Definition of the regular expression for nodes that have only a left
      * child.
      */
-    protected static String REGEX_LEFT_CHILD;
+    protected static String regexLeftChild;
 
     /**
      * Definition of the regular expression for nodes that have only a right
      * child.
      */
-    protected static String REGEX_RIGHT_CHILD;
+    protected static String regexRightChild;
 
     /**
      * Definition of the regular expression for nodes that have no children.
      */
-    protected static String REGEX_NO_CHILD;
+    protected static String regexNoChild;
 
     /**
      * The file parser associates each type of binary tree with the good type of
@@ -224,7 +224,7 @@ public abstract class TreeFile {
     private IBinaryTree createBinaryTree() throws UnknownDataStructureException {
         IBinaryTree tree = null;
         if (nodeVector.size() != 0) {
-            tree = createBinaryTree(Integer.parseInt(nodeVector.get(0)[KEY]));
+            tree = createBinaryTree(Integer.parseInt(nodeVector.get(0)[KEY_INDEX]));
             generateNode(tree.getRoot(), 0);
         } else {
             tree = createEmptyBinaryTree();
@@ -239,16 +239,16 @@ public abstract class TreeFile {
 
     private void generateNode(IBinaryNode node, int currentNodeNumber) {
         if (currentNodeNumber < nodeVector.size()) {
-            if (!nodeVector.get(currentNodeNumber)[LEFT_CHILD].equals(NIL_NODE)) {
+            if (!nodeVector.get(currentNodeNumber)[LEFT_CHILD_INDEX].equals(NIL_NODE)) {
                 int childNodeNumber = Integer.parseInt(
-                        nodeVector.get(currentNodeNumber)[LEFT_CHILD]);
+                        nodeVector.get(currentNodeNumber)[LEFT_CHILD_INDEX]);
                 setLeftNode(node, childNodeNumber);
                 node.getLeft().setFather(node);
                 generateNode(node.getLeft(), childNodeNumber);
             }
-            if (!nodeVector.get(currentNodeNumber)[RIGHT_CHILD].equals(NIL_NODE)) {
+            if (!nodeVector.get(currentNodeNumber)[RIGHT_CHILD_INDEX].equals(NIL_NODE)) {
                 int childNodeNumber = Integer.parseInt(
-                        nodeVector.get(currentNodeNumber)[RIGHT_CHILD]);
+                        nodeVector.get(currentNodeNumber)[RIGHT_CHILD_INDEX]);
                 setRightNode(node, childNodeNumber);
                 node.getRight().setFather(node);
                 generateNode(node.getRight(), childNodeNumber);
@@ -268,33 +268,33 @@ public abstract class TreeFile {
         }
         while (lineToParse != null) {
             initREGEX(currentNodeNumber, nextNodeNumber);
-            if (lineToParse.matches(REGEX_2_CHILD + REGEX_COMMENT_LINE)) {
-                pattern = Pattern.compile(REGEX_2_CHILD);
+            if (lineToParse.matches(regex2Child + REGEX_COMMENT_LINE)) {
+                pattern = Pattern.compile(regex2Child);
                 matcher = pattern.matcher(lineToParse);
                 matcher.find();
                 nodeVector.add(matcher.group().split(REGEX_BLANK));
                 ++currentNodeNumber;
                 nextNodeNumber += 2;
-            } else if (lineToParse.matches(REGEX_LEFT_CHILD + REGEX_COMMENT_LINE)) {
-                pattern = Pattern.compile(REGEX_LEFT_CHILD);
+            } else if (lineToParse.matches(regexLeftChild + REGEX_COMMENT_LINE)) {
+                pattern = Pattern.compile(regexLeftChild);
                 matcher = pattern.matcher(lineToParse);
                 matcher.find();
                 nodeVector.add(matcher.group().split(REGEX_BLANK));
                 ++currentNodeNumber;
                 ++nextNodeNumber;
-            } else if (lineToParse.matches(REGEX_RIGHT_CHILD + REGEX_COMMENT_LINE)) {
-                pattern = Pattern.compile(REGEX_RIGHT_CHILD);
+            } else if (lineToParse.matches(regexRightChild + REGEX_COMMENT_LINE)) {
+                pattern = Pattern.compile(regexRightChild);
                 matcher = pattern.matcher(lineToParse);
                 matcher.find();
                 nodeVector.add(matcher.group().split(REGEX_BLANK));
                 ++currentNodeNumber;
                 ++nextNodeNumber;
-            } else if (lineToParse.matches(REGEX_NO_CHILD + REGEX_COMMENT_LINE)) {
+            } else if (lineToParse.matches(regexNoChild + REGEX_COMMENT_LINE)) {
                 if (currentNodeNumber >= nextNodeNumber) {
                     throw new ParseException("Too many nodes have been specified",
                             lineNumber);
                 } else {
-                    pattern = Pattern.compile(REGEX_NO_CHILD);
+                    pattern = Pattern.compile(regexNoChild);
                     matcher = pattern.matcher(lineToParse);
                     matcher.find();
                     nodeVector.add(matcher.group().split(REGEX_BLANK));
@@ -347,11 +347,11 @@ public abstract class TreeFile {
         String lineBegin = currentNodeNumber + REGEX_BLANK + REGEX_KEY
                 + REGEX_BLANK;
         
-        REGEX_2_CHILD = lineBegin + nextNodeNumber + REGEX_BLANK
+        regex2Child = lineBegin + nextNodeNumber + REGEX_BLANK
                 + (nextNodeNumber + 1);
-        REGEX_LEFT_CHILD = lineBegin + nextNodeNumber + REGEX_BLANK + "nil";
-        REGEX_RIGHT_CHILD = lineBegin + "nil" + REGEX_BLANK + nextNodeNumber;
-        REGEX_NO_CHILD = lineBegin + "nil" + REGEX_BLANK + "nil";
+        regexLeftChild = lineBegin + nextNodeNumber + REGEX_BLANK + NIL_NODE;
+        regexRightChild = lineBegin + NIL_NODE + REGEX_BLANK + nextNodeNumber;
+        regexNoChild = lineBegin + NIL_NODE + REGEX_BLANK + NIL_NODE;
     }
 
     /**

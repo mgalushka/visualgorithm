@@ -21,15 +21,16 @@
 
 package view;
 
-import controller.SoftwareController;
-import controller.BinaryTreeController;
+import controller.ISoftwareController;
+import controller.IBinaryTreeController;
 
 /**
- * This abstract class defines an abstract factory of the different views of the
- * software. It is used to implement all the views with a specific technology
- * that could be changed. In order to do so, all the controllers of the software
- * must use only this abstract factory to create the views. Thus, there are no
- * dependencies between the controllers and the technology of the views.
+ * This abstract class defines an abstract factory according to the design
+ * pattern abstract factory. It is used to implement all the views of the
+ * software with a specific technology that could be changed. In order to do so,
+ * all the controllers of the software must use only this abstract factory to
+ * create the views. Thus, there are no dependencies between the controllers and
+ * the technology of the views.
  * 
  * @author Julien Hannier
  * @version 1.00 16/06/08
@@ -43,21 +44,16 @@ public abstract class AbstractViewFactory {
      * @return the software view
      */
     public abstract ISoftwareView createSoftwareView(
-            SoftwareController controller);
+            ISoftwareController controller);
 
     /**
      * Creates the binary tree view. The parameter {@code type} is used to
-     * indicate the type of the binary tree in the view. In the same way,
-     * {@code width} and {@code height} are necessary to know the size that the
-     * tree visualization can take and so place the binary tree in the center of
-     * the view.
+     * indicate the type of the binary tree in the view.
      * 
      * @param type the type of the binary tree
      * @param controller the binary tree controller
-     * @param width the width of the tree visualization
-     * @param height the height of the tree visualization
      * @return the binary tree view
      */
     public abstract IBinaryTreeView createBinaryTreeView(String type,
-            BinaryTreeController controller, int width, int height);
+            IBinaryTreeController controller);
 }

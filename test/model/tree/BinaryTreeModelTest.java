@@ -36,21 +36,21 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  */
 public class BinaryTreeModelTest {
 
-    private static String filePath = "test" + File.separator + "model" +
+    private static final String FILE_PATH = "test" + File.separator + "model" +
             File.separator + "tree" + File.separator;
 
-    private BinaryTreeModel btModel1;
+    private IBinaryTreeModel btModel1;
 
-    private BinaryTreeModel btModel2;
+    private IBinaryTreeModel btModel2;
 
-    private BinaryTreeModel btModel3;
+    private IBinaryTreeModel btModel3;
 
     @Before
     public void setUp() {
         btModel1 = new BinaryTreeModel(BinaryTreeType.AVLTREE);
         try {
             btModel2 = new BinaryTreeModel(
-                    new File(filePath + "loadBST.bt"));
+                    new File(FILE_PATH + "loadBST.bt"));
         } catch (Exception e) {
             assertNotNull(btModel2);
         }
@@ -59,18 +59,15 @@ public class BinaryTreeModelTest {
 
     @Test
     public void testBinaryTreeModel() {
-        assertEquals(btModel1.getDataStructure().getType(),
-                BinaryTreeType.AVLTREE.toString());
-        assertEquals(btModel2.getDataStructure().getType(),
-                BinaryTreeType.BINARYSEARCHTREE.toString());
-        assertEquals(btModel3.getDataStructure().getType(),
-                BinaryTreeType.REDBLACKTREE.toString());
+        assertEquals(btModel1.getDataStructureType(), BinaryTreeType.AVLTREE.toString());
+        assertEquals(btModel2.getDataStructureType(), BinaryTreeType.BINARYSEARCHTREE.toString());
+        assertEquals(btModel3.getDataStructureType(), BinaryTreeType.REDBLACKTREE.toString());
         assertEquals(btModel1.isDataStructureSaved(), false);
         assertEquals(btModel2.isDataStructureSaved(), true);
         assertEquals(btModel3.isDataStructureSaved(), false);
 
         try {
-            btModel1.saveDataStructure(new File(filePath + "saveAVLT.bt"));
+            btModel1.saveDataStructure(new File(FILE_PATH + "saveAVLT.bt"));
         } catch (Exception e) {
         }
         assertEquals(btModel1.isDataStructureSaved(), true);
@@ -80,7 +77,5 @@ public class BinaryTreeModelTest {
         btModel3.insertNode(45);
         btModel3.deleteNode(23);
         btModel3.deleteNodeWithoutCorrection(89);
-
-        btModel2.updateListeners();
     }
 }

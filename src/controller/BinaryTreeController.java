@@ -21,15 +21,16 @@
 
 package controller;
 
-import io.tree.TreeFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-import model.IDataStructureModel;
+import model.ISoftwareModel;
 import model.UnknownDataStructureException;
 import model.tree.BinaryTreeModel;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
+import model.tree.BinaryTreeModelListener;
+import model.tree.IBinaryTreeModel;
 import view.AbstractViewFactory;
 import view.IBinaryTreeView;
 
@@ -42,22 +43,29 @@ import view.IBinaryTreeView;
  *
  * @author Julien Hannier
  * @version 1.00 16/06/08
- * @see IDataStructureController
+ * @see IBinaryTreeController
  */
-public final class BinaryTreeController implements IDataStructureController {
+public final class BinaryTreeController implements IBinaryTreeController {
 
-    /**
-     * Definition of the extension of the binary tree files.
-     */
-    public final static String binaryTreeFileExtension = TreeFile.fileExtension;
-    
-    private BinaryTreeModel binaryTreeModel;
+    private IBinaryTreeModel binaryTreeModel;
 
     private IBinaryTreeView binaryTreeView;
 
+    /**
+     * Builds the binary tree controller. The binary tree controller is composed
+     * by a binary tree model and the corresponding binary tree view.
+     */
+    public BinaryTreeController() {
+    }
+
+    @Override
+    public IBinaryTreeController clone() {
+        return new BinaryTreeController();
+    }
+
     @Override
     public void initializeDataStructureController(Object type,
-            AbstractViewFactory viewFactory, int width, int height)
+            AbstractViewFactory viewFactory)
             throws IllegalArgumentException {
         if (!(type instanceof BinaryTreeType)) {
             throw new IllegalArgumentException("You have to pass a" +
@@ -66,13 +74,13 @@ public final class BinaryTreeController implements IDataStructureController {
         binaryTreeModel = new BinaryTreeModel((BinaryTreeType) type);
 
         binaryTreeView = viewFactory.createBinaryTreeView(
-                "Type of the Tree : " + type.toString(), this, width, height);
+                "Type of the Tree : " + type.toString(), this);
         addListener();
     }
 
     @Override
     public void initializeDataStructureController(Object type,
-            AbstractViewFactory viewFactory, int nb, int width, int height)
+            AbstractViewFactory viewFactory, int nb)
             throws IllegalArgumentException {
         if (!(type instanceof BinaryTreeType)) {
             throw new IllegalArgumentException("You have to pass a" +
@@ -82,33 +90,36 @@ public final class BinaryTreeController implements IDataStructureController {
         binaryTreeModel.insertRandomNodes(nb);
 
         binaryTreeView = viewFactory.createBinaryTreeView(
-                "Type Of The Tree : " + type.toString(), this, width, height);
+                "Type Of The Tree : " + type.toString(), this);
         addListener();
-        binaryTreeModel.updateListeners();
     }
 
     @Override
     public void initializeDataStructureController(File file,
-            AbstractViewFactory viewFactory, int width, int height)
+            AbstractViewFactory viewFactory)
             throws FileNotFoundException, ParseException, IOException,
             UnknownDataStructureException {
         binaryTreeModel = new BinaryTreeModel(file);
 
         binaryTreeView = viewFactory.createBinaryTreeView(
-                "Type of the Tree : " + binaryTreeModel.getDataStructure().getType(),
-                this, width, height);
+                "Type of the Tree : " + binaryTreeModel.getDataStructureType(), this);
         addListener();
-        binaryTreeModel.updateListeners();
+    }
+
+    @Override
+    public void addDataStructureModelToSoftwareModel(ISoftwareModel softwareModel) {
+        softwareModel.addDataStructureModel(binaryTreeModel);
+    }
+
+    @Override
+    public void addDataStructureModelToSoftwareModelFromFile(
+            ISoftwareModel softwareModel, String fileName) {
+        softwareModel.addDataStructureModelFromFile(binaryTreeModel, fileName);
     }
 
     @Override
     public IBinaryTreeView getView() {
         return binaryTreeView;
-    }
-
-    @Override
-    public IDataStructureModel getDataStructureModel() {
-        return binaryTreeModel;
     }
 
     @Override
@@ -122,43 +133,22 @@ public final class BinaryTreeController implements IDataStructureController {
     }
 
     private void addListener() {
-        binaryTreeModel.addBinaryTreeModelListener(binaryTreeView);
+        assert(binaryTreeView instanceof BinaryTreeModelListener);
+
+        binaryTreeModel.addModelListener(binaryTreeView);
     }
 
-    /**
-     * Adds a node into the binary tree. This method uses the insert
-     * algorithm corresponding to the type of the binary tree. If it is
-     * necessary, the binary tree is corrected. For instance, the balance of an
-     * AVL tree is corrected after the insertion. If {@code key} is greater than
-     * 99 or less than 0 then an IllegalArgumentException is thrown.
-     * 
-     * @param key the key of the node to add
-     * @throws IllegalArgumentException
-     */
+    @Override
     public void addNodeToBinaryTreeModel(int key) throws IllegalArgumentException {
         binaryTreeModel.insertNode(key);
     }
 
-    /**
-     * Deletes a node from the binary tree. This method uses the delete
-     * algorithm corresponding to the type of the binary tree. If it is
-     * necessary, the binary tree is corrected. For instance, the balance of an
-     * AVL tree is corrected after the deletion.
-     *
-     * @param key the key of the node to delete
-     */
+    @Override
     public void deleteNodeFromBinaryTreeModel(int key) {
         binaryTreeModel.deleteNode(key);
     }
 
-    /**
-     * Deletes a node from the binary tree. This method uses the delete
-     * algorithm from the binary search tree that is to say that the node is
-     * deleted without any correction of the binary tree. For instance, the
-     * balance of an AVL tree is not corrected after the deletion.
-     * 
-     * @param key the key of the node to delete
-     */
+    @Override
     public void deleteNodeFromBinaryTreeModelWithoutCorrection(int key) {
         binaryTreeModel.deleteNodeWithoutCorrection(key);
     }

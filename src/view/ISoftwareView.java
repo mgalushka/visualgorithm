@@ -36,16 +36,10 @@ import model.SoftwareModelListener;
 public interface ISoftwareView extends IView, SoftwareModelListener {
 
     /**
-     * Shows the view of the software. This method must be used to show the
+     * Displays the view of the software. This method must be used to show the
      * software view at the first time.
      */
     public void displayView();
-
-    /**
-     * Shows an error message indicating that a serious problem occurs and
-     * exits the software.
-     */
-    public void displayErrorMessageAndExit();
 
     /**
      * Closes the view of the software. This method must be used to hide and

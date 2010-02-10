@@ -1,5 +1,5 @@
 /*
- * SoftwareViewMock.java v1.00 04/06/09
+ * package-info.java v1.00 27/02/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,32 +19,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package controller;
-
-import model.SoftwareModelEvent;
-import view.ISoftwareView;
-
 /**
- * Mock of the software view for the tests of controllers.
+ * This package contains the view of the software. It is composed by different
+ * data structure views that are open in the software. Each of these data
+ * structure views takes part of a tabbed pane. A view must implement the
+ * interface <tt>IView</tt> directly or through a more specific interface. Thus
+ * a new data structure view must take part of the software view at the name of
+ * the data structure and implement <tt>IDataStructureView</tt> or a more
+ * specific interface.
  * 
  * @author Julien Hannier
- * @version 1.00 04/06/09
- * @see ISoftwareView
+ * @version 1.00 27/02/09
  */
-public class SoftwareViewMock implements ISoftwareView {
-
-    public SoftwareViewMock(ISoftwareController c) {
-    }
-
-    @Override
-    public void displayView() {
-    }
-
-    @Override
-    public void closeView() {
-    }
-
-    @Override
-    public void modelHasChanged(SoftwareModelEvent event) {
-    }
-}
+package swing;

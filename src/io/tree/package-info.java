@@ -20,8 +20,8 @@
  */
 
 /**
- * This package contains file input and output operations for binary trees.
- * These operations are implemented by static methods in the abstract class
+ * This package contains file input and output operations for trees. These
+ * operations are implemented by static methods in the abstract class
  * <tt>TreeFile</tt>. <tt>TreeFile</tt> also defines a readable file format for
  * binary trees.
  * 

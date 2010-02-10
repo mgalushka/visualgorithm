@@ -36,13 +36,13 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  */
 public class SoftwareModelTest {
 
-    private SoftwareModel softwareModel;
+    private ISoftwareModel softwareModel;
 
-    private BinaryTreeModel btModel1;
+    private IDataStructureModel btModel1;
 
-    private BinaryTreeModel btModel2;
+    private IDataStructureModel btModel2;
 
-    private BinaryTreeModel btModel3;
+    private IDataStructureModel btModel3;
 
     @Before
     public void setUp() {

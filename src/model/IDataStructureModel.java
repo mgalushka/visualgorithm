@@ -25,21 +25,23 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * This interface is the common interface of all data structure models. It must
- * be implemented by each model containing a particular data structure. It is
- * principally used in the software model.
+ * This interface is the common interface of all data structure models. It is
+ * used by the data structure controllers of the software. This interface must
+ * be implemented by all data structure models of the software directly or
+ * through a more specific interface.
  * 
  * @author Julien Hannier
  * @version 1.00 07/07/08
+ * @see IModel
  */
-public interface IDataStructureModel {
+public interface IDataStructureModel extends IModel {
 
     /**
-     * Returns the data structure of the model.
+     * Returns the type of the data structure of the model.
      * 
-     * @return the data structure of the model
+     * @return the type of the data structure of the model
      */
-    public IDataStructure getDataStructure();
+    public String getDataStructureType();
 
     /**
      * Returns true if the data structure of the model has been saved, or else

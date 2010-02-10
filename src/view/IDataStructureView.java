@@ -1,14 +1,14 @@
 /*
- * SoftwareViewMock.java v1.00 04/06/09
+ * IDataStructureView.java v1.00 06/12/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -19,32 +19,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package controller;
-
-import model.SoftwareModelEvent;
-import view.ISoftwareView;
+package view;
 
 /**
- * Mock of the software view for the tests of controllers.
- * 
+ * This interface is the common interface of all data structure views. It is
+ * used by the data structure controllers of the software. This interface must
+ * be implemented by all data structure views of the software directly or
+ * through a more specific interface.
+ *
  * @author Julien Hannier
- * @version 1.00 04/06/09
- * @see ISoftwareView
+ * @version 1.00 06/12/09
+ * @see IView
  */
-public class SoftwareViewMock implements ISoftwareView {
-
-    public SoftwareViewMock(ISoftwareController c) {
-    }
-
-    @Override
-    public void displayView() {
-    }
-
-    @Override
-    public void closeView() {
-    }
-
-    @Override
-    public void modelHasChanged(SoftwareModelEvent event) {
-    }
+public interface IDataStructureView extends IView {
 }

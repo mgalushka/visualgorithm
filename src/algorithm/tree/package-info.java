@@ -20,7 +20,7 @@
  */
 
 /**
- * This package contains the binary tree algorithms of the software. There is
+ * This package contains the tree algorithms of the software. There is
  * principally insertion, deletion, searching and traversal. All the algorithms
  * must implement the interface <tt>IBinaryTreeAlgorithm</tt> in order to be
  * applied to binary trees.

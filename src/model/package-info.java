@@ -22,10 +22,12 @@
 /**
  * This package contains the model of the software. It is composed by different
  * data structures that are open in the software. Each of these data structures
- * takes part of a data structure model. Thus, a new data structure must
- * implement <tt>IDataStructure</tt> to define a type. It must also take part of
- * a data structure model at the name of the data structure that implement
- * <tt>IDataStructureModel</tt>.
+ * takes part of a data structure model. A model must implement the interface
+ * <tt>IModel</tt> directly or through a more specific interface. Thus, a new
+ * data structure must implement <tt>IDataStructure</tt> to define a type. It
+ * must also take part of a data structure model at the name of the data
+ * structure that implement <tt>IDataStructureModel</tt> or a more specific
+ * interface.
  * 
  * @author Julien Hannier
  * @version 1.00 01/03/09

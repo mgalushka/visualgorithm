@@ -36,7 +36,7 @@ import org.junit.Test;
  */
 public class BinarySearchTreeFileTest {
 
-    private static String filePath = "test" + File.separator + "io" +
+    private static final String FILE_PATH = "test" + File.separator + "io" +
             File.separator + "tree" + File.separator;
 
     private String loadFileName;
@@ -47,8 +47,8 @@ public class BinarySearchTreeFileTest {
 
     @Before
     public void setUp() {
-        loadFileName = filePath + "loadBST.bt";
-        saveFileName = filePath + "saveBST.bt";
+        loadFileName = FILE_PATH + "loadBST.bt";
+        saveFileName = FILE_PATH + "saveBST.bt";
         tree = new BinarySearchTree(8);
 
         tree.getRoot().setLeft(new BinarySearchNode(5));

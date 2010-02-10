@@ -30,7 +30,7 @@ package model.tree;
  * @version 1.00 19/05/08
  * @see IBinarySearchNode
  */
-abstract class AbstractBinarySearchNode extends AbstractBinaryNode implements
+public abstract class AbstractBinarySearchNode extends AbstractBinaryNode implements
         IBinarySearchNode {
 
     /**

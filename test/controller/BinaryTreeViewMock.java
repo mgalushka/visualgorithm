@@ -33,8 +33,7 @@ import model.tree.BinaryTreeModelEvent;
  */
 public class BinaryTreeViewMock implements IBinaryTreeView {
 
-    public BinaryTreeViewMock(String type, BinaryTreeController c, int width,
-            int height) {
+    public BinaryTreeViewMock(String type, IBinaryTreeController c) {
     }
 
     @Override

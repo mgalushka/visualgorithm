@@ -1,14 +1,14 @@
 /*
- * SoftwareViewMock.java v1.00 04/06/09
+ * IDataStructureMenu.java v1.00 13/12/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -19,32 +19,25 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package controller;
+package swing;
 
-import model.SoftwareModelEvent;
-import view.ISoftwareView;
+import controller.ISoftwareController;
 
 /**
- * Mock of the software view for the tests of controllers.
- * 
+ * This interface defines the data structure menu of the software. It must be
+ * implemented by all data structure menus directly or through a more specific
+ * class. It is principally used in the view of the software.
+ *
  * @author Julien Hannier
- * @version 1.00 04/06/09
- * @see ISoftwareView
+ * @version 1.00 13/12/09
  */
-public class SoftwareViewMock implements ISoftwareView {
+public interface IDataStructureMenu {
 
-    public SoftwareViewMock(ISoftwareController c) {
-    }
-
-    @Override
-    public void displayView() {
-    }
-
-    @Override
-    public void closeView() {
-    }
-
-    @Override
-    public void modelHasChanged(SoftwareModelEvent event) {
-    }
+    /**
+     * Initializes the data structure menu by seting the software controller
+     * with {@code controller} and finishing the build of the menu.
+     *
+     * @param controller the software controller
+     */
+    public void initializeDataStructureMenu(ISoftwareController controller);
 }

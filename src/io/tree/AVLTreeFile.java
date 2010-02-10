@@ -56,7 +56,7 @@ final class AVLTreeFile extends TreeFile {
 
         ((AVLNode) node).setLeft(
                 new AVLNode(Integer.parseInt(
-                nodeVector.get(childNodeNumber)[KEY])));
+                nodeVector.get(childNodeNumber)[KEY_INDEX])));
     }
 
     @Override
@@ -65,6 +65,6 @@ final class AVLTreeFile extends TreeFile {
 
         ((AVLNode) node).setRight(
                 new AVLNode(Integer.parseInt(
-                nodeVector.get(childNodeNumber)[KEY])));
+                nodeVector.get(childNodeNumber)[KEY_INDEX])));
     }
 }

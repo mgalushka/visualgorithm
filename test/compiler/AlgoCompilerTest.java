@@ -37,6 +37,6 @@ public class AlgoCompilerTest {
 
     @Test
     public void testCompileInput() {
-        // TODO test compile input
+        // TODO Test compile input
     }
 }

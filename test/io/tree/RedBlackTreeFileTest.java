@@ -37,7 +37,7 @@ import org.junit.Test;
  */
 public class RedBlackTreeFileTest {
 
-    private static String filePath = "test" + File.separator + "io" +
+    private static final String FILE_PATH = "test" + File.separator + "io" +
             File.separator + "tree" + File.separator;
 
     private String loadFileName;
@@ -48,8 +48,8 @@ public class RedBlackTreeFileTest {
 
     @Before
     public void setUp() {
-        loadFileName = filePath + "loadRBT.bt";
-        saveFileName = filePath + "saveRBT.bt";
+        loadFileName = FILE_PATH + "loadRBT.bt";
+        saveFileName = FILE_PATH + "saveRBT.bt";
         tree = new RedBlackTree(6);
 
         tree.getRoot().setLeft(new RedBlackNode(4, RedBlackNodeColor.BLACK));

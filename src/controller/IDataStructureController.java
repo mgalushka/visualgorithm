@@ -25,23 +25,36 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import model.ISoftwareModel;
 import view.AbstractViewFactory;
-import model.IDataStructureModel;
 import model.UnknownDataStructureException;
+import view.IDataStructureView;
 
 /**
  * This interface defines data structure controllers. It must be implemented by
- * controllers of each kind of data structure. These controllers will be
- * instanciated thanks to reflection so they must have a public constructor
- * without parameters. The {@code void initializeDataStructureController()}
- * methods will take care of the initialization of the object. It is principally
- * used in the software controller.
+ * controllers of each kind of data structure directly or through a more specific
+ * interface. These controllers will be instanciated thanks to the design pattern
+ * prototype so they must have a constructor without parameters. The
+ * {@code void initializeDataStructureController()} methods will take care of
+ * the initialization of the object. It is principally used in the software
+ * controller.
  * 
  * @author Julien Hannier
  * @version 1.00 07/07/08
  * @see IController
  */
 public interface IDataStructureController extends IController {
+
+    @Override
+    public IDataStructureView getView();
+
+    /**
+     * Clones the data structure controller object that is to say creates a new
+     * one and returns it.
+     *
+     * @return the cloned data structure controller
+     */
+    public IDataStructureController clone();
 
     /**
      * Initializes the data structure controller with an empty data structure.
@@ -50,12 +63,10 @@ public interface IDataStructureController extends IController {
      * 
      * @param type the type of the data structure
      * @param viewFactory the view factory
-     * @param width the width of the visualization
-     * @param height the height of the visualization
      * @throws IllegalArgumentException
      */
     public void initializeDataStructureController(Object type,
-            AbstractViewFactory viewFactory, int width, int height)
+            AbstractViewFactory viewFactory)
             throws IllegalArgumentException;
 
     /**
@@ -67,12 +78,10 @@ public interface IDataStructureController extends IController {
      * @param type the type of the data structure
      * @param viewFactory the view factory
      * @param nb the number of random elements
-     * @param width the width of the visualization
-     * @param height the height of the visualization
      * @throws IllegalArgumentException
      */
     public void initializeDataStructureController(Object type,
-            AbstractViewFactory viewFactory, int nb, int width, int height)
+            AbstractViewFactory viewFactory, int nb)
             throws IllegalArgumentException;
 
     /**
@@ -81,24 +90,33 @@ public interface IDataStructureController extends IController {
      * 
      * @param file the file containing the data structure
      * @param viewFactory the view factory
-     * @param width the width of the visualization of the data structure
-     * @param height the height of the visualization of the data structure
      * @throws UnknownDataStructureException
      * @throws IOException
      * @throws ParseException
      * @throws FileNotFoundException
      */
     public void initializeDataStructureController(File file,
-            AbstractViewFactory viewFactory, int width, int height)
+            AbstractViewFactory viewFactory)
             throws FileNotFoundException, ParseException, IOException,
             UnknownDataStructureException;
 
     /**
-     * Returns the data structure model.
-     * 
-     * @return the data structure model
+     * Adds the data structure model to the software model {@code softwareModel}.
+     *
+     * @param softwareModel the software model where to add
      */
-    public IDataStructureModel getDataStructureModel();
+    public void addDataStructureModelToSoftwareModel(ISoftwareModel softwareModel);
+
+    /**
+     * Adds the data structure model to the software model {@code softwareModel}.
+     * The parameter {@code fileName} represents the name of the data structure
+     * model.
+     *
+     * @param softwareModel the software model where to add
+     * @param fileName the name of the file where the data structure model is
+     */
+    public void addDataStructureModelToSoftwareModelFromFile(
+            ISoftwareModel softwareModel, String fileName);
 
     /**
      * Saves the data structure model into the selected file.

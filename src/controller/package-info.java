@@ -26,7 +26,8 @@
  * package is composed by different data structure controllers that take part
  * of a software controller. There is a data structure controller for each data
  * structure in the software. All new data structure controllers must implement
- * <tt>IDataStructureController</tt>.
+ * <tt>IDataStructureController</tt> directly or through a more specific
+ * interface.
  * 
  * @author Julien Hannier
  * @version 1.00 02/03/09

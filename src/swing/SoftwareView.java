@@ -24,160 +24,177 @@ package swing;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
-import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import model.SoftwareModelEvent;
 import model.SoftwareModelEvent.SoftwareModelEventType;
-import swing.SoftwareIO.SaveEventType;
 import view.ISoftwareView;
-import controller.SoftwareController;
-import javax.swing.JOptionPane;
-import swing.tree.TreeMenu;
+import controller.ISoftwareController;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+import swing.tree.BinaryTreeMenu;
 
 /**
- * Definition of the software view.
+ * This class defines the view of the software. The software view is composed by
+ * the software controller to modify the software model and a software view IO
+ * operation which manages IO operations between users and the software. It also
+ * contains a tabbed pane which has tabs representing data structure views. This
+ * class is not designed for inheritance. If you would like to add other data
+ * structure menus, do not forget to register your data structure menus in the
+ * data structure {@code dataStructureMenus} in this class.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  * @see ISoftwareView
  */
-public class SoftwareView extends JFrame implements ISoftwareView {
+public final class SoftwareView extends JFrame implements ISoftwareView {
 
     private static final long serialVersionUID = 1L;
 
-    private SoftwareController softwareController;
+    private static final double SOFTWARE_VIEW_DISPLAY_RATIO = 0.8;
 
-    private JMenuBar menuBar;
+    private ISoftwareController softwareController;
 
-    private JMenu algorithms;
+    private SoftwareViewIOOperation softwareViewIOOperation;
 
-    private SoftwareIO ioOperation;
-
-    private JTabbedPane tabbedPane;
+    private JTabbedPane softwareTabbedPane;
 
     /**
-     * Builds the software view.
+     * The data structure menus contains all the data structure menus of the software.
+     */
+    private static List<IDataStructureMenu> dataStructureMenus =
+            new ArrayList<IDataStructureMenu>();
+
+    /**
+     * Registration of the data structure menus according to the types of data
+     * structures. You have to register new data structure menus here.
+     */
+    static {
+        dataStructureMenus.add(new BinaryTreeMenu());
+    }
+
+    /**
+     * Builds the software view. The software view is composed by the software
+     * controller and a tabbed pane. It also contains a software view IO
+     * operation.
      * 
      * @param c the software controller
      */
-    public SoftwareView(SoftwareController c) {
+    public SoftwareView(ISoftwareController c) {
         super("Visualgorithm");
+        
         softwareController = c;
-        tabbedPane = new JTabbedPane(SwingConstants.TOP,
+        softwareTabbedPane = new JTabbedPane(SwingConstants.TOP,
                 JTabbedPane.SCROLL_TAB_LAYOUT);
-        ioOperation = new SoftwareIO(this, tabbedPane, softwareController);
-        createMenuBar();
-
-        menuBar.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
-        setJMenuBar(menuBar);
-        getContentPane().add(tabbedPane, BorderLayout.CENTER);
+        softwareViewIOOperation = new SoftwareViewIOOperation(softwareController);
+        
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosing(WindowEvent evt) {
-                ioOperation.exitSoftwareOperation();
+                if (softwareViewIOOperation.exitSoftwareOperation(
+                        softwareTabbedPane.getTabCount())) {
+                    closeView();
+                }
             }
         });
+        setJMenuBar(createMenuBar());
+        getContentPane().add(softwareTabbedPane, BorderLayout.CENTER);
+        
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(screenSize.width * 8 / 10, screenSize.height * 8 / 10);
+        setSize((int) (screenSize.width * SOFTWARE_VIEW_DISPLAY_RATIO),
+                (int) (screenSize.height * SOFTWARE_VIEW_DISPLAY_RATIO));
     }
 
-    private void createMenuBar() {
-        menuBar = new JMenuBar();
-        createAlgorithmsMenu();
+    private JMenuBar createMenuBar() {
+        JMenuBar softwareMenuBar = new JMenuBar();
 
-        menuBar.add(createFileMenu());
-        addDataStructureMenus(menuBar);
-        menuBar.add(algorithms);
+        softwareMenuBar.add(createFileMenu());
+        for (IDataStructureMenu dataStructureMenu: dataStructureMenus) {
+            dataStructureMenu.initializeDataStructureMenu(softwareController);
+            softwareMenuBar.add((JMenu) dataStructureMenu);
+        }
+        softwareMenuBar.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
+
+        return softwareMenuBar;
     }
 
     private JMenu createFileMenu() {
-        JMenu file = new JMenu("File");
-        JMenuItem open = new JMenuItem("Open");
-        JMenuItem save = new JMenuItem("Save");
-        JMenuItem exit = new JMenuItem("Exit");
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem openMenuItem = new JMenuItem("Open");
+        JMenuItem saveMenuItem = new JMenuItem("Save");
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
 
-        file.setMnemonic('F');
-        open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
-            ActionEvent.CTRL_MASK));
-        open.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                ioOperation.openOperation();
-
-            }
-        });
-        save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-            ActionEvent.CTRL_MASK));
-        save.addActionListener(new ActionListener() {
+        fileMenu.setMnemonic('F');
+        openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
+                ActionEvent.CTRL_MASK));
+        openMenuItem.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent event) {
-                ioOperation.saveOperation(SaveEventType.SAVE);
+                softwareViewIOOperation.openFileOperation();
             }
         });
-        exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
-            ActionEvent.CTRL_MASK));
-        exit.addActionListener(new ActionListener() {
+        saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+                ActionEvent.CTRL_MASK));
+        saveMenuItem.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent event) {
-                ioOperation.exitSoftwareOperation();
+                int selectedIndex = softwareTabbedPane.getSelectedIndex();
+
+                String fileName =
+                        softwareViewIOOperation.saveDataStructureOperation(selectedIndex);
+                if (!fileName.isEmpty()) {
+                    try {
+                        softwareTabbedPane.setTitleAt(selectedIndex, fileName);
+                        ((JComponent) softwareTabbedPane.getTabComponentAt(
+                                selectedIndex)).revalidate();
+                    } catch (IndexOutOfBoundsException ex) {
+                        softwareViewIOOperation.showErrorMessage("An irrecoverable" +
+                                " error occurs and the software is about\nto shut" +
+                                " down. Sorry for the inconvenience.", "Software Error");
+                        System.exit(1);
+                    }
+                }
             }
         });
-        file.add(open);
-        file.add(save);
-        file.add(exit);
-        return file;
-    }
+        exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
+                ActionEvent.CTRL_MASK));
+        exitMenuItem.addActionListener(new ActionListener() {
 
-    protected void addDataStructureMenus(JMenuBar menuBar) {
-        JMenu newMenu = new TreeMenu(this, tabbedPane, softwareController);
-        menuBar.add(newMenu);
-    }
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                if (softwareViewIOOperation.exitSoftwareOperation(
+                        softwareTabbedPane.getTabCount())) {
+                    closeView();
+                }
+            }
+        });
+        fileMenu.add(openMenuItem);
+        fileMenu.add(saveMenuItem);
+        fileMenu.add(exitMenuItem);
 
-    private void createAlgorithmsMenu() {
-        algorithms = new JMenu("Algorithm");
-        JMenu apply = new JMenu("Apply");
-
-        algorithms.setMnemonic('A');
-        // TODO apply
-        algorithms.add(apply);
-    }
-
-    private JComponent getTabView(int index) {
-        return (JComponent) softwareController.getDataStructureController(index)
-                .getView();
+        return fileMenu;
     }
 
     @Override
     public void displayView() {
         setVisible(true);
-    }
-
-    @Override
-    public void displayErrorMessageAndExit() {
-        JOptionPane.showMessageDialog(this, "An irrecoverable error occurs" +
-                " and the software is about\nto shut down. Sorry for the" +
-                " inconvenience.", "Software Error", JOptionPane.ERROR_MESSAGE);
-        System.exit(1);
     }
 
     @Override
@@ -189,17 +206,33 @@ public class SoftwareView extends JFrame implements ISoftwareView {
     @Override
     public void modelHasChanged(SoftwareModelEvent event) {
         if (event.getEventType() == SoftwareModelEventType.INSERT) {
-            int numTab = tabbedPane.getTabCount();
-            tabbedPane.addTab(event.getDataStructureModelName(), getTabView(numTab));
-            tabbedPane.setTabComponentAt(numTab, new TabCloseButton(tabbedPane,
-                    ioOperation));
-            tabbedPane.setSelectedIndex(numTab);
+            int tabCount = softwareTabbedPane.getTabCount();
+            
+            try {
+                softwareTabbedPane.addTab(event.getDataStructureModelName(),
+                        (JComponent) softwareController.getDataStructureController(
+                        tabCount).getView());
+                softwareTabbedPane.setTabComponentAt(tabCount, new TabCloseButton(
+                        softwareTabbedPane, softwareViewIOOperation));
+                softwareTabbedPane.setSelectedIndex(tabCount);
+            } catch (IndexOutOfBoundsException ex) {
+                softwareViewIOOperation.showErrorMessage("An irrecoverable error" +
+                        " occurs and the software is about\nto shut down. Sorry" +
+                        " for the inconvenience.", "Software Error");
+                System.exit(1);
+            }
         } else if (event.getEventType() == SoftwareModelEventType.CLEAR) {
             System.exit(0);
         } else if (event.getEventType() == SoftwareModelEventType.DELETE) {
-            int i = event.getDataStructureModelIndex();
-            if (i != -1) {
-                tabbedPane.remove(i);
+            int index = event.getDataStructureModelIndex();
+            
+            try {
+                softwareTabbedPane.remove(index);
+            } catch (IndexOutOfBoundsException ex) {
+                softwareViewIOOperation.showErrorMessage("An irrecoverable error" +
+                        " occurs and the software is about\nto shut down. Sorry" +
+                        " for the inconvenience.", "Software Error");
+                System.exit(1);
             }
         }
     }

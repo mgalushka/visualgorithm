@@ -26,75 +26,123 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * Definition of the graphic node.
+ * This class defines the graphic node. The graphic node is composed by an image
+ * that represents the node and a key that is drawn above it. A graphic node
+ * also has a color and a size that are used to load the image representing the
+ * node. Then, the node can be placed on a panel. This class is not designed for
+ * inheritance.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  */
-class GraphicNode {
+final class GraphicNode {
 
     /**
-     * Definition of the graphic node color.
-     * 
+     * Enumeration that defines the different sizes of graphic nodes. This
+     * enumeration also gives access to the integer corresponding to the color
+     * with the method {@code int getSizeAsInt()}. This integer is used to
+     * load the image.
+     *
      * @author Julien Hannier
-     * @author Pierre Pironin
-     * @author Damien Rigoni
      * @version 1.00 16/06/08
      */
-    enum GraphicNodeColor {
-        BLACK, BLUE, GREEN, RED, YELLOW
+    static enum GraphicNodeSize {
+        ONE(30), TWO(45), THREE(60), FOUR(75);
+
+        private int sizeInt;
+
+        private GraphicNodeSize(int size) {
+            sizeInt = size;
+        }
+
+        /**
+         * Returns the integer corresponding to the size on which the method
+         * is applied.
+         *
+         * @return the integer corresponding to the size
+         */
+        int getSizeAsInt() {
+            return sizeInt;
+        }
+    }
+    
+    /**
+     * Enumeration that defines the different colors of graphic nodes. This
+     * enumeration also gives access to the string corresponding to the color
+     * with the method {@code String getColorAsString()}. This string is used to
+     * load the image.
+     * 
+     * @author Julien Hannier
+     * @version 1.00 16/06/08
+     */
+    static enum GraphicNodeColor {
+        BLACK("black"), BLUE("blue"), GREEN("green"), RED("red"),
+        YELLOW("yellow");
+
+        private String colorString;
+
+        private GraphicNodeColor(String color) {
+            colorString = color;
+        }
+
+        /**
+         * Returns the string corresponding to the color on which the method
+         * is applied.
+         *
+         * @return the string corresponding to the color
+         */
+        String getColorAsString() {
+            return colorString;
+        }
     }
 
-    private Integer key;
+    private int nodeKey;
 
-    private BufferedImage nodeImage;
+    private int xPosition;
+
+    private int yPosition;
+
+    private GraphicNodeSize nodeSize;
 
     private GraphicNodeColor nodeColor;
 
-    private int xPosition, yPosition, nodeSize;
+    private BufferedImage nodeImage;
 
     /**
-     * Builds the graphic node.
+     * Builds the graphic node. The graphic node is composed by an image that
+     * represents the node and a key that is drawn above it.
      * 
-     * @param k the key of the graphic node
-     * @param x the x position of the graphic node
-     * @param y the y position of the graphic node
-     * @param s the size of the graphic node
-     * @param c the color of the graphic node
+     * @param key the key of the graphic node
+     * @param xPos the x position of the graphic node
+     * @param yPos the y position of the graphic node
+     * @param size the size of the graphic node
+     * @param color the color of the graphic node
      */
-    GraphicNode(int k, int x, int y, int s, GraphicNodeColor c) {
-        key = k;
-        xPosition = x;
-        yPosition = y;
-        nodeSize = s;
-        nodeColor = c;
-        if (getNodeColor() == GraphicNodeColor.BLACK) {
-            nodeImage = loadImage("black", getNodeSize());
-        } else if (getNodeColor() == GraphicNodeColor.BLUE) {
-            nodeImage = loadImage("blue", getNodeSize());
-        } else if (getNodeColor() == GraphicNodeColor.GREEN) {
-            nodeImage = loadImage("green", getNodeSize());
-        } else if (getNodeColor() == GraphicNodeColor.RED) {
-            nodeImage = loadImage("red", getNodeSize());
-        } else {
-            nodeImage = loadImage("yellow", getNodeSize());
-        }
+    GraphicNode(int key, int xPos, int yPos, GraphicNodeSize size, GraphicNodeColor color) {
+        nodeKey = key;
+        xPosition = xPos;
+        yPosition = yPos;
+        nodeSize = size;
+        nodeColor = color;
+        // TODO The node image might be null
+        nodeImage = loadNodeImage(nodeColor, nodeSize);
     }
 
-    private BufferedImage loadImage(String color, int size) {
-        String imgFileName = "img/node_" + color + "_" + size + ".png";
-        BufferedImage img = null;
+    private BufferedImage loadNodeImage(GraphicNodeColor color, GraphicNodeSize size) {
+        BufferedImage image = null;
+        String imageFileName = "img/node_" + color.getColorAsString() + "_" +
+                size.getSizeAsInt() + ".png";
+
         try {
-            img = ImageIO.read(new File(imgFileName));
-        } catch (Exception e) {
-            e.printStackTrace();
+            image = ImageIO.read(new File(imageFileName));
+        } catch (IOException ex) {
         }
-        return img;
+        
+        return image;
     }
 
     /**
@@ -103,7 +151,7 @@ class GraphicNode {
      * @return the key of the graphic node
      */
     int getNodeKey() {
-        return key;
+        return nodeKey;
     }
 
     /**
@@ -120,7 +168,7 @@ class GraphicNode {
      * 
      * @return the size of the graphic node
      */
-    int getNodeSize() {
+    GraphicNodeSize getNodeSize() {
         return nodeSize;
     }
 
@@ -143,35 +191,23 @@ class GraphicNode {
     }
 
     /**
-     * Changes the size of the graphic node. The node size must be 30, 45, 60 or
-     * 75 or else an exception is launched.
+     * Changes the size of the graphic node.
      * 
-     * @param value the new size of the graphic node
+     * @param size the new size of the graphic node
      */
-    void changeNodeSize(int value) {
-        nodeSize = value;
-        nodeImage = loadImage(getNodeColor().toString().toLowerCase(),
-            getNodeSize());
+    void changeNodeSize(GraphicNodeSize size) {
+        nodeSize = size;
+        nodeImage = loadNodeImage(nodeColor, nodeSize);
     }
 
     /**
      * Changes the color of the graphic node.
      * 
-     * @param c the new color of the graphic node
+     * @param color the new color of the graphic node
      */
-    void changeNodeColor(GraphicNodeColor c) {
-        nodeColor = c;
-        if (getNodeColor() == GraphicNodeColor.BLACK) {
-            nodeImage = loadImage("black", getNodeSize());
-        } else if (getNodeColor() == GraphicNodeColor.BLUE) {
-            nodeImage = loadImage("blue", getNodeSize());
-        } else if (getNodeColor() == GraphicNodeColor.GREEN) {
-            nodeImage = loadImage("green", getNodeSize());
-        } else if (getNodeColor() == GraphicNodeColor.RED) {
-            nodeImage = loadImage("red", getNodeSize());
-        } else {
-            nodeImage = loadImage("yellow", getNodeSize());
-        }
+    void changeNodeColor(GraphicNodeColor color) {
+        nodeColor = color;
+        nodeImage = loadNodeImage(nodeColor, nodeSize);
     }
 
     /**
@@ -186,54 +222,59 @@ class GraphicNode {
     }
 
     /**
-     * Draws the graphic node.
+     * Paints the graphic node and its key.
      * 
-     * @param g the graphics
+     * @param graphics the graphics to paint the node
      */
-    void paint(Graphics g) {
-        int smallestNodeSize = 30;
-        int stringSizeFactor = getNodeSize() / 15 - 2;
-        int initialFont = 12;
-        int initialYString = 4;
-        int initialXStringOneChar = 4;
-        int initialXStringTwoChar = 7;
+    void paintNode(Graphics graphics) {
+        int currentNodeSize = nodeSize.getSizeAsInt();
+        int smallestNodeSize = GraphicNodeSize.ONE.getSizeAsInt();
+        int smallestFontSize = 12;
+        int fontSizeFactor = currentNodeSize / 15 - 2;
         int differenceBetweenFontSize = 8;
-        int yStringDifferenceBetweenFont = 3;
-        int xStringOneCharDifferenceBetweenFont = 3;
-        int xStringTwoCharDifferenceBetweenFont = 5;
-        int xString = 0;
-        int yString = 0;
-        String stringKey = key.toString();
+        int initialYPositionKeyString = 4;
+        int initialXPositionOneCharKeyString = 4;
+        int initialXPositionTwoCharKeyString = 7;
+        int yDifferenceBetweenFont = 3;
+        int xDifferenceBetweenOneCharFont = 3;
+        int xDifferenceBetweenTwoCharFont = 5;
+        int xPositionKeyString = 0;
+        int yPositionKeyString = 0;
+        String nodeKeyString = Integer.toString(nodeKey);
 
-        g.drawImage(nodeImage, getXPosition() - getNodeSize() / 2,
-            getYPosition() - getNodeSize() / 2, getNodeSize(), getNodeSize(),
-            null);
-        if ((getNodeColor() == GraphicNodeColor.BLACK)
-                || (getNodeColor() == GraphicNodeColor.RED)) {
-            g.setColor(Color.WHITE);
+        graphics.drawImage(nodeImage, xPosition - currentNodeSize / 2,
+                yPosition - currentNodeSize / 2, currentNodeSize,
+                currentNodeSize, null);
+        
+        if ((nodeColor == GraphicNodeColor.BLACK)
+                || (nodeColor == GraphicNodeColor.RED)) {
+            graphics.setColor(Color.WHITE);
         } else {
-            g.setColor(Color.BLACK);
+            graphics.setColor(Color.BLACK);
         }
-        g.setFont(new Font(null, Font.PLAIN,
-                getNodeSize() == smallestNodeSize ? initialFont : initialFont
-                        + differenceBetweenFontSize * stringSizeFactor));
-        yString = getYPosition()
-                + (getNodeSize() == smallestNodeSize ? initialYString
-                        : initialYString + yStringDifferenceBetweenFont
-                                * stringSizeFactor);
-        if (stringKey.length() == 1) {
-            xString = getXPosition()
-                    - (getNodeSize() == smallestNodeSize ? initialXStringOneChar
-                            : initialXStringOneChar
-                                    + xStringOneCharDifferenceBetweenFont
-                                    * stringSizeFactor);
-        } else if (stringKey.length() == 2) {
-            xString = getXPosition()
-                    - (getNodeSize() == smallestNodeSize ? initialXStringTwoChar
-                            : initialXStringTwoChar
-                                    + xStringTwoCharDifferenceBetweenFont
-                                    * stringSizeFactor);
+        if (currentNodeSize == smallestNodeSize) {
+            graphics.setFont(new Font(null, Font.PLAIN, smallestFontSize));
+            yPositionKeyString = yPosition + initialYPositionKeyString;
+            
+            if (nodeKeyString.length() == 1) {
+                xPositionKeyString = xPosition - initialXPositionOneCharKeyString;
+            } else if (nodeKeyString.length() == 2) {
+                xPositionKeyString = xPosition - initialXPositionTwoCharKeyString;
+            }
+        } else {
+            graphics.setFont(new Font(null, Font.PLAIN,
+                    smallestFontSize + differenceBetweenFontSize * fontSizeFactor));
+            yPositionKeyString = yPosition + initialYPositionKeyString +
+                    yDifferenceBetweenFont * fontSizeFactor;
+
+            if (nodeKeyString.length() == 1) {
+                xPositionKeyString = xPosition - initialXPositionOneCharKeyString +
+                        xDifferenceBetweenOneCharFont * fontSizeFactor;
+            } else if (nodeKeyString.length() == 2) {
+                xPositionKeyString = xPosition - initialXPositionTwoCharKeyString +
+                        xDifferenceBetweenTwoCharFont * fontSizeFactor;
+            }
         }
-        g.drawString(stringKey, xString, yString);
+        graphics.drawString(nodeKeyString, xPositionKeyString, yPositionKeyString);
     }
 }

@@ -44,7 +44,7 @@ public abstract class AbstractBinaryTree implements IBinaryTree {
      * @author Damien Rigoni
      * @version 1.00 16/06/08
      */
-    public enum BinaryTreeType {
+    public static enum BinaryTreeType {
         AVLTREE(AVLTree.class), BINARYSEARCHTREE(BinarySearchTree.class),
         REDBLACKTREE(RedBlackTree.class);
 

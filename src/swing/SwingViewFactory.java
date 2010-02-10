@@ -21,33 +21,35 @@
 
 package swing;
 
-import controller.SoftwareController;
-import controller.BinaryTreeController;
+import controller.ISoftwareController;
+import controller.IBinaryTreeController;
 import swing.tree.BinaryTreeView;
 import view.IBinaryTreeView;
 import view.ISoftwareView;
 import view.AbstractViewFactory;
 
 /**
- * Concrete factory of swing views.
+ * This class defines the concrete swing view factory of the different views of
+ * the software. This class is not designed for inheritance. The class
+ * <tt>SwingViewFactory</tt> uses the design pattern singleton to force the use
+ * of a unique instance of the factory.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  * @see AbstractViewFactory
  */
-public class SwingViewFactory extends AbstractViewFactory {
+public final class SwingViewFactory extends AbstractViewFactory {
 
     private static AbstractViewFactory instance = null;
 
     private SwingViewFactory() {
     }
-    
+
     /**
-     * Creates the factory.
+     * Creates the factory if it has not been created yet or returns it in the
+     * other case.
      * 
-     * @return the factory
+     * @return the single instance of the factory
      */
     public static AbstractViewFactory getFactory() {
         if (instance == null) {
@@ -57,13 +59,13 @@ public class SwingViewFactory extends AbstractViewFactory {
     }
 
     @Override
-    public ISoftwareView createSoftwareView(SoftwareController controller) {
+    public ISoftwareView createSoftwareView(ISoftwareController controller) {
         return new SoftwareView(controller);
     }
 
     @Override
     public IBinaryTreeView createBinaryTreeView(String type,
-            BinaryTreeController controller, int width, int height) {
-        return new BinaryTreeView(type, controller, width, height);
+            IBinaryTreeController controller) {
+        return new BinaryTreeView(type, controller);
     }
 }

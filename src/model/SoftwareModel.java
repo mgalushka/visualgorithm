@@ -22,6 +22,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 import javax.swing.event.EventListenerList;
 import model.SoftwareModelEvent.SoftwareModelEventType;
@@ -29,15 +30,14 @@ import model.SoftwareModelEvent.SoftwareModelEventType;
 /**
  * This class defines all the methods in order to modify the software model. The
  * software model is composed by data structure models. There is a data
- * structure model for each data structure in the software. It is possible to
- * add a software model listener to the model in order to listen the
- * modifications of the software model. This class is not designed for
- * inheritance.
+ * structure model for each data structure in the software. This class is not
+ * designed for inheritance.
  * 
  * @author Julien Hannier
  * @version 1.00 16/06/08
+ * @see ISoftwareModel
  */
-public final class SoftwareModel {
+public final class SoftwareModel implements ISoftwareModel {
 
     private List<IDataStructureModel> dataStructureModels;
 
@@ -52,77 +52,57 @@ public final class SoftwareModel {
         listeners = new EventListenerList();
     }
 
-    /**
-     * Returns the wanted data structure model. The parameter {@code index}
-     * indicates the place of the data structure model among the others.
-     *
-     * @param index the index of the data structure model
-     * @return the wanted data structure model
-     */
-    public IDataStructureModel getDataStructureModel(int index) {
+    @Override
+    public IDataStructureModel getDataStructureModel(int index)
+            throws IndexOutOfBoundsException {
+        if (index >= dataStructureModels.size()) {
+            throw new IndexOutOfBoundsException("You have given an index out" +
+                " of bounds");
+        }
         return dataStructureModels.get(index);
     }
 
-    /**
-     * Adds a software model listener to the software model.
-     * 
-     * @param listener the listener to add
-     */
-    public void addSoftwareModelListener(SoftwareModelListener listener) {
-        listeners.add(SoftwareModelListener.class, listener);
+    @Override
+    public void addModelListener(EventListener listener) throws IllegalArgumentException {
+        if (!(listener instanceof SoftwareModelListener)) {
+            throw new IllegalArgumentException("You have to pass a SoftwareModelListener");
+        }
+        listeners.add(SoftwareModelListener.class, (SoftwareModelListener)listener);
     }
 
-    /**
-     * Removes a software model listener from the software model.
-     *
-     * @param listener the listener to remove
-     */
-    public void removeSoftwareModelListener(SoftwareModelListener listener) {
-        listeners.remove(SoftwareModelListener.class, listener);
+    @Override
+    public void removeModelListener(EventListener listener) throws IllegalArgumentException {
+        if (!(listener instanceof SoftwareModelListener)) {
+            throw new IllegalArgumentException("You have to pass a SoftwareModelListener");
+        }
+        listeners.remove(SoftwareModelListener.class, (SoftwareModelListener)listener);
     }
 
-    /**
-     * Adds a data structure model to the software model. The data structure is
-     * already created into the data structure model {@code dataStructureModel}.
-     * 
-     * @param dataStructureModel the data structure model to add
-     */
+    @Override
     public void addDataStructureModel(IDataStructureModel dataStructureModel) {
         dataStructureModels.add(dataStructureModel);
         fireModelHasChangedWithInsertEvent("New " +
-                dataStructureModel.getDataStructure().getType());
+                dataStructureModel.getDataStructureType());
     }
 
-    /**
-     * Adds a data structure model to the software model. The data structure is
-     * already loaded from the file into the data structure model
-     * {@code dataStructureModel}. The parameter {@code fileName} represents the
-     * name of the data structure model.
-     * 
-     * @param dataStructureModel the data structure model to add
-     * @param fileName the name of the file where the data structure model is
-     */
+    @Override
     public void addDataStructureModelFromFile(
             IDataStructureModel dataStructureModel, String fileName) {
         dataStructureModels.add(dataStructureModel);
         fireModelHasChangedWithInsertEvent(fileName);
     }
 
-    /**
-     * Deletes the data structure model from the software model. The parameter
-     * {@code index} indicates the place of the data structure model among the
-     * others.
-     * 
-     * @param index the index of the data structure model to delete
-     */
-    public void deleteDataStructureModel(int index) {
+    @Override
+    public void deleteDataStructureModel(int index) throws IndexOutOfBoundsException {
+        if (index >= dataStructureModels.size()) {
+            throw new IndexOutOfBoundsException("You have given an index out" +
+                " of bounds");
+        }
         dataStructureModels.remove(index);
         fireModelHasChangedWithDeleteEvent(index);
     }
 
-    /**
-     * Removes all the data structure models from the software model.
-     */
+    @Override
     public void removeAllDataStructureModels() {
         dataStructureModels.clear();
         fireModelHasChangedWithClearEvent();

@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import javax.swing.event.EventListenerList;
 import io.tree.TreeFile;
-import model.IDataStructureModel;
+import java.util.EventListener;
 import model.UnknownDataStructureException;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 
@@ -40,9 +40,9 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  * 
  * @author Julien Hannier
  * @version 1.00 16/06/08
- * @see IDataStructureModel
+ * @see IBinaryTreeModel
  */
-public final class BinaryTreeModel implements IDataStructureModel {
+public final class BinaryTreeModel implements IBinaryTreeModel {
 
     private IBinaryTree binaryTree;
 
@@ -57,6 +57,7 @@ public final class BinaryTreeModel implements IDataStructureModel {
      * @param type the type of the binary tree
      */
     public BinaryTreeModel(BinaryTreeType type) {
+        // TODO The binary tree might be null
         binaryTree = type.createBinaryTree();
         listeners = new EventListenerList();
         isBinaryTreeSaved = false;
@@ -81,8 +82,8 @@ public final class BinaryTreeModel implements IDataStructureModel {
     }
 
     @Override
-    public IBinaryTree getDataStructure() {
-        return binaryTree;
+    public String getDataStructureType() {
+        return binaryTree.getType();
     }
 
     @Override
@@ -94,102 +95,71 @@ public final class BinaryTreeModel implements IDataStructureModel {
     public void saveDataStructure(File file) throws IOException {
         String path = file.getAbsolutePath();
 
-        if (path.endsWith("." + TreeFile.fileExtension)) {
+        if (path.endsWith("." + TreeFile.FILE_EXTENSION)) {
             TreeFile.save(binaryTree, path);
         } else {
-            TreeFile.save(binaryTree, path.concat("." + TreeFile.fileExtension));
+            TreeFile.save(binaryTree, path.concat("." + TreeFile.FILE_EXTENSION));
         }
         isBinaryTreeSaved = true;
     }
 
-    /**
-     * Adds a binary tree model listener to the binary tree model.
-     * 
-     * @param listener the listener to add
-     */
-    public void addBinaryTreeModelListener(BinaryTreeModelListener listener) {
-        listeners.add(BinaryTreeModelListener.class, listener);
+    @Override
+    public void addModelListener(EventListener listener) throws IllegalArgumentException {
+        if (!(listener instanceof BinaryTreeModelListener)) {
+            throw new IllegalArgumentException("You have to pass a BinaryTreeModelListener");
+        }
+
+        BinaryTreeModelListener binaryTreeModelListener = (BinaryTreeModelListener)listener;
+
+        listeners.add(BinaryTreeModelListener.class, binaryTreeModelListener);
+        binaryTreeModelListener.binaryTreeHasChanged(new BinaryTreeModelEvent(this,
+                    binaryTree.buildHeapFromBinaryTree()));
     }
 
-    /**
-     * Removes a binary tree model listener from the binary tree model.
-     * 
-     * @param listener the listener to remove
-     */
-    public void removeBinaryTreeModelListener(BinaryTreeModelListener listener) {
-        listeners.remove(BinaryTreeModelListener.class, listener);
+    @Override
+    public void removeModelListener(EventListener listener) throws IllegalArgumentException {
+        if (!(listener instanceof BinaryTreeModelListener)) {
+            throw new IllegalArgumentException("You have to pass a BinaryTreeModelListener");
+        }
+        listeners.remove(BinaryTreeModelListener.class, (BinaryTreeModelListener)listener);
     }
 
-    /**
-     * Inserts {@code nbNode} random nodes into the binary tree. This method
-     * uses the insert algorithm corresponding to the type of the binary tree.
-     * If it is necessary, the binary tree is corrected. For instance, the
-     * balance of an AVL tree is corrected after multiple insertions.
-     * 
-     * @param nbNode the number of random nodes to insert
-     */
+    @Override
     public void insertRandomNodes(int nbNode) {
         for (int i = 0; i < nbNode; i++) {
             int key = (int) Math.round(Math.random() * 100);
-            // TODO insertion
+            // TODO Insertion
             System.out.println(key);
         }
         updateListeners();
         isBinaryTreeSaved = false;
     }
 
-    /**
-     * Inserts a node into the binary tree. This method uses the insert
-     * algorithm corresponding to the type of the binary tree. If it is
-     * necessary, the binary tree is corrected. For instance, the balance of an
-     * AVL tree is corrected after the insertion. If {@code key} is greater than
-     * 99 or less than 0 then an IllegalArgumentException is thrown.
-     * 
-     * @param key the key of the node to insert
-     * @throws IllegalArgumentException
-     */
+    @Override
     public void insertNode(int key) throws IllegalArgumentException {
-        // TODO insertion
+        // TODO Insertion
         System.out.println(key);
         updateListeners();
         isBinaryTreeSaved = false;
     }
 
-    /**
-     * Deletes a node from the binary tree. This method uses the delete
-     * algorithm corresponding to the type of the binary tree. If it is
-     * necessary, the binary tree is corrected. For instance, the balance of an
-     * AVL tree is corrected after the deletion.
-     * 
-     * @param key the key of the node to delete
-     */
+    @Override
     public void deleteNode(int key) {
-        // TODO deletion
+        // TODO Deletion
         System.out.println(key);
         updateListeners();
         isBinaryTreeSaved = false;
     }
 
-    /**
-     * Deletes a node from the binary tree. This method uses the delete
-     * algorithm from the binary search tree that is to say that the node is
-     * deleted without any correction of the binary tree. For instance, the
-     * balance of an AVL tree is not corrected after the deletion.
-     * 
-     * @param key the key of the node to delete
-     */
+    @Override
     public void deleteNodeWithoutCorrection(int key) {
-        // TODO deletion with BST delete algorithm
+        // TODO Deletion with BST delete algorithm
         System.out.println(key);
         updateListeners();
         isBinaryTreeSaved = false;
     }
 
-    /**
-     * Updates the listeners with the last version of the binary tree of the
-     * model.
-     */
-    public void updateListeners() {
+    private void updateListeners() {
         BinaryTreeModelListener[] listenerTab =
                 listeners.getListeners(BinaryTreeModelListener.class);
         for (BinaryTreeModelListener listener : listenerTab) {

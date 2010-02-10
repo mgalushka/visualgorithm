@@ -40,7 +40,7 @@ final class RedBlackTreeFile extends TreeFile {
 
     private static final String REGEX_COLOR = "(red|black)";
 
-    private static int COLOR = 4;
+    private static final int COLOR_INDEX = 4;
 
     RedBlackTreeFile() {
         super();
@@ -60,10 +60,10 @@ final class RedBlackTreeFile extends TreeFile {
     protected void initREGEX(int currentNodeNumber, int nextNodeNumber) {
         super.initREGEX(currentNodeNumber, nextNodeNumber);
         String lineEnd = REGEX_BLANK + REGEX_COLOR;
-        REGEX_2_CHILD += lineEnd;
-        REGEX_LEFT_CHILD += lineEnd;
-        REGEX_RIGHT_CHILD += lineEnd;
-        REGEX_NO_CHILD += lineEnd;
+        regex2Child += lineEnd;
+        regexLeftChild += lineEnd;
+        regexRightChild += lineEnd;
+        regexNoChild += lineEnd;
     }
 
     @Override
@@ -81,11 +81,11 @@ final class RedBlackTreeFile extends TreeFile {
         assert(node instanceof RedBlackNode);
 
         RedBlackNodeColor color =
-                nodeVector.get(childNodeNumber)[COLOR].equals("black") ?
+                nodeVector.get(childNodeNumber)[COLOR_INDEX].equals("black") ?
                     RedBlackNodeColor.BLACK : RedBlackNodeColor.RED;
         ((RedBlackNode) node).setLeft(
                 new RedBlackNode(Integer.parseInt(
-                nodeVector.get(childNodeNumber)[KEY]), color));
+                nodeVector.get(childNodeNumber)[KEY_INDEX]), color));
     }
 
     @Override
@@ -93,10 +93,10 @@ final class RedBlackTreeFile extends TreeFile {
         assert(node instanceof RedBlackNode);
 
         RedBlackNodeColor color =
-                nodeVector.get(childNodeNumber)[COLOR].equals("black") ?
+                nodeVector.get(childNodeNumber)[COLOR_INDEX].equals("black") ?
                     RedBlackNodeColor.BLACK : RedBlackNodeColor.RED;
         ((RedBlackNode) node).setRight(
                 new RedBlackNode(Integer.parseInt(
-                nodeVector.get(childNodeNumber)[KEY]), color));
+                nodeVector.get(childNodeNumber)[KEY_INDEX]), color));
     }
 }

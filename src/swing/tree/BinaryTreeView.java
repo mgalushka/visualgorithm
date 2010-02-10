@@ -21,6 +21,7 @@
 
 package swing.tree;
 
+import controller.IBinaryTreeController;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -28,101 +29,89 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import controller.BinaryTreeController;
 import view.IBinaryTreeView;
 import model.tree.BinaryTreeModelEvent;
 
 /**
- * Definition of the binary tree tab view.
+ * This class defines the binary tree view. The binary tree view is composed by
+ * two different panels that can be interchanged, the fast creation panel and
+ * the pedagogical creation panel. There is also a title which contains the type
+ * of the binary tree. This class is not designed for inheritance.
  * 
  * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
  * @version 1.00 16/06/08
  * @see IBinaryTreeView
  */
-public class BinaryTreeView extends JPanel implements IBinaryTreeView {
+public final class BinaryTreeView extends JPanel implements IBinaryTreeView {
 
     private static final long serialVersionUID = 1L;
 
-    private BinaryTreeController binaryTreeController;
+    private IBinaryTreeController binaryTreeController;
 
-    private FastTreeCreationPanel fastTreeCreationPanel = null;
+    private AbstractBinaryTreeCreationPanel binaryTreeCreationPanel;
 
-    private PedagogicalTreeCreationPanel pedagogicalTreeCreationPanel = null;
-
-    private boolean isFastTreeCreation = true;
+    private boolean isFastBinaryTreeCreationPanel;
 
     /**
-     * Builds the binary tree tab view.
+     * Builds the binary tree view. The binary tree view is composed by the fast
+     * binary tree creation panel and the pedagogical binary tree creation
+     * panel. The parameter {@code type} is used to set the title of the view.
      * 
-     * @param c the binary tree tab controller
      * @param type the type of the binary tree
-     * @param width the width of the tree visualization
-     * @param height the height of the tree visualization
+     * @param c the binary tree controller
      */
-    public BinaryTreeView(String type, BinaryTreeController c, int width,
-            int height) {
-        fastTreeCreationPanel = new FastTreeCreationPanel(c, width, height);
-        JPanel titlePane = new JPanel();
-        JLabel title = new JLabel(type);
-
+    public BinaryTreeView(String type, IBinaryTreeController c) {
+        JPanel viewTitlePane = new JPanel();
+        JLabel viewTitle = new JLabel(type);
         binaryTreeController = c;
-        titlePane.setLayout(new FlowLayout(FlowLayout.CENTER, 4, 4));
-        titlePane.add(title);
-
+        binaryTreeCreationPanel = new FastBinaryTreeCreationPanel(binaryTreeController);
+        isFastBinaryTreeCreationPanel = true;
+        
+        viewTitlePane.setLayout(new FlowLayout(FlowLayout.CENTER, 4, 4));
+        viewTitlePane.add(viewTitle);
+        
         setLayout(new BorderLayout(4, 4));
-        add(titlePane, BorderLayout.NORTH);
-        add(fastTreeCreationPanel, BorderLayout.CENTER);
-        add(createButtonBetweenViews(), BorderLayout.SOUTH);
+        add(viewTitlePane, BorderLayout.NORTH);
+        add((JPanel) binaryTreeCreationPanel, BorderLayout.CENTER);
+        add(createButtonBetweenPanels(), BorderLayout.SOUTH);
     }
 
-    private JButton createButtonBetweenViews() {
-        final JButton button = new JButton("Pedagogical Creation Mode");
+    private JButton createButtonBetweenPanels() {
+        final JButton buttonBetweenPanels = new JButton("Pedagogical Creation Mode");
 
-        button.addActionListener(new ActionListener() {
+        buttonBetweenPanels.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent event) {
-                if (isFastTreeCreation) {
-                    if (pedagogicalTreeCreationPanel == null) {
-                        pedagogicalTreeCreationPanel = new PedagogicalTreeCreationPanel(
-                                binaryTreeController);
-                    }
-                    pedagogicalTreeCreationPanel
-                            .getPedagogicalTreeVisualization()
-                            .copyGraphicNodes(
-                                fastTreeCreationPanel
-                                        .getFastTreeVisualization());
-                    button.setText("Fast Creation Mode");
-                    remove(fastTreeCreationPanel);
-                    add(pedagogicalTreeCreationPanel, BorderLayout.CENTER);
-                    revalidate();
-                    repaint();
-                    isFastTreeCreation = false;
+                if (isFastBinaryTreeCreationPanel) {
+                    AbstractBinaryTreeCreationPanel pedagogicalBinaryTreeCreationPanel =
+                            new PedagogicalBinaryTreeCreationPanel(binaryTreeController);
+
+                    buttonBetweenPanels.setText("Fast Creation Mode");
+                    remove(binaryTreeCreationPanel);
+                    binaryTreeCreationPanel = pedagogicalBinaryTreeCreationPanel;
+                    add((JPanel) binaryTreeCreationPanel, BorderLayout.CENTER);
+                    isFastBinaryTreeCreationPanel = false;
                 } else {
-                    fastTreeCreationPanel.getFastTreeVisualization()
-                            .copyGraphicNodes(
-                                pedagogicalTreeCreationPanel
-                                        .getPedagogicalTreeVisualization());
-                    button.setText("Pedagogical Creation Mode");
-                    remove(pedagogicalTreeCreationPanel);
-                    add(fastTreeCreationPanel, BorderLayout.CENTER);
-                    revalidate();
-                    repaint();
-                    isFastTreeCreation = true;
+                    AbstractBinaryTreeCreationPanel fastBinaryTreeCreationPanel =
+                            new FastBinaryTreeCreationPanel(binaryTreeController);
+
+                    buttonBetweenPanels.setText("Pedagogical Creation Mode");
+                    remove(binaryTreeCreationPanel);
+                    binaryTreeCreationPanel = fastBinaryTreeCreationPanel;
+                    add((JPanel) binaryTreeCreationPanel, BorderLayout.CENTER);
+                    isFastBinaryTreeCreationPanel = true;
                 }
+                revalidate();
+                repaint();
             }
         });
-        return button;
+        
+        return buttonBetweenPanels;
     }
 
     @Override
     public void binaryTreeHasChanged(BinaryTreeModelEvent event) {
-        if (isFastTreeCreation) {
-            fastTreeCreationPanel.updateTree(event.getHeapCorrespondingToBinaryTree());
-        } else {
-            pedagogicalTreeCreationPanel.updateTree(event.getHeapCorrespondingToBinaryTree());
-        }
+        binaryTreeCreationPanel.updateTreeVisualization(event.getHeapCorrespondingToBinaryTree());
     }
 }

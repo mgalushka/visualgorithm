@@ -47,13 +47,13 @@ public class ViewFactoryMock extends AbstractViewFactory {
     }
 
     @Override
-    public ISoftwareView createSoftwareView(SoftwareController controller) {
+    public ISoftwareView createSoftwareView(ISoftwareController controller) {
         return new SoftwareViewMock(controller);
     }
 
     @Override
     public IBinaryTreeView createBinaryTreeView(String type,
-            BinaryTreeController controller, int width, int height) {
-        return new BinaryTreeViewMock(type, controller, width, height);
+            IBinaryTreeController controller) {
+        return new BinaryTreeViewMock(type, controller);
     }
 }

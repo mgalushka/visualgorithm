@@ -26,8 +26,8 @@ import java.util.EventObject;
 /**
  * This class defines the software model event. It is used to indicate the
  * changes of the software model to the software model listeners. In order to do
- * so, there is three different types of software model event : CLEAR, DELETE
- * and INSERT. It is not designed for inheritance.
+ * so, there is three different types of software model event : <tt>CLEAR</tt>,
+ * <tt>DELETE</tt> and <tt>INSERT</tt>. It is not designed for inheritance.
  *
  * @author Julien Hannier
  * @version 1.00 16/06/08
@@ -35,11 +35,11 @@ import java.util.EventObject;
 public class SoftwareModelEvent extends EventObject {
 
     /**
-     * Enumeration that defines the software model event type. There is CLEAR
-     * that is for the exit of the software and so for the deletion of the
-     * content of the software model, DELETE that is for the deletion of a data
-     * structure model, and finally INSERT that is for the insertion of a data
-     * structure model.
+     * Enumeration that defines the software model event type. There is
+     * <tt>CLEAR</tt> that is for the exit of the software and so for the
+     * deletion of the content of the software model, <tt>DELETE</tt> that is
+     * for the deletion of a data structure model, and finally <tt>INSERT</tt>
+     * that is for the insertion of a data structure model.
      * 
      * @author Julien Hannier
      * @version 1.00 16/06/08

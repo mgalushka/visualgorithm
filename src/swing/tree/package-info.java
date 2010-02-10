@@ -1,5 +1,5 @@
 /*
- * SoftwareViewMock.java v1.00 04/06/09
+ * package-info.java v1.00 27/02/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,32 +19,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package controller;
-
-import model.SoftwareModelEvent;
-import view.ISoftwareView;
-
 /**
- * Mock of the software view for the tests of controllers.
+ * This package contains one part of the data structure view of the software :
+ * tree views. Currently, only binary tree views have been implemented but it is
+ * possible to add other tree views. In order to do so, you must create a new
+ * data structure view implementing <tt>IDataStructureView</tt> or a more
+ * specific interface.
  * 
  * @author Julien Hannier
- * @version 1.00 04/06/09
- * @see ISoftwareView
+ * @version 1.00 27/02/09
  */
-public class SoftwareViewMock implements ISoftwareView {
-
-    public SoftwareViewMock(ISoftwareController c) {
-    }
-
-    @Override
-    public void displayView() {
-    }
-
-    @Override
-    public void closeView() {
-    }
-
-    @Override
-    public void modelHasChanged(SoftwareModelEvent event) {
-    }
-}
+package swing.tree;

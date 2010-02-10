@@ -30,7 +30,7 @@ package model.tree;
  * @version 1.00 19/05/08
  * @see IBinaryNode
  */
-abstract class AbstractBinaryNode implements IBinaryNode {
+public abstract class AbstractBinaryNode implements IBinaryNode {
 
     /**
      * The key of the binary node.

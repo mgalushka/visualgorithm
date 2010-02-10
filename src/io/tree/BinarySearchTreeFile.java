@@ -56,7 +56,7 @@ final class BinarySearchTreeFile extends TreeFile {
 
         ((BinarySearchNode) node).setLeft(
                 new BinarySearchNode(Integer.parseInt(
-                nodeVector.get(childNodeNumber)[KEY])));
+                nodeVector.get(childNodeNumber)[KEY_INDEX])));
     }
 
     @Override
@@ -65,6 +65,6 @@ final class BinarySearchTreeFile extends TreeFile {
 
         ((BinarySearchNode) node).setRight(
                 new BinarySearchNode(Integer.parseInt(
-                nodeVector.get(childNodeNumber)[KEY])));
+                nodeVector.get(childNodeNumber)[KEY_INDEX])));
     }
 }

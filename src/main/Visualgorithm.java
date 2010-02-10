@@ -25,6 +25,7 @@ import javax.swing.SwingUtilities;
 import swing.SwingViewFactory;
 import view.AbstractViewFactory;
 import controller.SoftwareController;
+import model.ISoftwareModel;
 import model.SoftwareModel;
 
 /**
@@ -45,7 +46,7 @@ public final class Visualgorithm {
      * @param args possible arguments
      */
     public static void main(String[] args) {
-        final SoftwareModel model = new SoftwareModel();
+        final ISoftwareModel model = new SoftwareModel();
         final AbstractViewFactory viewFactory = SwingViewFactory.getFactory();
 
         SwingUtilities.invokeLater(new Runnable() {
