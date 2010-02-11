@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import controller.IBinaryTreeController;
+import java.awt.Dimension;
+import java.awt.Rectangle;
 import model.tree.IBinaryNode;
 import model.tree.RedBlackNode;
 import swing.tree.GraphicNode.GraphicNodeColor;
@@ -428,6 +430,37 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
      */
     protected abstract void paintExtraComponent(Graphics graphics);
 
+    @Override
+    public Dimension getPreferredSize() {
+        int widthSize = 0;
+        int heightSize = 0;
+
+        int nbNodes = graphicNodes.size();
+        if (nbNodes > 0) {
+            int height = 0;
+            int nodeSize = sizeOfNodes.getSizeAsInt();
+            int nbOfNodesOnTheLastWidth = 1;
+            int nbWidthBetweenBrotherNodes = 0;
+            int nbWidthBetweenDifferentNodes = 0;
+
+            if (nbNodes > 1) {
+                height = (int) Math.round(Math.sqrt((nbNodes + 1) / 2));
+                nbOfNodesOnTheLastWidth = (int) Math.pow(2, height);
+                nbWidthBetweenBrotherNodes = nbOfNodesOnTheLastWidth / 2;
+                nbWidthBetweenDifferentNodes = nbOfNodesOnTheLastWidth / 2 - 1;
+            }
+
+            widthSize = nbOfNodesOnTheLastWidth * nodeSize +
+                    nbWidthBetweenBrotherNodes * widthBetweenBrotherNodes +
+                    nbWidthBetweenDifferentNodes * widthBetweenDifferentNodes +
+                    yPositionOfRootNode;
+            heightSize = height * heightBetweenNodes +
+                    yPositionOfRootNode + nodeSize / 2 + 10;
+        }
+
+        return new Dimension(widthSize, heightSize);
+    }
+
     private void updateNodesPosition() {
         int nbNodes = graphicNodes.size();
         
@@ -438,7 +471,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
             int widthBetweenCurrentNodeChildren = 0;
             int indexOfLastNodeOnTheWidth = 1;
             int indexOfCurrentNode = 0;
-            int xPositionOfCurrentNode = getWidth() / 2;
+            int xPositionOfCurrentNode = getPreferredSize().width / 2;
             int yPositionOfCurrentNode;
 
             if (nbNodes > 1) {
@@ -536,6 +569,15 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
                 } else {
                     graphicNodes.add(null);
                 }
+            }
+
+            Rectangle visibleSize = getVisibleRect();
+            Dimension preferredSize = getPreferredSize();
+
+            if (preferredSize.width <= visibleSize.width) {
+                setSize(visibleSize.width, visibleSize.height);
+            } else {
+                setSize(preferredSize);
             }
 
             updateNodesPosition();
