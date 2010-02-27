@@ -25,8 +25,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.net.URLClassLoader;
 import javax.imageio.ImageIO;
 
 /**
@@ -100,6 +100,8 @@ final class GraphicNode {
         }
     }
 
+    private static URLClassLoader urlClassLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+
     private int nodeKey;
 
     private int xPosition;
@@ -138,8 +140,8 @@ final class GraphicNode {
                 size.getSizeAsInt() + ".png";
 
         try {
-            image = ImageIO.read(new File(imageFileName));
-        } catch (IOException ex) {
+            image = ImageIO.read(urlClassLoader.findResource(imageFileName));
+        } catch (Exception ex) {
         }
         
         return image;

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Visualgorithm" default="default" basedir=".">
+  <property name="platform.version" value="1.6"/>
+  <property name="platform.dir" location="/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/bin"/>
+  <property name="project.name" value="Visualgorithm"/>
+  <property name="project.version" value="0.1"/>
+  <property name="project.encoding" value="UTF-8"/>
+  <property name="main.class" value="main.Visualgorithm"/>
+  <property name="src.dir" location="src"/>
+  <property name="img.dir" location="img"/>
+  <property name="build.dir" location="build"/>
+  <property name="dist.dir" location="dist"/>
+  <property name="doc.dir" location="dist/javadoc"/>
+
+
+  <target name="-pre-compile">
+    <mkdir dir="${build.dir}"/>
+  </target>
+
+  <target name="-pre-jar">
+    <mkdir dir="${dist.dir}"/>
+    <copy todir="${build.dir}/img">
+      <fileset dir="${img.dir}"/>
+    </copy>
+  </target>
+
+  <target name="clean" description="Clean build products.">
+    <delete dir="${build.dir}"/>
+    <delete dir="${dist.dir}"/>
+  </target>
+
+  <target name="compile" depends="clean, -pre-compile" description="Compile project.">
+    <javac destdir="${build.dir}" encoding="${project.encoding}" executable="${platform.dir}/javac" fork="yes" includeantruntime="false" includes="**" source="${platform.version}" sourcepath="" srcdir="${src.dir}" target="${platform.version}"/>
+  </target>
+
+  <target name="jar" depends="compile, -pre-jar" description="Build JAR.">
+    <jar jarfile="${dist.dir}/${project.name}-${project.version}.jar" basedir="${build.dir}">
+      <manifest>
+        <attribute name="Main-Class" value="${main.class}"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="run" depends="jar" description="Run a main class.">
+    <java jar="${dist.dir}/${project.name}-${project.version}.jar" fork="true" jvm="${platform.dir}/java"/>
+  </target>
+
+  <target name="javadoc" description="Build Javadoc.">
+    <mkdir dir="${doc.dir}"/>
+    <javadoc author="true" charset="${project.encoding}" destdir="${doc.dir}" docencoding="${project.encoding}" encoding="${project.encoding}" executable="${platform.dir}/javadoc" failonerror="true" noindex="false" nonavbar="false" notree="false" private="false" source="${platform.version}" splitindex="true" use="true" useexternalfile="true" version="true" windowtitle="${project.name}">
+      <fileset dir="${src.dir}">
+        <filename name="**/*.java"/>
+      </fileset>
+    </javadoc>
+  </target>
+
+  <target depends="jar, javadoc" description="Build and test whole project." name="default"/>
+</project>
