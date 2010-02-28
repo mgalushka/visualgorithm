@@ -7,19 +7,36 @@
   <property name="project.encoding" value="UTF-8"/>
   <property name="main.class" value="main.Visualgorithm"/>
   <property name="src.dir" location="src"/>
+  <property name="test.dir" location="test"/>
+  <property name="lib.dir" location="lib"/>
   <property name="img.dir" location="img"/>
   <property name="build.dir" location="build"/>
+  <property name="build.src.dir" location="${build.dir}/src"/>
+  <property name="build.test.dir" location="${build.dir}/test"/>
   <property name="dist.dir" location="dist"/>
-  <property name="doc.dir" location="dist/javadoc"/>
+  <property name="dist.javadoc.dir" location="${dist.dir}/javadoc"/>
+
+  <path id="lib.path">
+    <fileset dir="${lib.dir}">
+      <include name="**/*.jar"/>
+    </fileset>
+    <dirset dir="${build.src.dir}">
+      <include name="**"/>
+    </dirset>
+  </path>
 
 
-  <target name="-pre-compile">
-    <mkdir dir="${build.dir}"/>
+  <target name="-pre-compile-src">
+    <mkdir dir="${build.src.dir}"/>
+  </target>
+
+  <target name="-pre-compile-test">
+    <mkdir dir="${build.test.dir}"/>
   </target>
 
   <target name="-pre-jar">
     <mkdir dir="${dist.dir}"/>
-    <copy todir="${build.dir}/img">
+    <copy todir="${build.src.dir}/img">
       <fileset dir="${img.dir}"/>
     </copy>
   </target>
@@ -29,12 +46,20 @@
     <delete dir="${dist.dir}"/>
   </target>
 
-  <target name="compile" depends="clean, -pre-compile" description="Compile project.">
-    <javac destdir="${build.dir}" encoding="${project.encoding}" executable="${platform.dir}/javac" fork="yes" includeantruntime="false" includes="**" source="${platform.version}" sourcepath="" srcdir="${src.dir}" target="${platform.version}"/>
+  <target name="compile-src" depends="-pre-compile-src" description="Compile src directory of the project.">
+    <javac destdir="${build.src.dir}" encoding="${project.encoding}" executable="${platform.dir}/javac" fork="yes" includeantruntime="false" includes="**" source="${platform.version}" sourcepath="" srcdir="${src.dir}" target="${platform.version}"/>
   </target>
 
-  <target name="jar" depends="compile, -pre-jar" description="Build JAR.">
-    <jar jarfile="${dist.dir}/${project.name}-${project.version}.jar" basedir="${build.dir}">
+  <target name="compile-test" depends="compile-src, -pre-compile-test" description="Compile test directory of the project.">
+    <javac destdir="${build.test.dir}" encoding="${project.encoding}" executable="${platform.dir}/javac" fork="yes" includeantruntime="false" includes="**" source="${platform.version}" sourcepath="" srcdir="${test.dir}" target="${platform.version}">
+      <classpath>
+        <path refid="lib.path"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile-src, -pre-jar" description="Build JAR.">
+    <jar jarfile="${dist.dir}/${project.name}-${project.version}.jar" basedir="${build.src.dir}">
       <manifest>
         <attribute name="Main-Class" value="${main.class}"/>
       </manifest>
@@ -45,14 +70,36 @@
     <java jar="${dist.dir}/${project.name}-${project.version}.jar" fork="true" jvm="${platform.dir}/java"/>
   </target>
 
+  <target name="test" depends="compile-test" description="Run unit tests.">
+    <junit printsummary="yes" fork="yes" jvm="${platform.dir}/java">
+      <classpath>
+        <path refid="lib.path"/>
+        <dirset dir="${build.test.dir}">
+          <include name="**"/>
+        </dirset>
+      </classpath>
+      <test name="model.tree.BinaryNodeTest"/>
+      <test name="model.tree.BinaryTreeTest"/>
+      <test name="model.tree.BinaryTreeModelTest"/>
+      <test name="model.SoftwareModelTest"/>
+      <test name="io.tree.AVLTreeFileTest"/>
+      <test name="io.tree.BinarySearchTreeFileTest"/>
+      <test name="io.tree.RedBlackTreeFileTest"/>
+      <test name="compiler.TokenTest"/>
+      <test name="compiler.AlgoCompilerTest"/>
+      <test name="controller.BinaryTreeControllerTest"/>
+      <test name="controller.SoftwareControllerTest"/>
+    </junit>
+  </target>
+
   <target name="javadoc" description="Build Javadoc.">
-    <mkdir dir="${doc.dir}"/>
-    <javadoc author="true" charset="${project.encoding}" destdir="${doc.dir}" docencoding="${project.encoding}" encoding="${project.encoding}" executable="${platform.dir}/javadoc" failonerror="true" noindex="false" nonavbar="false" notree="false" private="false" source="${platform.version}" splitindex="true" use="true" useexternalfile="true" version="true" windowtitle="${project.name}">
+    <mkdir dir="${dist.javadoc.dir}"/>
+    <javadoc author="true" charset="${project.encoding}" destdir="${dist.javadoc.dir}" docencoding="${project.encoding}" encoding="${project.encoding}" executable="${platform.dir}/javadoc" failonerror="true" noindex="false" nonavbar="false" notree="false" private="false" source="${platform.version}" splitindex="true" use="true" useexternalfile="true" version="true" windowtitle="${project.name}">
       <fileset dir="${src.dir}">
         <filename name="**/*.java"/>
       </fileset>
     </javadoc>
   </target>
 
-  <target depends="jar, javadoc" description="Build and test whole project." name="default"/>
+  <target depends="test, jar, javadoc" description="Build and test whole project." name="default"/>
 </project>
