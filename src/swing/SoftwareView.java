@@ -115,9 +115,19 @@ public final class SoftwareView extends JFrame implements ISoftwareView {
         setJMenuBar(createMenuBar());
         getContentPane().add(softwareTabbedPane, BorderLayout.CENTER);
         
+        shapeSoftwareViewFrame();
+    }
+
+    private void shapeSoftwareViewFrame() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize((int) (screenSize.width * SOFTWARE_VIEW_DISPLAY_RATIO),
-                (int) (screenSize.height * SOFTWARE_VIEW_DISPLAY_RATIO));
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+        int softwareViewWidth = (int) (screenWidth * SOFTWARE_VIEW_DISPLAY_RATIO);
+        int softwareViewHeight = (int) (screenHeight * SOFTWARE_VIEW_DISPLAY_RATIO);
+
+        setSize(softwareViewWidth, softwareViewHeight);
+        setLocation((screenWidth - softwareViewWidth) / 2,
+                (screenHeight - softwareViewHeight) / 2);
     }
 
     private JMenuBar createMenuBar() {
