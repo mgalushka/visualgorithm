@@ -25,7 +25,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.net.URLClassLoader;
 import javax.imageio.ImageIO;
 
@@ -45,7 +44,10 @@ final class GraphicNode {
      * Enumeration that defines the different sizes of graphic nodes. This
      * enumeration also gives access to the integer corresponding to the color
      * with the method {@code int getSizeAsInt()}. This integer is used to
-     * load the image.
+     * load the image. It is also possible to increment or decrement a graphic
+     * node size respectively with the methods
+     * {@code GraphicNodeSize incrementSize()} and
+     * {@code GraphicNodeSize decrementSize()}.
      *
      * @author Julien Hannier
      * @version 1.00 16/06/08
@@ -67,6 +69,46 @@ final class GraphicNode {
          */
         int getSizeAsInt() {
             return sizeInt;
+        }
+
+        /**
+         * Returns an increment of the current size.
+         *
+         * @return the increment of the current size
+         */
+        GraphicNodeSize incrementSize() {
+            switch (sizeInt) {
+                case 30:
+                    return TWO;
+                case 45:
+                    return THREE;
+                case 60:
+                    return FOUR;
+                case 75:
+                    return FOUR;
+                default:
+                   return this;
+            }
+        }
+
+        /**
+         * Returns a decrement of the current size.
+         *
+         * @return the decrement of the current size
+         */
+        GraphicNodeSize decrementSize() {
+            switch (sizeInt) {
+                case 30:
+                    return ONE;
+                case 45:
+                    return ONE;
+                case 60:
+                    return TWO;
+                case 75:
+                    return THREE;
+                default:
+                   return this;
+            }
         }
     }
     
@@ -270,11 +312,11 @@ final class GraphicNode {
                     yDifferenceBetweenFont * fontSizeFactor;
 
             if (nodeKeyString.length() == 1) {
-                xPositionKeyString = xPosition - initialXPositionOneCharKeyString +
-                        xDifferenceBetweenOneCharFont * fontSizeFactor;
+                xPositionKeyString = xPosition - (initialXPositionOneCharKeyString +
+                        xDifferenceBetweenOneCharFont * fontSizeFactor);
             } else if (nodeKeyString.length() == 2) {
-                xPositionKeyString = xPosition - initialXPositionTwoCharKeyString +
-                        xDifferenceBetweenTwoCharFont * fontSizeFactor;
+                xPositionKeyString = xPosition - (initialXPositionTwoCharKeyString +
+                        xDifferenceBetweenTwoCharFont * fontSizeFactor);
             }
         }
         graphics.drawString(nodeKeyString, xPositionKeyString, yPositionKeyString);

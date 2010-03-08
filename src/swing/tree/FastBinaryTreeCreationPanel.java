@@ -52,7 +52,7 @@ final class FastBinaryTreeCreationPanel extends AbstractBinaryTreeCreationPanel 
         binaryTreeVisualization = new FastBinaryTreeVisualization(binaryTreeController);
 
         setLayout(new BorderLayout(4, 4));
-        add(binaryTreeVisualization, BorderLayout.CENTER);
+        add(binaryTreeVisualization.buildVisualizationPanelWithZoom(), BorderLayout.CENTER);
         add(createControls(), BorderLayout.SOUTH);
     }
 

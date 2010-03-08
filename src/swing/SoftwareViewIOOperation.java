@@ -85,10 +85,11 @@ final class SoftwareViewIOOperation {
     private JFileChooser createFileChooser() {
         JFileChooser fileChooser = new JFileChooser();
 
+        fileChooser.setAcceptAllFileFilterUsed(false);
         for (FileFilter fileFilter: dataStructureFileFilters) {
             fileChooser.addChoosableFileFilter(fileFilter);
+            fileChooser.setFileFilter(fileFilter);
         }
-        fileChooser.setAcceptAllFileFilterUsed(false);
 
         return fileChooser;
     }

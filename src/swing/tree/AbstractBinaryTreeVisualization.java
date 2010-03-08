@@ -30,8 +30,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import controller.IBinaryTreeController;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import model.tree.IBinaryNode;
 import model.tree.RedBlackNode;
 import swing.tree.GraphicNode.GraphicNodeColor;
@@ -461,6 +466,73 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
         return new Dimension(widthSize, heightSize);
     }
 
+    /**
+     * Builds a panel containing the visualization with a zoom function. If this
+     * method is used for more than one visualization, then all the
+     * visualizations with the zoom function will be updated for the zoom of one
+     * of them.
+     *
+     * @return a panel containing the visualization with a zoom function
+     */
+    JPanel buildVisualizationPanelWithZoom() {
+        JPanel visualizationPanelWithZoom = new JPanel();
+        JScrollPane zoomScrollPane = new JScrollPane(this);
+        
+        zoomScrollPane.addMouseWheelListener(new MouseWheelListener() {
+            
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent event) {
+                int smallestNodeSize = GraphicNodeSize.ONE.getSizeAsInt();
+
+                if (event.getWheelRotation() < 0) {
+                    sizeOfNodes = sizeOfNodes.decrementSize();
+                } else {
+                    sizeOfNodes = sizeOfNodes.incrementSize();
+                }
+                heightBetweenNodes = INITIAL_HEIGHT_BETWEEN_NODES +
+                        sizeOfNodes.getSizeAsInt() - smallestNodeSize;
+                widthBetweenBrotherNodes = INITIAL_WIDTH_BETWEEN_BROTHER_NODES +
+                        sizeOfNodes.getSizeAsInt() - smallestNodeSize;
+                widthBetweenDifferentNodes = INITIAL_WIDTH_BETWEEN_DIFFERENT_NODES +
+                        sizeOfNodes.getSizeAsInt() - smallestNodeSize;
+                yPositionOfRootNode = ROOT_NODE_Y_POSITION_SHIFT +
+                        sizeOfNodes.getSizeAsInt() / 2;
+
+                for (GraphicNode node : graphicNodes) {
+                    if (node != null) {
+                        node.changeNodeSize(sizeOfNodes);
+                    }
+                }
+
+                sizeVisualizationArea();
+                updateNodesPosition();
+                repaint();
+            }
+        });
+        zoomScrollPane.setHorizontalScrollBarPolicy(
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        zoomScrollPane.setVerticalScrollBarPolicy(
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        zoomScrollPane.setWheelScrollingEnabled(false);
+        zoomScrollPane.setPreferredSize(new Dimension(getWidth(), getHeight()));
+        
+        visualizationPanelWithZoom.setLayout(new BorderLayout(4, 4));
+        visualizationPanelWithZoom.add(zoomScrollPane, BorderLayout.CENTER);
+
+        return visualizationPanelWithZoom;
+    }
+
+    private void sizeVisualizationArea() {
+        Rectangle visibleSize = getVisibleRect();
+        Dimension preferredSize = getPreferredSize();
+
+        if (preferredSize.width <= visibleSize.width) {
+            setSize(visibleSize.width, visibleSize.height);
+        } else {
+            setSize(preferredSize);
+        }
+    }
+
     private void updateNodesPosition() {
         int nbNodes = graphicNodes.size();
         
@@ -571,15 +643,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
                 }
             }
 
-            Rectangle visibleSize = getVisibleRect();
-            Dimension preferredSize = getPreferredSize();
-
-            if (preferredSize.width <= visibleSize.width) {
-                setSize(visibleSize.width, visibleSize.height);
-            } else {
-                setSize(preferredSize);
-            }
-
+            sizeVisualizationArea();
             updateNodesPosition();
             repaint();
         }

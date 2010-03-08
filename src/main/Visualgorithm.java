@@ -52,7 +52,8 @@ public final class Visualgorithm {
         String osName = System.getProperty("os.name").toLowerCase();
         if (osName.indexOf("mac") >= 0) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
-            System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Visualgorithm");
+            System.setProperty("com.apple.mrj.application.apple.menu.about.name",
+                    "Visualgorithm");
         }
 
         SwingUtilities.invokeLater(new Runnable() {

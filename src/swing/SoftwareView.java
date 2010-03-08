@@ -147,11 +147,10 @@ public final class SoftwareView extends JFrame implements ISoftwareView {
         JMenu fileMenu = new JMenu("File");
         JMenuItem openMenuItem = new JMenuItem("Open");
         JMenuItem saveMenuItem = new JMenuItem("Save");
-        JMenuItem exitMenuItem = new JMenuItem("Exit");
 
         fileMenu.setMnemonic('F');
         openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
-                ActionEvent.CTRL_MASK));
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         openMenuItem.addActionListener(new ActionListener() {
 
             @Override
@@ -160,44 +159,54 @@ public final class SoftwareView extends JFrame implements ISoftwareView {
             }
         });
         saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-                ActionEvent.CTRL_MASK));
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         saveMenuItem.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent event) {
                 int selectedIndex = softwareTabbedPane.getSelectedIndex();
 
-                String fileName =
-                        softwareViewIOOperation.saveDataStructureOperation(selectedIndex);
-                if (!fileName.isEmpty()) {
-                    try {
-                        softwareTabbedPane.setTitleAt(selectedIndex, fileName);
-                        ((JComponent) softwareTabbedPane.getTabComponentAt(
-                                selectedIndex)).revalidate();
-                    } catch (IndexOutOfBoundsException ex) {
-                        softwareViewIOOperation.showErrorMessage("An irrecoverable" +
-                                " error occurs and the software is about\nto shut" +
-                                " down. Sorry for the inconvenience.", "Software Error");
-                        System.exit(1);
+                if (selectedIndex >= 0) {
+                    String fileName =
+                            softwareViewIOOperation.saveDataStructureOperation(selectedIndex);
+                    if (!fileName.isEmpty()) {
+                        try {
+                            softwareTabbedPane.setTitleAt(selectedIndex, fileName);
+                            ((JComponent) softwareTabbedPane.getTabComponentAt(
+                                    selectedIndex)).revalidate();
+                        } catch (IndexOutOfBoundsException ex) {
+                            softwareViewIOOperation.showErrorMessage("An irrecoverable" +
+                                    " error occurs and the software is about\nto shut" +
+                                    " down. Sorry for the inconvenience.", "Software Error");
+                            System.exit(1);
+                        }
                     }
-                }
-            }
-        });
-        exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
-                ActionEvent.CTRL_MASK));
-        exitMenuItem.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                if (softwareViewIOOperation.exitSoftwareOperation(
-                        softwareTabbedPane.getTabCount())) {
-                    closeView();
                 }
             }
         });
         fileMenu.add(openMenuItem);
         fileMenu.add(saveMenuItem);
-        fileMenu.add(exitMenuItem);
+
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.indexOf("mac") < 0) {
+            JMenuItem exitMenuItem = new JMenuItem("Exit");
+
+            exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            exitMenuItem.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    if (softwareViewIOOperation.exitSoftwareOperation(
+                            softwareTabbedPane.getTabCount())) {
+                        closeView();
+                    }
+                }
+            });
+            fileMenu.add(exitMenuItem);
+        } else {
+            //TODO Exit menu MAC
+        }
 
         return fileMenu;
     }
@@ -217,7 +226,7 @@ public final class SoftwareView extends JFrame implements ISoftwareView {
     public void modelHasChanged(SoftwareModelEvent event) {
         if (event.getEventType() == SoftwareModelEventType.INSERT) {
             int tabCount = softwareTabbedPane.getTabCount();
-            
+
             try {
                 softwareTabbedPane.addTab(event.getDataStructureModelName(),
                         (JComponent) softwareController.getDataStructureController(

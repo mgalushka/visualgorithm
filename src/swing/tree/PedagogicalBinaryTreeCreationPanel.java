@@ -67,7 +67,7 @@ final class PedagogicalBinaryTreeCreationPanel extends AbstractBinaryTreeCreatio
         informationArea = createInformationArea();
         
         setLayout(new BorderLayout(4, 4));
-        add(binaryTreeVisualization, BorderLayout.CENTER);
+        add(binaryTreeVisualization.buildVisualizationPanelWithZoom(), BorderLayout.CENTER);
         add(composeControlsAndInformationArea(), BorderLayout.SOUTH);
     }
 
