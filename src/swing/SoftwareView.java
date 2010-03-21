@@ -21,6 +21,9 @@
 
 package swing;
 
+import com.apple.eawt.Application;
+import com.apple.eawt.ApplicationAdapter;
+import com.apple.eawt.ApplicationEvent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -46,6 +49,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import swing.tree.BinaryTreeMenu;
+import util.ImageLoadingUtility;
 
 /**
  * This class defines the view of the software. The software view is composed by
@@ -205,9 +209,22 @@ public final class SoftwareView extends JFrame implements ISoftwareView {
             });
             fileMenu.add(exitMenuItem);
         } else {
-            //TODO Exit menu MAC
-        }
+            Application macApplication = new Application();
 
+            macApplication.setDockIconImage(
+                    ImageLoadingUtility.loadImageFromVisualgorithmJar("img/icon.png"));
+            macApplication.addApplicationListener(new ApplicationAdapter() {
+
+                @Override
+                public void handleQuit(ApplicationEvent event) {
+                    if (softwareViewIOOperation.exitSoftwareOperation(
+                            softwareTabbedPane.getTabCount())) {
+                        closeView();
+                    }
+                }
+            });
+        }
+        
         return fileMenu;
     }
 

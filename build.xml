@@ -78,6 +78,7 @@
           <include name="**"/>
         </dirset>
       </classpath>
+      <test name="util.ImageLoadingUtilityTest"/>
       <test name="model.tree.BinaryNodeTest"/>
       <test name="model.tree.BinaryTreeTest"/>
       <test name="model.tree.BinaryTreeModelTest"/>

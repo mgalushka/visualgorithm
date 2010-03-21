@@ -25,8 +25,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.net.URLClassLoader;
-import javax.imageio.ImageIO;
+import util.ImageLoadingUtility;
 
 /**
  * This class defines the graphic node. The graphic node is composed by an image
@@ -142,8 +141,6 @@ final class GraphicNode {
         }
     }
 
-    private static URLClassLoader urlClassLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
-
     private int nodeKey;
 
     private int xPosition;
@@ -177,16 +174,10 @@ final class GraphicNode {
     }
 
     private BufferedImage loadNodeImage(GraphicNodeColor color, GraphicNodeSize size) {
-        BufferedImage image = null;
         String imageFileName = "img/node_" + color.getColorAsString() + "_" +
                 size.getSizeAsInt() + ".png";
 
-        try {
-            image = ImageIO.read(urlClassLoader.findResource(imageFileName));
-        } catch (Exception ex) {
-        }
-        
-        return image;
+        return ImageLoadingUtility.loadImageFromVisualgorithmJar(imageFileName);
     }
 
     /**
