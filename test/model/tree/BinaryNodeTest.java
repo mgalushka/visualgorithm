@@ -58,23 +58,17 @@ public class BinaryNodeTest {
         assertNull(bsNode.getFather());
         assertNull(bsNode.getRight());
         assertNull(bsNode.getLeft());
+        assertEquals(new BinarySearchNode(-2).getKey(), -2);
 
-        try {
-            assertEquals(new BinarySearchNode(-2).getKey(), -2);
-        } catch (IllegalArgumentException e) {
-        }
-        try {
-            bsNode.setKey(-1);
-            assertEquals(bsNode.getKey(), -1);
-        } catch (IllegalArgumentException e) {
-        }
+        bsNode.setKey(-1);
+        assertEquals(bsNode.getKey(), -1);
+
         bsNode.setKey(46);
         assertEquals(bsNode.getKey(), 46);
-        try {
-            bsNode.setKey(100);
-            assertEquals(bsNode.getKey(), 100);
-        } catch (IllegalArgumentException e) {
-        }
+
+        bsNode.setKey(100);
+        assertEquals(bsNode.getKey(), 100);
+
         try {
             bsNode.setFather(new AVLNode(0));
             assertEquals(bsNode.getFather() instanceof BinarySearchNode, true);
@@ -99,23 +93,17 @@ public class BinaryNodeTest {
         assertNull(avlNode.getRight());
         assertNull(avlNode.getLeft());
         assertEquals(avlNode.getAVLHeight(), 0);
+        assertEquals(new AVLNode(-2).getKey(), -2);
 
-        try {
-            assertEquals(new AVLNode(-2).getKey(), -2);
-        } catch (IllegalArgumentException e) {
-        }
-        try {
-            avlNode.setKey(-1);
-            assertEquals(avlNode.getKey(), -1);
-        } catch (IllegalArgumentException e) {
-        }
+        avlNode.setKey(-1);
+        assertEquals(avlNode.getKey(), -1);
+
         avlNode.setKey(0);
         assertEquals(avlNode.getKey(), 0);
-        try {
-            avlNode.setKey(100);
-            assertEquals(avlNode.getKey(), 100);
-        } catch (IllegalArgumentException e) {
-        }
+
+        avlNode.setKey(100);
+        assertEquals(avlNode.getKey(), 100);
+
         try {
             avlNode.setFather(new BinarySearchNode(0));
             assertEquals(bsNode.getFather() instanceof AVLNode, true);
@@ -164,23 +152,17 @@ public class BinaryNodeTest {
         assertEquals(rbNode1.isBlack(), false);
         assertEquals(rbNode1.calculateLeftBlackHeight(), 0);
         assertEquals(rbNode1.calculateRightBlackHeight(), 0);
+        assertEquals(new RedBlackNode(-2).getKey(), -2);
 
-        try {
-            assertEquals(new RedBlackNode(-2).getKey(), -2);
-        } catch (IllegalArgumentException e) {
-        }
-        try {
-            rbNode1.setKey(-1);
-            assertEquals(rbNode1.getKey(), -1);
-        } catch (IllegalArgumentException e) {
-        }
+        rbNode1.setKey(-1);
+        assertEquals(rbNode1.getKey(), -1);
+
         rbNode1.setKey(99);
         assertEquals(rbNode1.getKey(), 99);
-        try {
-            rbNode1.setKey(100);
-            assertEquals(rbNode1.getKey(), 100);
-        } catch (IllegalArgumentException e) {
-        }
+
+        rbNode1.setKey(100);
+        assertEquals(rbNode1.getKey(), 100);
+
         try {
             rbNode1.setFather(new BinarySearchNode(0));
             assertEquals(bsNode.getFather() instanceof RedBlackNode, true);

@@ -90,6 +90,18 @@
       <test name="compiler.AlgoCompilerTest"/>
       <test name="controller.BinaryTreeControllerTest"/>
       <test name="controller.SoftwareControllerTest"/>
+      <test name="algorithm.tree.AVLTreeDeleteAlgorithmTest"/>
+      <test name="algorithm.tree.AVLTreeInsertAlgorithmTest"/>
+      <test name="algorithm.tree.AVLTreeLeftRotationAlgorithmTest"/>
+      <test name="algorithm.tree.AVLTreeRightRotationAlgorithmTest"/>
+      <test name="algorithm.tree.BinarySearchTreeDeleteAlgorithmTest"/>
+      <test name="algorithm.tree.BinarySearchTreeInsertAlgorithmTest"/>
+      <test name="algorithm.tree.BinarySearchTreeMinimumAlgorithmTest"/>
+      <test name="algorithm.tree.BinarySearchTreeSuccessorAlgorithmTest"/>
+      <test name="algorithm.tree.RedBlackTreeDeleteAlgorithmTest"/>
+      <test name="algorithm.tree.RedBlackTreeInsertAlgorithmTest"/>
+      <test name="algorithm.tree.RedBlackTreeLeftRotationAlgorithmTest"/>
+      <test name="algorithm.tree.RedBlackTreeRightRotationAlgorithmTest"/>
     </junit>
   </target>
 

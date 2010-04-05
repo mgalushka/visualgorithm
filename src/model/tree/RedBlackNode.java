@@ -48,29 +48,23 @@ public final class RedBlackNode extends AbstractBinarySearchNode implements
     /**
      * Builds a red black node with the key given in parameter. The children and
      * the father are initialized to null and the color is initialized to red by
-     * default. If {@code key} is greater than 99 or less than 0 then an
-     * IllegalArgumentException is thrown.
+     * default.
      * 
      * @param key the key of the new red black node
-     * @throws IllegalArgumentException
      */
-    public RedBlackNode(int key) throws IllegalArgumentException {
+    public RedBlackNode(int key) {
         super(key);
         color = RedBlackNodeColor.RED;
     }
 
     /**
      * Builds a red black node with the key and the color given in parameters.
-     * The children and the father are initialized to null. If {@code key} is
-     * greater than 99 or less than 0 then an IllegalArgumentException is
-     * thrown.
+     * The children and the father are initialized to null.
      *
      * @param key the key of the new red black node
      * @param c the color of the new red black node
-     * @throws IllegalArgumentException
      */
-    public RedBlackNode(int key, RedBlackNodeColor c)
-            throws IllegalArgumentException {
+    public RedBlackNode(int key, RedBlackNodeColor c) {
         super(key);
         color = c;
     }
@@ -97,7 +91,7 @@ public final class RedBlackNode extends AbstractBinarySearchNode implements
 
     @Override
     public void setRight(IBinaryNode newNode) throws IllegalArgumentException {
-        if (!(newNode instanceof RedBlackNode)) {
+        if ((newNode != null) && !(newNode instanceof RedBlackNode)) {
             throw new IllegalArgumentException(
                     "You have to pass a RedBlackNode");
         }
@@ -106,7 +100,7 @@ public final class RedBlackNode extends AbstractBinarySearchNode implements
 
     @Override
     public void setLeft(IBinaryNode newNode) throws IllegalArgumentException {
-        if (!(newNode instanceof RedBlackNode)) {
+        if ((newNode != null) && !(newNode instanceof RedBlackNode)) {
             throw new IllegalArgumentException(
                     "You have to pass a RedBlackNode");
         }
@@ -115,7 +109,7 @@ public final class RedBlackNode extends AbstractBinarySearchNode implements
 
     @Override
     public void setFather(IBinaryNode newNode) throws IllegalArgumentException {
-        if (!(newNode instanceof RedBlackNode)) {
+        if ((newNode != null) && !(newNode instanceof RedBlackNode)) {
             throw new IllegalArgumentException(
                     "You have to pass a RedBlackNode");
         }

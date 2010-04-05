@@ -44,12 +44,11 @@ public final class AVLTree extends AbstractBinarySearchTree {
 
     /**
      * Builds an AVL tree with the key given in parameter. The children and the
-     * father are initialized to null. If {@code key} is greater than 99 or less
-     * than 0 then an IllegalArgumentException is thrown.
+     * father are initialized to null.
      * 
      * @param key the key of the root node
      */
-    public AVLTree(int key) throws IllegalArgumentException {
+    public AVLTree(int key) {
         root = new AVLNode(key);
     }
 
@@ -60,7 +59,7 @@ public final class AVLTree extends AbstractBinarySearchTree {
 
     @Override
     public void setRoot(IBinaryNode newNode) throws IllegalArgumentException {
-        if (!(newNode instanceof AVLNode)) {
+        if ((newNode != null) && !(newNode instanceof AVLNode)) {
             throw new IllegalArgumentException(
                     "You have to pass an AVLNode");
         }

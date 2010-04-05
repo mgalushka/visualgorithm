@@ -47,13 +47,11 @@ public interface IBinaryTreeModel extends IDataStructureModel {
      * Inserts a node into the binary tree. This method uses the insert
      * algorithm corresponding to the type of the binary tree. If it is
      * necessary, the binary tree is corrected. For instance, the balance of an
-     * AVL tree is corrected after the insertion. If {@code key} is greater than
-     * 99 or less than 0 then an IllegalArgumentException is thrown.
+     * AVL tree is corrected after the insertion.
      *
      * @param key the key of the node to insert
-     * @throws IllegalArgumentException
      */
-    public void insertNode(int key) throws IllegalArgumentException;
+    public void insertNode(int key);
 
     /**
      * Deletes a node from the binary tree. This method uses the delete

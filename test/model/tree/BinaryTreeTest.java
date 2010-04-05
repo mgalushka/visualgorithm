@@ -63,14 +63,8 @@ public class BinaryTreeTest {
     public void testBST() {
         assertEquals(bsTreeType.createBinaryTree().getType(), "BINARYSEARCHTREE");
         assertNull(new BinarySearchTree().getRoot());
-        try {
-            assertEquals(new BinarySearchTree(-1).getRoot().getKey(), -1);
-        } catch(IllegalArgumentException e) {
-        }
-        try {
-            assertEquals(new BinarySearchTree(100).getRoot().getKey(), 100);
-        } catch(IllegalArgumentException e) {
-        }
+        assertEquals(new BinarySearchTree(-1).getRoot().getKey(), -1);
+        assertEquals(new BinarySearchTree(100).getRoot().getKey(), 100);
 
         try {
             bsTree.setRoot(new AVLNode(0));
@@ -99,15 +93,9 @@ public class BinaryTreeTest {
     public void testAVLT() {
         assertEquals(avlTreeType.createBinaryTree().getType(), "AVLTREE");
         assertNull(new AVLTree().getRoot());
-        try {
-            assertEquals(new AVLTree(-1).getRoot().getKey(), -1);
-        } catch(IllegalArgumentException e) {
-        }
-        try {
-            assertEquals(new AVLTree(100).getRoot().getKey(), 100);
-        } catch(IllegalArgumentException e) {
-        }
-        
+        assertEquals(new AVLTree(-1).getRoot().getKey(), -1);
+        assertEquals(new AVLTree(100).getRoot().getKey(), 100);
+
         try {
             avlTree.setRoot(new BinarySearchNode(45));
             assertEquals(avlTree.getRoot() instanceof AVLNode, true);
@@ -139,14 +127,8 @@ public class BinaryTreeTest {
     public void testRBT() {
         assertEquals(rbTreeType.createBinaryTree().getType(), "REDBLACKTREE");
         assertNull(new RedBlackTree().getRoot());
-        try {
-            assertEquals(new RedBlackTree(-1).getRoot().getKey(), -1);
-        } catch(IllegalArgumentException e) {
-        }
-        try {
-            assertEquals(new RedBlackTree(100).getRoot().getKey(), 100);
-        } catch(IllegalArgumentException e) {
-        }
+        assertEquals(new RedBlackTree(-1).getRoot().getKey(), -1);
+        assertEquals(new RedBlackTree(100).getRoot().getKey(), 100);
         
         try {
             rbTree.setRoot(new AVLNode(70));

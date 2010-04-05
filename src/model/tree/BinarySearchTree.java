@@ -45,12 +45,11 @@ public final class BinarySearchTree extends
 
     /**
      * Builds a binary search tree with the key given in parameter. The children
-     * and the father are initialized to null. If {@code key} is greater than 99
-     * or less than 0 then an IllegalArgumentException is thrown.
+     * and the father are initialized to null.
      * 
      * @param key the key of the root node
      */
-    public BinarySearchTree(int key) throws IllegalArgumentException {
+    public BinarySearchTree(int key) {
         root = new BinarySearchNode(key);
     }
 
@@ -61,7 +60,7 @@ public final class BinarySearchTree extends
 
     @Override
     public void setRoot(IBinaryNode newNode) throws IllegalArgumentException {
-        if (!(newNode instanceof BinarySearchNode)) {
+        if ((newNode != null) && !(newNode instanceof BinarySearchNode)) {
             throw new IllegalArgumentException(
                     "You have to pass a BinarySearchNode");
         }

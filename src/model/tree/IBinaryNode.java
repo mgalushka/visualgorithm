@@ -28,8 +28,7 @@ package model.tree;
  * node. For instance, the method {@code IBinaryNode getRight()} will look like
  * {@code AVLNode getRight()} for the class AVLNode. All the setters must be
  * used with the same type of binary node that the object on which they are
- * used. If not, an IllegalArgumentException is thrown. Keys are only integers
- * greater equal than 0 and less than 100.
+ * used. If not, an IllegalArgumentException is thrown.
  * 
  * @author Damien Rigoni
  * @version 1.00 19/05/08
@@ -65,14 +64,11 @@ public interface IBinaryNode {
     public IBinaryNode getFather();
 
     /**
-     * Replaces the key of the node by {@code newKey}. If {@code newKey} is
-     * greater than 99 or less than 0 then an IllegalArgumentException is
-     * thrown.
+     * Replaces the key of the node by {@code newKey}.
      * 
      * @param newKey the new key of the node
-     * @throws IllegalArgumentException
      */
-    public void setKey(int newKey) throws IllegalArgumentException;
+    public void setKey(int newKey);
 
     /**
      * Replaces the right child of the node by {@code newNode}. If 

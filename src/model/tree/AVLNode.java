@@ -35,14 +35,11 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
 
     /**
      * Builds an AVL node with the key given in parameter. The children and the
-     * father are initialized to null and the height is initialized to 0. If
-     * {@code key} is greater than 99 or less than 0 then an
-     * IllegalArgumentException is thrown.
+     * father are initialized to null and the height is initialized to 0.
      * 
      * @param key the key of the new AVL node
-     * @throws IllegalArgumentException
      */
-    public AVLNode(int key) throws IllegalArgumentException {
+    public AVLNode(int key) {
         super(key);
         height = 0;
     }
@@ -69,7 +66,7 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
 
     @Override
     public void setRight(IBinaryNode newNode) throws IllegalArgumentException {
-        if (!(newNode instanceof AVLNode)) {
+        if ((newNode != null) && !(newNode instanceof AVLNode)) {
             throw new IllegalArgumentException("You have to pass an AVLNode");
         }
         right = newNode;
@@ -77,7 +74,7 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
 
     @Override
     public void setLeft(IBinaryNode newNode) throws IllegalArgumentException {
-        if (!(newNode instanceof AVLNode)) {
+        if ((newNode != null) && !(newNode instanceof AVLNode)) {
             throw new IllegalArgumentException("You have to pass an AVLNode");
         }
         left = newNode;
@@ -85,7 +82,7 @@ public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode 
 
     @Override
     public void setFather(IBinaryNode newNode) throws IllegalArgumentException {
-        if (!(newNode instanceof AVLNode)) {
+        if ((newNode != null) && !(newNode instanceof AVLNode)) {
             throw new IllegalArgumentException("You have to pass an AVLNode");
         }
         father = newNode;

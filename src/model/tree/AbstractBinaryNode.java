@@ -54,17 +54,11 @@ public abstract class AbstractBinaryNode implements IBinaryNode {
 
     /**
      * Builds a node with the key given in parameter, the children and the
-     * father are initialized to null. If {@code k} is greater than 99 or less
-     * than 0 then an IllegalArgumentException is thrown.
+     * father are initialized to null.
      * 
      * @param k the key of the new node
-     * @throws IllegalArgumentException
      */
-    protected AbstractBinaryNode(int k) throws IllegalArgumentException {
-        if((k < 0) || (k > 99)) {
-            throw new IllegalArgumentException(
-                    "You have to pass a key between 0 and 99");
-        }
+    protected AbstractBinaryNode(int k) {
         key = k;
         left = right = father = null;
     }
@@ -75,11 +69,7 @@ public abstract class AbstractBinaryNode implements IBinaryNode {
     }
 
     @Override
-    public final void setKey(int newKey) throws IllegalArgumentException {
-        if((newKey < 0) || (newKey > 99)) {
-            throw new IllegalArgumentException(
-                    "You have to pass a key between 0 and 99");
-        }
+    public final void setKey(int newKey) {
         key = newKey;
     }
 }

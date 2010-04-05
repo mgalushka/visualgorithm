@@ -127,7 +127,7 @@ public final class BinaryTreeModel implements IBinaryTreeModel {
     @Override
     public void insertRandomNodes(int nbNode) {
         for (int i = 0; i < nbNode; i++) {
-            int key = (int) Math.round(Math.random() * 100);
+            int key = (int) Math.round(Math.random() * 99);
             // TODO Insertion
             System.out.println(key);
         }

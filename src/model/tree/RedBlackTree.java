@@ -44,12 +44,11 @@ public final class RedBlackTree extends AbstractBinarySearchTree {
 
     /**
      * Builds a red black tree with the key given in parameter. The children and
-     * the father are initialized to null. If {@code key} is greater than 99 or
-     * less than 0 then an IllegalArgumentException is thrown.
+     * the father are initialized to null.
      *
      * @param key the key of the root node
      */
-    public RedBlackTree(int key) throws IllegalArgumentException {
+    public RedBlackTree(int key) {
         root = new RedBlackNode(key, RedBlackNode.RedBlackNodeColor.BLACK);
     }
 
@@ -60,7 +59,7 @@ public final class RedBlackTree extends AbstractBinarySearchTree {
 
     @Override
     public void setRoot(IBinaryNode newNode) throws IllegalArgumentException {
-        if (!(newNode instanceof RedBlackNode)) {
+        if ((newNode != null) && !(newNode instanceof RedBlackNode)) {
             throw new IllegalArgumentException(
                     "You have to pass a RedBlackNode");
         }
