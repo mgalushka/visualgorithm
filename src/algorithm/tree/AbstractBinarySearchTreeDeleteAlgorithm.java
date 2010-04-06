@@ -33,17 +33,18 @@ import model.tree.IBinarySearchTree;
  * @version 1.00 03/04/10
  * @see IBinaryTreeAlgorithm
  */
-public abstract class AbstractBinarySearchTreeDeleteAlgorithm implements IBinaryTreeAlgorithm {
+public abstract class AbstractBinarySearchTreeDeleteAlgorithm<NodeType extends IBinarySearchNode, TreeType extends IBinarySearchTree>
+        implements IBinaryTreeAlgorithm {
 
     /**
      * The binary search tree on which the algorithm is applied.
      */
-    private IBinarySearchTree tree;
+    private TreeType tree;
 
     /**
      * The binary search node to delete.
      */
-    private IBinarySearchNode deleteNode;
+    private NodeType deleteNode;
 
     /**
      * Builds the binary search tree delete algorithm.
@@ -51,7 +52,7 @@ public abstract class AbstractBinarySearchTreeDeleteAlgorithm implements IBinary
      * @param t the binary search tree on which the algorithm is applied
      * @param n the binary search node to delete
      */
-    protected AbstractBinarySearchTreeDeleteAlgorithm(IBinarySearchTree t, IBinarySearchNode n) {
+    protected AbstractBinarySearchTreeDeleteAlgorithm(TreeType t, NodeType n) {
         tree = t;
         deleteNode = n;
     }
@@ -64,24 +65,24 @@ public abstract class AbstractBinarySearchTreeDeleteAlgorithm implements IBinary
      * @param x the node from which the correction is made
      * @param y the deleted node
      */
-    protected abstract void specificCorrectionProcess(IBinarySearchTree t, IBinarySearchNode x, IBinarySearchNode y);
+    protected abstract void specificCorrectionProcess(TreeType t, NodeType x, NodeType y);
 
     @Override
     public final Object applyAlgorithm() {
-        IBinarySearchNode x, y;
+        NodeType x, y;
 
         if ((deleteNode.getLeft() == null) || (deleteNode.getRight() == null)) {
             y = deleteNode;
         } else {
             BinarySearchTreeSuccessorAlgorithm algo = new BinarySearchTreeSuccessorAlgorithm(deleteNode);
 
-            y = (IBinarySearchNode) algo.applyAlgorithm();
+            y = (NodeType) algo.applyAlgorithm();
         }
 
         if (y.getLeft() != null) {
-            x = y.getLeft();
+            x = (NodeType) y.getLeft();
         } else {
-            x = y.getRight();
+            x = (NodeType) y.getRight();
         }
 
         if (x != null) {

@@ -33,17 +33,18 @@ import model.tree.IBinaryTree;
  * @version 1.00 03/04/10
  * @see IBinaryTreeAlgorithm
  */
-public abstract class AbstractBinaryTreeLeftRotationAlgorithm implements IBinaryTreeAlgorithm {
+public abstract class AbstractBinaryTreeLeftRotationAlgorithm<NodeType extends IBinaryNode, TreeType extends IBinaryTree>
+        implements IBinaryTreeAlgorithm {
 
     /**
      * The binary tree on which the algorithm is applied.
      */
-    private IBinaryTree tree;
+    private TreeType tree;
 
     /**
      * The binary node on which the rotation is applied.
      */
-    private IBinaryNode node;
+    private NodeType node;
 
     /**
      * Builds the binary tree left rotation algorithm.
@@ -51,7 +52,7 @@ public abstract class AbstractBinaryTreeLeftRotationAlgorithm implements IBinary
      * @param t the binary tree on which the algorithm is applied
      * @param n the binary node on which the rotation is applied
      */
-    protected AbstractBinaryTreeLeftRotationAlgorithm(IBinaryTree t, IBinaryNode n) {
+    protected AbstractBinaryTreeLeftRotationAlgorithm(TreeType t, NodeType n) {
         tree = t;
         node = n;
     }
@@ -63,14 +64,14 @@ public abstract class AbstractBinaryTreeLeftRotationAlgorithm implements IBinary
      * @param x the left child of y
      * @param y the node on which the rotation is applied
      */
-    protected abstract void specificProcess(IBinaryNode x, IBinaryNode y);
+    protected abstract void specificProcess(NodeType x, NodeType y);
 
     @Override
     public final Object applyAlgorithm() {
         if (tree.getRoot() == null) {
             return null;
         } else {
-            IBinaryNode y = node.getRight();
+            NodeType y = (NodeType) node.getRight();
             node.setRight(y.getLeft());
 
             if (y.getLeft() != null) {

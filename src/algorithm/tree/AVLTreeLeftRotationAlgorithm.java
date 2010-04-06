@@ -21,7 +21,6 @@
 
 package algorithm.tree;
 
-import model.tree.IBinaryNode;
 import model.tree.AVLNode;
 import model.tree.AVLTree;
 
@@ -34,7 +33,8 @@ import model.tree.AVLTree;
  * @version 1.00 24/03/08
  * @see AbstractBinaryTreeLeftRotationAlgorithm
  */
-public final class AVLTreeLeftRotationAlgorithm extends AbstractBinaryTreeLeftRotationAlgorithm {
+public final class AVLTreeLeftRotationAlgorithm
+        extends AbstractBinaryTreeLeftRotationAlgorithm<AVLNode, AVLTree> {
 
     /**
      * Builds the AVL tree left rotation algorithm.
@@ -47,11 +47,8 @@ public final class AVLTreeLeftRotationAlgorithm extends AbstractBinaryTreeLeftRo
     }
 
     @Override
-    protected void specificProcess(IBinaryNode x, IBinaryNode y) {
-        AVLNode xAVL = (AVLNode) x;
-        AVLNode yAVL = (AVLNode) y;
-
-        xAVL.computeAndSetHeight();
-        yAVL.computeAndSetHeight();
+    protected void specificProcess(AVLNode x, AVLNode y) {
+        x.computeAndSetHeight();
+        y.computeAndSetHeight();
     }
 }

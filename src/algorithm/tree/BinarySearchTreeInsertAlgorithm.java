@@ -21,8 +21,6 @@
 
 package algorithm.tree;
 
-import model.tree.IBinarySearchNode;
-import model.tree.IBinarySearchTree;
 import model.tree.BinarySearchNode;
 import model.tree.BinarySearchTree;
 
@@ -35,7 +33,8 @@ import model.tree.BinarySearchTree;
  * @version 1.00 24/03/08
  * @see AbstractBinarySearchTreeInsertAlgorithm
  */
-public final class BinarySearchTreeInsertAlgorithm extends AbstractBinarySearchTreeInsertAlgorithm {
+public final class BinarySearchTreeInsertAlgorithm
+        extends AbstractBinarySearchTreeInsertAlgorithm<BinarySearchNode, BinarySearchTree> {
 
     /**
      * Builds the binary search tree insert algorithm.
@@ -48,6 +47,6 @@ public final class BinarySearchTreeInsertAlgorithm extends AbstractBinarySearchT
     }
 
     @Override
-    protected void specificCorrectionProcess(IBinarySearchTree t, IBinarySearchNode x) {
+    protected void specificCorrectionProcess(BinarySearchTree t, BinarySearchNode x) {
     }
 }

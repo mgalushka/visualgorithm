@@ -21,8 +21,6 @@
 
 package algorithm.tree;
 
-import model.tree.IBinarySearchNode;
-import model.tree.IBinarySearchTree;
 import model.tree.BinarySearchNode;
 import model.tree.BinarySearchTree;
 
@@ -35,7 +33,8 @@ import model.tree.BinarySearchTree;
  * @version 1.00 24/03/08
  * @see AbstractBinarySearchTreeDeleteAlgorithm
  */
-public final class BinarySearchTreeDeleteAlgorithm extends AbstractBinarySearchTreeDeleteAlgorithm {
+public final class BinarySearchTreeDeleteAlgorithm
+        extends AbstractBinarySearchTreeDeleteAlgorithm<BinarySearchNode, BinarySearchTree> {
 
     /**
      * Builds the binary search tree delete algorithm.
@@ -48,6 +47,7 @@ public final class BinarySearchTreeDeleteAlgorithm extends AbstractBinarySearchT
     }
 
     @Override
-    protected void specificCorrectionProcess(IBinarySearchTree t, IBinarySearchNode x, IBinarySearchNode y) {
+    protected void specificCorrectionProcess(BinarySearchTree t, BinarySearchNode x,
+            BinarySearchNode y) {
     }
 }

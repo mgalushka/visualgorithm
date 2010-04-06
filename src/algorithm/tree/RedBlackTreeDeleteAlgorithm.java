@@ -21,8 +21,6 @@
 
 package algorithm.tree;
 
-import model.tree.IBinarySearchNode;
-import model.tree.IBinarySearchTree;
 import model.tree.RedBlackNode;
 import model.tree.RedBlackTree;
 
@@ -34,7 +32,8 @@ import model.tree.RedBlackTree;
  * @version 1.00 24/03/08
  * @see AbstractBinarySearchTreeDeleteAlgorithm
  */
-public final class RedBlackTreeDeleteAlgorithm extends AbstractBinarySearchTreeDeleteAlgorithm {
+public final class RedBlackTreeDeleteAlgorithm
+        extends AbstractBinarySearchTreeDeleteAlgorithm<RedBlackNode, RedBlackTree> {
 
     /**
      * Builds the red black tree delete algorithm.
@@ -47,17 +46,13 @@ public final class RedBlackTreeDeleteAlgorithm extends AbstractBinarySearchTreeD
     }
 
     @Override
-    protected void specificCorrectionProcess(IBinarySearchTree t, IBinarySearchNode x, IBinarySearchNode y) {
-        RedBlackTree tRedBlack = (RedBlackTree) t;
-        RedBlackNode xRedBlack = (RedBlackNode) x;
-        RedBlackNode yRedBlack = (RedBlackNode) y;
-
-        if (yRedBlack.isBlack()) {
-            if (xRedBlack == null) {
-                xRedBlack = new RedBlackNode(-1, RedBlackNode.RedBlackNodeColor.BLACK);
-                xRedBlack.setFather(y.getFather());
+    protected void specificCorrectionProcess(RedBlackTree t, RedBlackNode x, RedBlackNode y) {
+        if (y.isBlack()) {
+            if (x == null) {
+                x = new RedBlackNode(-1, RedBlackNode.RedBlackNodeColor.BLACK);
+                x.setFather(y.getFather());
             }
-            new RedBlackTreeDeleteCorrectionAlgorithm(tRedBlack, xRedBlack).applyAlgorithm();
+            new RedBlackTreeDeleteCorrectionAlgorithm(t, x).applyAlgorithm();
         }
     }
 }

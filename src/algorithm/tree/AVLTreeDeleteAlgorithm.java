@@ -21,8 +21,6 @@
 
 package algorithm.tree;
 
-import model.tree.IBinarySearchNode;
-import model.tree.IBinarySearchTree;
 import model.tree.AVLNode;
 import model.tree.AVLTree;
 
@@ -34,7 +32,8 @@ import model.tree.AVLTree;
  * @version 1.00 24/03/08
  * @see AbstractBinarySearchTreeDeleteAlgorithm
  */
-public final class AVLTreeDeleteAlgorithm extends AbstractBinarySearchTreeDeleteAlgorithm {
+public final class AVLTreeDeleteAlgorithm
+        extends AbstractBinarySearchTreeDeleteAlgorithm<AVLNode, AVLTree> {
 
     /**
      * Builds the AVL tree delete algorithm.
@@ -47,10 +46,7 @@ public final class AVLTreeDeleteAlgorithm extends AbstractBinarySearchTreeDelete
     }
 
     @Override
-    protected void specificCorrectionProcess(IBinarySearchTree t, IBinarySearchNode x, IBinarySearchNode y) {
-        AVLTree tAVL = (AVLTree) t;
-        AVLNode yAVL = (AVLNode) y;
-
-        new AVLTreeInsertAndDeleteCorrectionAlgorithm(tAVL, yAVL.getFather()).applyAlgorithm();
+    protected void specificCorrectionProcess(AVLTree t, AVLNode x, AVLNode y) {
+        new AVLTreeInsertAndDeleteCorrectionAlgorithm(t, y.getFather()).applyAlgorithm();
     }
 }

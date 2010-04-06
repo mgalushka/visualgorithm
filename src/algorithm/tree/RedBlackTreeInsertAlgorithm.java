@@ -21,8 +21,6 @@
 
 package algorithm.tree;
 
-import model.tree.IBinarySearchNode;
-import model.tree.IBinarySearchTree;
 import model.tree.RedBlackNode;
 import model.tree.RedBlackTree;
 
@@ -34,7 +32,8 @@ import model.tree.RedBlackTree;
  * @version 1.00 24/03/08
  * @see AbstractBinarySearchTreeInsertAlgorithm
  */
-public final class RedBlackTreeInsertAlgorithm extends AbstractBinarySearchTreeInsertAlgorithm {
+public final class RedBlackTreeInsertAlgorithm
+        extends AbstractBinarySearchTreeInsertAlgorithm<RedBlackNode, RedBlackTree> {
 
     /**
      * Builds the red black tree insert algorithm.
@@ -47,13 +46,10 @@ public final class RedBlackTreeInsertAlgorithm extends AbstractBinarySearchTreeI
     }
 
     @Override
-    protected void specificCorrectionProcess(IBinarySearchTree t, IBinarySearchNode x) {
-        RedBlackTree tRedBlack = (RedBlackTree) t;
-        RedBlackNode xRedBlack = (RedBlackNode) x;
-
-        xRedBlack.setLeft(null);
-        xRedBlack.setRight(null);
-        xRedBlack.setColor(RedBlackNode.RedBlackNodeColor.RED);
-        new RedBlackTreeInsertCorrectionAlgorithm(tRedBlack, xRedBlack).applyAlgorithm();
+    protected void specificCorrectionProcess(RedBlackTree t, RedBlackNode x) {
+        x.setLeft(null);
+        x.setRight(null);
+        x.setColor(RedBlackNode.RedBlackNodeColor.RED);
+        new RedBlackTreeInsertCorrectionAlgorithm(t, x).applyAlgorithm();
     }
 }

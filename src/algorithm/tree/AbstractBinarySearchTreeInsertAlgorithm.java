@@ -33,17 +33,18 @@ import model.tree.IBinarySearchTree;
  * @version 1.00 03/04/10
  * @see IBinaryTreeAlgorithm
  */
-public abstract class AbstractBinarySearchTreeInsertAlgorithm implements IBinaryTreeAlgorithm {
+public abstract class AbstractBinarySearchTreeInsertAlgorithm<NodeType extends IBinarySearchNode, TreeType extends IBinarySearchTree>
+        implements IBinaryTreeAlgorithm {
 
     /**
      * The binary search tree on which the algorithm is applied.
      */
-    private IBinarySearchTree tree;
+    private TreeType tree;
 
     /**
      * The binary search node to insert.
      */
-    private IBinarySearchNode insertNode;
+    private NodeType insertNode;
 
     /**
      * Builds the binary search tree insert algorithm.
@@ -51,7 +52,7 @@ public abstract class AbstractBinarySearchTreeInsertAlgorithm implements IBinary
      * @param t the binary search tree on which the algorithm is applied
      * @param n the binary search node to insert
      */
-    protected AbstractBinarySearchTreeInsertAlgorithm(IBinarySearchTree t, IBinarySearchNode n) {
+    protected AbstractBinarySearchTreeInsertAlgorithm(TreeType t, NodeType n) {
         tree = t;
         insertNode = n;
     }
@@ -63,19 +64,19 @@ public abstract class AbstractBinarySearchTreeInsertAlgorithm implements IBinary
      * @param t the tree on which the corretion is applied
      * @param x the node from which the correction is made
      */
-    protected abstract void specificCorrectionProcess(IBinarySearchTree t, IBinarySearchNode x);
+    protected abstract void specificCorrectionProcess(TreeType t, NodeType x);
 
     @Override
     public final Object applyAlgorithm() {
-        IBinarySearchNode y = null;
-        IBinarySearchNode z = tree.getRoot();
+        NodeType y = null;
+        NodeType z = (NodeType) tree.getRoot();
 
         while (z != null) {
             y = z;
             if (insertNode.getKey() < z.getKey()) {
-                z = z.getLeft();
+                z = (NodeType) z.getLeft();
             } else {
-                z = z.getRight();
+                z = (NodeType) z.getRight();
             }
         }
         insertNode.setFather(y);

@@ -21,7 +21,6 @@
 
 package algorithm.tree;
 
-import model.tree.IBinaryNode;
 import model.tree.RedBlackNode;
 import model.tree.RedBlackTree;
 
@@ -34,7 +33,8 @@ import model.tree.RedBlackTree;
  * @version 1.00 24/03/08
  * @see AbstractBinaryTreeLeftRotationAlgorithm
  */
-public final class RedBlackTreeLeftRotationAlgorithm extends AbstractBinaryTreeLeftRotationAlgorithm {
+public final class RedBlackTreeLeftRotationAlgorithm
+        extends AbstractBinaryTreeLeftRotationAlgorithm<RedBlackNode, RedBlackTree> {
 
     /**
      * Builds the red black tree left rotation algorithm.
@@ -47,6 +47,6 @@ public final class RedBlackTreeLeftRotationAlgorithm extends AbstractBinaryTreeL
     }
 
     @Override
-    protected void specificProcess(IBinaryNode x, IBinaryNode y) {
+    protected void specificProcess(RedBlackNode x, RedBlackNode y) {
     }
 }
