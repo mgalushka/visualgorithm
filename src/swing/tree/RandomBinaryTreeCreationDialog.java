@@ -77,7 +77,7 @@ final class RandomBinaryTreeCreationDialog extends JDialog {
 
         String[] treeListStrings = {AVL_TREE, BINARY_SEARCH_TREE, RED_BLACK_TREE};
         SpinnerNumberModel spinnerModel = new SpinnerNumberModel(new Integer(15),
-                new Integer(1), new Integer(30), new Integer(1));
+                new Integer(1), new Integer(64), new Integer(1));
         softwareController = c;
         treeListComboBox = new JComboBox(treeListStrings);
         numberOfNodesSpinner = new JSpinner(spinnerModel);

@@ -1,14 +1,14 @@
 /*
- * SymbolTable.java 28/08/08
+ * AlgoSymbolTable.java v1.00 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,21 +24,13 @@ package compiler;
 import compiler.lexical.TokenAlgo;
 
 /**
- * This class provide
  * 
- * @author Julien Hannier
- * @author Pierre Pironin
+ *
  * @author Damien Rigoni
- * @version 1.00
+ * @version 1.00 28/08/08
  */
 public class AlgoSymbolTable {
 
-    /**
-     * @param id
-     * @param type
-     */
     public void addSymbol(TokenAlgo id, TokenAlgo type) {
-        // TODO Auto-generated method stub
-        
     }
 }

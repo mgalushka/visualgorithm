@@ -62,14 +62,4 @@ public interface IBinaryTreeModel extends IDataStructureModel {
      * @param key the key of the node to delete
      */
     public void deleteNode(int key);
-
-    /**
-     * Deletes a node from the binary tree. This method uses the delete
-     * algorithm from the binary search tree that is to say that the node is
-     * deleted without any correction of the binary tree. For instance, the
-     * balance of an AVL tree is not corrected after the deletion.
-     *
-     * @param key the key of the node to delete
-     */
-    public void deleteNodeWithoutCorrection(int key);
 }

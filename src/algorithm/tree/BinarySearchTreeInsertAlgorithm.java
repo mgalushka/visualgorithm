@@ -27,7 +27,7 @@ import model.tree.BinarySearchTree;
 /**
  * This class defines the binary search tree insert algorithm. It is composed
  * by the binary search tree on which the algorithm is applied and the node to
- * insert.
+ * insert. This class is not designed for inheritance.
  *
  * @author Damien Rigoni
  * @version 1.00 24/03/08

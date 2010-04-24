@@ -1,14 +1,14 @@
 /*
- * TokenTest.java 1 sept. 2008
+ * TokenTest.java v1.00 01/09/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -21,16 +21,18 @@
 
 package compiler.lexical;
 
-import static org.junit.Assert.*;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import compiler.lexical.IntegerTokenAlgo;
-import compiler.lexical.TokenAlgo;
 import compiler.lexical.TokenAlgo.TokenAlgoType;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * @author Damien R.
- * 
+ * Test of the token.
+ *
+ * @author Damien Rigoni
+ * @version 1.00 01/09/08
  */
 public class TokenTest {
 
@@ -42,7 +44,7 @@ public class TokenTest {
 
     private TokenAlgo tokenInt1, tokenInt2;
 
-    @BeforeClass
+    @Before
     public void setUp() {
         tokenId1 = new TokenAlgo(TokenAlgoType.ID, "tata");
         tokenId2 = new TokenAlgo(TokenAlgoType.ID, "toto");
@@ -58,17 +60,15 @@ public class TokenTest {
 
     @Test
     public void equalsTest() {
-        // reflexivity
+        // Reflexivity
         assertTrue(tokenId1.equals(tokenId1));
 
-        // symmetry
+        // Symmetry
         assertTrue(tokenId3.equals(tokenId1));
-        assertEquals(tokenId1.equals(tokenId3), tokenId3
-                .equals(tokenId1));
+        assertEquals(tokenId1.equals(tokenId3), tokenId3.equals(tokenId1));
 
-        // transitivity
-        assertEquals(tokenId1.equals(tokenId3), tokenId3
-                .equals(tokenId4));
+        // Transitivity
+        assertEquals(tokenId1.equals(tokenId3), tokenId3.equals(tokenId4));
         assertTrue(tokenId1.equals(tokenId4));
 
         assertFalse(tokenId1.equals(tokenId2));

@@ -42,6 +42,10 @@ final class RedBlackTreeFile extends TreeFile {
 
     private static final int COLOR_INDEX = 4;
 
+    /**
+     * Builds the red black tree file. The format of the file is defined in
+     * <tt>TreeFile</tt>. The color attribute is defined in this class.
+     */
     RedBlackTreeFile() {
         super();
     }

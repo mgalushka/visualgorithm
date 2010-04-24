@@ -98,9 +98,11 @@ public class BinaryTreeControllerTest {
         }
         assertEquals(btController1.isDataStructureModelSaved(), true);
 
-        //TODO Test with algorithms
+        btController1.addNodeToBinaryTreeModel(45);
+        btController1.deleteNodeFromBinaryTreeModel(23);
+        btController2.addNodeToBinaryTreeModel(45);
+        btController2.deleteNodeFromBinaryTreeModel(23);
         btController3.addNodeToBinaryTreeModel(45);
         btController3.deleteNodeFromBinaryTreeModel(23);
-        btController3.deleteNodeFromBinaryTreeModelWithoutCorrection(89);
     }
 }

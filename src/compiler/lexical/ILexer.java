@@ -1,14 +1,14 @@
 /*
- * ILexer.java 28/08/08
+ * ILexer.java v1.00 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,20 +23,17 @@ package compiler.lexical;
 
 /**
  * A lexer is an lexical analyzer which returns token of an input.
- * 
- * @author Julien Hannier
- * @author Pierre Pironin
+ *
  * @author Damien Rigoni
- * @version 1.00
- * 
+ * @version 1.00 28/08/08
  */
 public interface ILexer {
 
     /**
      * 
+     *
      * @return the next token found in the input
      * @throws Exception
      */
     public TokenAlgo nextToken() throws Exception;
-
 }

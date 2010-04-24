@@ -36,14 +36,8 @@ import model.tree.IBinarySearchTree;
 public abstract class AbstractBinarySearchTreeDeleteAlgorithm<NodeType extends IBinarySearchNode, TreeType extends IBinarySearchTree>
         implements IBinaryTreeAlgorithm {
 
-    /**
-     * The binary search tree on which the algorithm is applied.
-     */
     private TreeType tree;
 
-    /**
-     * The binary search node to delete.
-     */
     private NodeType deleteNode;
 
     /**

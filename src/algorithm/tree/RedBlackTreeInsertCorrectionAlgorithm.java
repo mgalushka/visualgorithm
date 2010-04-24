@@ -27,7 +27,8 @@ import model.tree.RedBlackTree;
 /**
  * This class defines the red black tree insert correction algorithm. It is
  * composed by the red black tree on which the algorithm is applied and the node
- * from which the correction is made.
+ * from which the correction is made. This class is not designed for
+ * inheritance.
  *
  * @author Damien Rigoni
  * @version 1.00 03/04/10
@@ -35,14 +36,8 @@ import model.tree.RedBlackTree;
  */
 public final class RedBlackTreeInsertCorrectionAlgorithm implements IBinaryTreeAlgorithm {
 
-    /**
-     * The red black tree on which the algorithm is applied.
-     */
     private RedBlackTree tree;
 
-    /**
-     * The red black node from which the correction is made.
-     */
     private RedBlackNode node;
 
     /**

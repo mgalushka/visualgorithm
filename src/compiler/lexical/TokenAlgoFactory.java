@@ -1,14 +1,14 @@
 /*
- * TokenAlgoFactory.java 02/09/08
+ * TokenAlgoFactory.java v1.00 02/09/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -21,18 +21,15 @@
 
 package compiler.lexical;
 
-import java.util.HashMap;
 import compiler.lexical.TokenAlgo.TokenAlgoType;
+import java.util.HashMap;
 
 /**
- * TokenFactory is an implementation of the flyweight pattern.
- * TokenFactoy creates a new token if none exists or supplies an
- * existing instance.
+ * TokenFactory is an implementation of the flyweight pattern. TokenFactoy
+ * creates a new token if none exists or supplies an existing instance.
  *
- * @author Julien Hannier
- * @author Pierre Pironin
  * @author Damien Rigoni
- * @version 1.00
+ * @version 1.00 02/09/08
  */
 public class TokenAlgoFactory {
 
@@ -42,32 +39,26 @@ public class TokenAlgoFactory {
     private TokenAlgoFactory() {
     }
     
-    // reserved words
     static {
-        tokens.put("algorithm", new TokenAlgo(
-                TokenAlgoType.ALGORITHM, "algorithm"));
-        tokens.put("begin", new TokenAlgo(TokenAlgoType.BEGIN,
-                "begin"));
+        tokens.put("algorithm", new TokenAlgo(TokenAlgoType.ALGORITHM, "algorithm"));
+        tokens.put("begin", new TokenAlgo(TokenAlgoType.BEGIN, "begin"));
         tokens.put("end", new TokenAlgo(TokenAlgoType.END, "end"));
-        tokens.put("return", new TokenAlgo(TokenAlgoType.RETURN,
-                "return"));
+        tokens.put("return", new TokenAlgo(TokenAlgoType.RETURN, "return"));
         tokens.put("var", new TokenAlgo(TokenAlgoType.VAR, "var"));
         tokens.put("if", new TokenAlgo(TokenAlgoType.IF, "if"));
         tokens.put("then", new TokenAlgo(TokenAlgoType.THEN, "then"));
         tokens.put("else", new TokenAlgo(TokenAlgoType.ELSE, "else"));
         tokens.put("do", new TokenAlgo(TokenAlgoType.DO, "do"));
-        tokens.put("while", new TokenAlgo(TokenAlgoType.WHILE,
-                "while"));
+        tokens.put("while", new TokenAlgo(TokenAlgoType.WHILE, "while"));
         tokens.put("or", new TokenAlgo(TokenAlgoType.OR, "or"));
         tokens.put("and", new TokenAlgo(TokenAlgoType.AND, "and"));
         tokens.put("true", new TokenAlgo(TokenAlgoType.TRUE, "true"));
-        tokens.put("false", new TokenAlgo(TokenAlgoType.FALSE,
-                "false"));
+        tokens.put("false", new TokenAlgo(TokenAlgoType.FALSE, "false"));
     }
 
     /**
-     * Check if the token is in the hash map and return a new token if
-     * none exists or return the existing instance.
+     * Check if the token is in the hash map and return a new token if none
+     * exists or return the existing instance.
      * 
      * @param type the token algo type needed to create an instance of token
      * @return the existing token or the created token if none exists
@@ -75,6 +66,7 @@ public class TokenAlgoFactory {
     public static TokenAlgo getToken(TokenAlgoType type, String lexeme) {
         TokenAlgo token = tokens.get(lexeme);
         assert(token.equals(TokenAlgo.NULL) || token.getTokenType() == type);
+
         if (token.equals(TokenAlgo.NULL)) {
             switch (type) {
             case INT:
@@ -99,6 +91,7 @@ public class TokenAlgoFactory {
             }
             tokens.put(lexeme, token);
         }
+        
         return token;
     }
 }

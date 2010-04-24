@@ -26,7 +26,8 @@ import model.tree.RedBlackTree;
 
 /**
  * This class defines the red black tree delete algorithm. It is composed by the
- * red black tree on which the algorithm is applied and the node to delete.
+ * red black tree on which the algorithm is applied and the node to delete. This
+ * class is not designed for inheritance.
  *
  * @author Damien Rigoni
  * @version 1.00 24/03/08

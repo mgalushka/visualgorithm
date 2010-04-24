@@ -36,6 +36,10 @@ import model.tree.IBinaryNode;
  */
 final class AVLTreeFile extends TreeFile {
 
+    /**
+     * Builds the AVL tree file. The format of the file is defined in
+     * <tt>TreeFile</tt>.
+     */
     AVLTreeFile() {
         super();
     }

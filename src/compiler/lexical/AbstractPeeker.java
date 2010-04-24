@@ -1,14 +1,14 @@
 /*
- * AbstractPeeker.java 28/08/08
+ * AbstractPeeker.java v1.00 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,11 +25,9 @@ import java.io.IOException;
 
 /**
  * This class provide some implementation for peekers.
- * 
- * @author Julien Hannier
- * @author Pierre Pironin
+ *
  * @author Damien Rigoni
- * @version 1.00
+ * @version 1.00 28/08/08
  */
 public abstract class AbstractPeeker implements IPeeker {
 
@@ -39,9 +37,9 @@ public abstract class AbstractPeeker implements IPeeker {
     
     protected String algoName;
 
-    protected AbstractPeeker(String algoName) {
+    protected AbstractPeeker(String algoNm) {
         rowNumber = columnNumber = 0;
-        this.algoName = algoName;
+        algoName = algoNm;
     }
 
     @Override
@@ -56,5 +54,4 @@ public abstract class AbstractPeeker implements IPeeker {
 
     @Override
     public abstract int nextChar() throws IOException;
-
 }

@@ -147,9 +147,4 @@ public final class BinaryTreeController implements IBinaryTreeController {
     public void deleteNodeFromBinaryTreeModel(int key) {
         binaryTreeModel.deleteNode(key);
     }
-
-    @Override
-    public void deleteNodeFromBinaryTreeModelWithoutCorrection(int key) {
-        binaryTreeModel.deleteNodeWithoutCorrection(key);
-    }
 }

@@ -36,6 +36,10 @@ import model.tree.IBinaryNode;
  */
 final class BinarySearchTreeFile extends TreeFile {
 
+    /**
+     * Builds the binary search tree file. The format of the file is defined in
+     * <tt>TreeFile</tt>.
+     */
     BinarySearchTreeFile() {
         super();
     }

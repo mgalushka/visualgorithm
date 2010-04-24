@@ -35,14 +35,8 @@ import model.tree.AVLTree;
  */
 public final class AVLTreeInsertAndDeleteCorrectionAlgorithm implements IBinaryTreeAlgorithm {
 
-    /**
-     * The AVL tree on which the algorithm is applied.
-     */
     private AVLTree tree;
 
-    /**
-     * The AVL node from which the correction is made.
-     */
     private AVLNode node;
 
     /**

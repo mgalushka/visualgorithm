@@ -1,5 +1,5 @@
 /*
- * AlgoNode.java v1.00 12/10/08
+ * TreeMenuFunctionalTest.java v1.00 20/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,26 +19,36 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package compiler.syntax;
+package swing.tree;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.netbeans.jemmy.ClassReference;
+import org.netbeans.jemmy.Scenario;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
+ * Functional test of the tree menu.
  *
- *
- * @author Damien Rigoni
- * @version 1.00 12/10/08
+ * @author Julien Hannier
+ * @version 1.00 20/04/10
  */
-public abstract class AlgoNode {
+public class TreeMenuFunctionalTest implements Scenario {
 
-    List<AlgoNode> children;
- 
-    protected AlgoNode() {
-        children = new ArrayList<AlgoNode>();
+    @Override
+    public int runIt(Object param) {
+        try {
+            new ClassReference("main.Visualgorithm").startApplication();
+            JFrameOperator mainFrame = new JFrameOperator("Visualgorithm");
+
+            // TODO Test of the tree menu
+        } catch (Exception ex) {
+            return 1;
+        }
+        return 0;
     }
-    
-    public void addNode(AlgoNode node) {
-        children.add(node);
+
+    public static void main(String[] args) {
+        String[] params = { "swing.tree.TreeMenuFunctionalTest" };
+
+        org.netbeans.jemmy.Test.main(params);
     }
 }

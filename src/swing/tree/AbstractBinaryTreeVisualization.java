@@ -449,7 +449,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
             int nbWidthBetweenDifferentNodes = 0;
 
             if (nbNodes > 1) {
-                height = (int) Math.round(Math.sqrt((nbNodes + 1) / 2));
+                height = (int) (Math.log((nbNodes + 1) / 2) / Math.log(2));
                 nbOfNodesOnTheLastWidth = (int) Math.pow(2, height);
                 nbWidthBetweenBrotherNodes = nbOfNodesOnTheLastWidth / 2;
                 nbWidthBetweenDifferentNodes = nbOfNodesOnTheLastWidth / 2 - 1;
@@ -547,7 +547,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
             int yPositionOfCurrentNode;
 
             if (nbNodes > 1) {
-                treeHeight = (int) Math.round(Math.sqrt((nbNodes + 1) / 2));
+                treeHeight = (int) (Math.log((nbNodes + 1) / 2) / Math.log(2));
             }
             widthBetweenCurrentNodeChildren = computeWidthBetweenRootChildren(treeHeight);
 
@@ -619,7 +619,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
      * @param heapRepresentation the last version of the tree as heap
      */
     <N extends IBinaryNode> void updateTreeVisualization(List<N> heapRepresentation) {
-        if (heapRepresentation.size() > 0) {
+        if (heapRepresentation.size() >= 0) {
             graphicNodes.clear();
 
             for (IBinaryNode node : heapRepresentation) {

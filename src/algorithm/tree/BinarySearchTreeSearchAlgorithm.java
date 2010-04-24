@@ -1,5 +1,5 @@
 /*
- * BinarySearchTreeSuccessorAlgorithm.java v1.00 03/04/10
+ * BinarySearchTreeSearchAlgorithm.java v1.00 17/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -24,47 +24,40 @@ package algorithm.tree;
 import model.tree.IBinarySearchNode;
 
 /**
- * This class defines the binary search tree successor algorithm. It is composed
- * by the binary search node on which the algorithm is applied. This class is
- * not designed for inheritance.
+ * This class defines the binary search tree search algorithm. It is composed
+ * by the binary search node on which the algorithm is applied and the key to
+ * research. This class is not designed for inheritance.
  *
  * @author Damien Rigoni
- * @version 1.00 03/04/10
+ * @version 1.00 17/04/10
  * @see IBinaryTreeAlgorithm
  */
-public final class BinarySearchTreeSuccessorAlgorithm implements IBinaryTreeAlgorithm {
+public final class BinarySearchTreeSearchAlgorithm implements IBinaryTreeAlgorithm {
 
     private IBinarySearchNode node;
 
+    private int key;
+
     /**
-     * Builds the binary search tree successor algorithm.
+     * Builds the binary search tree search algorithm.
      *
      * @param n the binary search node on which the algorithm is applied
+     * @param k the key to research
      */
-    public BinarySearchTreeSuccessorAlgorithm(IBinarySearchNode n) {
+    public BinarySearchTreeSearchAlgorithm(IBinarySearchNode n, int k) {
         node = n;
+        key = k;
     }
 
     @Override
     public final Object applyAlgorithm() {
-        if (node == null) {
-            return null;
-        } else {
-            IBinarySearchNode y;
-
-            if (node.getRight() != null) {
-                BinarySearchTreeMinimumAlgorithm algo = new BinarySearchTreeMinimumAlgorithm(node.getRight());
-
-                return algo.applyAlgorithm();
+        while ((node != null) && (key != node.getKey())) {
+            if (key < node.getKey()) {
+                node = node.getLeft();
+            } else {
+                node = node.getRight();
             }
-            y = node.getFather();
-
-            while ((y != null) && (node == y.getRight())) {
-                node = y;
-                y = node.getFather();
-            }
-            
-            return y;
         }
+        return node;
     }
 }

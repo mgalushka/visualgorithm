@@ -1,14 +1,14 @@
 /*
- * AlgoCompilerFactory.java 28/08/08
+ * AlgoCompilerFactory.java v1.00 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -26,12 +26,10 @@ import compiler.lexical.FilePeeker;
 import compiler.syntax.AlgoSyntax;
 
 /**
- * Factory wich create an instance of AlgoCompiler.
- * 
- * @author Julien Hannier
- * @author Pierre Pironin
+ * Factory which create an instance of AlgoCompiler.
+ *
  * @author Damien Rigoni
- * @version 1.00
+ * @version 1.00 28/08/08
  */
 public class AlgoCompilerFactory implements ICompilerFactory {
 
@@ -44,12 +42,13 @@ public class AlgoCompilerFactory implements ICompilerFactory {
         return instance;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
+    @SuppressWarnings("deprecation")
     public AlgoCompiler newCompiler() {
         return new AlgoCompiler(new AlgoSyntax(new AlgoLexer(new FilePeeker())));
     }
 
+    @Override
     @SuppressWarnings("deprecation")
     public AlgoLexer newLexer() {
         return new AlgoLexer(new FilePeeker());

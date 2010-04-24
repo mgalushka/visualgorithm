@@ -1,14 +1,14 @@
 /*
- * AlgoSyntax.java 31/08/08
+ * AlgoSyntax.java v1.00 31/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -21,19 +21,17 @@
 
 package compiler.syntax;
 
-import java.text.ParseException;
 import compiler.AlgoSymbolTable;
 import compiler.lexical.AlgoLexer;
 import compiler.lexical.TokenAlgo;
 import compiler.lexical.TokenAlgo.TokenAlgoType;
+import java.text.ParseException;
 
 /**
  * Parse and create an AST.
- * 
- * @author Julien Hannier
- * @author Pierre Pironin
+ *
  * @author Damien Rigoni
- * @version 1.00
+ * @version 1.00 31/08/08
  */
 public class AlgoSyntax {
 
@@ -45,10 +43,9 @@ public class AlgoSyntax {
 
     private AlgoNode tree;
 
-    // Change to private when we are in java 7 with superpackage.
     @Deprecated
-    public AlgoSyntax(AlgoLexer lexer) {
-        this.lexer = lexer;
+    public AlgoSyntax(AlgoLexer lex) {
+        lexer = lex;
     }
 
     public void parse(String algoFileName) throws Exception {
@@ -99,22 +96,16 @@ public class AlgoSyntax {
 
         match(TokenAlgoType.END);
         createNode(currentToken);
-
     }
 
-    /**
-     * @param token
-     */
     private void createNode(TokenAlgo token) {
-
     }
 
     private void match(TokenAlgoType tokenAlgoType) throws Exception {
         if (!currentToken.equals(tokenAlgoType)) {
             throw new ParseException("error:" + lexer.getRowNumber() + ", "
                     + lexer.getColumnNumber() + ": excepted " + tokenAlgoType
-                    + " but encoutered " + currentToken.toString(), lexer
-                    .getRowNumber());
+                    + " but encoutered " + currentToken.toString(), lexer.getRowNumber());
         }
     }
 
@@ -131,11 +122,10 @@ public class AlgoSyntax {
         symbolTable.addSymbol(id(), type);
 
         try {
-
             match(TokenAlgoType.COMMA);
             parameter();
         } catch (ParseException e) {
-            // no other parameter
+            // No other parameter
         }
         return null;
     }
@@ -151,11 +141,11 @@ public class AlgoSyntax {
         case WHILE:
         case DO:
         case BREAK:
-
         }
+
         try {
             id();
-        } catch (Exception e) {
+        } catch (Exception ex) {
 
         }
     }
@@ -165,16 +155,19 @@ public class AlgoSyntax {
         match(TokenAlgoType.COLON);
         returnType();
         match(TokenAlgoType.SEMICOLON);
+
         return null;
     }
 
     private TypeAlgoNode returnType() throws Exception {
         match(TokenAlgoType.TYPE);
-        return null;// currentToken;
+
+        return null;
     }
 
     private TokenAlgo id() throws Exception {
         match(TokenAlgoType.ID);
+        
         return currentToken;
     }
 }

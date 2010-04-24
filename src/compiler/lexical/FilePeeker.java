@@ -1,14 +1,14 @@
 /*
- * FilePeeker.java 28/08/08
+ * FilePeeker.java v1.00 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -28,11 +28,9 @@ import java.io.IOException;
 
 /**
  * This class peek a character in a file.
- * 
- * @author Julien Hannier
- * @author Pierre Pironin
+ *
  * @author Damien Rigoni
- * @version 1.00
+ * @version 1.00 28/08/08
  */
 public class FilePeeker extends AbstractPeeker {
 
@@ -40,9 +38,8 @@ public class FilePeeker extends AbstractPeeker {
 
     private boolean fileClose = true;
 
-    private int peek = ' '; // current char in int
+    private int peek = ' ';
 
-    // Change to private when we are in java 7 with superpackage.
     @Deprecated
     public FilePeeker() {
         super("");
@@ -50,12 +47,14 @@ public class FilePeeker extends AbstractPeeker {
 
     public int read() throws IOException {
         int localPeek = file.read();
+
         if (peek == '\n') {
             ++rowNumber;
             columnNumber = 0;
         } else {
             ++columnNumber;
         }
+
         return localPeek;
     }
 
@@ -65,10 +64,12 @@ public class FilePeeker extends AbstractPeeker {
             return -1;
         } else {
             peek = read();
+
             if (peek == -1) {
                 file.close();
                 fileClose = true;
             }
+
             return peek;
         }
     }

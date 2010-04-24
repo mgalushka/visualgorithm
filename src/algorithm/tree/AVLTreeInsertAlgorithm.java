@@ -26,7 +26,8 @@ import model.tree.AVLTree;
 
 /**
  * This class defines the AVL tree insert algorithm. It is composed by the AVL
- * tree on which the algorithm is applied and the node to insert.
+ * tree on which the algorithm is applied and the node to insert. This class is
+ * not designed for inheritance.
  *
  * @author Damien Rigoni
  * @version 1.00 24/03/08

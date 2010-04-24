@@ -1,5 +1,5 @@
 /*
- * AlgoCompilerTest.java v1.00 01/09/08
+ * FastTreeCreationFunctionalTest.java v1.00 20/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,43 +19,36 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package compiler;
+package swing.tree;
 
-import java.io.File;
-import org.junit.Before;
-import org.junit.Test;
+import org.netbeans.jemmy.ClassReference;
+import org.netbeans.jemmy.Scenario;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
- * Test of the algorithm compiler.
+ * Functional test of the fast tree creation panel.
  *
- * @author Damien Rigoni
- * @version 1.00 01/09/08
+ * @author Julien Hannier
+ * @version 1.00 20/04/10
  */
-public class AlgoCompilerTest {
+public class FastTreeCreationFunctionalTest implements Scenario {
 
-    private static final String ALGO_FILE_NAME = "algo" + File.separator + "test.al";
-
-    private ICompiler compiler;
-
-    private ICompilerFactory factory;
-
-    @Before
-    public void setUp() {
-        factory = AlgoCompilerFactory.getInstance();
-        compiler = factory.newCompiler();
-    }
-
-    @Test
-    public void testCompileFile() {
+    @Override
+    public int runIt(Object param) {
         try {
-            compiler.compile(ALGO_FILE_NAME);
+            new ClassReference("main.Visualgorithm").startApplication();
+            JFrameOperator mainFrame = new JFrameOperator("Visualgorithm");
+
+            // TODO Test of the fast tree creation panel
         } catch (Exception ex) {
-            ex.printStackTrace();
+            return 1;
         }
+        return 0;
     }
 
-    @Test
-    public void testCompileInput() {
-        // TODO Test compile input
+    public static void main(String[] args) {
+        String[] params = { "swing.tree.FastTreeCreationFunctionalTest" };
+
+        org.netbeans.jemmy.Test.main(params);
     }
 }

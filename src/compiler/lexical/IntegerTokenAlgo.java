@@ -1,14 +1,14 @@
 /*
- * IntegerTokenAlgo.java 28/08/08
+ * IntegerTokenAlgo.java v1.00 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,14 +23,12 @@ package compiler.lexical;
 
 /**
  * A token which represents an integer.
- * 
- * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
- * @version 1.00@author Damien R.
  *
+ * @author Damien Rigoni
+ * @version 1.00 28/08/08
  */
 public class IntegerTokenAlgo extends TokenAlgo {
+    
     private final int integer;
     
     public IntegerTokenAlgo(String integer) {
@@ -38,11 +36,7 @@ public class IntegerTokenAlgo extends TokenAlgo {
         this.integer = Integer.valueOf(integer, 10);
     }
 
-    /**
-     * @return the integer
-     */
     public int getInteger() {
         return integer;
     }
-
 }

@@ -36,14 +36,8 @@ import model.tree.IBinaryTree;
 public abstract class AbstractBinaryTreeRightRotationAlgorithm<NodeType extends IBinaryNode, TreeType extends IBinaryTree>
         implements IBinaryTreeAlgorithm {
 
-    /**
-     * The binary tree on which the algorithm is applied.
-     */
     private TreeType tree;
 
-    /**
-     * The binary node on which the rotation is applied.
-     */
     private NodeType node;
 
     /**

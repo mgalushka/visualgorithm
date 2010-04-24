@@ -1,5 +1,5 @@
 /*
- * IBinaryTreeController.java v1.00 06/12/09
+ * IBinaryTreeAlgorithmStrategy.java v1.00 18/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -19,42 +19,28 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package controller;
-
-import io.tree.TreeFile;
-import view.IBinaryTreeView;
+package algorithm.tree;
 
 /**
- * This interface defines binary tree controllers. It must be implemented by all
- * the binary tree controllers. It is principally used in the software controller
- * and also in the binary tree view.
- *
+ * This interface defines binary tree algorithm strategies. Its goal is to link
+ * a type of binary tree to its algorithms. In order to do so, it uses the
+ * design pattern strategy. It must be implemented by all the binary tree
+ * algorithm strategies.
+ * 
  * @author Julien Hannier
- * @version 1.00 06/12/09
- * @see IDataStructureController
+ * @version 1.00 18/04/10
  */
-public interface IBinaryTreeController extends IDataStructureController {
+public interface IBinaryTreeAlgorithmStrategy {
 
     /**
-     * Definition of the extension of the binary tree files.
-     */
-    public static final String BINARY_TREE_FILE_EXTENSION = TreeFile.FILE_EXTENSION;
-
-    @Override
-    public IBinaryTreeView getView();
-
-    @Override
-    public IBinaryTreeController clone();
-
-    /**
-     * Adds a node into the binary tree. This method uses the insert
+     * Inserts a node into the binary tree. This method uses the insert
      * algorithm corresponding to the type of the binary tree. If it is
      * necessary, the binary tree is corrected. For instance, the balance of an
      * AVL tree is corrected after the insertion.
      *
-     * @param key the key of the node to add
+     * @param key the key of the node to insert
      */
-    public void addNodeToBinaryTreeModel(int key);
+    public void insertNode(int key);
 
     /**
      * Deletes a node from the binary tree. This method uses the delete
@@ -62,7 +48,7 @@ public interface IBinaryTreeController extends IDataStructureController {
      * necessary, the binary tree is corrected. For instance, the balance of an
      * AVL tree is corrected after the deletion.
      *
-     * @param key the key of the node to delete
+     * @param key the key of the node to delete 
      */
-    public void deleteNodeFromBinaryTreeModel(int key);
+    public void deleteNode(int key);
 }

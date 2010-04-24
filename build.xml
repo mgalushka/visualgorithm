@@ -3,7 +3,7 @@
   <property name="platform.version" value="1.6"/>
   <property name="platform.dir" location="/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/bin"/>
   <property name="project.name" value="Visualgorithm"/>
-  <property name="project.version" value="0.1"/>
+  <property name="project.version" value="1.0"/>
   <property name="project.encoding" value="UTF-8"/>
   <property name="main.class" value="main.Visualgorithm"/>
   <property name="src.dir" location="src"/>
@@ -97,6 +97,7 @@
       <test name="algorithm.tree.BinarySearchTreeDeleteAlgorithmTest"/>
       <test name="algorithm.tree.BinarySearchTreeInsertAlgorithmTest"/>
       <test name="algorithm.tree.BinarySearchTreeMinimumAlgorithmTest"/>
+      <test name="algorithm.tree.BinarySearchTreeSearchAlgorithmTest"/>
       <test name="algorithm.tree.BinarySearchTreeSuccessorAlgorithmTest"/>
       <test name="algorithm.tree.RedBlackTreeDeleteAlgorithmTest"/>
       <test name="algorithm.tree.RedBlackTreeInsertAlgorithmTest"/>

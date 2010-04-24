@@ -72,10 +72,14 @@ public class BinaryTreeModelTest {
         }
         assertEquals(btModel1.isDataStructureSaved(), true);
 
-        //TODO Test with algorithms
+        btModel1.insertRandomNodes(6);
+        btModel1.insertNode(45);
+        btModel1.deleteNode(23);
+        btModel2.insertRandomNodes(6);
+        btModel2.insertNode(45);
+        btModel2.deleteNode(23);
         btModel3.insertRandomNodes(6);
         btModel3.insertNode(45);
         btModel3.deleteNode(23);
-        btModel3.deleteNodeWithoutCorrection(89);
     }
 }

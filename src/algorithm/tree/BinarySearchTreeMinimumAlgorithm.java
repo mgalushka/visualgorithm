@@ -25,7 +25,8 @@ import model.tree.IBinarySearchNode;
 
 /**
  * This class defines the binary search tree minimum algorithm. It is composed
- * by the binary search node on which the algorithm is applied.
+ * by the binary search node on which the algorithm is applied. This class is
+ * not designed for inheritance.
  *
  * @author Damien Rigoni
  * @version 1.00 03/04/10
@@ -33,13 +34,10 @@ import model.tree.IBinarySearchNode;
  */
 public final class BinarySearchTreeMinimumAlgorithm implements IBinaryTreeAlgorithm {
 
-    /**
-     * The binary search node on which the algorithm is applied.
-     */
     private IBinarySearchNode node;
 
     /**
-     * Builds a binary search tree minimum algorithm.
+     * Builds the binary search tree minimum algorithm.
      *
      * @param n the binary search node on which the algorithm is applied
      */

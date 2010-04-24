@@ -21,6 +21,10 @@
 
 package model.tree;
 
+import algorithm.tree.AVLTreeAlgorithmStrategy;
+import algorithm.tree.BinarySearchTreeAlgorithmStrategy;
+import algorithm.tree.IBinaryTreeAlgorithmStrategy;
+import algorithm.tree.RedBlackTreeAlgorithmStrategy;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -46,6 +50,8 @@ public final class BinaryTreeModel implements IBinaryTreeModel {
 
     private IBinaryTree binaryTree;
 
+    private IBinaryTreeAlgorithmStrategy algorithmStrategy;
+
     private EventListenerList listeners;
 
     private boolean isBinaryTreeSaved;
@@ -57,10 +63,11 @@ public final class BinaryTreeModel implements IBinaryTreeModel {
      * @param type the type of the binary tree
      */
     public BinaryTreeModel(BinaryTreeType type) {
-        // TODO The binary tree might be null
         binaryTree = type.createBinaryTree();
         listeners = new EventListenerList();
         isBinaryTreeSaved = false;
+
+        setBinaryTreeAlgorithmStrategy();
     }
 
     /**
@@ -79,6 +86,22 @@ public final class BinaryTreeModel implements IBinaryTreeModel {
         binaryTree = TreeFile.load(file.getAbsolutePath());
         listeners = new EventListenerList();
         isBinaryTreeSaved = true;
+
+        setBinaryTreeAlgorithmStrategy();
+    }
+
+    /**
+     * Sets the binary tree algorithm strategy in order to call the algorithms
+     * corresponding to the type of the binary tree.
+     */
+    public void setBinaryTreeAlgorithmStrategy() {
+        if (binaryTree instanceof BinarySearchTree) {
+            algorithmStrategy = new BinarySearchTreeAlgorithmStrategy((BinarySearchTree) binaryTree);
+        } else if (binaryTree instanceof AVLTree) {
+            algorithmStrategy = new AVLTreeAlgorithmStrategy((AVLTree) binaryTree);
+        } else if (binaryTree instanceof RedBlackTree) {
+            algorithmStrategy = new RedBlackTreeAlgorithmStrategy((RedBlackTree) binaryTree);
+        }
     }
 
     @Override
@@ -128,8 +151,8 @@ public final class BinaryTreeModel implements IBinaryTreeModel {
     public void insertRandomNodes(int nbNode) {
         for (int i = 0; i < nbNode; i++) {
             int key = (int) Math.round(Math.random() * 99);
-            // TODO Insertion
-            System.out.println(key);
+            
+            algorithmStrategy.insertNode(key);
         }
         updateListeners();
         isBinaryTreeSaved = false;
@@ -137,24 +160,16 @@ public final class BinaryTreeModel implements IBinaryTreeModel {
 
     @Override
     public void insertNode(int key) throws IllegalArgumentException {
-        // TODO Insertion
-        System.out.println(key);
+        algorithmStrategy.insertNode(key);
+        
         updateListeners();
         isBinaryTreeSaved = false;
     }
 
     @Override
     public void deleteNode(int key) {
-        // TODO Deletion
-        System.out.println(key);
-        updateListeners();
-        isBinaryTreeSaved = false;
-    }
+        algorithmStrategy.deleteNode(key);
 
-    @Override
-    public void deleteNodeWithoutCorrection(int key) {
-        // TODO Deletion with BST delete algorithm
-        System.out.println(key);
         updateListeners();
         isBinaryTreeSaved = false;
     }

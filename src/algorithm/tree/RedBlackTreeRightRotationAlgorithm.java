@@ -27,7 +27,7 @@ import model.tree.RedBlackTree;
 /**
  * This class defines the red black tree right rotation algorithm. It is
  * composed by the red black tree on which the algorithm is applied and the node
- * on which the rotation is applied.
+ * on which the rotation is applied. This class is not designed for inheritance.
  * 
  * @author Damien Rigoni
  * @version 1.00 24/03/08

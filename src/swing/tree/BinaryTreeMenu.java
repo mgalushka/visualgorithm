@@ -28,6 +28,7 @@ import javax.swing.JMenuItem;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
 import swing.AbstractDataStructureMenu;
 
@@ -117,6 +118,9 @@ public final class BinaryTreeMenu extends AbstractDataStructureMenu {
             @Override
             public void actionPerformed(ActionEvent event) {
                 // TODO Display information
+                JOptionPane.showMessageDialog((JFrame) softwareController.getView(),
+                        "Operation not implemented yet!", "Information",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         });
         binarySearchTreeMenuItem.addActionListener(new ActionListener() {
@@ -124,6 +128,9 @@ public final class BinaryTreeMenu extends AbstractDataStructureMenu {
             @Override
             public void actionPerformed(ActionEvent event) {
                 // TODO Display information
+                JOptionPane.showMessageDialog((JFrame) softwareController.getView(),
+                        "Operation not implemented yet!", "Information",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         });
         redBlackTreeMenuItem.addActionListener(new ActionListener() {
@@ -131,6 +138,9 @@ public final class BinaryTreeMenu extends AbstractDataStructureMenu {
             @Override
             public void actionPerformed(ActionEvent event) {
                 // TODO Display information
+                JOptionPane.showMessageDialog((JFrame) softwareController.getView(),
+                        "Operation not implemented yet!", "Information",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         });
         infoTreeMenuItems.add(binarySearchTreeMenuItem);

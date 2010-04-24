@@ -1,14 +1,14 @@
 /*
- * LexicalException.java 05/09/08
+ * LexicalException.java v1.00 05/09/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -21,15 +21,11 @@
 
 package compiler.lexical;
 
-
 /**
  * Represents a lexical exception.
- * 
- * @author Julien Hannier
- * @author Pierre Pironin
- * @author Damien Rigoni
- * @version 1.00
  *
+ * @author Damien Rigoni
+ * @version 1.00 05/09/08
  */
 public class LexicalException extends Exception {
     
@@ -41,16 +37,13 @@ public class LexicalException extends Exception {
     
     private final int columnNumber;
     
-    /**
-     * @param aChar
-     * @param rowNumber
-     * @param columnNumber
-     */
-    public LexicalException(final char aChar, final int rowNumber, final int columnNumber) {
-        super("Encoutered an unknown char: " + aChar + " on row: " + rowNumber + " and column: " + columnNumber + ".");
-        this.aChar = aChar;
-        this.rowNumber = rowNumber;
-        this.columnNumber = columnNumber;
+    public LexicalException(final char ch, final int rowNb, final int columnNb) {
+        super("Encoutered an unknown char: " + ch + " on row: " + rowNb +
+                " and column: " + columnNb + ".");
+
+        aChar = ch;
+        rowNumber = rowNb;
+        columnNumber = columnNb;
     }
 
     final public int getRowNumber() {
