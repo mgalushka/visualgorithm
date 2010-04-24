@@ -1,5 +1,5 @@
 /*
- * IdAlgoNode.java v1.00 12/10/08
+ * IdAlgoNode.java v0.10 12/10/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -28,7 +28,7 @@ import compiler.lexical.TokenAlgo.TokenAlgoType;
  *
  *
  * @author Damien Rigoni
- * @version 1.00 12/10/08
+ * @version 0.10 12/10/08
  */
 public class IdAlgoNode extends AlgoNode {
     

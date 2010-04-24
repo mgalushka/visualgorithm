@@ -1,5 +1,5 @@
 /*
- * AbstractBinaryTreeCreationPanel.java v1.00 08/01/10
+ * AbstractBinaryTreeCreationPanel.java v0.10 08/01/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -40,7 +40,7 @@ import model.tree.IBinaryNode;
  * panels thanks to the design pattern template method.
  *
  * @author Julien Hannier
- * @version 1.00 08/01/10
+ * @version 0.10 08/01/10
  */
 abstract class AbstractBinaryTreeCreationPanel extends JPanel {
 

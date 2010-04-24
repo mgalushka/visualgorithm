@@ -1,5 +1,5 @@
 /*
- * BinarySearchTreeAlgorithmStrategy.java v1.00 18/04/10
+ * BinarySearchTreeAlgorithmStrategy.java v0.10 18/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -30,7 +30,7 @@ import model.tree.BinarySearchTree;
  * designed for inheritance.
  *
  * @author Julien Hannier
- * @version 1.00 18/04/10
+ * @version 0.10 18/04/10
  * @see IBinaryTreeAlgorithmStrategy
  */
 public final class BinarySearchTreeAlgorithmStrategy implements IBinaryTreeAlgorithmStrategy {

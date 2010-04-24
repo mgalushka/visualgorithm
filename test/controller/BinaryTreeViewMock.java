@@ -1,5 +1,5 @@
 /*
- * BinaryTreeViewMock.java v1.00 04/06/09
+ * BinaryTreeViewMock.java v0.10 04/06/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -28,7 +28,7 @@ import model.tree.BinaryTreeModelEvent;
  * Mock of the binary tree view for the tests of controllers.
  * 
  * @author Julien Hannier
- * @version 1.00 04/06/09
+ * @version 0.10 04/06/09
  * @see IBinaryTreeView
  */
 public class BinaryTreeViewMock implements IBinaryTreeView {

@@ -1,5 +1,5 @@
 /*
- * BinarySearchTree.java v1.00 19/05/08
+ * BinarySearchTree.java v0.10 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -26,7 +26,7 @@ package model.tree;
  * <tt>BinarySearchNode</tt>. It is not designed for inheritance.
  *
  * @author Damien Rigoni
- * @version 1.00 19/05/08
+ * @version 0.10 19/05/08
  * @see IBinarySearchTree
  */
 public final class BinarySearchTree extends

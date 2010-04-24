@@ -1,5 +1,5 @@
 /*
- * IDataStructureMenu.java v1.00 13/12/09
+ * IDataStructureMenu.java v0.10 13/12/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -29,7 +29,7 @@ import controller.ISoftwareController;
  * class. It is principally used in the view of the software.
  *
  * @author Julien Hannier
- * @version 1.00 13/12/09
+ * @version 0.10 13/12/09
  */
 public interface IDataStructureMenu {
 

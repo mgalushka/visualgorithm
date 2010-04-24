@@ -1,5 +1,5 @@
 /*
- * SoftwareModelEvent.java v1.00 16/06/08
+ * SoftwareModelEvent.java v0.10 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -30,7 +30,7 @@ import java.util.EventObject;
  * <tt>DELETE</tt> and <tt>INSERT</tt>. It is not designed for inheritance.
  *
  * @author Julien Hannier
- * @version 1.00 16/06/08
+ * @version 0.10 16/06/08
  */
 public class SoftwareModelEvent extends EventObject {
 
@@ -42,7 +42,7 @@ public class SoftwareModelEvent extends EventObject {
      * that is for the insertion of a data structure model.
      * 
      * @author Julien Hannier
-     * @version 1.00 16/06/08
+     * @version 0.10 16/06/08
      */
     public enum SoftwareModelEventType {
         CLEAR, DELETE, INSERT

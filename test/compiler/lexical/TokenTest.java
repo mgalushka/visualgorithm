@@ -1,5 +1,5 @@
 /*
- * TokenTest.java v1.00 01/09/08
+ * TokenTest.java v0.10 01/09/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -32,7 +32,7 @@ import org.junit.Test;
  * Test of the token.
  *
  * @author Damien Rigoni
- * @version 1.00 01/09/08
+ * @version 0.10 01/09/08
  */
 public class TokenTest {
 

@@ -1,5 +1,5 @@
 /*
- * AbstractBinaryTreeVisualization.java v1.00 16/06/08
+ * AbstractBinaryTreeVisualization.java v0.10 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -51,7 +51,7 @@ import swing.tree.GraphicNode.GraphicNodeSize;
  * the design pattern template method.
  * 
  * @author Julien Hannier
- * @version 1.00 16/06/08
+ * @version 0.10 16/06/08
  */
 abstract class AbstractBinaryTreeVisualization extends JPanel {
 

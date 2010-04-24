@@ -1,5 +1,5 @@
 /*
- * ISoftwareModel.java v1.00 06/12/09
+ * ISoftwareModel.java v0.10 06/12/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -26,7 +26,7 @@ package model;
  * software model. It is principally used in the software controller.
  *
  * @author Julien Hannier
- * @version 1.00 06/12/09
+ * @version 0.10 06/12/09
  * @see IModel
  */
 public interface ISoftwareModel extends IModel {

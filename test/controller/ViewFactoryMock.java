@@ -1,5 +1,5 @@
 /*
- * ViewFactoryMock.java v1.00 04/06/09
+ * ViewFactoryMock.java v0.10 04/06/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -29,7 +29,7 @@ import view.AbstractViewFactory;
  * Mock of the view Factory for the tests of controllers.
  * 
  * @author Julien Hannier
- * @version 1.00 04/06/09
+ * @version 0.10 04/06/09
  * @see AbstractViewFactory
  */
 public class ViewFactoryMock extends AbstractViewFactory {

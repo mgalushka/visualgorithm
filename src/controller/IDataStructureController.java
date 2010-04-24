@@ -1,5 +1,5 @@
 /*
- * IDataStructureController.java v1.00 07/07/08
+ * IDataStructureController.java v0.10 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -40,7 +40,7 @@ import view.IDataStructureView;
  * controller.
  * 
  * @author Julien Hannier
- * @version 1.00 07/07/08
+ * @version 0.10 07/07/08
  * @see IController
  */
 public interface IDataStructureController extends IController {

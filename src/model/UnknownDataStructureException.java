@@ -1,5 +1,5 @@
 /*
- * UnknownDataStructureException.java v1.00 02/07/08
+ * UnknownDataStructureException.java v0.10 02/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -27,7 +27,7 @@ package model;
  * loading of a data structure from a file.
  * 
  * @author Damien Rigoni
- * @version 1.00 02/07/08
+ * @version 0.10 02/07/08
  */
 public class UnknownDataStructureException extends Exception {
 

@@ -1,5 +1,5 @@
 /*
- * RedBlackTreeFileTest.java v1.00 07/07/08
+ * RedBlackTreeFileTest.java v0.10 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -33,7 +33,7 @@ import org.junit.Test;
  * Test of the loading and saving of a red black tree.
  * 
  * @author Damien Rigoni
- * @version 1.00 07/07/08
+ * @version 0.10 07/07/08
  */
 public class RedBlackTreeFileTest {
 

@@ -1,5 +1,5 @@
 /*
- * RedBlackTreeDeleteAlgorithmTest.java v1.00 05/04/10
+ * RedBlackTreeDeleteAlgorithmTest.java v0.10 05/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -31,7 +31,7 @@ import model.tree.RedBlackTree;
  * Test of the red black tree delete algorithm.
  *
  * @author Damien Rigoni
- * @version 1.00 05/04/10
+ * @version 0.10 05/04/10
  */
 public class RedBlackTreeDeleteAlgorithmTest {
 

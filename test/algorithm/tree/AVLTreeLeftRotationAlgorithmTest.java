@@ -1,5 +1,5 @@
 /*
- * AVLTreeLeftRotationAlgorithmTest.java v1.00 05/04/10
+ * AVLTreeLeftRotationAlgorithmTest.java v0.10 05/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -31,7 +31,7 @@ import model.tree.AVLTree;
  * Test of the AVL tree left rotation algorithm.
  *
  * @author Damien Rigoni
- * @version 1.00 05/04/10
+ * @version 0.10 05/04/10
  */
 public class AVLTreeLeftRotationAlgorithmTest {
 

@@ -1,5 +1,5 @@
 /*
- * FastTreeCreationFunctionalTest.java v1.00 20/04/10
+ * FastTreeCreationFunctionalTest.java v0.10 20/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -29,7 +29,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  * Functional test of the fast tree creation panel.
  *
  * @author Julien Hannier
- * @version 1.00 20/04/10
+ * @version 0.10 20/04/10
  */
 public class FastTreeCreationFunctionalTest implements Scenario {
 

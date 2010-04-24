@@ -1,5 +1,5 @@
 /*
- * AlgoNode.java v1.00 12/10/08
+ * AlgoNode.java v0.10 12/10/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -28,7 +28,7 @@ import java.util.List;
  *
  *
  * @author Damien Rigoni
- * @version 1.00 12/10/08
+ * @version 0.10 12/10/08
  */
 public abstract class AlgoNode {
 

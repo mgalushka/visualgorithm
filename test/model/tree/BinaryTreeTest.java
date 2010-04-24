@@ -1,5 +1,5 @@
 /*
- * BinaryTreeTest.java v1.00 25/02/09
+ * BinaryTreeTest.java v0.10 25/02/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -33,7 +33,7 @@ import org.junit.Test;
  * red black tree.
  * 
  * @author Julien Hannier
- * @version 1.00 25/02/09
+ * @version 0.10 25/02/09
  */
 public class BinaryTreeTest {
 

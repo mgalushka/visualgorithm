@@ -1,5 +1,5 @@
 /*
- * package-info.java v1.00 01/03/09
+ * package-info.java v0.10 01/03/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -27,6 +27,6 @@
  * factory that is used by controllers.
  * 
  * @author Julien Hannier
- * @version 1.00 01/03/09
+ * @version 0.10 01/03/09
  */
 package view;

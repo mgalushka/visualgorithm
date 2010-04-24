@@ -1,5 +1,5 @@
 /*
- * package-info.java v1.00 14/03/10
+ * package-info.java v0.10 14/03/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -24,6 +24,6 @@
  * are made with static methods that can be used everywhere in the application.
  * 
  * @author Julien Hannier
- * @version 1.00 14/03/10
+ * @version 0.10 14/03/10
  */
 package util;

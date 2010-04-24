@@ -1,5 +1,5 @@
 /*
- * IBinaryTreeAlgorithmStrategy.java v1.00 18/04/10
+ * IBinaryTreeAlgorithmStrategy.java v0.10 18/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -28,7 +28,7 @@ package algorithm.tree;
  * algorithm strategies.
  * 
  * @author Julien Hannier
- * @version 1.00 18/04/10
+ * @version 0.10 18/04/10
  */
 public interface IBinaryTreeAlgorithmStrategy {
 

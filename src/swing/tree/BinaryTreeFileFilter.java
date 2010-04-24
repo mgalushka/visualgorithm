@@ -1,5 +1,5 @@
 /*
- * BinaryTreeFileFilter.java v1.00 26/10/08
+ * BinaryTreeFileFilter.java v0.10 26/10/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -31,7 +31,7 @@ import javax.swing.filechooser.FileFilter;
  * the <tt>SoftwareViewIOOperation</tt> class.
  * 
  * @author Julien Hannier
- * @version 1.00 26/10/08
+ * @version 0.10 26/10/08
  */
 public final class BinaryTreeFileFilter extends FileFilter {
 

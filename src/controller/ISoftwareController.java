@@ -1,5 +1,5 @@
 /*
- * ISoftwareController.java v1.00 06/12/09
+ * ISoftwareController.java v0.10 06/12/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -35,7 +35,7 @@ import view.ISoftwareView;
  * of the software.
  *
  * @author Julien Hannier
- * @version 1.00 06/12/09
+ * @version 0.10 06/12/09
  * @see IController
  */
 public interface ISoftwareController extends IController {

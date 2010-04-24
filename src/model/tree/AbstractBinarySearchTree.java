@@ -1,5 +1,5 @@
 /*
- * AbstractBinarySearchTree.java v1.00 19/05/08
+ * AbstractBinarySearchTree.java v0.10 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -27,7 +27,7 @@ package model.tree;
  * search tree classes like AVLTree, etc.
  * 
  * @author Damien Rigoni
- * @version 1.00 19/05/08
+ * @version 0.10 19/05/08
  * @see IBinarySearchTree
  */
 public abstract class AbstractBinarySearchTree extends AbstractBinaryTree

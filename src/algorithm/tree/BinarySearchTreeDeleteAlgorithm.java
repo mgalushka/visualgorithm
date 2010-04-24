@@ -1,5 +1,5 @@
 /*
- * BinarySearchTreeDeleteAlgorithm.java v1.00 03/04/10
+ * BinarySearchTreeDeleteAlgorithm.java v0.10 03/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -30,7 +30,7 @@ import model.tree.BinarySearchTree;
  * delete. This class is not designed for inheritance.
  *
  * @author Damien Rigoni
- * @version 1.00 24/03/08
+ * @version 0.10 24/03/08
  * @see AbstractBinarySearchTreeDeleteAlgorithm
  */
 public final class BinarySearchTreeDeleteAlgorithm

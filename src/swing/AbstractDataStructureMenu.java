@@ -1,5 +1,5 @@
 /*
- * AbstractDataStructureMenu.java v1.00 13/12/09
+ * AbstractDataStructureMenu.java v0.10 13/12/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -36,7 +36,7 @@ import javax.swing.JMenuItem;
  * thanks to the design pattern template method.
  *
  * @author Julien Hannier
- * @version 1.00 13/12/09
+ * @version 0.10 13/12/09
  * @see IDataStructureMenu
  */
 public abstract class AbstractDataStructureMenu extends JMenu implements IDataStructureMenu {

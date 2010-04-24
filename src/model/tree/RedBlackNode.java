@@ -1,5 +1,5 @@
 /*
- * RedBlackNode.java v1.00 19/05/08
+ * RedBlackNode.java v0.10 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -27,7 +27,7 @@ package model.tree;
  * the node.
  * 
  * @author Damien Rigoni
- * @version 1.00 19/05/08
+ * @version 0.10 19/05/08
  * @see IRedBlackNode
  */
 public final class RedBlackNode extends AbstractBinarySearchNode implements
@@ -37,7 +37,7 @@ public final class RedBlackNode extends AbstractBinarySearchNode implements
      * This enumeration defines the two different colors of red black nodes.
      * 
      * @author Damien Rigoni
-     * @version 1.00 19/05/08
+     * @version 0.10 19/05/08
      */
     public static enum RedBlackNodeColor {
         RED, BLACK;

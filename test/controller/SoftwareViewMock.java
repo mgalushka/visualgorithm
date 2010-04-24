@@ -1,5 +1,5 @@
 /*
- * SoftwareViewMock.java v1.00 04/06/09
+ * SoftwareViewMock.java v0.10 04/06/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -28,7 +28,7 @@ import view.ISoftwareView;
  * Mock of the software view for the tests of controllers.
  * 
  * @author Julien Hannier
- * @version 1.00 04/06/09
+ * @version 0.10 04/06/09
  * @see ISoftwareView
  */
 public class SoftwareViewMock implements ISoftwareView {

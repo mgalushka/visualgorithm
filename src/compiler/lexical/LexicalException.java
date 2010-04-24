@@ -1,5 +1,5 @@
 /*
- * LexicalException.java v1.00 05/09/08
+ * LexicalException.java v0.10 05/09/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -25,7 +25,7 @@ package compiler.lexical;
  * Represents a lexical exception.
  *
  * @author Damien Rigoni
- * @version 1.00 05/09/08
+ * @version 0.10 05/09/08
  */
 public class LexicalException extends Exception {
     

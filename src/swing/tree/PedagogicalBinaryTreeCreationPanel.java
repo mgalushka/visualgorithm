@@ -1,5 +1,5 @@
 /*
- * PedagogicalBinaryTreeCreationPanel.java v1.00 07/07/08
+ * PedagogicalBinaryTreeCreationPanel.java v0.10 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -45,7 +45,7 @@ import controller.IBinaryTreeController;
  * class is not designed for inheritance.
  * 
  * @author Julien Hannier
- * @version 1.00 07/07/08
+ * @version 0.10 07/07/08
  * @see AbstractBinaryTreeCreationPanel
  */
 final class PedagogicalBinaryTreeCreationPanel extends AbstractBinaryTreeCreationPanel {

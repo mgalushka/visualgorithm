@@ -1,5 +1,5 @@
 /*
- * BinarySearchTreeSearchAlgorithmTest.java v1.00 17/04/10
+ * BinarySearchTreeSearchAlgorithmTest.java v0.10 17/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -32,7 +32,7 @@ import model.tree.BinarySearchTree;
  * Test of the binary search tree search algorithm.
  *
  * @author Damien Rigoni
- * @version 1.00 17/04/10
+ * @version 0.10 17/04/10
  */
 public class BinarySearchTreeSearchAlgorithmTest {
     

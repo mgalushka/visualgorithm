@@ -1,5 +1,5 @@
 /*
- * IDataStructure.java v1.00 16/06/08
+ * IDataStructure.java v0.10 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -27,7 +27,7 @@ package model;
  * structure models.
  * 
  * @author Julien Hannier
- * @version 1.00 16/06/08
+ * @version 0.10 16/06/08
  */
 public interface IDataStructure {
 

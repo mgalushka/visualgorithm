@@ -1,5 +1,5 @@
 /*
- * AVLTreeFile.java v1.00 02/07/08
+ * AVLTreeFile.java v0.10 02/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -31,7 +31,7 @@ import model.tree.IBinaryNode;
  * <tt>TreeFile</tt>.
  * 
  * @author Damien Rigoni
- * @version 1.00 02/07/08
+ * @version 0.10 02/07/08
  * @see TreeFile
  */
 final class AVLTreeFile extends TreeFile {

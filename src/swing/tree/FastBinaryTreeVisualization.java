@@ -1,5 +1,5 @@
 /*
- * FastBinaryTreeVisualization.java v1.00 01/08/08
+ * FastBinaryTreeVisualization.java v0.10 01/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -34,7 +34,7 @@ import java.awt.Graphics;
  * a delete mode with the cursor. This class is not designed for inheritance.
  * 
  * @author Julien Hannier
- * @version 1.00 01/08/08
+ * @version 0.10 01/08/08
  * @see AbstractBinaryTreeVisualization
  */
 final class FastBinaryTreeVisualization extends AbstractBinaryTreeVisualization {

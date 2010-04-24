@@ -1,5 +1,5 @@
 /*
- * SoftwareModelTest.java v1.00 07/07/08
+ * SoftwareModelTest.java v0.10 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -32,7 +32,7 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  * Test of the software model.
  * 
  * @author Julien Hannier
- * @version 1.00 07/07/08
+ * @version 0.10 07/07/08
  */
 public class SoftwareModelTest {
 

@@ -1,5 +1,5 @@
 /*
- * TokenAlgo.java v1.00 28/08/08
+ * TokenAlgo.java v0.10 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -26,7 +26,7 @@ package compiler.lexical;
  * TokenAlgoFactory.
  *
  * @author Damien Rigoni
- * @version 1.00 28/08/08
+ * @version 0.10 28/08/08
  */
 public class TokenAlgo {
 

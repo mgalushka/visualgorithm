@@ -1,5 +1,5 @@
 /*
- * PedagogicalBinaryTreeVisualization.java v1.00 01/08/08
+ * PedagogicalBinaryTreeVisualization.java v0.10 01/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -37,7 +37,7 @@ import controller.IBinaryTreeController;
  * tree. This class is not designed for inheritance.
  * 
  * @author Julien Hannier
- * @version 1.00 01/08/08
+ * @version 0.10 01/08/08
  * @see AbstractBinaryTreeVisualization
  */
 final class PedagogicalBinaryTreeVisualization extends AbstractBinaryTreeVisualization {

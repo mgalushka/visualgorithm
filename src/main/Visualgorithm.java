@@ -1,5 +1,5 @@
 /*
- * Visualgorithm.java v1.00 16/06/08
+ * Visualgorithm.java v0.10 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -34,7 +34,7 @@ import model.SoftwareModel;
  * inheritance.
  * 
  * @author Julien Hannier
- * @version 1.00 16/06/08
+ * @version 0.10 16/06/08
  */
 public final class Visualgorithm {
 

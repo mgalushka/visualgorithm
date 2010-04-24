@@ -1,5 +1,5 @@
 /*
- * ImageLoadingUtility.java v1.00 14/03/10
+ * ImageLoadingUtility.java v0.10 14/03/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -31,7 +31,7 @@ import javax.imageio.ImageIO;
  * so it cannot be instanciated. This class is not designed for inheritance.
  *
  * @author Julien Hannier
- * @version 1.00 14/03/10
+ * @version 0.10 14/03/10
  */
 public final class ImageLoadingUtility {
 

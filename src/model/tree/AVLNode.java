@@ -1,5 +1,5 @@
 /*
- * AVLNode.java v1.00 19/05/08
+ * AVLNode.java v0.10 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -26,7 +26,7 @@ package model.tree;
  * These nodes contain a specific attribute which is the height of the node.
  * 
  * @author Damien Rigoni
- * @version 1.00 19/05/08
+ * @version 0.10 19/05/08
  * @see IAVLNode
  */
 public final class AVLNode extends AbstractBinarySearchNode implements IAVLNode {

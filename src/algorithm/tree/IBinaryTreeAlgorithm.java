@@ -1,5 +1,5 @@
 /*
- * IBinaryTreeAlgorithm.java v1.00 09/07/08
+ * IBinaryTreeAlgorithm.java v0.10 09/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -27,7 +27,7 @@ package algorithm.tree;
  * create a constructor with the desired parameters.
  * 
  * @author Damien Rigoni
- * @version 1.00 09/07/08
+ * @version 0.10 09/07/08
  */
 public interface IBinaryTreeAlgorithm {
 

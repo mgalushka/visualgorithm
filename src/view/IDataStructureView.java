@@ -1,5 +1,5 @@
 /*
- * IDataStructureView.java v1.00 06/12/09
+ * IDataStructureView.java v0.10 06/12/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -28,7 +28,7 @@ package view;
  * through a more specific interface.
  *
  * @author Julien Hannier
- * @version 1.00 06/12/09
+ * @version 0.10 06/12/09
  * @see IView
  */
 public interface IDataStructureView extends IView {

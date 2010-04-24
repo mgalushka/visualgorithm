@@ -1,5 +1,5 @@
 /*
- * AlgoLexer.java v1.00 28/08/08
+ * AlgoLexer.java v0.10 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -27,7 +27,7 @@ import compiler.lexical.TokenAlgo.TokenAlgoType;
  * This is the lexer for the algo compiler.
  *
  * @author Damien Rigoni
- * @version 1.00 28/08/08
+ * @version 0.10 28/08/08
  */
 public class AlgoLexer implements ILexer {
 

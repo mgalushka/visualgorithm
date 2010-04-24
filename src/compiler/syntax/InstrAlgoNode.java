@@ -1,5 +1,5 @@
 /*
- * InstrAlgoNode.java v1.00 12/10/08
+ * InstrAlgoNode.java v0.10 12/10/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -25,7 +25,7 @@ package compiler.syntax;
  *
  *
  * @author Damien Rigoni
- * @version 1.00 12/10/08
+ * @version 0.10 12/10/08
  */
 public class InstrAlgoNode extends AlgoNode {
 }

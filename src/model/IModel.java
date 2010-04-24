@@ -1,5 +1,5 @@
 /*
- * IModel.java v1.00 06/12/09
+ * IModel.java v0.10 06/12/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -31,7 +31,7 @@ import java.util.EventListener;
  * the model.
  *
  * @author Julien Hannier
- * @version 1.00 06/12/09
+ * @version 0.10 06/12/09
  */
 public interface IModel {
     

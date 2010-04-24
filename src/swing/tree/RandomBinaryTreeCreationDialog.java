@@ -1,5 +1,5 @@
 /*
- * RandomBinaryTreeCreationDialog.java v1.00 12/07/08
+ * RandomBinaryTreeCreationDialog.java v0.10 12/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -47,7 +47,7 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  * nodes of the tree. This class is not designed for inheritance.
  * 
  * @author Julien Hannier
- * @version 1.00 12/07/08
+ * @version 0.10 12/07/08
  */
 final class RandomBinaryTreeCreationDialog extends JDialog {
 

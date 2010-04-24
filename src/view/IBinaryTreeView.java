@@ -1,5 +1,5 @@
 /*
- * IBinaryTreeView.java v1.00 16/06/08
+ * IBinaryTreeView.java v0.10 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -29,7 +29,7 @@ import model.tree.BinaryTreeModelListener;
  * This interface is used in the abstract view factory.
  * 
  * @author Julien Hannier
- * @version 1.00 16/06/08
+ * @version 0.10 16/06/08
  * @see IDataStructureView
  * @see BinaryTreeModelListener
  */

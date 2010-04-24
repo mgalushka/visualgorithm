@@ -1,5 +1,5 @@
 /*
- * BinaryTreeMenu.java v1.00 26/10/08
+ * BinaryTreeMenu.java v0.10 26/10/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -39,7 +39,7 @@ import swing.AbstractDataStructureMenu;
  * This class is not designed for inheritance.
  * 
  * @author Julien Hannier
- * @version 1.00 26/10/08
+ * @version 0.10 26/10/08
  * @see AbstractDataStructureMenu
  */
 public final class BinaryTreeMenu extends AbstractDataStructureMenu {

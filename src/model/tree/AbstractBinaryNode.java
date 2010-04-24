@@ -1,5 +1,5 @@
 /*
- * AbstractBinaryNode.java v1.00 19/05/08
+ * AbstractBinaryNode.java v0.10 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -27,7 +27,7 @@ package model.tree;
  * classes like BinaryNode.
  * 
  * @author Damien Rigoni
- * @version 1.00 19/05/08
+ * @version 0.10 19/05/08
  * @see IBinaryNode
  */
 public abstract class AbstractBinaryNode implements IBinaryNode {

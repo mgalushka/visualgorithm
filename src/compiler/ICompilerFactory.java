@@ -1,5 +1,5 @@
 /*
- * ICompilerFactory.java v1.00 28/08/08
+ * ICompilerFactory.java v0.10 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -27,7 +27,7 @@ import compiler.lexical.ILexer;
  * This factory provide an easy way to get a compiler.
  *
  * @author Damien Rigoni
- * @version 1.00 28/08/08
+ * @version 0.10 28/08/08
  */
 public interface ICompilerFactory {
 

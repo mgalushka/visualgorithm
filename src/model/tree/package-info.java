@@ -1,5 +1,5 @@
 /*
- * package-info.java v1.00 10/02/09
+ * package-info.java v0.10 10/02/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -29,6 +29,6 @@
  * to implement the interface <tt>IDataStructure</tt> from the parent package.
  * 
  * @author Julien Hannier
- * @version 1.00 10/02/09
+ * @version 0.10 10/02/09
  */
 package model.tree;

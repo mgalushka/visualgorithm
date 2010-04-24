@@ -1,5 +1,5 @@
 /*
- * ImageLoadingUtilityTest.java v1.00 14/03/10
+ * ImageLoadingUtilityTest.java v0.10 14/03/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -29,7 +29,7 @@ import org.junit.Before;
  * Test of the image loading utility.
  *
  * @author Julien Hannier
- * @version 1.00 14/03/10
+ * @version 0.10 14/03/10
  */
 public class ImageLoadingUtilityTest {
 

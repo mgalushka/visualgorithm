@@ -1,5 +1,5 @@
 /*
- * TreeFile.java v1.00 02/07/08
+ * TreeFile.java v0.10 02/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -51,7 +51,7 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  * {@code fileParser} in this class.
  *
  * @author Damien Rigoni
- * @version 1.00 02/07/08
+ * @version 0.10 02/07/08
  */
 public abstract class TreeFile {
 

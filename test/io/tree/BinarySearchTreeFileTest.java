@@ -1,5 +1,5 @@
 /*
- * BinarySearchTreeFileTest.java v1.00 07/07/08
+ * BinarySearchTreeFileTest.java v0.10 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -32,7 +32,7 @@ import org.junit.Test;
  * Test of the loading and saving of a binary search tree.
  * 
  * @author Damien Rigoni
- * @version 1.00 07/07/08
+ * @version 0.10 07/07/08
  */
 public class BinarySearchTreeFileTest {
 

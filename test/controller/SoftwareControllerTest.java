@@ -1,5 +1,5 @@
 /*
- * SoftwareControllerTest.java v1.00 30/05/09
+ * SoftwareControllerTest.java v0.10 30/05/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -36,7 +36,7 @@ import view.AbstractViewFactory;
  * Test of the software controller.
  * 
  * @author Julien Hannier
- * @version 1.00 30/05/09
+ * @version 0.10 30/05/09
  */
 public class SoftwareControllerTest {
 

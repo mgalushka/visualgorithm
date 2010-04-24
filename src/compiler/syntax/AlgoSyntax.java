@@ -1,5 +1,5 @@
 /*
- * AlgoSyntax.java v1.00 31/08/08
+ * AlgoSyntax.java v0.10 31/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -31,7 +31,7 @@ import java.text.ParseException;
  * Parse and create an AST.
  *
  * @author Damien Rigoni
- * @version 1.00 31/08/08
+ * @version 0.10 31/08/08
  */
 public class AlgoSyntax {
 

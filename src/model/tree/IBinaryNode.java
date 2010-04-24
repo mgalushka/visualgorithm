@@ -1,5 +1,5 @@
 /*
- * IBinaryNode.java v1.00 19/05/08
+ * IBinaryNode.java v0.10 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -31,7 +31,7 @@ package model.tree;
  * used. If not, an IllegalArgumentException is thrown.
  * 
  * @author Damien Rigoni
- * @version 1.00 19/05/08
+ * @version 0.10 19/05/08
  */
 public interface IBinaryNode {
 

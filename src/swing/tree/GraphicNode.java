@@ -1,5 +1,5 @@
 /*
- * GraphicNode.java v1.00 16/06/08
+ * GraphicNode.java v0.10 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -35,7 +35,7 @@ import util.ImageLoadingUtility;
  * inheritance.
  * 
  * @author Julien Hannier
- * @version 1.00 16/06/08
+ * @version 0.10 16/06/08
  */
 final class GraphicNode {
 
@@ -49,7 +49,7 @@ final class GraphicNode {
      * {@code GraphicNodeSize decrementSize()}.
      *
      * @author Julien Hannier
-     * @version 1.00 16/06/08
+     * @version 0.10 16/06/08
      */
     static enum GraphicNodeSize {
         ONE(30), TWO(45), THREE(60), FOUR(75);
@@ -118,7 +118,7 @@ final class GraphicNode {
      * load the image.
      * 
      * @author Julien Hannier
-     * @version 1.00 16/06/08
+     * @version 0.10 16/06/08
      */
     static enum GraphicNodeColor {
         BLACK("black"), BLUE("blue"), GREEN("green"), RED("red"),

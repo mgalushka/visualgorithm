@@ -1,5 +1,5 @@
 /*
- * IDataStructureModel.java v1.00 07/07/08
+ * IDataStructureModel.java v0.10 07/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -31,7 +31,7 @@ import java.io.IOException;
  * through a more specific interface.
  * 
  * @author Julien Hannier
- * @version 1.00 07/07/08
+ * @version 0.10 07/07/08
  * @see IModel
  */
 public interface IDataStructureModel extends IModel {

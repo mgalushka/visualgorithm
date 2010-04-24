@@ -1,5 +1,5 @@
 /*
- * IBinaryTreeModel.java v1.00 06/12/09
+ * IBinaryTreeModel.java v0.10 06/12/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -28,7 +28,7 @@ import model.IDataStructureModel;
  * binary tree models. It is principally used in the binary tree controller.
  *
  * @author Julien Hannier
- * @version 1.00 06/12/09
+ * @version 0.10 06/12/09
  * @see IDataStructureModel
  */
 public interface IBinaryTreeModel extends IDataStructureModel {

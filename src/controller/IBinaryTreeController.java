@@ -1,5 +1,5 @@
 /*
- * IBinaryTreeController.java v1.00 06/12/09
+ * IBinaryTreeController.java v0.10 06/12/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -30,7 +30,7 @@ import view.IBinaryTreeView;
  * and also in the binary tree view.
  *
  * @author Julien Hannier
- * @version 1.00 06/12/09
+ * @version 0.10 06/12/09
  * @see IDataStructureController
  */
 public interface IBinaryTreeController extends IDataStructureController {

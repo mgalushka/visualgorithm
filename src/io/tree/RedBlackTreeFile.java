@@ -1,5 +1,5 @@
 /*
- * RedBlackTreeFile.java v1.00 02/07/08
+ * RedBlackTreeFile.java v0.10 02/07/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -33,7 +33,7 @@ import model.tree.RedBlackNode.RedBlackNodeColor;
  * {@literal [index] [key] [index of left child] [index of right child] [color]}
  * 
  * @author Damien Rigoni
- * @version 1.00 02/07/08
+ * @version 0.10 02/07/08
  * @see TreeFile
  */
 final class RedBlackTreeFile extends TreeFile {

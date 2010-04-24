@@ -1,5 +1,5 @@
 /*
- * BinaryTreeView.java v1.00 16/06/08
+ * BinaryTreeView.java v0.10 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -39,7 +39,7 @@ import model.tree.BinaryTreeModelEvent;
  * of the binary tree. This class is not designed for inheritance.
  * 
  * @author Julien Hannier
- * @version 1.00 16/06/08
+ * @version 0.10 16/06/08
  * @see IBinaryTreeView
  */
 public final class BinaryTreeView extends JPanel implements IBinaryTreeView {

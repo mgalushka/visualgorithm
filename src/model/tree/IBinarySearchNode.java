@@ -1,5 +1,5 @@
 /*
- * IBinarySearchNode.java v1.00 19/05/08
+ * IBinarySearchNode.java v0.10 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -27,7 +27,7 @@ package model.tree;
  * or any other type of binary search node like AVLNode, etc.
  * 
  * @author Damien Rigoni
- * @version 1.00 19/05/08
+ * @version 0.10 19/05/08
  * @see IBinaryNode
  */
 public interface IBinarySearchNode extends IBinaryNode {

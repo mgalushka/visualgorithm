@@ -1,5 +1,5 @@
 /*
- * SoftwareViewIOOperation.java v1.00 27/09/08
+ * SoftwareViewIOOperation.java v0.10 27/09/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -45,7 +45,7 @@ import swing.tree.BinaryTreeFileFilter;
  * the data structure {@code dataStructureFileFilters} in this class.
  * 
  * @author Julien Hannier
- * @version 1.00 27/09/08
+ * @version 0.10 27/09/08
  */
 final class SoftwareViewIOOperation {
 

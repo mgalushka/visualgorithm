@@ -1,5 +1,5 @@
 /*
- * BinaryTreeControllerTest.java v1.00 30/05/09
+ * BinaryTreeControllerTest.java v0.10 30/05/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -35,7 +35,7 @@ import view.AbstractViewFactory;
  * Test of the binary tree controller.
  * 
  * @author Julien Hannier
- * @version 1.00 30/05/09
+ * @version 0.10 30/05/09
  */
 public class BinaryTreeControllerTest {
 

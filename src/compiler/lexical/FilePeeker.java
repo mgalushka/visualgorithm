@@ -1,5 +1,5 @@
 /*
- * FilePeeker.java v1.00 28/08/08
+ * FilePeeker.java v0.10 28/08/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -30,7 +30,7 @@ import java.io.IOException;
  * This class peek a character in a file.
  *
  * @author Damien Rigoni
- * @version 1.00 28/08/08
+ * @version 0.10 28/08/08
  */
 public class FilePeeker extends AbstractPeeker {
 

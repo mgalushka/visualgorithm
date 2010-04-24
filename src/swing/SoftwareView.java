@@ -1,5 +1,5 @@
 /*
- * SoftwareView.java v1.00 16/06/08
+ * SoftwareView.java v0.10 16/06/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -61,7 +61,7 @@ import util.ImageLoadingUtility;
  * data structure {@code dataStructureMenus} in this class.
  * 
  * @author Julien Hannier
- * @version 1.00 16/06/08
+ * @version 0.10 16/06/08
  * @see ISoftwareView
  */
 public final class SoftwareView extends JFrame implements ISoftwareView {

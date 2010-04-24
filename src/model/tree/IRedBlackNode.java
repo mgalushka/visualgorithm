@@ -1,5 +1,5 @@
 /*
- * IRedBlackNode.java v1.00 19/05/08
+ * IRedBlackNode.java v0.10 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -28,7 +28,7 @@ import model.tree.RedBlackNode.RedBlackNodeColor;
  * must be implemented by classes defining red black nodes.
  * 
  * @author Damien Rigoni
- * @version 1.00 19/05/08
+ * @version 0.10 19/05/08
  * @see IBinarySearchNode
  */
 public interface IRedBlackNode extends IBinarySearchNode {

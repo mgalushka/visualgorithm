@@ -1,5 +1,5 @@
 /*
- * FileMenuFunctionalTest.java v1.00 20/04/10
+ * FileMenuFunctionalTest.java v0.10 20/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -29,7 +29,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  * Functional test of the file menu.
  *
  * @author Julien Hannier
- * @version 1.00 20/04/10
+ * @version 0.10 20/04/10
  */
 public class FileMenuFunctionalTest implements Scenario {
 

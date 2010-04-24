@@ -1,5 +1,5 @@
 /*
- * AbstractBinarySearchTreeDeleteAlgorithm.java v1.00 03/04/10
+ * AbstractBinarySearchTreeDeleteAlgorithm.java v0.10 03/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -30,7 +30,7 @@ import model.tree.IBinarySearchTree;
  * delete.
  *
  * @author Damien Rigoni
- * @version 1.00 03/04/10
+ * @version 0.10 03/04/10
  * @see IBinaryTreeAlgorithm
  */
 public abstract class AbstractBinarySearchTreeDeleteAlgorithm<NodeType extends IBinarySearchNode, TreeType extends IBinarySearchTree>

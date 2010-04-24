@@ -1,5 +1,5 @@
 /*
- * TokenAlgoFactory.java v1.00 02/09/08
+ * TokenAlgoFactory.java v0.10 02/09/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -29,7 +29,7 @@ import java.util.HashMap;
  * creates a new token if none exists or supplies an existing instance.
  *
  * @author Damien Rigoni
- * @version 1.00 02/09/08
+ * @version 0.10 02/09/08
  */
 public class TokenAlgoFactory {
 

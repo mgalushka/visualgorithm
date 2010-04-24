@@ -1,5 +1,5 @@
 /*
- * IAVLNode.java v1.00 19/05/08
+ * IAVLNode.java v0.10 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -26,7 +26,7 @@ package model.tree;
  * implemented by classes defining AVL nodes.
  * 
  * @author Damien Rigoni
- * @version 1.00 19/05/08
+ * @version 0.10 19/05/08
  * @see IBinarySearchNode
  */
 public interface IAVLNode extends IBinarySearchNode {

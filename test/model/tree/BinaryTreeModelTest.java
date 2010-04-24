@@ -1,5 +1,5 @@
 /*
- * BinaryTreeModelTest.java v1.00 26/02/09
+ * BinaryTreeModelTest.java v0.10 26/02/09
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -32,7 +32,7 @@ import model.tree.AbstractBinaryTree.BinaryTreeType;
  * Test of the binary tree model.
  * 
  * @author Julien Hannier
- * @version 1.00 26/02/09
+ * @version 0.10 26/02/09
  */
 public class BinaryTreeModelTest {
 

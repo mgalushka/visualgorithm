@@ -1,5 +1,5 @@
 /*
- * AbstractBinarySearchNode.java v1.00 19/05/08
+ * AbstractBinarySearchNode.java v0.10 19/05/08
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -27,7 +27,7 @@ package model.tree;
  * search node classes like AVLNode, etc.
  * 
  * @author Damien Rigoni
- * @version 1.00 19/05/08
+ * @version 0.10 19/05/08
  * @see IBinarySearchNode
  */
 public abstract class AbstractBinarySearchNode extends AbstractBinaryNode implements
