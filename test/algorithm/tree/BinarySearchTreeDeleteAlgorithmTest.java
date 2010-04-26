@@ -23,6 +23,7 @@ package algorithm.tree;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import model.tree.BinarySearchNode;
@@ -48,12 +49,14 @@ public class BinarySearchTreeDeleteAlgorithmTest {
         BinarySearchNode deleteNode = new BinarySearchNode(23);
         assertEquals(new BinarySearchTreeDeleteAlgorithm(bsTree,
                 deleteNode).applyAlgorithm(), deleteNode);
+        assertTrue(bsTree.isWellFormedTree());
 
         new BinarySearchTreeInsertAlgorithm(bsTree,
                 new BinarySearchNode(2)).applyAlgorithm();
         new BinarySearchTreeDeleteAlgorithm(bsTree,
                 bsTree.getRoot()).applyAlgorithm();
         assertNull(bsTree.getRoot());
+        assertTrue(bsTree.isWellFormedTree());
 
         new BinarySearchTreeInsertAlgorithm(bsTree,
                 new BinarySearchNode(2)).applyAlgorithm();
@@ -66,6 +69,7 @@ public class BinarySearchTreeDeleteAlgorithmTest {
         assertEquals(bsTree.getRoot().getKey(), 2);
         assertNull(bsTree.getRoot().getLeft());
         assertEquals(bsTree.getRoot().getRight().getKey(), 3);
+        assertTrue(bsTree.isWellFormedTree());
 
         new BinarySearchTreeInsertAlgorithm(bsTree,
                 new BinarySearchNode(4)).applyAlgorithm();
@@ -74,5 +78,6 @@ public class BinarySearchTreeDeleteAlgorithmTest {
         assertEquals(bsTree.getRoot().getKey(), 2);
         assertNull(bsTree.getRoot().getLeft());
         assertEquals(bsTree.getRoot().getRight().getKey(), 4);
+        assertTrue(bsTree.isWellFormedTree());
     }
 }

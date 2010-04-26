@@ -72,7 +72,7 @@ final class PedagogicalBinaryTreeCreationPanel extends AbstractBinaryTreeCreatio
     }
 
     private JTextArea createInformationArea() {
-        JTextArea textArea = new JTextArea("", 2, 1);
+        JTextArea textArea = new JTextArea("Panel not implemented yet!", 2, 1);
 
         textArea.setEditable(false);
         textArea.setLineWrap(true);
@@ -126,14 +126,7 @@ final class PedagogicalBinaryTreeCreationPanel extends AbstractBinaryTreeCreatio
 
     @Override
     protected void insertNodeActionWithText(String nodeValue) {
-        PedagogicalBinaryTreeVisualization pedagogicalBinaryTreeVisualization =
-                ((PedagogicalBinaryTreeVisualization) binaryTreeVisualization);
-
-        if (pedagogicalBinaryTreeVisualization.isTreeVisualizationEmpty()) {
-            binaryTreeController.addNodeToBinaryTreeModel(Integer.parseInt(nodeValue));
-        } else {
-            pedagogicalBinaryTreeVisualization.createNewInsertedNode(Integer.parseInt(nodeValue));
-        }
+        // TODO Insertion
     }
 
     @Override

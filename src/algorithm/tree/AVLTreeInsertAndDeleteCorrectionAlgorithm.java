@@ -66,6 +66,7 @@ public final class AVLTreeInsertAndDeleteCorrectionAlgorithm implements IBinaryT
         
         while (node != null) {
             node.computeAndSetHeight();
+
             if (node.computeBalanceFactor() == -2) {
                 if (x.computeBalanceFactor() == 1) {
                     new AVLTreeLeftRotationAlgorithm(tree, x).applyAlgorithm();
@@ -84,8 +85,9 @@ public final class AVLTreeInsertAndDeleteCorrectionAlgorithm implements IBinaryT
                         new AVLTreeLeftRotationAlgorithm(tree, node).applyAlgorithm();
                     }
                 }
-                x = node;
             }
+            
+            x = node;
             node = x.getFather();
         }
         

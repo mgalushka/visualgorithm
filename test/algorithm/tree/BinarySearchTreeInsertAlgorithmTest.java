@@ -23,6 +23,7 @@ package algorithm.tree;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import model.tree.BinarySearchNode;
@@ -49,22 +50,26 @@ public class BinarySearchTreeInsertAlgorithmTest {
                 new BinarySearchNode(2)).applyAlgorithm();
         assertEquals(bsTree.getRoot().getKey(), 2);
         assertNull(bsTree.getRoot().getFather());
+        assertTrue(bsTree.isWellFormedTree());
 
         new BinarySearchTreeInsertAlgorithm(bsTree,
                 new BinarySearchNode(1)).applyAlgorithm();
         assertEquals(bsTree.getRoot().getLeft().getKey(), 1);
         assertEquals(bsTree.getRoot().getLeft().getFather().getKey(), 2);
+        assertTrue(bsTree.isWellFormedTree());
 
         new BinarySearchTreeInsertAlgorithm(bsTree,
                 new BinarySearchNode(3)).applyAlgorithm();
         assertEquals(bsTree.getRoot().getRight().getKey(), 3);
         assertEquals(bsTree.getRoot().getRight().getFather().getKey(), 2);
+        assertTrue(bsTree.isWellFormedTree());
 
         new BinarySearchTreeInsertAlgorithm(bsTree,
                 new BinarySearchNode(4)).applyAlgorithm();
         assertEquals(bsTree.getRoot().getRight().getRight().getKey(), 4);
         assertEquals(bsTree.getRoot().getRight().getRight().getFather().
                 getKey(), 3);
+        assertTrue(bsTree.isWellFormedTree());
 
         new BinarySearchTreeInsertAlgorithm(bsTree,
                 new BinarySearchNode(15)).applyAlgorithm();
@@ -72,6 +77,7 @@ public class BinarySearchTreeInsertAlgorithmTest {
                 getKey(), 15);
         assertEquals(bsTree.getRoot().getRight().getRight().getRight().
                 getFather().getKey(), 4);
+        assertTrue(bsTree.isWellFormedTree());
 
         new BinarySearchTreeInsertAlgorithm(bsTree,
                 new BinarySearchNode(10)).applyAlgorithm();
@@ -79,6 +85,7 @@ public class BinarySearchTreeInsertAlgorithmTest {
                 getLeft().getKey(), 10);
         assertEquals(bsTree.getRoot().getRight().getRight().getRight().
                 getLeft().getFather().getKey(), 15);
+        assertTrue(bsTree.isWellFormedTree());
 
         new BinarySearchTreeInsertAlgorithm(bsTree,
                 new BinarySearchNode(5)).applyAlgorithm();
@@ -86,5 +93,14 @@ public class BinarySearchTreeInsertAlgorithmTest {
                 getLeft().getLeft().getKey(), 5);
         assertEquals(bsTree.getRoot().getRight().getRight().getRight().
                 getLeft().getLeft().getFather().getKey(), 10);
+        assertTrue(bsTree.isWellFormedTree());
+
+        new BinarySearchTreeInsertAlgorithm(bsTree,
+                new BinarySearchNode(10)).applyAlgorithm();
+        assertEquals(bsTree.getRoot().getRight().getRight().getRight().
+                getLeft().getRight().getKey(), 10);
+        assertEquals(bsTree.getRoot().getRight().getRight().getRight().
+                getLeft().getRight().getFather().getKey(), 10);
+        assertTrue(bsTree.isWellFormedTree());
     }
 }

@@ -22,6 +22,7 @@
 package algorithm.tree;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import model.tree.AVLNode;
@@ -47,6 +48,7 @@ public class AVLTreeDeleteAlgorithmTest {
         AVLNode deleteNode = new AVLNode(23);
         assertEquals(new AVLTreeDeleteAlgorithm(avlTree,
                 deleteNode).applyAlgorithm(), deleteNode);
+        assertTrue(avlTree.isWellFormedTree());
 
         new AVLTreeInsertAlgorithm(avlTree, new AVLNode(4)).applyAlgorithm();
         new AVLTreeInsertAlgorithm(avlTree, new AVLNode(2)).applyAlgorithm();
@@ -54,6 +56,7 @@ public class AVLTreeDeleteAlgorithmTest {
         new AVLTreeDeleteAlgorithm(avlTree, avlTree.getRoot()).applyAlgorithm();
         assertEquals(avlTree.getRoot().getKey(), 4);
         assertEquals(avlTree.getRoot().getLeft().getKey(), 2);
+        assertTrue(avlTree.isWellFormedTree());
 
         new AVLTreeInsertAlgorithm(avlTree, new AVLNode(6)).applyAlgorithm();
         new AVLTreeInsertAlgorithm(avlTree, new AVLNode(8)).applyAlgorithm();
@@ -66,5 +69,6 @@ public class AVLTreeDeleteAlgorithmTest {
         assertEquals(avlTree.getRoot().getLeft().getKey(), 4);
         assertEquals(avlTree.getRoot().getRight().getKey(), 10);
         assertEquals(avlTree.getRoot().computeBalanceFactor(), 0);
+        assertTrue(avlTree.isWellFormedTree());
     }
 }
