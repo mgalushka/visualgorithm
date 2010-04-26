@@ -1,5 +1,5 @@
 /*
- * PedagogicalBinaryTreeCreationPanel.java v0.10 07/07/08
+ * PedagogicalBinaryTreeCreationPanel.java v0.20 26/04/10
  *
  * Visualgorithm
  * Copyright (C) Hannier, Pironin, Rigoni (visualgo@googlegroups.com)
@@ -45,7 +45,7 @@ import controller.IBinaryTreeController;
  * class is not designed for inheritance.
  * 
  * @author Julien Hannier
- * @version 0.10 07/07/08
+ * @version 0.20 26/04/10
  * @see AbstractBinaryTreeCreationPanel
  */
 final class PedagogicalBinaryTreeCreationPanel extends AbstractBinaryTreeCreationPanel {
@@ -72,7 +72,7 @@ final class PedagogicalBinaryTreeCreationPanel extends AbstractBinaryTreeCreatio
     }
 
     private JTextArea createInformationArea() {
-        JTextArea textArea = new JTextArea("Panel not implemented yet!", 2, 1);
+        JTextArea textArea = new JTextArea("", 2, 1);
 
         textArea.setEditable(false);
         textArea.setLineWrap(true);
@@ -126,7 +126,14 @@ final class PedagogicalBinaryTreeCreationPanel extends AbstractBinaryTreeCreatio
 
     @Override
     protected void insertNodeActionWithText(String nodeValue) {
-        // TODO Insertion
+        PedagogicalBinaryTreeVisualization pedagogicalBinaryTreeVisualization =
+                ((PedagogicalBinaryTreeVisualization) binaryTreeVisualization);
+
+        if (pedagogicalBinaryTreeVisualization.isTreeVisualizationEmpty()) {
+            binaryTreeController.addNodeToBinaryTreeModel(Integer.parseInt(nodeValue));
+        } else {
+            pedagogicalBinaryTreeVisualization.createNewInsertedNode(Integer.parseInt(nodeValue));
+        }
     }
 
     @Override
