@@ -22,6 +22,7 @@
 package algorithm.tree;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import model.tree.AVLNode;
@@ -50,7 +51,6 @@ public class AVLTreeInsertAlgorithmTest {
         new AVLTreeInsertAlgorithm(avlTree, new AVLNode(6)).applyAlgorithm();
         new AVLTreeInsertAlgorithm(avlTree, new AVLNode(8)).applyAlgorithm();
         new AVLTreeInsertAlgorithm(avlTree, new AVLNode(10)).applyAlgorithm();
-
         assertEquals(avlTree.getRoot().getKey(), 6);
         assertEquals(avlTree.getRoot().getLeft().getKey(), 3);
         assertEquals(avlTree.getRoot().getRight().getKey(), 8);
@@ -58,5 +58,11 @@ public class AVLTreeInsertAlgorithmTest {
         assertEquals(avlTree.getRoot().getLeft().getLeft().getKey(), 2);
         assertEquals(avlTree.getRoot().getLeft().getRight().getKey(), 4);
         assertEquals(avlTree.getRoot().computeBalanceFactor(), 0);
+        assertTrue(avlTree.isWellFormedTree());
+
+        new AVLTreeInsertAlgorithm(avlTree, new AVLNode(8)).applyAlgorithm();
+        assertEquals(avlTree.getRoot().getRight().getLeft().getKey(), 8);
+        assertEquals(avlTree.getRoot().computeBalanceFactor(), 0);
+        assertTrue(avlTree.isWellFormedTree());
     }
 }

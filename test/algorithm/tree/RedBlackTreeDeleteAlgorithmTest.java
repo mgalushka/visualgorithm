@@ -22,6 +22,7 @@
 package algorithm.tree;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import model.tree.RedBlackNode;
@@ -48,6 +49,7 @@ public class RedBlackTreeDeleteAlgorithmTest {
                 RedBlackNode.RedBlackNodeColor.BLACK);
         assertEquals(new RedBlackTreeDeleteAlgorithm(rbTree,
                 deleteNode).applyAlgorithm(), deleteNode);
+        assertTrue(rbTree.isWellFormedTree());
 
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(4)).applyAlgorithm();
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(2)).applyAlgorithm();
@@ -55,6 +57,7 @@ public class RedBlackTreeDeleteAlgorithmTest {
         new RedBlackTreeDeleteAlgorithm(rbTree, rbTree.getRoot()).applyAlgorithm();
         assertEquals(rbTree.getRoot().getKey(), 4);
         assertEquals(rbTree.getRoot().getLeft().getKey(), 2);
+        assertTrue(rbTree.isWellFormedTree());
 
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(6)).applyAlgorithm();
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(8)).applyAlgorithm();
@@ -72,6 +75,7 @@ public class RedBlackTreeDeleteAlgorithmTest {
                 RedBlackNode.RedBlackNodeColor.BLACK);
         assertEquals(rbTree.getRoot().getRight().getRight().getColor(),
                 RedBlackNode.RedBlackNodeColor.RED);
+        assertTrue(rbTree.isWellFormedTree());
 
         new RedBlackTreeDeleteAlgorithm(rbTree,
                 rbTree.getRoot().getLeft()).applyAlgorithm();
@@ -83,5 +87,6 @@ public class RedBlackTreeDeleteAlgorithmTest {
                 RedBlackNode.RedBlackNodeColor.BLACK);
         assertEquals(rbTree.getRoot().getRight().getColor(),
                 RedBlackNode.RedBlackNodeColor.BLACK);
+        assertTrue(rbTree.isWellFormedTree());
     }
 }

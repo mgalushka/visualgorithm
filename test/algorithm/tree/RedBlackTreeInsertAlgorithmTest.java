@@ -22,6 +22,7 @@
 package algorithm.tree;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import model.tree.RedBlackNode;
@@ -47,10 +48,12 @@ public class RedBlackTreeInsertAlgorithmTest {
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(8)).applyAlgorithm();
         assertEquals(rbTree.getRoot().getKey(), 8);
         assertEquals(rbTree.getRoot().isBlack(), true);
+        assertTrue(rbTree.isWellFormedTree());
 
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(5)).applyAlgorithm();
         assertEquals(rbTree.getRoot().getLeft().getKey(), 5);
         assertEquals(rbTree.getRoot().getLeft().isRed(), true);
+        assertTrue(rbTree.isWellFormedTree());
 
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(6)).applyAlgorithm();
         assertEquals(rbTree.getRoot().getKey(), 6);
@@ -59,12 +62,14 @@ public class RedBlackTreeInsertAlgorithmTest {
         assertEquals(rbTree.getRoot().getLeft().isRed(), true);
         assertEquals(rbTree.getRoot().getRight().getKey(), 8);
         assertEquals(rbTree.getRoot().getRight().isRed(), true);
+        assertTrue(rbTree.isWellFormedTree());
 
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(3)).applyAlgorithm();
         assertEquals(rbTree.getRoot().getLeft().getKey(), 5);
         assertEquals(rbTree.getRoot().getLeft().isBlack(), true);
         assertEquals(rbTree.getRoot().getLeft().getLeft().getKey(), 3);
         assertEquals(rbTree.getRoot().getLeft().getLeft().isRed(), true);
+        assertTrue(rbTree.isWellFormedTree());
 
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(4)).applyAlgorithm();
         assertEquals(rbTree.getRoot().getKey(), 6);
@@ -77,10 +82,12 @@ public class RedBlackTreeInsertAlgorithmTest {
         assertEquals(rbTree.getRoot().getLeft().getLeft().isRed(), true);
         assertEquals(rbTree.getRoot().getLeft().getRight().getKey(), 5);
         assertEquals(rbTree.getRoot().getLeft().getRight().isRed(), true);
+        assertTrue(rbTree.isWellFormedTree());
 
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(20)).applyAlgorithm();
         assertEquals(rbTree.getRoot().getRight().getRight().getKey(), 20);
         assertEquals(rbTree.getRoot().getRight().getRight().isRed(), true);
+        assertTrue(rbTree.isWellFormedTree());
 
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(10)).applyAlgorithm();
         assertEquals(rbTree.getRoot().getKey(), 6);
@@ -97,6 +104,7 @@ public class RedBlackTreeInsertAlgorithmTest {
         assertEquals(rbTree.getRoot().getRight().getLeft().isRed(), true);
         assertEquals(rbTree.getRoot().getRight().getRight().getKey(), 20);
         assertEquals(rbTree.getRoot().getRight().getRight().isRed(), true);
+        assertTrue(rbTree.isWellFormedTree());
 
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(20)).applyAlgorithm();
         assertEquals(rbTree.getRoot().getKey(), 6);
@@ -115,6 +123,7 @@ public class RedBlackTreeInsertAlgorithmTest {
         assertEquals(rbTree.getRoot().getRight().getRight().isBlack(), true);
         assertEquals(rbTree.getRoot().getRight().getRight().getRight().getKey(), 20);
         assertEquals(rbTree.getRoot().getRight().getRight().getRight().isRed(), true);
+        assertTrue(rbTree.isWellFormedTree());
 
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(30)).applyAlgorithm();
         assertEquals(rbTree.getRoot().getKey(), 6);
@@ -135,6 +144,7 @@ public class RedBlackTreeInsertAlgorithmTest {
         assertEquals(rbTree.getRoot().getRight().getRight().getLeft().isRed(), true);
         assertEquals(rbTree.getRoot().getRight().getRight().getRight().getKey(), 30);
         assertEquals(rbTree.getRoot().getRight().getRight().getRight().isRed(), true);
+        assertTrue(rbTree.isWellFormedTree());
 
         new RedBlackTreeInsertAlgorithm(rbTree, new RedBlackNode(16)).applyAlgorithm();
         assertEquals(rbTree.getRoot().getKey(), 10);
@@ -157,5 +167,6 @@ public class RedBlackTreeInsertAlgorithmTest {
         assertEquals(rbTree.getRoot().getLeft().getLeft().getRight().isRed(), true);
         assertEquals(rbTree.getRoot().getRight().getLeft().getLeft().getKey(), 16);
         assertEquals(rbTree.getRoot().getRight().getLeft().getLeft().isRed(), true);
+        assertTrue(rbTree.isWellFormedTree());
     }
 }

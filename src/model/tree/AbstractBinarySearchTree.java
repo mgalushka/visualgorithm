@@ -47,15 +47,15 @@ public abstract class AbstractBinarySearchTree extends AbstractBinaryTree
                 return true;
             } else {
                 if (root.getLeft() == null) {
-                    return (root.getRight().getKey() > root.getKey())
+                    return (root.getRight().getKey() >= root.getKey())
                             && isWellFormedBST(root.getRight());
                 } else if (root.getRight() == null) {
-                    return (root.getLeft().getKey() < root.getKey())
+                    return (root.getLeft().getKey() <= root.getKey())
                             && isWellFormedBST(root.getLeft());
                 } else {
-                    return (root.getLeft().getKey() < root.getKey())
+                    return (root.getLeft().getKey() <= root.getKey())
                             && isWellFormedBST(root.getLeft())
-                            && (root.getRight().getKey() > root.getKey())
+                            && (root.getRight().getKey() >= root.getKey())
                             && isWellFormedBST(root.getRight());
                 }
             }
