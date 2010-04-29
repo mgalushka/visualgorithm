@@ -21,9 +21,6 @@
 
 package swing;
 
-import com.apple.eawt.Application;
-import com.apple.eawt.ApplicationAdapter;
-import com.apple.eawt.ApplicationEvent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -38,9 +35,13 @@ import model.SoftwareModelEvent;
 import model.SoftwareModelEvent.SoftwareModelEventType;
 import view.ISoftwareView;
 import controller.ISoftwareController;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -192,7 +193,41 @@ public final class SoftwareView extends JFrame implements ISoftwareView {
         fileMenu.add(saveMenuItem);
 
         String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.indexOf("mac") < 0) {
+        if (osName.indexOf("mac") >= 0) {
+            try {
+                Class macApplicationClass = Class.forName("com.apple.eawt.Application");
+                Object macApplication = macApplicationClass.newInstance();
+
+                Method setDockIconImage = macApplicationClass.getMethod("setDockIconImage",
+                        Image.class);
+                setDockIconImage.invoke(macApplication,
+                        ImageLoadingUtility.loadImageFromVisualgorithmJar("img/icon.png"));
+
+                Class applicationListenerClass = Class.forName("com.apple.eawt.ApplicationListener");
+                Object macListener = Proxy.newProxyInstance(getClass().getClassLoader(),
+                        new Class[] {applicationListenerClass}, new InvocationHandler() {
+
+                    @Override
+                    public Object invoke(Object proxy, Method method, Object[] args) {
+                        if (method.getName().equals("handleQuit")) {
+                            if (softwareViewIOOperation.exitSoftwareOperation(
+                                    softwareTabbedPane.getTabCount())) {
+                                closeView();
+                            }
+                        }
+                        return null;
+                    }
+                });
+                Method addApplicationListener = macApplicationClass.getMethod("addApplicationListener",
+                        applicationListenerClass);
+                addApplicationListener.invoke(macApplication, macListener);
+            } catch (Exception ex) {
+                softwareViewIOOperation.showErrorMessage("An irrecoverable error" +
+                        " occurs and the software is about\nto shut down. Sorry" +
+                        " for the inconvenience.", "Software Error");
+                System.exit(1);
+            }
+        } else {
             JMenuItem exitMenuItem = new JMenuItem("Exit");
 
             exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
@@ -208,21 +243,6 @@ public final class SoftwareView extends JFrame implements ISoftwareView {
                 }
             });
             fileMenu.add(exitMenuItem);
-        } else {
-            Application macApplication = new Application();
-
-            macApplication.setDockIconImage(
-                    ImageLoadingUtility.loadImageFromVisualgorithmJar("img/icon.png"));
-            macApplication.addApplicationListener(new ApplicationAdapter() {
-
-                @Override
-                public void handleQuit(ApplicationEvent event) {
-                    if (softwareViewIOOperation.exitSoftwareOperation(
-                            softwareTabbedPane.getTabCount())) {
-                        closeView();
-                    }
-                }
-            });
         }
         
         return fileMenu;
