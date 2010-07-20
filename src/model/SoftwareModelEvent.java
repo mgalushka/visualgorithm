@@ -57,29 +57,28 @@ public class SoftwareModelEvent extends EventObject {
     private int dataStructureModelIndex;
 
     private SoftwareModelEvent(Object source, SoftwareModelEventType type) {
-        super(source);
-        eventType = type;
-        dataStructureModelName = "";
-        dataStructureModelIndex = -1;
+    	this(source, type, "", -1);
     }
 
     private SoftwareModelEvent(Object source, SoftwareModelEventType type,
             int index) {
-        super(source);
-        eventType = type;
-        dataStructureModelName = "";
-        dataStructureModelIndex = index;
+    	this(source, type, "", index);
     }
 
     private SoftwareModelEvent(Object source, SoftwareModelEventType type,
             String name) {
-        super(source);
-        eventType = type;
-        dataStructureModelName = name;
-        dataStructureModelIndex = -1;
+    	this(source, type, name, -1);
     }
 
-    /**
+    public SoftwareModelEvent(Object source, SoftwareModelEventType type,
+    		String name, int index) {
+		super(source);
+		eventType = type;
+		dataStructureModelName = name;
+		dataStructureModelIndex = -1;
+	}
+
+	/**
      * Builds a software model event for the event type CLEAR. In this case,
      * there is no need for a data structure model name or a data structure
      * model index because the event type CLEAR is for the exit of the software
