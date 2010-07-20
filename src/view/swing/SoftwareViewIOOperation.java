@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package swing;
+package view.swing;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import model.UnknownDataStructureException;
-import swing.tree.BinaryTreeFileFilter;
+import view.swing.tree.BinaryTreeFileFilter;
 
 /**
  * This class defines the software view IO operation. The software view IO

@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package swing;
+package view.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -34,6 +34,7 @@ import javax.swing.WindowConstants;
 import model.SoftwareModelEvent;
 import model.SoftwareModelEvent.SoftwareModelEventType;
 import view.ISoftwareView;
+import view.swing.tree.BinaryTreeMenu;
 import controller.ISoftwareController;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -49,7 +50,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-import swing.tree.BinaryTreeMenu;
 import util.ImageLoadingUtility;
 
 /**

@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package swing.tree;
+package view.swing.tree;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -39,8 +39,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import model.tree.IBinaryNode;
 import model.tree.RedBlackNode;
-import swing.tree.GraphicNode.GraphicNodeColor;
-import swing.tree.GraphicNode.GraphicNodeSize;
+import view.swing.tree.GraphicNode.GraphicNodeColor;
+import view.swing.tree.GraphicNode.GraphicNodeSize;
 
 /**
  * This class defines the binary tree visualization. It is composed by graphic

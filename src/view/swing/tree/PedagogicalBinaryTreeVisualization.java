@@ -19,13 +19,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package swing.tree;
+package view.swing.tree;
 
 import java.awt.Graphics;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import swing.tree.GraphicNode.GraphicNodeColor;
+
+import view.swing.tree.GraphicNode.GraphicNodeColor;
 import controller.IBinaryTreeController;
 
 /**

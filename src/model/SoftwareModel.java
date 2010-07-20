@@ -109,29 +109,25 @@ public final class SoftwareModel implements ISoftwareModel {
     }
 
     private void fireModelHasChangedWithInsertEvent(String name) {
-        SoftwareModelListener[] listenerTab = listeners.getListeners(
-                SoftwareModelListener.class);
-        for (SoftwareModelListener listener : listenerTab) {
-            listener.modelHasChanged(SoftwareModelEvent.buildInsertEvent(this,
-                    SoftwareModelEventType.INSERT, name));
-        }
+    	fireModelHasChanged(SoftwareModelEvent.buildInsertEvent(this,
+                SoftwareModelEventType.INSERT, name));
     }
 
-    private void fireModelHasChangedWithDeleteEvent(int index) {
-        SoftwareModelListener[] listenerTab = listeners.getListeners(
-                SoftwareModelListener.class);
-        for (SoftwareModelListener listener : listenerTab) {
-            listener.modelHasChanged(SoftwareModelEvent.buildDeleteEvent(this,
+	private void fireModelHasChangedWithDeleteEvent(int index) {
+		fireModelHasChanged(SoftwareModelEvent.buildDeleteEvent(this,
                     SoftwareModelEventType.DELETE, index));
-        }
     }
 
     private void fireModelHasChangedWithClearEvent() {
+    	fireModelHasChanged(SoftwareModelEvent.buildClearEvent(this,
+                    SoftwareModelEventType.CLEAR));
+    }
+    
+    private void fireModelHasChanged(SoftwareModelEvent buildInsertEvent) {
         SoftwareModelListener[] listenerTab = listeners.getListeners(
                 SoftwareModelListener.class);
         for (SoftwareModelListener listener : listenerTab) {
-            listener.modelHasChanged(SoftwareModelEvent.buildClearEvent(this,
-                    SoftwareModelEventType.CLEAR));
+            listener.modelHasChanged(buildInsertEvent);
         }
-    }
+	}
 }

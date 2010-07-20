@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package swing.tree;
+package view.swing.tree;
 
 import controller.IBinaryTreeController;
 import java.awt.event.ActionEvent;
@@ -30,7 +30,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
-import swing.AbstractDataStructureMenu;
+import view.swing.AbstractDataStructureMenu;
 
 /**
  * This class defines the binary tree menu. It is composed by the software

@@ -20,13 +20,15 @@
  */
 
 /**
- * This package contains one part of the data structure view of the software :
- * tree views. Currently, only binary tree views have been implemented but it is
- * possible to add other tree views. In order to do so, you must create a new
- * data structure view implementing <tt>IDataStructureView</tt> or a more
+ * This package contains the view of the software. It is composed by different
+ * data structure views that are open in the software. Each of these data
+ * structure views takes part of a tabbed pane. A view must implement the
+ * interface <tt>IView</tt> directly or through a more specific interface. Thus
+ * a new data structure view must take part of the software view at the name of
+ * the data structure and implement <tt>IDataStructureView</tt> or a more
  * specific interface.
  * 
  * @author Julien Hannier
  * @version 0.10 27/02/09
  */
-package swing.tree;
+package view.swing;

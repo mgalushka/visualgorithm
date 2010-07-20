@@ -21,9 +21,15 @@
 
 package compiler;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
+
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.internal.runners.statements.Fail;
 
 /**
  * Test of the algorithm compiler.
@@ -33,7 +39,7 @@ import org.junit.Test;
  */
 public class AlgoCompilerTest {
 
-    private static final String ALGO_FILE_NAME = "algo" + File.separator + "test.al";
+    private static final String ALGO_FILE_NAME = "data" + File.separator + "InsertBT.al";
 
     private ICompiler compiler;
 
@@ -47,15 +53,16 @@ public class AlgoCompilerTest {
 
     @Test
     public void testCompileFile() {
-        try {
-            compiler.compile(ALGO_FILE_NAME);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    	fail("Not implemented");
+//        try {
+//            compiler.compile(ALGO_FILE_NAME);
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
     }
 
     @Test
     public void testCompileInput() {
-        // TODO Test compile input
+    	fail("Not implemented");
     }
 }

@@ -22,8 +22,8 @@
 package main;
 
 import javax.swing.SwingUtilities;
-import swing.SwingViewFactory;
 import view.AbstractViewFactory;
+import view.swing.SwingViewFactory;
 import controller.SoftwareController;
 import model.ISoftwareModel;
 import model.SoftwareModel;

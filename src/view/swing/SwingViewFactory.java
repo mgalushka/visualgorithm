@@ -19,14 +19,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package swing;
+package view.swing;
 
 import controller.ISoftwareController;
 import controller.IBinaryTreeController;
-import swing.tree.BinaryTreeView;
 import view.IBinaryTreeView;
 import view.ISoftwareView;
 import view.AbstractViewFactory;
+import view.swing.tree.BinaryTreeView;
 
 /**
  * This class defines the concrete swing view factory of the different views of
