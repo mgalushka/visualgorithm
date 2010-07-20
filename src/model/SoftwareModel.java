@@ -123,11 +123,11 @@ public final class SoftwareModel implements ISoftwareModel {
                     SoftwareModelEventType.CLEAR));
     }
     
-    private void fireModelHasChanged(SoftwareModelEvent buildInsertEvent) {
+    private void fireModelHasChanged(SoftwareModelEvent event) {
         SoftwareModelListener[] listenerTab = listeners.getListeners(
                 SoftwareModelListener.class);
         for (SoftwareModelListener listener : listenerTab) {
-            listener.modelHasChanged(buildInsertEvent);
+            listener.modelHasChanged(event);
         }
 	}
 }

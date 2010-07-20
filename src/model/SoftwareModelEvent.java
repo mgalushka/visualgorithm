@@ -75,7 +75,7 @@ public class SoftwareModelEvent extends EventObject {
 		super(source);
 		eventType = type;
 		dataStructureModelName = name;
-		dataStructureModelIndex = -1;
+		dataStructureModelIndex = index;
 	}
 
 	/**
