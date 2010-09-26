@@ -83,7 +83,7 @@ abstract class AbstractBinaryTreeCreationPanel extends JPanel {
      */
     protected AbstractBinaryTreeCreationPanel(IBinaryTreeController c) {
         super();
-        
+
         binaryTreeController = c;
         insertNodeText = new JTextField();
         deleteNodeText = new JTextField();
@@ -103,7 +103,7 @@ abstract class AbstractBinaryTreeCreationPanel extends JPanel {
             public void actionPerformed(ActionEvent event) {
                 String emptyString = "";
                 String nodeValue = insertNodeText.getText();
-                
+
                 if ((nodeValue != null) && !emptyString.equals(nodeValue)) {
                     if (nodeValue.length() == 2) {
                         if ((nodeValue.charAt(0) >= '0')

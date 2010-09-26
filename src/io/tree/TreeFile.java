@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import model.UnknownDataStructureException;
@@ -142,7 +142,7 @@ public abstract class TreeFile {
      * The file parser associates each type of binary tree with the good type of
      * tree file.
      */
-    private static HashMap<String, TreeFile> fileParsers =
+    private static final HashMap<String, TreeFile> fileParsers =
             new HashMap<String, TreeFile>();
 
     private int lineNumber;
@@ -152,7 +152,7 @@ public abstract class TreeFile {
      * one string for each attribute of a node. There are the key and the number
      * of the children nodes.
      */
-    protected Vector<String[]> nodeVector;
+    protected List<String[]> nodeVector;
 
     /**
      * The type of the binary tree.
@@ -175,7 +175,7 @@ public abstract class TreeFile {
      * Builds the tree file with an empty node vector and an empty tree type.
      */
     protected TreeFile() {
-        nodeVector = new Vector<String[]>();
+        nodeVector = new ArrayList<String[]>();
         treeType = new String();
     }
 
@@ -223,7 +223,7 @@ public abstract class TreeFile {
 
     private IBinaryTree createBinaryTree() throws UnknownDataStructureException {
         IBinaryTree tree = null;
-        if (nodeVector.size() != 0) {
+        if (!nodeVector.isEmpty()) {
             tree = createBinaryTree(Integer.parseInt(nodeVector.get(0)[KEY_INDEX]));
             generateNode(tree.getRoot(), 0);
         } else {
@@ -413,7 +413,7 @@ public abstract class TreeFile {
      * @param fileName the name of the file where to save the binary tree
      * @throws IOException
      */
-    public final static void save(IBinaryTree tree,
+    public static void save(IBinaryTree tree,
             String fileName) throws IOException {
         FileWriter file = new FileWriter(fileName);
         int currentNodeNumber = 0;

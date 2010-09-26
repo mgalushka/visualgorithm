@@ -46,10 +46,10 @@ public class TokenTest {
 
     @Before
     public void setUp() {
-        tokenId1 = new TokenAlgo(TokenAlgoType.ID, "tata");
-        tokenId2 = new TokenAlgo(TokenAlgoType.ID, "toto");
-        tokenId3 = new TokenAlgo(TokenAlgoType.ID, "tata");
-        tokenId4 = new TokenAlgo(TokenAlgoType.ID, "tata");
+        tokenId1 = new TokenAlgo(TokenAlgoType.ID, "id1");
+        tokenId2 = new TokenAlgo(TokenAlgoType.ID, "id2");
+        tokenId3 = new TokenAlgo(TokenAlgoType.ID, "id1");
+        tokenId4 = new TokenAlgo(TokenAlgoType.ID, "id1");
 
         tokenDo = new TokenAlgo(TokenAlgoType.DO, "do");
         tokenIdWeak = new TokenAlgo(TokenAlgoType.ID, "do");
@@ -82,7 +82,7 @@ public class TokenTest {
     }
 
     @Test
-    public void hasCodeTest() {
+    public void hashCodeTest() {
         assertEquals(tokenId1.hashCode(), tokenId1.hashCode());
         assertEquals(tokenId1.hashCode(), tokenId3.hashCode());
         assertFalse(tokenId1.hashCode() == tokenId2.hashCode());

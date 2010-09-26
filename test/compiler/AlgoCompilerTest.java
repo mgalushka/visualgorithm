@@ -21,15 +21,10 @@
 
 package compiler;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.fail;
 import java.io.File;
-
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.internal.runners.statements.Fail;
 
 /**
  * Test of the algorithm compiler.
@@ -53,12 +48,7 @@ public class AlgoCompilerTest {
 
     @Test
     public void testCompileFile() {
-    	fail("Not implemented");
-//        try {
-//            compiler.compile(ALGO_FILE_NAME);
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
+        fail("Not implemented");
     }
 
     @Test

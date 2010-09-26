@@ -80,7 +80,7 @@ public final class SoftwareView extends JFrame implements ISoftwareView {
     /**
      * The data structure menus contains all the data structure menus of the software.
      */
-    private static List<IDataStructureMenu> dataStructureMenus =
+    private static final List<IDataStructureMenu> dataStructureMenus =
             new ArrayList<IDataStructureMenu>();
 
     /**

@@ -70,7 +70,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
     private int xPositionOfSelectedNode;
 
     private int yPositionOfSelectedNode;
-    
+
     private GraphicNodeColor colorOfSelectedNode;
 
     /**
@@ -132,10 +132,10 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
                 if (event.getButton() == MouseEvent.BUTTON1) {
                     indexOfSelectedNode = findIndexOfSelectedNode(event.getX(),
                             event.getY());
-                    
+
                     if (indexOfSelectedNode != -1) {
                         GraphicNode selectedNode = graphicNodes.get(indexOfSelectedNode);
-                        
+
                         xPositionOfSelectedNode = selectedNode.getXPosition();
                         yPositionOfSelectedNode = selectedNode.getYPosition();
                         colorOfSelectedNode = selectedNode.getNodeColor();
@@ -163,13 +163,13 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
                 }
             }
         });
-        
+
         addMouseMotionListener(new MouseAdapter() {
 
             @Override
             public void mouseDragged(MouseEvent event) {
-                if ((event.getModifiersEx() &
-                        InputEvent.BUTTON1_DOWN_MASK) == InputEvent.BUTTON1_DOWN_MASK) {
+                if ((event.getModifiersEx()
+                        & InputEvent.BUTTON1_DOWN_MASK) == InputEvent.BUTTON1_DOWN_MASK) {
                     if (indexOfSelectedNode > 0) {
                         moveGraphicNode(indexOfSelectedNode,
                                 event.getX(), event.getY());
@@ -192,21 +192,21 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
 
         for (int i = 0; i < graphicNodes.size(); i++) {
             GraphicNode currentNode = graphicNodes.get(i);
-            
+
             if (currentNode != null) {
                 int currentNodeSize = currentNode.getNodeSize().getSizeAsInt();
                 int currentNodeXPosition = currentNode.getXPosition();
                 int currentNodeYPosition = currentNode.getYPosition();
 
-                if ((x < currentNodeXPosition + currentNodeSize / 2) &&
-                        (x > currentNodeXPosition - currentNodeSize / 2) &&
-                        (y < currentNodeYPosition + currentNodeSize / 2) &&
-                        (y > currentNodeYPosition - currentNodeSize / 2)) {
+                if ((x < currentNodeXPosition + currentNodeSize / 2)
+                        && (x > currentNodeXPosition - currentNodeSize / 2)
+                        && (y < currentNodeYPosition + currentNodeSize / 2)
+                        && (y > currentNodeYPosition - currentNodeSize / 2)) {
                     index = i;
                 }
             }
         }
-        
+
         return index;
     }
 
@@ -219,8 +219,8 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
      * @return the index of the parent graphic node or else -1
      */
     protected int findIndexOfParentNode(int index) {
-        if ((index >= 0) && (index < graphicNodes.size()) &&
-                (graphicNodes.get(index) != null)) {
+        if ((index >= 0) && (index < graphicNodes.size())
+                && (graphicNodes.get(index) != null)) {
             if (index != 0) {
                 if (index % 2 == 0) {
                     return (index - 2) / 2;
@@ -245,8 +245,8 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
         int currentIndex = index;
         int minNodeIndex = -1;
 
-        while ((currentIndex >= 0) && (currentIndex < graphicNodes.size()) &&
-                (graphicNodes.get(currentIndex) != null)) {
+        while ((currentIndex >= 0) && (currentIndex < graphicNodes.size())
+                && (graphicNodes.get(currentIndex) != null)) {
             minNodeIndex = currentIndex;
             currentIndex = 2 * currentIndex + 1;
         }
@@ -266,12 +266,12 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
         int currentIndex = index;
         int maxNodeIndex = -1;
 
-        while ((currentIndex >= 0) && (currentIndex < graphicNodes.size()) &&
-                (graphicNodes.get(currentIndex) != null)) {
+        while ((currentIndex >= 0) && (currentIndex < graphicNodes.size())
+                && (graphicNodes.get(currentIndex) != null)) {
             maxNodeIndex = currentIndex;
             currentIndex = 2 * currentIndex + 2;
         }
-        
+
         return maxNodeIndex;
     }
 
@@ -284,8 +284,8 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
      * @return the key of the graphic node or else -1
      */
     protected int findNodeKey(int index) {
-        if ((index >= 0) && (index < graphicNodes.size()) &&
-                (graphicNodes.get(index) != null)) {
+        if ((index >= 0) && (index < graphicNodes.size())
+                && (graphicNodes.get(index) != null)) {
             return graphicNodes.get(index).getNodeKey();
         }
 
@@ -301,8 +301,8 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
      * @return the height of the graphic node or else -1
      */
     protected int computeGraphicNodeHeight(int index) {
-        if ((index < 0) || (index >= graphicNodes.size()) ||
-                (graphicNodes.get(index) == null)) {
+        if ((index < 0) || (index >= graphicNodes.size())
+                || (graphicNodes.get(index) == null)) {
             return -1;
         } else {
             return Math.max(computeGraphicNodeHeight(2 * index + 1),
@@ -312,10 +312,10 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
 
     private void changeGraphicNodeColor(int index, GraphicNodeColor color) {
         GraphicNode node = graphicNodes.get(index);
-        
+
         node.changeNodeColor(color);
         repaint(node.getXPosition() - sizeOfNodes.getSizeAsInt() / 2 - 1,
-                node.getYPosition()  - sizeOfNodes.getSizeAsInt() / 2 - 1,
+                node.getYPosition() - sizeOfNodes.getSizeAsInt() / 2 - 1,
                 sizeOfNodes.getSizeAsInt() + 2, sizeOfNodes.getSizeAsInt() + 2);
     }
 
@@ -336,17 +336,17 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
         int yPositionOfMovedNode = movedNode.getYPosition();
         int yPositionOfParentNode = parentNode.getYPosition();
         int yPositionOfMaxNode = yPositionOfMovedNode + movedNodeHeight * heightBetweenNodes;
-        int xMin = (xPositionOfMinNode < xPositionOfParentNode ?
-            xPositionOfMinNode : xPositionOfParentNode) - nodeSize / 2 - 1;
-        int xMax = (xPositionOfMaxNode > xPositionOfParentNode ?
-            xPositionOfMaxNode : xPositionOfParentNode) + nodeSize / 2 + 1;
-        int yMin = (yPositionOfMovedNode < yPositionOfParentNode ?
-            yPositionOfMovedNode : yPositionOfParentNode) - nodeSize / 2 - 1;
-        int yMax = (yPositionOfMaxNode > yPositionOfParentNode ?
-            yPositionOfMaxNode : yPositionOfParentNode) + nodeSize / 2 + 1;
+        int xMin = (xPositionOfMinNode < xPositionOfParentNode
+                ? xPositionOfMinNode : xPositionOfParentNode) - nodeSize / 2 - 1;
+        int xMax = (xPositionOfMaxNode > xPositionOfParentNode
+                ? xPositionOfMaxNode : xPositionOfParentNode) + nodeSize / 2 + 1;
+        int yMin = (yPositionOfMovedNode < yPositionOfParentNode
+                ? yPositionOfMovedNode : yPositionOfParentNode) - nodeSize / 2 - 1;
+        int yMax = (yPositionOfMaxNode > yPositionOfParentNode
+                ? yPositionOfMaxNode : yPositionOfParentNode) + nodeSize / 2 + 1;
 
         repaint(xMin, yMin, xMax - xMin, yMax - yMin);
-        
+
         movedNode.changeNodePosition(x, y);
         moveGraphicSubNodes(index, x - xPositionOfMovedNode, y - yPositionOfMovedNode);
         xPositionOfMinNode = minNode.getXPosition();
@@ -354,14 +354,14 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
         xPositionOfMovedNode = movedNode.getXPosition();
         yPositionOfMovedNode = movedNode.getYPosition();
         yPositionOfMaxNode = yPositionOfMovedNode + movedNodeHeight * heightBetweenNodes;
-        xMin = (xPositionOfMinNode < xPositionOfParentNode ?
-            xPositionOfMinNode : xPositionOfParentNode) - nodeSize / 2 - 1;
-        xMax = (xPositionOfMaxNode > xPositionOfParentNode ?
-            xPositionOfMaxNode : xPositionOfParentNode) + nodeSize / 2 + 1;
-        yMin = (yPositionOfMovedNode < yPositionOfParentNode ?
-            yPositionOfMovedNode : yPositionOfParentNode) - nodeSize / 2 - 1;
-        yMax = (yPositionOfMaxNode > yPositionOfParentNode ?
-            yPositionOfMaxNode : yPositionOfParentNode) + nodeSize / 2 + 1;
+        xMin = (xPositionOfMinNode < xPositionOfParentNode
+                ? xPositionOfMinNode : xPositionOfParentNode) - nodeSize / 2 - 1;
+        xMax = (xPositionOfMaxNode > xPositionOfParentNode
+                ? xPositionOfMaxNode : xPositionOfParentNode) + nodeSize / 2 + 1;
+        yMin = (yPositionOfMovedNode < yPositionOfParentNode
+                ? yPositionOfMovedNode : yPositionOfParentNode) - nodeSize / 2 - 1;
+        yMax = (yPositionOfMaxNode > yPositionOfParentNode
+                ? yPositionOfMaxNode : yPositionOfParentNode) + nodeSize / 2 + 1;
 
         repaint(xMin, yMin, xMax - xMin, yMax - yMin);
     }
@@ -373,7 +373,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
             if (leftNode != null) {
                 moveGraphicSubNodes(2 * index + 1, shiftX, shiftY);
                 leftNode.changeNodePosition(leftNode.getXPosition() + shiftX,
-                        leftNode .getYPosition() + shiftY);
+                        leftNode.getYPosition() + shiftY);
             }
         }
         if (2 * index + 2 < graphicNodes.size()) {
@@ -409,7 +409,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
                     }
                 }
             }
-            
+
             index++;
         }
     }
@@ -417,7 +417,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        
+
         paintEdges(graphics);
         for (GraphicNode node : graphicNodes) {
             if (node != null) {
@@ -455,12 +455,12 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
                 nbWidthBetweenDifferentNodes = nbOfNodesOnTheLastWidth / 2 - 1;
             }
 
-            widthSize = nbOfNodesOnTheLastWidth * nodeSize +
-                    nbWidthBetweenBrotherNodes * widthBetweenBrotherNodes +
-                    nbWidthBetweenDifferentNodes * widthBetweenDifferentNodes +
-                    yPositionOfRootNode;
-            heightSize = height * heightBetweenNodes +
-                    yPositionOfRootNode + nodeSize / 2 + 10;
+            widthSize = nbOfNodesOnTheLastWidth * nodeSize
+                    + nbWidthBetweenBrotherNodes * widthBetweenBrotherNodes
+                    + nbWidthBetweenDifferentNodes * widthBetweenDifferentNodes
+                    + yPositionOfRootNode;
+            heightSize = height * heightBetweenNodes
+                    + yPositionOfRootNode + nodeSize / 2 + 10;
         }
 
         return new Dimension(widthSize, heightSize);
@@ -477,9 +477,9 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
     JPanel buildVisualizationPanelWithZoom() {
         JPanel visualizationPanelWithZoom = new JPanel();
         JScrollPane zoomScrollPane = new JScrollPane(this);
-        
+
         zoomScrollPane.addMouseWheelListener(new MouseWheelListener() {
-            
+
             @Override
             public void mouseWheelMoved(MouseWheelEvent event) {
                 int smallestNodeSize = GraphicNodeSize.ONE.getSizeAsInt();
@@ -489,14 +489,14 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
                 } else {
                     sizeOfNodes = sizeOfNodes.incrementSize();
                 }
-                heightBetweenNodes = INITIAL_HEIGHT_BETWEEN_NODES +
-                        sizeOfNodes.getSizeAsInt() - smallestNodeSize;
-                widthBetweenBrotherNodes = INITIAL_WIDTH_BETWEEN_BROTHER_NODES +
-                        sizeOfNodes.getSizeAsInt() - smallestNodeSize;
-                widthBetweenDifferentNodes = INITIAL_WIDTH_BETWEEN_DIFFERENT_NODES +
-                        sizeOfNodes.getSizeAsInt() - smallestNodeSize;
-                yPositionOfRootNode = ROOT_NODE_Y_POSITION_SHIFT +
-                        sizeOfNodes.getSizeAsInt() / 2;
+                heightBetweenNodes = INITIAL_HEIGHT_BETWEEN_NODES
+                        + sizeOfNodes.getSizeAsInt() - smallestNodeSize;
+                widthBetweenBrotherNodes = INITIAL_WIDTH_BETWEEN_BROTHER_NODES
+                        + sizeOfNodes.getSizeAsInt() - smallestNodeSize;
+                widthBetweenDifferentNodes = INITIAL_WIDTH_BETWEEN_DIFFERENT_NODES
+                        + sizeOfNodes.getSizeAsInt() - smallestNodeSize;
+                yPositionOfRootNode = ROOT_NODE_Y_POSITION_SHIFT
+                        + sizeOfNodes.getSizeAsInt() / 2;
 
                 for (GraphicNode node : graphicNodes) {
                     if (node != null) {
@@ -515,7 +515,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         zoomScrollPane.setWheelScrollingEnabled(false);
         zoomScrollPane.setPreferredSize(new Dimension(getWidth(), getHeight()));
-        
+
         visualizationPanelWithZoom.setLayout(new BorderLayout(4, 4));
         visualizationPanelWithZoom.add(zoomScrollPane, BorderLayout.CENTER);
 
@@ -535,7 +535,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
 
     private void updateNodesPosition() {
         int nbNodes = graphicNodes.size();
-        
+
         if (nbNodes > 0) {
             int treeHeight = 0;
             int nodeSize = sizeOfNodes.getSizeAsInt();
@@ -554,7 +554,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
             for (int level = 0; level <= treeHeight; level++) {
                 while (indexOfCurrentNode < indexOfLastNodeOnTheWidth) {
                     GraphicNode currentNode = graphicNodes.get(indexOfCurrentNode);
-                    
+
                     if (currentNode != null) {
                         yPositionOfCurrentNode = yPositionOfRootNode + level * heightBetweenNodes;
                         currentNode.changeNodePosition(xPositionOfCurrentNode, yPositionOfCurrentNode);
@@ -571,10 +571,10 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
                             xPositionOfCurrentNode += widthBetweenBrotherNodes + nodeSize;
                         }
                     }
-                    
+
                     indexOfCurrentNode++;
                 }
-                
+
                 xPositionOfCurrentNode -= (nbOfNodesOnTheWidth - 1) * widthBetweenCurrentNodeChildren;
                 if (level < treeHeight - 1) {
                     if (level > 0) {
@@ -594,8 +594,8 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
         if ((height == 0) || (height == 1)) {
             return 0;
         } else if (height == 2) {
-            return widthBetweenBrotherNodes + widthBetweenDifferentNodes +
-                    2 * sizeOfNodes.getSizeAsInt();
+            return widthBetweenBrotherNodes + widthBetweenDifferentNodes
+                    + 2 * sizeOfNodes.getSizeAsInt();
         } else {
             return 2 * computeWidthBetweenRootChildren(height - 1);
         }
@@ -609,7 +609,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
      * @return true if the tree visualization is empty, or else false
      */
     boolean isTreeVisualizationEmpty() {
-        return graphicNodes.size() == 0;
+        return graphicNodes.isEmpty();
     }
 
     /**
@@ -625,7 +625,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
             for (IBinaryNode node : heapRepresentation) {
                 if (node != null) {
                     GraphicNodeColor color;
-                    
+
                     if (node instanceof RedBlackNode) {
                         if (((RedBlackNode) node).isRed()) {
                             color = GraphicNodeColor.RED;
@@ -635,7 +635,7 @@ abstract class AbstractBinaryTreeVisualization extends JPanel {
                     } else {
                         color = GraphicNodeColor.YELLOW;
                     }
-                    
+
                     graphicNodes.add(new GraphicNode(node.getKey(), 0, 0,
                             sizeOfNodes, color));
                 } else {

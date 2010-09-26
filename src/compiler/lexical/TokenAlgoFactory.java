@@ -33,7 +33,7 @@ import java.util.HashMap;
  */
 public class TokenAlgoFactory {
 
-    private static HashMap<String, TokenAlgo> tokens =
+    private static final HashMap<String, TokenAlgo> tokens =
             new HashMap<String, TokenAlgo>();
 
     private TokenAlgoFactory() {

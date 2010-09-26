@@ -56,6 +56,23 @@ public class SoftwareModelEvent extends EventObject {
 
     private int dataStructureModelIndex;
 
+    /**
+     * Builds a software model event.
+     *
+     * @param source the source of the software model event
+     * @param type the type of the software model event
+     * @param name the name of the data structure model
+     * @param index the index of the data structure model
+     */
+    public SoftwareModelEvent(Object source, SoftwareModelEventType type,
+    		String name, int index) {
+		super(source);
+
+		eventType = type;
+		dataStructureModelName = name;
+		dataStructureModelIndex = index;
+	}
+
     private SoftwareModelEvent(Object source, SoftwareModelEventType type) {
     	this(source, type, "", -1);
     }
@@ -69,14 +86,6 @@ public class SoftwareModelEvent extends EventObject {
             String name) {
     	this(source, type, name, -1);
     }
-
-    public SoftwareModelEvent(Object source, SoftwareModelEventType type,
-    		String name, int index) {
-		super(source);
-		eventType = type;
-		dataStructureModelName = name;
-		dataStructureModelIndex = index;
-	}
 
 	/**
      * Builds a software model event for the event type CLEAR. In this case,

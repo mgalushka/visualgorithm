@@ -62,7 +62,7 @@ public final class SoftwareController implements ISoftwareController {
      * The data structure controller prototypes associates each type of data
      * structure with the good type of data structure controller.
      */
-    private static HashMap<String, IDataStructureController> dataStructureControllerPrototypes =
+    private static final HashMap<String, IDataStructureController> dataStructureControllerPrototypes =
             new HashMap<String, IDataStructureController>();
 
     /**

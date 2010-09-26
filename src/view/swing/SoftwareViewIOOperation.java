@@ -59,7 +59,7 @@ final class SoftwareViewIOOperation {
      * The data structure file filters contains all the data structure file
      * filters of the software.
      */
-    private static List<FileFilter> dataStructureFileFilters = new ArrayList<FileFilter>();
+    private static final List<FileFilter> dataStructureFileFilters = new ArrayList<FileFilter>();
 
     /**
      * Registration of the data structure file filters according to the types of
