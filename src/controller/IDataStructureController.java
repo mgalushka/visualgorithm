@@ -108,17 +108,6 @@ public interface IDataStructureController extends IController {
     public void addDataStructureModelToSoftwareModel(ISoftwareModel softwareModel);
 
     /**
-     * Adds the data structure model to the software model {@code softwareModel}.
-     * The parameter {@code fileName} represents the name of the data structure
-     * model.
-     *
-     * @param softwareModel the software model where to add
-     * @param fileName the name of the file where the data structure model is
-     */
-    public void addDataStructureModelToSoftwareModelFromFile(
-            ISoftwareModel softwareModel, String fileName);
-
-    /**
      * Saves the data structure model into the selected file.
      * 
      * @param file the file where to save

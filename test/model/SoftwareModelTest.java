@@ -55,7 +55,7 @@ public class SoftwareModelTest {
     @Test
     public void testSoftwareModel() {
         softwareModel.addDataStructureModel(btModel1);
-        softwareModel.addDataStructureModelFromFile(btModel2, "btModel2.bt");
+        softwareModel.addDataStructureModel(btModel2);
         softwareModel.addDataStructureModel(btModel3);
         assertEquals(softwareModel.getDataStructureModel(0), btModel1);
         assertEquals(softwareModel.getDataStructureModel(1), btModel2);

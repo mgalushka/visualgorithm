@@ -51,20 +51,8 @@ public interface ISoftwareModel extends IModel {
     public void addDataStructureModel(IDataStructureModel dataStructureModel);
 
     /**
-     * Adds a data structure model to the software model. The data structure is
-     * already loaded from the file into the data structure model
-     * {@code dataStructureModel}. The parameter {@code fileName} represents the
-     * name of the data structure model.
-     *
-     * @param dataStructureModel the data structure model to add
-     * @param fileName the name of the file where the data structure model is
-     */
-    public void addDataStructureModelFromFile(
-            IDataStructureModel dataStructureModel, String fileName);
-
-    /**
      * Deletes the data structure model from the software model. The parameter
-     * {@code index} indicates the place of the data structure model among the
+     * {@code index} indicates the place of the data structure model among
      * others. If the index is out of bounds, then an IndexOutOfBoundsException
      * is thrown.
      *

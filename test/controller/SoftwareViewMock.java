@@ -21,7 +21,7 @@
 
 package controller;
 
-import model.SoftwareModelEvent;
+import view.IDataStructureView;
 import view.ISoftwareView;
 
 /**
@@ -44,7 +44,11 @@ public class SoftwareViewMock implements ISoftwareView {
     public void closeView() {
     }
 
-    @Override
-    public void modelHasChanged(SoftwareModelEvent event) {
-    }
+	@Override
+	public void addDataStructureView(String name, IDataStructureView view) {
+	}
+
+	@Override
+	public void deleteDataStructureView(int index) {
+	}
 }

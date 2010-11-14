@@ -44,6 +44,8 @@ import model.tree.IBinaryNode;
  */
 abstract class AbstractBinaryTreeCreationPanel extends JPanel {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The binary tree visualization.
      */

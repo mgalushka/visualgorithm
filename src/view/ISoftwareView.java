@@ -21,19 +21,15 @@
 
 package view;
 
-import model.SoftwareModelListener;
-
 /**
- * This interface defines the software view. The software view is a listener on
- * the software model in order to be updated on every change. This interface is
- * used in the abstract view factory.
+ * This interface defines the software view. This interface is used in the
+ * abstract view factory.
  * 
  * @author Julien Hannier
  * @version 0.10 16/06/08
  * @see IView
- * @see SoftwareModelListener
  */
-public interface ISoftwareView extends IView, SoftwareModelListener {
+public interface ISoftwareView extends IView {
 
     /**
      * Displays the view of the software. This method must be used to show the
@@ -46,4 +42,23 @@ public interface ISoftwareView extends IView, SoftwareModelListener {
      * close the software view.
      */
     public void closeView();
+    
+    /**
+     * Adds a data structure view to the software view. The data structure view is
+     * already created into the parameter {@code view}. The parameter {@code name}
+     * is a string representing the data structure view.
+     * 
+     * @param name the name of the data structure view to add
+     * @param view the data structure view to add
+     */
+    public void addDataStructureView(String name, IDataStructureView view);
+    
+    /**
+     * Deletes the data structure view from the software view. The parameter
+     * {@code index} indicates the place of the data structure view among
+     * others.
+     * 
+     * @param index the index of the data structure view to delete
+     */
+    public void deleteDataStructureView(int index);
 }

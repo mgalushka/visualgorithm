@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import model.ISoftwareModel;
-import model.SoftwareModelListener;
 import model.UnknownDataStructureException;
 import view.AbstractViewFactory;
 import view.ISoftwareView;
@@ -89,7 +88,6 @@ public final class SoftwareController implements ISoftwareController {
         softwareView = softwareViewFactory.createSoftwareView(this);
         
         softwareView.displayView();
-        addListener();
     }
 
     @Override
@@ -105,12 +103,6 @@ public final class SoftwareController implements ISoftwareController {
                 " of bounds");
         }
         return dataStructureControllers.get(index);
-    }
-
-    private void addListener() {
-        assert(softwareView instanceof SoftwareModelListener);
-
-        softwareModel.addModelListener(softwareView);
     }
 
     @Override
@@ -129,6 +121,7 @@ public final class SoftwareController implements ISoftwareController {
                 softwareViewFactory);
         dataStructureControllers.add(dataStructureController);
         dataStructureController.addDataStructureModelToSoftwareModel(softwareModel);
+        softwareView.addDataStructureView("New " + type.toString(), dataStructureController.getView());
     }
 
     @Override
@@ -147,6 +140,7 @@ public final class SoftwareController implements ISoftwareController {
                 softwareViewFactory, nb);
         dataStructureControllers.add(dataStructureController);
         dataStructureController.addDataStructureModelToSoftwareModel(softwareModel);
+        softwareView.addDataStructureView("New " + type.toString(), dataStructureController.getView());
     }
 
     @Override
@@ -169,8 +163,8 @@ public final class SoftwareController implements ISoftwareController {
         dataStructureController.initializeDataStructureController(file,
                 softwareViewFactory);
         dataStructureControllers.add(dataStructureController);
-        dataStructureController.addDataStructureModelToSoftwareModelFromFile(
-                softwareModel, fileName);
+        dataStructureController.addDataStructureModelToSoftwareModel(softwareModel);
+        softwareView.addDataStructureView(fileName, dataStructureController.getView());
     }
 
     @Override
@@ -181,6 +175,7 @@ public final class SoftwareController implements ISoftwareController {
         }
         softwareModel.deleteDataStructureModel(index);
         dataStructureControllers.remove(index);
+        softwareView.deleteDataStructureView(index);
     }
 
     @Override

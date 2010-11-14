@@ -24,8 +24,6 @@ package model;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.List;
-import javax.swing.event.EventListenerList;
-import model.SoftwareModelEvent.SoftwareModelEventType;
 
 /**
  * This class defines all the methods in order to modify the software model. The
@@ -41,15 +39,12 @@ public final class SoftwareModel implements ISoftwareModel {
 
     private List<IDataStructureModel> dataStructureModels;
 
-    private EventListenerList listeners;
-
     /**
      * Builds the software model. The software model is a list of data structure
      * models.
      */
     public SoftwareModel() {
         dataStructureModels = new ArrayList<IDataStructureModel>();
-        listeners = new EventListenerList();
     }
 
     @Override
@@ -64,32 +59,15 @@ public final class SoftwareModel implements ISoftwareModel {
 
     @Override
     public void addModelListener(EventListener listener) throws IllegalArgumentException {
-        if (!(listener instanceof SoftwareModelListener)) {
-            throw new IllegalArgumentException("You have to pass a SoftwareModelListener");
-        }
-        listeners.add(SoftwareModelListener.class, (SoftwareModelListener)listener);
     }
 
     @Override
     public void removeModelListener(EventListener listener) throws IllegalArgumentException {
-        if (!(listener instanceof SoftwareModelListener)) {
-            throw new IllegalArgumentException("You have to pass a SoftwareModelListener");
-        }
-        listeners.remove(SoftwareModelListener.class, (SoftwareModelListener)listener);
     }
 
     @Override
     public void addDataStructureModel(IDataStructureModel dataStructureModel) {
         dataStructureModels.add(dataStructureModel);
-        fireModelHasChangedWithInsertEvent("New " +
-                dataStructureModel.getDataStructureType());
-    }
-
-    @Override
-    public void addDataStructureModelFromFile(
-            IDataStructureModel dataStructureModel, String fileName) {
-        dataStructureModels.add(dataStructureModel);
-        fireModelHasChangedWithInsertEvent(fileName);
     }
 
     @Override
@@ -99,35 +77,10 @@ public final class SoftwareModel implements ISoftwareModel {
                 " of bounds");
         }
         dataStructureModels.remove(index);
-        fireModelHasChangedWithDeleteEvent(index);
     }
 
     @Override
     public void removeAllDataStructureModels() {
         dataStructureModels.clear();
-        fireModelHasChangedWithClearEvent();
     }
-
-    private void fireModelHasChangedWithInsertEvent(String name) {
-    	fireModelHasChanged(SoftwareModelEvent.buildInsertEvent(this,
-                SoftwareModelEventType.INSERT, name));
-    }
-
-	private void fireModelHasChangedWithDeleteEvent(int index) {
-		fireModelHasChanged(SoftwareModelEvent.buildDeleteEvent(this,
-                    SoftwareModelEventType.DELETE, index));
-    }
-
-    private void fireModelHasChangedWithClearEvent() {
-    	fireModelHasChanged(SoftwareModelEvent.buildClearEvent(this,
-                    SoftwareModelEventType.CLEAR));
-    }
-    
-    private void fireModelHasChanged(SoftwareModelEvent event) {
-        SoftwareModelListener[] listenerTab = listeners.getListeners(
-                SoftwareModelListener.class);
-        for (SoftwareModelListener listener : listenerTab) {
-            listener.modelHasChanged(event);
-        }
-	}
 }

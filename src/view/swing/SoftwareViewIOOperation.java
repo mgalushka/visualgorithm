@@ -214,7 +214,7 @@ final class SoftwareViewIOOperation {
 
     /**
      * Exits the software by asking users to save non-saved data structures. If
-     * the operation is successfull then true is returned, or else false.
+     * the operation is successful then true is returned, or else false.
      *
      * @param tabCount the number of tabs of the software
      * @return true if the operation ends successfully, or else false

@@ -55,6 +55,8 @@ import view.swing.tree.GraphicNode.GraphicNodeSize;
  */
 abstract class AbstractBinaryTreeVisualization extends JPanel {
 
+    private static final long serialVersionUID = 1L;
+
     private static final int ROOT_NODE_Y_POSITION_SHIFT = 10;
 
     private static final int INITIAL_HEIGHT_BETWEEN_NODES = 35;

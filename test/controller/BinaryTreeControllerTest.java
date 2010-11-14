@@ -77,8 +77,7 @@ public class BinaryTreeControllerTest {
         assertEquals(btController1.getView().getClass(), BinaryTreeViewMock.class);
 
         btController1.addDataStructureModelToSoftwareModel(softwareModel);
-        btController2.addDataStructureModelToSoftwareModelFromFile(softwareModel,
-                "loadBST.bt");
+        btController2.addDataStructureModelToSoftwareModel(softwareModel);
         btController3.addDataStructureModelToSoftwareModel(softwareModel);
 
         assertEquals(softwareModel.getDataStructureModel(0).getDataStructureType(),

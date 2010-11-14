@@ -41,6 +41,8 @@ import javax.swing.JMenuItem;
  */
 public abstract class AbstractDataStructureMenu extends JMenu implements IDataStructureMenu {
 
+    private static final long serialVersionUID = 1L;
+
     private JMenu newMenu;
 
     private JMenu infoMenu;

@@ -31,8 +31,8 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import model.SoftwareModelEvent;
-import model.SoftwareModelEvent.SoftwareModelEventType;
+
+import view.IDataStructureView;
 import view.ISoftwareView;
 import view.swing.tree.BinaryTreeMenu;
 import controller.ISoftwareController;
@@ -195,7 +195,7 @@ public final class SoftwareView extends JFrame implements ISoftwareView {
         String osName = System.getProperty("os.name").toLowerCase();
         if (osName.indexOf("mac") >= 0) {
             try {
-                Class macApplicationClass = Class.forName("com.apple.eawt.Application");
+                Class<?> macApplicationClass = Class.forName("com.apple.eawt.Application");
                 Object macApplication = macApplicationClass.newInstance();
 
                 Method setDockIconImage = macApplicationClass.getMethod("setDockIconImage",
@@ -203,7 +203,7 @@ public final class SoftwareView extends JFrame implements ISoftwareView {
                 setDockIconImage.invoke(macApplication,
                         ImageLoadingUtility.loadImageFromVisualgorithmJar("img/icon.png"));
 
-                Class applicationListenerClass = Class.forName("com.apple.eawt.ApplicationListener");
+                Class<?> applicationListenerClass = Class.forName("com.apple.eawt.ApplicationListener");
                 Object macListener = Proxy.newProxyInstance(getClass().getClassLoader(),
                         new Class[] {applicationListenerClass}, new InvocationHandler() {
 
@@ -258,38 +258,35 @@ public final class SoftwareView extends JFrame implements ISoftwareView {
         setVisible(false);
         dispose();
     }
-
+    
     @Override
-    public void modelHasChanged(SoftwareModelEvent event) {
-        if (event.getEventType() == SoftwareModelEventType.INSERT) {
-            int tabCount = softwareTabbedPane.getTabCount();
-
-            try {
-                softwareTabbedPane.addTab(event.getDataStructureModelName(),
-                        (JComponent) softwareController.getDataStructureController(
-                        tabCount).getView());
-                softwareTabbedPane.setTabComponentAt(tabCount, new TabCloseButton(
-                        softwareTabbedPane, softwareViewIOOperation));
-                softwareTabbedPane.setSelectedIndex(tabCount);
-            } catch (IndexOutOfBoundsException ex) {
-                softwareViewIOOperation.showErrorMessage("An irrecoverable error" +
-                        " occurs and the software is about\nto shut down. Sorry" +
-                        " for the inconvenience.", "Software Error");
-                System.exit(1);
-            }
-        } else if (event.getEventType() == SoftwareModelEventType.CLEAR) {
-            System.exit(0);
-        } else if (event.getEventType() == SoftwareModelEventType.DELETE) {
-            int index = event.getDataStructureModelIndex();
-            
-            try {
-                softwareTabbedPane.remove(index);
-            } catch (IndexOutOfBoundsException ex) {
-                softwareViewIOOperation.showErrorMessage("An irrecoverable error" +
-                        " occurs and the software is about\nto shut down. Sorry" +
-                        " for the inconvenience.", "Software Error");
-                System.exit(1);
-            }
+    public void addDataStructureView(String name, IDataStructureView view)
+    {
+    	int tabCount = softwareTabbedPane.getTabCount();
+    	
+    	try {
+            softwareTabbedPane.addTab(name, (JComponent) view);
+            softwareTabbedPane.setTabComponentAt(tabCount, new TabCloseButton(
+                    softwareTabbedPane, softwareViewIOOperation));
+            softwareTabbedPane.setSelectedIndex(tabCount);
+        } catch (IndexOutOfBoundsException ex) {
+            softwareViewIOOperation.showErrorMessage("An irrecoverable error" +
+                    " occurs and the software is about\nto shut down. Sorry" +
+                    " for the inconvenience.", "Software Error");
+            System.exit(1);
+        }
+    }
+    
+    @Override
+    public void deleteDataStructureView(int index)
+    {
+        try {
+            softwareTabbedPane.remove(index);
+        } catch (IndexOutOfBoundsException ex) {
+            softwareViewIOOperation.showErrorMessage("An irrecoverable error" +
+                    " occurs and the software is about\nto shut down. Sorry" +
+                    " for the inconvenience.", "Software Error");
+            System.exit(1);
         }
     }
 }

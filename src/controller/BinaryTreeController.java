@@ -112,12 +112,6 @@ public final class BinaryTreeController implements IBinaryTreeController {
     }
 
     @Override
-    public void addDataStructureModelToSoftwareModelFromFile(
-            ISoftwareModel softwareModel, String fileName) {
-        softwareModel.addDataStructureModelFromFile(binaryTreeModel, fileName);
-    }
-
-    @Override
     public IBinaryTreeView getView() {
         return binaryTreeView;
     }
