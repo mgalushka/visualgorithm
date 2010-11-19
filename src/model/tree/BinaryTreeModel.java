@@ -154,8 +154,10 @@ public final class BinaryTreeModel implements IBinaryTreeModel {
             
             algorithmStrategy.insertNode(key);
         }
+        if (nbNode > 0) {
         updateListeners();
         isBinaryTreeSaved = false;
+        }
     }
 
     @Override

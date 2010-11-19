@@ -82,4 +82,16 @@ public class BinaryTreeModelTest {
         btModel3.insertNode(45);
         btModel3.deleteNode(23);
     }
+
+    @Test
+    public void insertionOfZeroRandomNodeDoNotModifyTree() {
+        btModel2.insertRandomNodes(0);
+        assertEquals(btModel2.isDataStructureSaved(), true);
+}
+
+    @Test
+    public void insertionOfNegativeRandomNodeDoNotModifyTree() {
+        btModel2.insertRandomNodes(-1);
+        assertEquals(btModel2.isDataStructureSaved(), true);
+    }
 }
