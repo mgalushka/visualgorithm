@@ -27,9 +27,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import model.ISoftwareModel;
 import model.UnknownDataStructureException;
-import model.tree.BinaryTreeModel;
 import model.tree.AbstractBinaryTree.BinaryTreeType;
-import model.tree.BinaryTreeModelListener;
+import model.tree.BinaryTreeModel;
 import model.tree.IBinaryTreeModel;
 import view.AbstractViewFactory;
 import view.IBinaryTreeView;
@@ -59,7 +58,7 @@ public final class BinaryTreeController implements IBinaryTreeController {
     }
 
     @Override
-    public IBinaryTreeController clone() {
+    public BinaryTreeController clone() {
         return new BinaryTreeController();
     }
 
@@ -127,8 +126,6 @@ public final class BinaryTreeController implements IBinaryTreeController {
     }
 
     private void addListener() {
-        assert(binaryTreeView instanceof BinaryTreeModelListener);
-
         binaryTreeModel.addModelListener(binaryTreeView);
     }
 

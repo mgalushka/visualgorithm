@@ -77,7 +77,7 @@ public final class BinaryTreeView extends JPanel implements IBinaryTreeView {
         
         setLayout(new BorderLayout(4, 4));
         add(viewTitlePane, BorderLayout.NORTH);
-        add((JPanel) fastBinaryTreeCreationPanel, BorderLayout.CENTER);
+        add(fastBinaryTreeCreationPanel, BorderLayout.CENTER);
         add(createButtonBetweenPanels(), BorderLayout.SOUTH);
     }
 
@@ -91,13 +91,13 @@ public final class BinaryTreeView extends JPanel implements IBinaryTreeView {
                 if (isFastBinaryTreeCreationPanel) {
                     buttonBetweenPanels.setText("Fast Creation Mode");
                     remove(fastBinaryTreeCreationPanel);
-                    add((JPanel) pedagogicalBinaryTreeCreationPanel,
+                    add(pedagogicalBinaryTreeCreationPanel,
                             BorderLayout.CENTER);
                     isFastBinaryTreeCreationPanel = false;
                 } else {
                     buttonBetweenPanels.setText("Pedagogical Creation Mode");
                     remove(pedagogicalBinaryTreeCreationPanel);
-                    add((JPanel) fastBinaryTreeCreationPanel,
+                    add(fastBinaryTreeCreationPanel,
                             BorderLayout.CENTER);
                     isFastBinaryTreeCreationPanel = true;
                 }
