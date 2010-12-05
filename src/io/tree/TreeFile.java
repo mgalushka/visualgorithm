@@ -203,17 +203,28 @@ public abstract class TreeFile {
                     parser = fileParsers.get(treeType);
                     parser.nodeVector.clear();
                     parser.treeType = matcher.group();
-                    parser.parse(reader);
+                    try {
+                    	parser.parse(reader);	
+                    } catch (IOException ex) {
+                    	reader.close();
+                    	throw ex;
+                    } catch (ParseException ex) {
+                    	reader.close();
+                    	throw ex;
+                    }
                     parser.lineNumber = ++line;
                 } else {
+                	reader.close();
                     throw new ParseException("The tree type " + matcher.group() +
                             " is unknown", line);
                 }
             } else {
+            	reader.close();
                 throw new ParseException("The type of the tree is not" +
                         " specified, or specified after the nodes", line);
             }
         }
+        reader.close();
         if (parser != null) {
             return parser;
         } else {

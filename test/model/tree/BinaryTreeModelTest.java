@@ -87,7 +87,7 @@ public class BinaryTreeModelTest {
     public void insertionOfZeroRandomNodeDoNotModifyTree() {
         btModel2.insertRandomNodes(0);
         assertEquals(btModel2.isDataStructureSaved(), true);
-}
+    }
 
     @Test
     public void insertionOfNegativeRandomNodeDoNotModifyTree() {

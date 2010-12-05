@@ -9,7 +9,7 @@
   <property name="test.dir" location="test"/>
   <property name="lib.dir" location="lib"/>
   <property name="img.dir" location="img"/>
-  <property name="build.dir" location="build"/>
+  <property name="build.dir" location="bin"/>
   <property name="build.src.dir" location="${build.dir}/src"/>
   <property name="build.test.dir" location="${build.dir}/test"/>
   <property name="dist.dir" location="dist"/>

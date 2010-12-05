@@ -30,7 +30,7 @@ import java.awt.Graphics;
 /**
  * This class defines the fast binary tree visualization. The fast binary tree
  * visualization is composed by graphic nodes that represent a binary tree. This
- * visualization has the same functionnalities than its parent class with also
+ * visualization has the same functionalities than its parent class with also
  * a delete mode with the cursor. This class is not designed for inheritance.
  * 
  * @author Julien Hannier
@@ -62,7 +62,7 @@ final class FastBinaryTreeVisualization extends AbstractBinaryTreeVisualization 
 
             @Override
             public void mouseClicked(MouseEvent event) {
-                if (isDeleteModeActive) {
+                if ((event.getButton() == MouseEvent.BUTTON1) && isDeleteModeActive) {
                     int indexOfSelectedNode = findIndexOfSelectedNode(event.getX(),
                             event.getY());
                     

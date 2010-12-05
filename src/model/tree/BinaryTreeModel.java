@@ -54,6 +54,8 @@ public final class BinaryTreeModel implements IBinaryTreeModel {
 
     private EventListenerList listeners;
 
+    private String modelfilePath;
+    
     private boolean isBinaryTreeSaved;
 
     /**
@@ -65,6 +67,7 @@ public final class BinaryTreeModel implements IBinaryTreeModel {
     public BinaryTreeModel(BinaryTreeType type) {
         binaryTree = type.createBinaryTree();
         listeners = new EventListenerList();
+        modelfilePath = "";
         isBinaryTreeSaved = false;
 
         setBinaryTreeAlgorithmStrategy();
@@ -85,6 +88,7 @@ public final class BinaryTreeModel implements IBinaryTreeModel {
             ParseException, IOException, UnknownDataStructureException {
         binaryTree = TreeFile.load(file.getAbsolutePath());
         listeners = new EventListenerList();
+        modelfilePath = file.getAbsolutePath();
         isBinaryTreeSaved = true;
 
         setBinaryTreeAlgorithmStrategy();
@@ -95,12 +99,12 @@ public final class BinaryTreeModel implements IBinaryTreeModel {
      * corresponding to the type of the binary tree.
      */
     public void setBinaryTreeAlgorithmStrategy() {
-        if (binaryTree instanceof BinarySearchTree) {
-            algorithmStrategy = new BinarySearchTreeAlgorithmStrategy((BinarySearchTree) binaryTree);
-        } else if (binaryTree instanceof AVLTree) {
+        if (binaryTree instanceof AVLTree) {
             algorithmStrategy = new AVLTreeAlgorithmStrategy((AVLTree) binaryTree);
         } else if (binaryTree instanceof RedBlackTree) {
             algorithmStrategy = new RedBlackTreeAlgorithmStrategy((RedBlackTree) binaryTree);
+        } else {
+        	algorithmStrategy = new BinarySearchTreeAlgorithmStrategy((BinarySearchTree) binaryTree);
         }
     }
 
@@ -111,7 +115,16 @@ public final class BinaryTreeModel implements IBinaryTreeModel {
 
     @Override
     public boolean isDataStructureSaved() {
-        return isBinaryTreeSaved;
+    	if (!modelfilePath.isEmpty())
+    	{
+    		File file = new File(modelfilePath);
+    		
+    		return isBinaryTreeSaved && file.exists();
+    	}
+    	else
+    	{
+    		return isBinaryTreeSaved;
+    	}
     }
 
     @Override
@@ -123,6 +136,7 @@ public final class BinaryTreeModel implements IBinaryTreeModel {
         } else {
             TreeFile.save(binaryTree, path.concat("." + TreeFile.FILE_EXTENSION));
         }
+        modelfilePath = path;
         isBinaryTreeSaved = true;
     }
 
