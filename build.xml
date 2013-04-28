@@ -13,8 +13,8 @@
   <property name="build.src.dir" location="${build.dir}/src"/>
   <property name="build.test.dir" location="${build.dir}/test"/>
   <property name="dist.dir" location="dist"/>
-  <property name="dist.javadoc.dir" location="${dist.dir}/javadoc"/>
-  <property name="dist.test.dir" location="${dist.dir}/test"/>
+  <property name="dist.javadoc.dir" location="${dist.dir}/Javadoc"/>
+  <property name="dist.test.dir" location="${dist.dir}/Test"/>
 
   <path id="lib.path">
     <fileset dir="${lib.dir}">
@@ -99,6 +99,23 @@
         <filename name="**/*.java"/>
       </fileset>
     </javadoc>
+  </target>
+
+  <target name="checkstyle" description="Check Java conventions. Parameters : ${java.jar.dir}, ${checkstyle.rules.file}.">
+    <taskdef resource="checkstyletask.properties">
+      <classpath>
+        <pathelement location="${java.jar.dir}/checkstyle.jar"/>
+        <pathelement location="${java.jar.dir}/commons-beanutils.jar"/>
+        <pathelement location="${java.jar.dir}/commons-logging.jar"/>
+        <pathelement location="${java.jar.dir}/antlr.jar"/>
+      </classpath>
+    </taskdef>
+    <checkstyle config="${checkstyle.rules.file}" failOnViolation="false">
+      <fileset dir="${src.dir}">
+        <include name="**/*.java"/>
+      </fileset>
+      <formatter type="xml" toFile="${dist.dir}/Report-Checkstyle.xml"/>
+    </checkstyle>
   </target>
 
   <target depends="test, jar, javadoc" description="Build and test whole project." name="default"/>
