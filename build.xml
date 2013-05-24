@@ -90,6 +90,7 @@
     <junitreport todir="${dist.dir}" tofile="Report-JUnit.xml">
       <fileset dir="${dist.test.dir}" includes="*.xml"/>
     </junitreport>
+    <delete dir="${dist.test.dir}"/>
   </target>
 
   <target name="javadoc" description="Build Javadoc.">
