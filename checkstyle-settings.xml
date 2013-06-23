@@ -4,6 +4,7 @@
     <module name="NewlineAtEndOfFile"/>
     <module name="Translation"/>
     <module name="FileLength"/>
+    <module name="FileTabCharacter"/>
     <module name="TreeWalker">
         <module name="JavadocType"/>
         <module name="JavadocStyle"/>
@@ -32,7 +33,6 @@
         <module name="NoWhitespaceBefore"/>
         <module name="ParenPad"/>
         <module name="TypecastParenPad"/>
-        <module name="TabCharacter"/>
         <module name="WhitespaceAfter"/>
 
         <module name="ModifierOrder"/>
