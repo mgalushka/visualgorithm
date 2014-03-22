@@ -102,15 +102,8 @@
     </javadoc>
   </target>
 
-  <target name="checkstyle" description="Check Java conventions. Parameters : ${java.jar.dir}, ${checkstyle.rules.file}.">
-    <taskdef resource="checkstyletask.properties">
-      <classpath>
-        <pathelement location="${java.jar.dir}/checkstyle.jar"/>
-        <pathelement location="${java.jar.dir}/commons-beanutils.jar"/>
-        <pathelement location="${java.jar.dir}/commons-logging.jar"/>
-        <pathelement location="${java.jar.dir}/antlr.jar"/>
-      </classpath>
-    </taskdef>
+  <target name="checkstyle" description="Check Java conventions. Parameters : ${checkstyle.jar}, ${checkstyle.rules.file}.">
+    <taskdef resource="checkstyletask.properties" classpath="${checkstyle.jar}"/>
     <checkstyle config="${checkstyle.rules.file}" failOnViolation="false">
       <fileset dir="${src.dir}">
         <include name="**/*.java"/>

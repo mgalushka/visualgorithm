@@ -1,14 +1,25 @@
 <?xml version="1.0"?>
-<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.3//EN" "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+<!DOCTYPE module PUBLIC
+    "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+    "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+
+<!-- Rule file for Checkstyle 5.7 -->
 <module name="Checker">
+    <!-- Checks whether files end with a new line -->
     <module name="NewlineAtEndOfFile"/>
+    <!-- Checks that property files contain the same keys -->
     <module name="Translation"/>
+    <!-- Checks for size violations -->
     <module name="FileLength"/>
+    <!-- Checks for whitespace -->
     <module name="FileTabCharacter"/>
+
     <module name="TreeWalker">
+       <!-- Checks for Javadoc comments -->
         <module name="JavadocType"/>
         <module name="JavadocStyle"/>
 
+        <!-- Checks for naming  onventions -->
         <module name="ConstantName"/>
         <module name="LocalFinalVariableName"/>
         <module name="LocalVariableName"/>
@@ -19,14 +30,17 @@
         <module name="StaticVariableName"/>
         <module name="TypeName"/>
 
+        <!-- Checks for imports -->
         <module name="AvoidStarImport"/>
         <module name="IllegalImport"/>
         <module name="RedundantImport"/>
         <module name="UnusedImports"/>
 
+        <!-- Checks for size violations -->
         <module name="MethodLength"/>
         <module name="ParameterNumber"/>
 
+        <!-- Checks for whitespace -->
         <module name="EmptyForIteratorPad"/>
         <module name="MethodParamPad"/>
         <module name="NoWhitespaceAfter"/>
@@ -35,15 +49,17 @@
         <module name="TypecastParenPad"/>
         <module name="WhitespaceAfter"/>
 
+        <!-- Modifier checks -->
         <module name="ModifierOrder"/>
 
+        <!-- Checks for blocks -->
         <module name="AvoidNestedBlocks"/>
         <module name="EmptyBlock"/>
         <module name="LeftCurly"/>
         <module name="NeedBraces"/>
         <module name="RightCurly"/>
 
-        <module name="DoubleCheckedLocking"/>
+        <!-- Checks for common coding problems -->
         <module name="EmptyStatement"/>
         <module name="EqualsHashCode"/>
         <module name="HiddenField"/>
@@ -53,11 +69,13 @@
         <module name="SimplifyBooleanExpression"/>
         <module name="SimplifyBooleanReturn"/>
 
+        <!-- Checks for class design -->
         <module name="DesignForExtension"/>
         <module name="FinalClass"/>
         <module name="HideUtilityClassConstructor"/>
         <module name="InterfaceIsType"/>
 
+        <!-- Miscellaneous other checks -->
         <module name="ArrayTypeStyle"/>
         <module name="TodoComment"/>
         <module name="UpperEll"/>
