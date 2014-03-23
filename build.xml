@@ -118,12 +118,17 @@
                 <include name="**/*.class"/>
             </fileset>
         </cobertura-instrument>
-        <junit printsummary="yes" fork="yes">
+        <junit printsummary="yes" fork="yes" failureProperty="test.failed">
             <sysproperty key="net.sourceforge.cobertura.datafile" file="${build.dir}/Cobertura.ser"/>
             <classpath>
-                <path refid="lib.path"/>
                 <pathelement path="${dist.instrument.dir}"/>
+                <pathelement path="${build.src.dir}"/>
                 <pathelement path="${build.test.dir}"/>
+                <fileset dir="${cobertura.dir}">
+                    <include name="cobertura*.jar"/>
+                    <include name="lib/**/*.jar"/>
+                </fileset>
+                <path refid="lib.path"/>
             </classpath>
             <formatter type="xml" usefile="true"/>
             <batchtest haltonfailure="no" todir="${dist.test.dir}">
