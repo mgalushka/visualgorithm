@@ -28,10 +28,12 @@
     
     
     <target name="-pre-compile-src">
+        <delete dir="${build.src.dir}"/>
         <mkdir dir="${build.src.dir}"/>
     </target>
     
     <target name="-pre-compile-test">
+        <delete dir="${build.test.dir}"/>
         <mkdir dir="${build.test.dir}"/>
     </target>
     
