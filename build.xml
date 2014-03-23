@@ -63,6 +63,12 @@
         <javac destdir="${build.src.dir}" encoding="${project.encoding}" fork="yes" includeantruntime="false" includes="**" source="${platform.version}" sourcepath="" srcdir="${src.dir}" target="${platform.version}" debug="yes"/>
     </target>
     
+    <target name="compile-test-debug" depends="compile-src-debug, -pre-compile-test" description="Compile test directory of the project.">
+        <javac destdir="${build.test.dir}" encoding="${project.encoding}" fork="yes" includeantruntime="false" includes="**" source="${platform.version}" sourcepath="" srcdir="${test.dir}" target="${platform.version}" debug="yes">
+            <classpath refid="lib.path"/>
+        </javac>
+    </target>
+    
     <target name="jar" depends="compile-src-release, -pre-jar" description="Build JAR.">
         <jar jarfile="${dist.dir}/${project.name}-${project.version}.jar" basedir="${build.src.dir}">
             <manifest>
@@ -96,8 +102,9 @@
         <delete dir="${dist.test.dir}"/>
     </target>
     
-    <target name="cobertura" depends="compile-src-debug" description="Check code coverage. Parameter : ${cobertura.dir}.">
+    <target name="cobertura" depends="compile-test-debug" description="Check code coverage. Parameter : ${cobertura.dir}.">
         <mkdir dir="${dist.instrument.dir}"/>
+        <mkdir dir="${dist.test.dir}"/>
         <taskdef resource="tasks.properties">
             <classpath>
                 <fileset dir="${cobertura.dir}">
@@ -111,9 +118,25 @@
                 <include name="**/*.class"/>
             </fileset>
         </cobertura-instrument>
+        <junit printsummary="yes" fork="yes">
+            <sysproperty key="net.sourceforge.cobertura.datafile" file="${build.dir}/Cobertura.ser"/>
+            <classpath>
+                <path refid="lib.path"/>
+                <pathelement path="${dist.instrument.dir}"/>
+                <pathelement path="${build.test.dir}"/>
+            </classpath>
+            <formatter type="xml" usefile="true"/>
+            <batchtest haltonfailure="no" todir="${dist.test.dir}">
+                <fileset dir="${build.test.dir}">
+                    <include name="**/*Test.class"/>
+                    <exclude name="**/*FunctionalTest.class"/>
+                </fileset>
+            </batchtest>
+        </junit>
         <cobertura-report datafile="${build.dir}/Cobertura.ser" srcdir="${src.dir}" destdir="${dist.dir}" format="xml"/>
         <move file="${dist.dir}/coverage.xml" tofile="${dist.dir}/Report-Cobertura.xml"/>
         <delete dir="${dist.instrument.dir}"/>
+        <delete dir="${dist.test.dir}"/>
     </target>
     
     <target name="javadoc" description="Build Javadoc.">
