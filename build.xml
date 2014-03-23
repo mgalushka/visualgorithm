@@ -14,6 +14,7 @@
   <property name="build.test.dir" location="${build.dir}/test"/>
   <property name="dist.dir" location="dist"/>
   <property name="dist.javadoc.dir" location="${dist.dir}/Javadoc"/>
+  <property name="dist.instrument.dir" location="${dist.dir}/Instrument"/>
   <property name="dist.test.dir" location="${dist.dir}/Test"/>
 
   <path id="lib.path">
@@ -92,6 +93,30 @@
     </junitreport>
     <delete dir="${dist.test.dir}"/>
   </target>
+  
+  <target name="cobertura" depends="compile-test" description="Check code coverage. Parameter : ${cobertura.dir}.">
+      <mkdir dir="${dist.instrument.dir}"/>
+      <taskdef resource="tasks.properties">
+          <classpath>
+              <fileset dir="${cobertura.dir}">
+                  <include name="cobertura*.jar"/>
+                  <include name="lib/**/*.jar"/>
+              </fileset>
+          </classpath>
+      </taskdef>
+      <cobertura-instrument datafile="${build.dir}/Cobertura.ser" todir="${dist.instrument.dir}">
+          <fileset dir="${build.src.dir}">
+              <include name="**/*.class"/>
+          </fileset>
+          <fileset dir="${build.test.dir}">
+              <include name="**/*Test.class"/>
+              <exclude name="**/*FunctionalTest.class"/>
+          </fileset>
+      </cobertura-instrument>
+      <cobertura-report datafile="${build.dir}/Cobertura.ser" srcdir="${src.dir}" destdir="${dist.dir}" format="xml"/>
+      <move file="${dist.dir}/coverage.xml" tofile="${dist.dir}/Report-Cobertura.xml"/>
+      <delete dir="${dist.instrument.dir}"/>
+  </target>
 
   <target name="javadoc" description="Build Javadoc.">
     <mkdir dir="${dist.javadoc.dir}"/>
@@ -102,8 +127,16 @@
     </javadoc>
   </target>
 
-  <target name="checkstyle" description="Check Java conventions. Parameters : ${checkstyle.jar}, ${checkstyle.rules.file}.">
-    <taskdef resource="checkstyletask.properties" classpath="${checkstyle.jar}"/>
+  <target name="checkstyle" description="Check Java conventions. Parameters : ${checkstyle.dir}, ${checkstyle.rules.file}.">
+    <mkdir dir="${dist.dir}"/>
+    <taskdef resource="checkstyletask.properties">
+        <classpath>
+            <fileset dir="${checkstyle.dir}">
+                <include name="checkstyle*.jar"/>
+                <include name="lib/**/*.jar"/>
+            </fileset>
+        </classpath>
+    </taskdef>
     <checkstyle config="${checkstyle.rules.file}" failOnViolation="false">
       <fileset dir="${src.dir}">
         <include name="**/*.java"/>
