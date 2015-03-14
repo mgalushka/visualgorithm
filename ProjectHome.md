@@ -1,0 +1,5 @@
+This project consists in creating a visualization tool for algorithmic teaching and more particularly for students. In its first version, the software will only include algorithms on binary trees but other data structures will be added.
+
+This software provides an algorithm player. This player allows users to visualize the modifications due to algorithms on data structures on which they are applied. Thus, users can understand algorithms at their own pace thanks to different controls like pause, next, previous, etc. Furthermore, algorithm modifications are translated into animations and users can change the details of the animations and the speed of the algorithm trace.
+
+Before applying an algorithm, users have to make the data structure on which they want to apply the algorithm. Two modes are possible for this creation. The first is a quick mode without any help. The second is a pedagogic mode where the user have to create the data structure by his own : the software just give tips and also the solution if the user does not know it (for example, on which node make a rotation to balance an AVL tree).
